@@ -1,19 +1,30 @@
 <script setup>
-  import MyAppHeader from "./components/MyAppHeader.vue"
-  import MyAppHeader2 from "./components/MyAppHeader2.vue"
-  import MyAppFooter from "./components/MyAppFooter.vue"
-import MyAppInput1Waste from "./components/MyAppInput1Waste.vue";
+  import Header_1 from "./components/Header_1.vue"
+  import Header_2 from "./components/Header_2.vue"
+  import Input_1 from "./components/Input_1.vue"
+  import Footer_1 from "./components/Footer_1.vue"
+
 </script>
 
 <template>
   <VApp>
-    <MyAppHeader></MyAppHeader>
-    <MyAppHeader2></MyAppHeader2>
+    <Header_1></Header_1>
+    <Header_2></Header_2>
     <VMain>
-      <MyAppInput1Waste></MyAppInput1Waste>
+      <Input_1 :color_green="color_green" :color_white="color_white"></Input_1>
     </VMain>
-    <MyAppFooter></MyAppFooter>
+    <Footer_1 v-bind:color_green="color_green" v-bind:color_lightgrey="color_lightgrey"></Footer_1>
   </VApp>
   
 </template>
 
+<script>
+export default {
+  data: () => ({
+    color_white: "#FFFFFF",
+    color_lightgrey: "#F2F2F2",
+    color_grey: "#4A4A4A",
+    color_green: "#55CD89"
+  }),
+};
+</script>

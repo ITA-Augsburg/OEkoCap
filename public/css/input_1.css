@@ -1,0 +1,89 @@
+.input_area {
+    width: var(--content-width);
+    margin: 0px calc((100vw - var(--content-width)) / 2) 0px calc((100vw - var(--content-width)) / 2);
+    height: calc(100vh - 285px - 185px);
+    overflow:scroll;
+    position: relative;
+}
+
+.type_input {
+    margin: 10px 10px 0px 10px;
+    height: 50px;
+}
+.type_input .v-label {
+    color: var(--color-white);
+    font-size: 20px;
+    opacity: 1;
+}
+
+.waste_size_checkbox {
+    height: 30px;
+}
+.waste_size_checkbox .v-label {
+    font-size: 20px;
+    color: var(--color-grey);
+    opacity: 1;
+}
+
+.desizing_checkbox {
+    height: 30px;
+}
+.desizing_checkbox .v-label {
+    font-size: 20px;
+    color: var(--color-grey);
+    opacity: 1;
+}
+
+.fiber_text {
+    width: calc(var(--content-width) - 20px);
+    margin: 30px 10px 0px 10px;
+    font-size: 20px;
+    color: var(--color-grey);
+}
+
+.my_slider {
+    width: calc(var(--content-width) - 20px - 50px);
+    padding: 0px 10px 0px 10px;
+}
+
+.fiber_percentage {
+    position: absolute;
+    right: 15px;
+    top: 182px;
+}
+
+.my_switch {
+    margin: 0px 0px 0px 10px;
+    height: 30px;
+}
+.my_switch .v-label {
+    font-size: 20px;
+    color: var(--color-grey);
+    opacity: 1;
+}
+
+.coarse_text {
+    width: calc(var(--content-width) - 20px);
+    margin: 40px 10px 0px 10px;
+    font-size: 20px;
+    color: var(--color-grey);
+}
+
+.coarse_percentage {
+    position: absolute;
+    right: 15px;
+    top: 336px;
+}
+
+.fine_text {
+    width: calc(var(--content-width) - 20px);
+    margin: 0px 10px 0px 10px;
+    font-size: 20px;
+    color: var(--color-grey);
+}
+
+.fine_percentage {
+    position: absolute;
+    right: 15px;
+    top: 420px;
+}
