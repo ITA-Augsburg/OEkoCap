@@ -1,0 +1,53 @@
+.input_area {
+    width: var(--content-width);
+    margin: 0px calc((100vw - var(--content-width)) / 2) 0px calc((100vw - var(--content-width)) / 2);
+    height: calc(100vh - 285px - 185px);
+    overflow:scroll;
+    position: relative;
+}
+
+.select {
+    margin: 10px 10px 0px 10px;
+    height: 50px;
+}
+.select .v-label {
+    color: var(--color-white);
+    font-size: 20px;
+    opacity: 1;
+}
+
+.checkbox {
+    height: 30px;
+}
+.checkbox .v-label {
+    font-size: 20px;
+    color: var(--color-grey);
+    opacity: 1;
+}
+
+.text {
+    width: calc(var(--content-width) - 20px);
+    font-size: 20px;
+    color: var(--color-grey);
+}
+
+.slider {
+    width: calc(var(--content-width) - 20px - 50px);
+    padding: 0px 10px 0px 10px;
+}
+.percentage {
+    position: absolute;
+    right: 15px;
+    font-size: 20px;
+    color: var(--color-grey);
+}
+
+.switch {
+    margin: 0px 0px 0px 10px;
+    height: 30px;
+}
+.switch .v-label {
+    font-size: 20px;
+    color: var(--color-grey);
+    opacity: 1;
+}

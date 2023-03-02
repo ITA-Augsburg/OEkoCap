@@ -1,21 +1,32 @@
 <script setup>
-  import Header_1 from "./components/Header_1.vue"
-  import Header_2 from "./components/Header_2.vue"
-  import Input_1 from "./components/Input_1.vue"
-  import Footer_1 from "./components/Footer_1.vue"
+  // import Test from "./components/Test.vue"
 
+  import Header from "./components/Header.vue"
+  // import Start_subheader from "./components/Start_subheader.vue"
+  import Input_subheader from "./components/Input_subheader.vue"
+
+  // import Start from "./components/Start.vue"
+  // import Input_waste from "./components/Input_waste.vue"
+  import Input_separation from "./components/Input_separation.vue"
+
+  // import Start_footer from "./components/Start_footer.vue"
+  import Input_footer from "./components/Input_footer.vue"
 </script>
 
 <template>
   <VApp>
-    <Header_1></Header_1>
-    <Header_2></Header_2>
+    <Header></Header>
+    <!-- <Start_subheader></Start_subheader> -->
+    <Input_subheader :text_3="subheader_separation"></Input_subheader>
     <VMain>
-      <Input_1 :color_green="color_green" :color_white="color_white"></Input_1>
+      <!-- <Test></Test> -->
+      <!-- <Start v-bind:color_green="color_green"></Start> -->
+      <!-- <Input_waste :color_green="color_green" :color_white="color_white"></Input_waste> -->
+      <Input_separation></Input_separation>
     </VMain>
-    <Footer_1 v-bind:color_green="color_green" v-bind:color_lightgrey="color_lightgrey"></Footer_1>
+    <!-- <Start_footer></Start_footer> -->
+    <Input_footer v-bind:color_green="color_green" v-bind:color_lightgrey="color_lightgrey"></Input_footer>
   </VApp>
-  
 </template>
 
 <script>
@@ -24,7 +35,10 @@ export default {
     color_white: "#FFFFFF",
     color_lightgrey: "#F2F2F2",
     color_grey: "#4A4A4A",
-    color_green: "#55CD89"
+    color_green: "#55CD89",
+
+    subheader_waste: "WASTE",
+    subheader_separation: "SEPARATION"
   }),
 };
 </script>

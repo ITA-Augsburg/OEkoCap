@@ -3,7 +3,7 @@
     <div class="input_area">
 
         <v-select
-        class="type_input"
+        class="select type_select"
         label="Type"
         :items=type_options
         variant="solo"
@@ -13,54 +13,54 @@
         ></v-select>
 
         <v-checkbox
-        class="waste_size_checkbox"
+        class="checkbox waste_size_checkbox"
         label="Waste Size > 1.5m"
         :color=color_green
         ></v-checkbox>
 
         <v-checkbox
-        class="desizing_checkbox"
+        class="checkbox desizing_checkbox"
         label="Desizing"
         :color=color_green
         disabled="true"
         ></v-checkbox>
 
-        <p class="fiber_text">Fiber volume content</p>
+        <p class="text fiber_text">Fiber volume content</p>
         <v-slider
-        class="my_slider"
+        class="slider"
         :color=color_green
         :thumb-color=color_green
         thumb-size="20"
         ></v-slider>
-        <p class="fiber_percentage">89%</p>
+        <p class="percentage fiber_percentage">89%</p>
         
         <v-switch
-        class="my_switch"
+        class="switch"
         label="Consider Transportation"
         inset
         :color=color_green
         ></v-switch>
 
-        <p class="coarse_text">Coarse Shredding - Mass loss</p>
+        <p class="text coarse_text">Coarse Shredding - Mass loss</p>
         <v-slider
-        class="my_slider"
+        class="slider"
         :color=color_green
         :thumb-color=color_green
         thumb-size="20"
         ></v-slider>
-        <p class="coarse_percentage">89%</p>
+        <p class="percentage coarse_percentage">89%</p>
 
-        <p class="fine_text">Fine Shredding - Mass loss</p>
+        <p class="text fine_text">Fine Shredding - Mass loss</p>
         <v-slider
-        class="my_slider"
+        class="slider"
         :color=color_green
         :thumb-color=color_green
         thumb-size="20"
         ></v-slider>
-        <p class="fine_percentage">89%</p>
+        <p class="percentage fine_percentage">89%</p>
 
         <v-switch
-        class="my_switch"
+        class="switch"
         label="Expert mode"
         inset
         :color=color_green

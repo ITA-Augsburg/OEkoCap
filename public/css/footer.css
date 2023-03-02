@@ -1,12 +1,12 @@
 .footer {
     width: 100vw;
-    height: min-content;
+    height: fit-content;
     background-color: var(--color-lightgrey);
 }
 
 .footer_content {
     width: var(--content-width);
-    height: min-content;
+    height: fit-content;
     margin: 0px calc((100vw - var(--content-width)) / 2);
 }
 
@@ -38,4 +38,18 @@
     padding-right: 15px;
     margin: 10px 0px;
     color: var(--color-grey);
+}
+
+.sponsor_container {
+    display: flex;
+    position: relative;
+    margin-left: 150px;
+}
+.sponsor_text {
+    font-size: 17px;
+    color: var(--color-grey);
+    margin-top: 10px;
+    position: absolute;
+    top: 7px;
+    left: -45px;
 }

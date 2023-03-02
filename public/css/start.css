@@ -1,0 +1,22 @@
+.start_area {
+    width: var(--content-width);
+    margin: 0px calc((100vw - var(--content-width)) / 2) 0px calc((100vw - var(--content-width)) / 2);
+    height: calc(100vh - 80px - 438px - 157.5px);
+    overflow:scroll;
+    position: relative;
+}
+
+.start_text {
+    font-size: 27px;
+    text-align: center;
+    padding: 60px 40px 30px 40px;
+}
+
+.start_button {
+    margin: 0px calc((var(--content-width) / 2) - 90px);
+}
+
+.start_button_text {
+    color: var(--color-white);
+    font-size: 20px;
+}
