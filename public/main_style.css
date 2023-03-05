@@ -13,4 +13,5 @@ by lower imports */
 @import "./css/input_processing.css";
 @import "./css/waiting.css";
 @import "./css/results.css";
+@import "./css/error.css";
 @import "./css/footer.css"
