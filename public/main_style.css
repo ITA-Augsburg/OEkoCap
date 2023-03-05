@@ -1,7 +1,16 @@
+/* order of the imports important,
+some styles of upper imports get overwritten
+by lower imports */
 @import "./css/root.css";
 @import "./css/header.css";
 @import "./css/subheader.css";
 @import "./css/input.css";
 @import "./css/start.css";
-@import "./css/input_1.css";
+@import "./css/input_waste.css";
+@import "./css/input_separation.css";
+@import "./css/input_matrix.css";
+@import "./css/input_textile.css";
+@import "./css/input_processing.css";
+@import "./css/waiting.css";
+@import "./css/results.css";
 @import "./css/footer.css"

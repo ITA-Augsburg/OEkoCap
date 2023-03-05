@@ -1,0 +1,33 @@
+.processing_type_select {
+    margin: 20px 10px 10px 10px;
+}
+
+.processing_subtype_select {
+    margin:30px 10px 20px 10px;
+}
+
+.processing_ml_text {
+    margin: 30px 0px 0px 10px
+}
+
+.processing_ml_percentage {
+    top: 210px;
+}
+
+.processing_wt_select {
+    margin: 25px 10px 20px 10px;
+}
+
+.processing_moi_select {
+    margin: 30px 10px 20px 10px;
+}
+
+.processing_clear_button_text {
+    color: var(--color-grey);
+    font-size: 25px;
+}
+
+.processing_calc_button_text {
+    color: var(--color-white);
+    font-size: 25px;
+}

@@ -33,6 +33,7 @@
 
 .slider {
     width: calc(var(--content-width) - 20px - 50px);
+    height: 35px;
     padding: 0px 10px 0px 10px;
 }
 .percentage {
@@ -50,4 +51,28 @@
     font-size: 20px;
     color: var(--color-grey);
     opacity: 1;
+}
+
+.textfield {
+    height: 50px;
+    margin: 30px 0px 0px 10px;
+    width: calc(var(--content-width) - 20px);
+}
+.textfield .v-label {
+    color: var(--color-white);
+    font-size: 20px;
+    opacity: 1;
+}
+
+.processing_buttoncontainer {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.processing_clear_buttoncontainer {
+    margin: 60px 5px 20px 10px;
+}
+
+.processing_calc_buttoncontainer {
+    margin: 60px 10px 20px 5px;
 }
