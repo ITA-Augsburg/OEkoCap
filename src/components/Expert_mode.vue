@@ -17,7 +17,7 @@
 
     <v-text-field
     class="textfield co2_textfield"
-    label="CO2-equi./kg"
+    label="kg CO2-äq./kg"
     variant="solo"
     :bg-color=color_green
     :color=color_white
@@ -31,7 +31,6 @@
         props: ["color_green", "color_white"],
         data() {
             return {
-                type_options: ['Cut-Off', 'End of Life'],
             }
         }
     }

@@ -1,0 +1,80 @@
+aktuelle arbeitszeit
+09.50 - 10.15 -> 00.25
+13.45 - 14.30 -> 00.45
+
+aus email:
+-logos von frauenhofer igcv und ita hinzufügen
+	wo? startseite wo?
+		header2 vertikat kleiner
+		2 logos kleiner, über den text
+
+-waste desizing rausnehmen
+-matrix insertion in process umbenennen
+	neue bezeichnung?
+		insert matrix as fibers in textile process
+-matrix fvg
+	10 20 30 möglich %
+-processing method of insertion umbenennen
+	neue bezeichnung?
+		so lassen
+		optionen: foil/film powder
+-results
+	benchmarkprocesse?
+	balkendiagramm package suchen
+		erst später
+
+neue excel hat die aktuelle logik
+
+
+Bischofsreut 23
+94145 Haidmühle
+
+TODO
+
+footer und subheader aus views in app.vue rausziehen,
+startfooter und inputfooter mit v-if irgendwie machen,
+dann routing
+
+vue.js, vuetify, nach angaben den frontend bauen
+
+wenn recycling.exe fehler, keine json zurückgibt, dann die ganze prozesskette loggen, wie es zum Fehler gekommen ist.
+
+output_page_content.js: 
+	sendPdfFile(...) -> Den Server aufrufen, docDefinition übergeben, auf Serverseite daraus pdf erzeugen und in einen geeigneten Ordner speichern
+											Ordner nach denselben Schema wie output_files
+											download-Datum, -Uhrzeit, ip-Adresse(?) mitspeichern
+
+	Formular (Name, E-mail, ...) um die pdf per E-mail zuschicken zu lassen. So könnten zusätzliche Infos (Name, E-mail, ...) auf dem Server gespeichert werden. (ist das nötig? darf man das?)
+	Formularfelder: name, e-mail, firma/istitution (name, e-mail, company/institution)
+
+dokumentation wie? testen wie?
+
+---
+
+SPÄTER
+
+output_page_content.js: createPdfContent(...) -> pdf-Datei mit Daten füllen
+
+wenn eingabe zwingend erforderlich, das mit einem stern signalisieren zB.: Type*
+
+dark mode - light mode button
+
+Mit allen möglichen Eingaben die recycling.exe aufrufen, schauen ob ich die Texte richtig übernommen habe
+Prepreg Production vielleicht mit kleinem p in createHTML Zeile 162
+
+---
+
+FRAGEN
+
+Soll das Formular die einzige Möglichkeit sein den Output runterladen zu können? Wenn ja, welche Daten sollen erhoben werden und welche optional?
+
+Wie sollen tooltips markiert werden? (kleines "?" neben dem Text oder Text gepunktet unterstrichen?)
+
+Auf wie viele Nachkommastellen sollen die Ausgaben gerundet werden? (bei default sind es 10+ Nks.)
+
+Masstab für flextural strength mpa? (wie co2/kg)
+tensileModulus_GPa
+flexuralModulus_GPa
+tensileStrength_MPa
+
+---

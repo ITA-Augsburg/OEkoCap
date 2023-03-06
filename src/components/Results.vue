@@ -15,7 +15,7 @@
     <p class="text results_tm_0_text">0 grad: XY - XY</p>
     <p class="text results_tm_90_text">90 grad: XY - XY</p>
     <p class="text results_gwp_text">Global warming potential</p>
-    <p class="text results_gwp_value_text">CO2-equi.: XY - XY</p>
+    <p class="text results_gwp_value_text">kg CO2-äq./kg: XY - XY</p>
 
     </div>
 
