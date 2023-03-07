@@ -1,6 +1,67 @@
 aktuelle arbeitszeit
-09.50 - 10.15 -> 00.25
-13.45 - 14.30 -> 00.45
+
+
+WASTE
+	type: EoL	->
+						waste size: no und nicht wählbar
+						coarse shredding: nicht wählbar
+						fine shredding: wählbar
+	type: Cut-Off ->
+						waste size: yes
+										->
+											coarse shredding: wählbar
+											fine shredding: wählbar
+						waste size: no	->
+											coarse shredding nicht wählbar
+											fine shredding wählbar
+SEPARATION
+	type: Pyrolyse (echt nur der eine wert?)
+TEXTILE
+	type: Dry-laid
+		mass loss: 5 / 10 / 15
+		throughput: 20 / 40 / 60
+		areal weight: 100 / 250 / 500 / 1000
+	type: Air-laid
+		mass loss: 5 / 10 / 15
+		throughput: 120
+		areal weight: 300 / 500 / 800
+	type: Wet-laid
+		mass loss: 2 / 5
+		throughput: 30 / 59 / 119
+		areal weight: 50 / 100 / 200
+MATRIX
+	fvc: wählbar
+	polymer: Thermoplastfiber / ThermoplastGranulate / ThermoplastPowder
+	type: Thermoplast (gibts im beispiel-konfig nicht, da gibts [PP, PA6, PET, PLA])
+		matr. ins.: yes
+			PROCESSING
+			type: Isothermal forming
+			method of ins.: laut Diagramm Thermoplastfiber aber kein zugehöriges Feld im beispiel-konfig
+			subtype: double belt press / Organosheet heating + forming
+			mass loss: wählbar
+			wall th.: 0.5 / 1 / 2
+		matr. ins.: no
+			PROCESSING
+			type: Isothermal forming
+			Method of ins.: laut Diagramm [Thermoplastfiber, Thermoplastgranulate, ThermoplastPowder] aber kein zugehöriges Feld im beispiel-konfig
+			subtype: double belt press / Organosheet heating + forming
+			mass loss: wählbar
+			wall th.: 0.5 / 1 / 2
+	type: thermoset (gibts im beispiel-konfig nicht, da gibts [PP, PA6, PET, PLA])
+		matr. ins.: no or yes? (fehlt im diagramm)
+			PROCESSING
+			type: Wet compression moulding / Resin transfer moulding
+			method of ins.: wert im Diagramm fehlt und kein zugehöriges Feld im beispiel-konfig
+			subtype: double belt press / Organosheet heating + forming
+			mass loss: wählbar
+			wall th.: 0.5 / 1 / 2
+			
+
+
+PROBLEME / ZWEIDEUTIGKEITEN
+Hat separation-type nur einen Wert undswar Pyrolyse?
+Für matrix-type stehen im beispiel-konfig folgende mögliche werte: [PP, PA6, PET, PLA] aber in dein Diagramm steht für matrix-type entweder Thermoplast oder Thermoset.
+Im beispiel-konfig existiert kein eingabefeld processing-method-of-insertion aber in dein Diagramm schon. Die Werte im Diagramm [Thermoplastfiber, ThermoplastGranulate, ThermoplastPowder] gehören zu matrix-polymer eingabefeld. Matrix-polymer wurde aber schon früher abgefragt. hilfe.
 
 aus email:
 -logos von frauenhofer igcv und ita hinzufügen
