@@ -1,9 +1,11 @@
 aktuelle arbeitszeit
-08.20 - 09.35 -> 01.15
-10.05 - 
+
+
+struggle gerade mit expertmode propagation to wastecomponent
 
 INFO
 waste-seite: expert mode rausgenommen weil consider transport dasselbe ist
+slider sind komisch wenn man die pfeiltasten drückt
 
 waste -> separation -> matrix -> textile -> processing
 
@@ -30,6 +32,10 @@ WASTE
 						waste size: no	->
 											coarse shredding nicht wählbar
 											fine shredding wählbar
+
+if type = "Cut-Off" -> waste_size no und nicht wählbar
+if type = "Cut-Off" || type = "EoL" && waste_size no -> coarse_shredding nicht wählbar
+
 SEPARATION
 	type: Pyrolyse
 TEXTILE
