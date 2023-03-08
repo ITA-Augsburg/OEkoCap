@@ -2,24 +2,20 @@
     margin: 20px 10px 10px 10px;
 }
 
-.desizing_checkbox {
-    margin: 5px 0px 10px 0px;
-}
-
 .waste_fvc_text {
     margin: 20px 10px 0px 10px;
 }
 
 .waste_fvc_percentage {
-    top: 180px;
+    top: 160px;
 }
 
 .waste_coarse_text {
-    margin: 30px 10px 0px 10px;
+    margin: 10px 10px 0px 10px;
 }
 
 .waste_coarse_percentage {
-    top: 334px;
+    top: 235px;
 }
 
 .waste_fine_text {
@@ -27,5 +23,5 @@
 }
 
 .waste_fine_percentage {
-    top: 417px;
+    top: 310px;
 }

@@ -38,7 +38,10 @@
         :color=color_white
         ></v-select>
 
-        <Expert_mode :color_green="color_green" :color_white="color_white"></Expert_mode>
+        <Expert_mode
+        :label=label
+        :color_green="color_green"
+        :color_white="color_white"></Expert_mode>
 
     </div>
 
@@ -55,7 +58,9 @@
             return {
                 type_options: ["textiletype1", "textiletype2"],
                 throughput_options: ["textilethroughput1", "textilethroughput2"],
-                aw_options: ["textileaw1", "textileaw2"]
+                aw_options: ["textileaw1", "textileaw2"],
+
+                label: "Expert mode"
             }
         }
     }

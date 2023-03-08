@@ -1,15 +1,20 @@
 .start_area {
     width: var(--content-width);
     margin: 0px calc((100vw - var(--content-width)) / 2) 0px calc((100vw - var(--content-width)) / 2);
-    height: calc(100vh - 80px - 438px - 157.5px);
+    height: calc(100vh - 438px - 157.5px);
     overflow:scroll;
     position: relative;
+}
+
+.start_logocontainer {
+    display: flex;
+    flex-wrap: nowrap;
 }
 
 .start_text {
     font-size: 27px;
     text-align: center;
-    padding: 60px 40px 30px 40px;
+    padding: 0px 40px 30px 40px;
 }
 
 .start_button {

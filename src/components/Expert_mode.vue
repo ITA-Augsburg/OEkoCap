@@ -2,12 +2,14 @@
 
     <v-switch
     class="switch"
-    label="Expert mode"
+    :label= label
     inset
     :color=color_green
+    @click="showHideExpertMode()"
     ></v-switch>
 
     <v-text-field
+    v-if="switchState"
     class="textfield cost_textfield"
     label="€/kg"
     variant="solo"
@@ -16,6 +18,7 @@
     ></v-text-field>
 
     <v-text-field
+    v-if="switchState"
     class="textfield co2_textfield"
     label="kg CO2-äq./kg"
     variant="solo"
@@ -28,9 +31,16 @@
 <script>
 
     export default {
-        props: ["color_green", "color_white"],
+        props: ["label", "color_green", "color_white"],
         data() {
             return {
+                switchState: false
+            }
+        },
+        methods: {
+            showHideExpertMode() {
+                this.switchState = !this.switchState
+                // console.log(this.switchState)
             }
         }
     }

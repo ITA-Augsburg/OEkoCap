@@ -31,5 +31,5 @@
 .subheader_logo {
     width: 450px;
     min-width: 450px;
-    margin: 150px calc((100vw - var(--content-width)) / 2) 50px calc((100vw - var(--content-width)) / 2);
+    margin: 70px calc((100vw - var(--content-width)) / 2) 50px calc((100vw - var(--content-width)) / 2);
 }

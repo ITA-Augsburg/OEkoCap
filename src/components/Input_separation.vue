@@ -11,7 +11,10 @@
         :color=color_white
         ></v-select>
 
-        <Expert_mode :color_green="color_green" :color_white="color_white"></Expert_mode>
+        <Expert_mode
+        :label=label
+        :color_green="color_green"
+        :color_white="color_white"></Expert_mode>
 
     </div>
 
@@ -26,7 +29,9 @@
         },
         data() {
             return {
-                type_options: ["separationtype1", "separationtype2"]
+                type_options: ["separationtype1", "separationtype2"],
+
+                label: "Expert mode"
             }
         }
     }

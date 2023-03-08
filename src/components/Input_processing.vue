@@ -47,7 +47,10 @@
         :color=color_white
         ></v-select>
 
-        <Expert_mode :color_green="color_green" :color_white="color_white"></Expert_mode>
+        <Expert_mode
+        :label=label
+        :color_green="color_green"
+        :color_white="color_white"></Expert_mode>
 
         <div class="processing_buttoncontainer">
             <div class="processing_clear_buttoncontainer">
@@ -85,7 +88,9 @@
                 type_options: ["processingtype1", "processingtype2"],
                 subtype_options: ["processingsubtype1", "processingsubtype2"],
                 wt_options: ["processingwt1", "processingwt2"],
-                moi_options: ["processingmoi1", "processingmoi2"]
+                moi_options: ["processingmoi1", "processingmoi2"],
+
+                label: "Expert mode"
             }
         }
     }

@@ -1,5 +1,21 @@
 aktuelle arbeitszeit
+08.20 - 09.35 -> 01.15
+10.05 - 
 
+INFO
+waste-seite: expert mode rausgenommen weil consider transport dasselbe ist
+
+waste -> separation -> matrix -> textile -> processing
+
+-eingabe-json initialisieren mit undefined überall
+
+-weiter knopf: prüfen ob mandatory inputs getätigt, optionale inputs sollen (wenn nicht gewählt) mit defaultwert versehen werden.
+
+-zurück knopf, frühere zahl-knöpfe: zurück auf die jeweilige seite und inputfelder entsprechend der früheren auswahl anzeigen.
+
+-spätere zahl-knöpfe: nicht wählbar
+
+-header links: app_input auf undefined stellen und seite wächseln
 
 WASTE
 	type: Cut-Off	->
@@ -60,19 +76,6 @@ MATRIX
 
 TODO
 
-footer und subheader aus views in app.vue rausziehen,
-startfooter und inputfooter mit v-if irgendwie machen,
-dann routing
-
--logos von frauenhofer igcv und ita hinzufügen
-	wo? startseite wo?
-		header2 vertikat kleiner
-		2 logos kleiner, über den text
-
--waste desizing rausnehmen
--matrix insertion in process umbenennen
-	neue bezeichnung?
-		insert matrix as fibers in textile process
 -processing method of insertion umbenennen
 	neue bezeichnung?
 		so lassen

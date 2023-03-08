@@ -15,13 +15,7 @@
         class="checkbox waste_size_checkbox"
         label="Waste Size > 1.5m"
         :color=color_green
-        ></v-checkbox>
-
-        <v-checkbox
-        class="checkbox desizing_checkbox"
-        label="Desizing"
-        :color=color_green
-        disabled="true"
+        @click="updateSize1dot5()"
         ></v-checkbox>
 
         <p class="text waste_fvc_text">Fiber volume content</p>
@@ -30,15 +24,12 @@
         :color=color_green
         :thumb-color=color_green
         thumb-size="20"
+        :min="10.00"
+        :max="100.00"
+        :step="1"
+        v-model="waste_fvc"
         ></v-slider>
-        <p class="percentage waste_fvc_percentage">89%</p>
-        
-        <v-switch
-        class="switch"
-        label="Consider Transportation"
-        inset
-        :color=color_green
-        ></v-switch>
+        <p class="percentage waste_fvc_percentage">{{ waste_fvc }}%</p>
 
         <p class="text waste_coarse_text">Coarse Shredding - Mass loss</p>
         <v-slider
@@ -58,7 +49,11 @@
         ></v-slider>
         <p class="percentage waste_fine_percentage">89%</p>
 
-        <Expert_mode :color_green="color_green" :color_white="color_white"></Expert_mode>
+        <!-- <Expert_mode :color_green="color_green" :color_white="color_white"></Expert_mode> -->
+        <Expert_mode
+        :label=label
+        :color_green="color_green"
+        :color_white="color_white"></Expert_mode>
     </div>
 
 </template>
@@ -72,7 +67,17 @@
         },
         data() {
             return {
-                type_options: ['wastetype1', 'wastetype2'],
+                type_options: ['Cut-Off', 'End of Life'],
+                size1dot5: false,
+                waste_fvc: 60.00,
+
+                label: "Consider Transportation"
+            }
+        },
+        methods: {
+            updateSize1dot5() {
+                this.size1dot5 = !this.size1dot5
+                // console.log(this.size1dot5)
             }
         }
     }

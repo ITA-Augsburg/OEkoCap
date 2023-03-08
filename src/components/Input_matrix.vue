@@ -31,11 +31,14 @@
 
         <v-checkbox
         class="checkbox matrix_iip_checkbox"
-        label="Matrix insertion in process"
+        label="Insert matrix as fibers in textile process"
         :color=color_green
         ></v-checkbox>
 
-        <Expert_mode :color_green="color_green" :color_white="color_white"></Expert_mode>
+        <Expert_mode
+        :label=label
+        :color_green="color_green"
+        :color_white="color_white"></Expert_mode>
 
     </div>
 
@@ -51,7 +54,9 @@
         data() {
             return {
                 type_options: ["matrixtype1", "matrixtype2"],
-                polymer_options: ["matrixpolymer1", "matrixpolymer2"]
+                polymer_options: ["matrixpolymer1", "matrixpolymer2"],
+
+                label: "Expert mode"
             }
         }
     }
