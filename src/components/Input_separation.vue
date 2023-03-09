@@ -3,6 +3,7 @@
     <div class="input_area">
 
         <v-select
+        v-model=separation_type
         class="select separation_type_select"
         label="Type"
         :items=type_options
@@ -30,7 +31,8 @@
         },
         data() {
             return {
-                type_options: ["separationtype1", "separationtype2"],
+                type_options: ["Pyrolyse"],
+                separation_type: undefined,
 
                 expert_mode_cost: undefined,
                 expert_mode_gwp: undefined,
@@ -42,10 +44,12 @@
             getNewValues(new_values) {
                 this.expert_mode_cost = new_values[0]
                 this.expert_mode_gwp = new_values[1]
-                this.log()
+                // this.log()
             },
             log() {
-                console.log("log todo")
+                console.log("sep_type:" + this.separation_type)
+                console.log("sep_expmode_cost:" + this.expert_mode_cost)
+                console.log("sep_expmode_gwp:" + this.expert_mode_gwp)
             }
         }
     }

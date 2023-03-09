@@ -138,13 +138,13 @@
                 // this.log()
             },
             log() {
-                console.log("type:"+this.waste_type)
-                console.log("size:"+this.size1dot5)
-                console.log("fvc:"+this.waste_fvc)
-                console.log("coarse:"+this.waste_coarse)
-                console.log("fine:"+this.waste_fine)
-                console.log("tCost:"+this.transport_cost)
-                console.log("tGwp:"+this.transport_gwp)
+                console.log("waste_type:"+this.waste_type)
+                console.log("waste_size:"+this.size1dot5)
+                console.log("waste_fvc:"+this.waste_fvc)
+                console.log("waste_coarse:"+this.waste_coarse)
+                console.log("waste_fine:"+this.waste_fine)
+                console.log("waste_tr_cost:"+this.transport_cost)
+                console.log("waste_tr_gwp:"+this.transport_gwp)
             }
         }
     }

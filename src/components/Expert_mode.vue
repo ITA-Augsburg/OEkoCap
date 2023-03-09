@@ -55,7 +55,7 @@
                 }
             },
             propagateNewValues() {
-                console.log("propagated")
+                // console.log("propagated")
                 // console.log(this.transporexpert_mode_cost + " " + this.expert_mode_gwp)
                 this.$emit("newExpertModeValues", [this.expert_mode_cost, this.expert_mode_gwp])
             }

@@ -4,6 +4,7 @@ aktuelle arbeitszeit
 INFO
 waste-seite: expert mode rausgenommen weil consider transport dasselbe ist
 slider sind komisch wenn man die pfeiltasten drückt
+expert-mode-input type-check noch nicht gemacht (und auch sonst nirgendwo)
 
 waste -> separation -> matrix -> textile -> processing
 

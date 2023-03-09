@@ -3,6 +3,7 @@
     <div class="input_area">
 
         <v-select
+        v-model=proc_type
         class="select processing_type_select"
         label="Type"
         :items=type_options
@@ -12,6 +13,7 @@
         ></v-select>
 
         <v-select
+        v-model=proc_subtype
         class="select processing_subtype_select"
         label="Subtype"
         :items=subtype_options
@@ -22,14 +24,19 @@
 
         <p class="text processing_ml_text">Mass loss</p>
         <v-slider
+        v-model=proc_ml
         class="slider"
         :color=color_green
         :thumb-color=color_green
         thumb-size="20"
+        :min="0.5"
+        :max="40"
+        :step="0.1"
         ></v-slider>
-        <p class="percentage processing_ml_percentage">89%</p>
+        <p class="percentage processing_ml_percentage">{{ proc_ml }}%</p>
 
         <v-select
+        v-model=proc_wt
         class="select processing_wt_select"
         label="Wall thickness"
         :items=wt_options
@@ -39,6 +46,7 @@
         ></v-select>
 
         <v-select
+        v-model=proc_moi
         class="select processing_moi_select"
         label="Method of insertion"
         :items=moi_options
@@ -91,6 +99,12 @@
                 wt_options: ["processingwt1", "processingwt2"],
                 moi_options: ["processingmoi1", "processingmoi2"],
 
+                proc_type: undefined,
+                proc_subtype: undefined,
+                proc_ml: 10,
+                proc_wt: undefined,
+                proc_moi: undefined,
+
                 expert_mode_cost: undefined,
                 expert_mode_gwp: undefined,
 
@@ -104,7 +118,13 @@
                 this.log()
             },
             log() {
-                console.log("log todo")
+                console.log("proc_type:" + this.proc_type)
+                console.log("proc_subtype:" + this.proc_subtype)
+                console.log("proc_ml:" + this.proc_ml)
+                console.log("proc_wt:" + this.proc_wt)
+                console.log("proc_moi:" + this.proc_moi)
+                console.log("proc_expmode_cost:" + this.expert_mode_cost)
+                console.log("proc_expmode_gwp:" + this.expert_mode_gwp)
             }
         }
     }
