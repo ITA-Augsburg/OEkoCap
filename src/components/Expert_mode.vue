@@ -10,7 +10,8 @@
 
     <v-text-field
     v-if="switchState"
-    :model-value=transport_cost
+    v-model=expert_mode_cost
+    @update:model-value="propagateNewValues()"
     class="textfield cost_textfield"
     label="€/kg"
     variant="solo"
@@ -20,8 +21,8 @@
 
     <v-text-field
     v-if="switchState"
-    :model-value=transport_gwp
-    v-on:update:focused="propagateNewValues()"
+    v-model=expert_mode_gwp
+    @update:model-value="propagateNewValues()"
     class="textfield co2_textfield"
     label="kg CO2-äq./kg"
     variant="solo"
@@ -39,9 +40,8 @@
         data() {
             return {
                 switchState: false,
-                transport_cost: undefined,
-                transport_gwp: undefined,
-                new_values: [this.transport_cost, this.transport_gwp]
+                expert_mode_cost: undefined,
+                expert_mode_gwp: undefined,
             }
         },
         methods: {
@@ -49,15 +49,15 @@
                 this.switchState = !this.switchState
                 // console.log(this.switchState)
                 if(this.switchState === false) {
-                    this.transport_cost = undefined
-                    this.transport_gwp = undefined
+                    this.expert_mode_cost = undefined
+                    this.expert_mode_gwp = undefined
                     this.propagateNewValues()
                 }
             },
             propagateNewValues() {
                 console.log("propagated")
-                console.log(this.transport_cost + " " + this.transport_gwp)
-                this.$emit("newExpertModeValues", "new_values")
+                // console.log(this.transporexpert_mode_cost + " " + this.expert_mode_gwp)
+                this.$emit("newExpertModeValues", [this.expert_mode_cost, this.expert_mode_gwp])
             }
         }
     }

@@ -44,7 +44,8 @@
         ></v-slider>
         <p class="percentage waste_fvc_percentage">{{ waste_fvc }}%</p>
 
-        <p class="text waste_coarse_text">Coarse Shredding - Mass loss</p>
+        <p
+        class="text waste_coarse_text">Coarse Shredding - Mass loss</p>
         <v-slider
         v-if="waste_type === undefined || waste_type === 'End of Life' && size1dot5 === true"
         class="slider"
@@ -68,7 +69,9 @@
         :step="0.1"
         v-model="waste_coarse"
         ></v-slider>
-        <p class="percentage waste_coarse_percentage">{{ waste_coarse }}%</p>
+        <p
+        v-if="this.waste_coarse !== undefined"
+        class="percentage waste_coarse_percentage">{{ waste_coarse }}%</p>
 
         <p class="text waste_fine_text">Fine Shredding - Mass loss</p>
         <v-slider
@@ -84,7 +87,7 @@
         <p class="percentage waste_fine_percentage">{{ waste_fine }}%</p>
 
         <Expert_mode
-        @newExpertModeValues="getNewValues"
+        @newExpertModeValues="getNewValues($event)"
         :label=label
         :color_green="color_green"
         :color_white="color_white"></Expert_mode>
@@ -127,7 +130,14 @@
                         this.waste_coarse = 5.0
                     }
                 }
-                    
+                // this.log()
+            },
+            getNewValues(new_values) {
+                this.transport_cost = new_values[0]
+                this.transport_gwp = new_values[1]
+                // this.log()
+            },
+            log() {
                 console.log("type:"+this.waste_type)
                 console.log("size:"+this.size1dot5)
                 console.log("fvc:"+this.waste_fvc)
@@ -135,10 +145,6 @@
                 console.log("fine:"+this.waste_fine)
                 console.log("tCost:"+this.transport_cost)
                 console.log("tGwp:"+this.transport_gwp)
-            },
-            getNewValues(new_values) {
-                this.transport_cost = new_values[0]
-                this.transport_gwp = new_values[1]
             }
         }
     }

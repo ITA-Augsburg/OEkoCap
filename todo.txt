@@ -1,8 +1,6 @@
 aktuelle arbeitszeit
 
 
-struggle gerade mit expertmode propagation to wastecomponent
-
 INFO
 waste-seite: expert mode rausgenommen weil consider transport dasselbe ist
 slider sind komisch wenn man die pfeiltasten drückt

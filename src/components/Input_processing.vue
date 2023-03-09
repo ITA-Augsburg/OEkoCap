@@ -48,6 +48,7 @@
         ></v-select>
 
         <Expert_mode
+        @newExpertModeValues="getNewValues($event)"
         :label=label
         :color_green="color_green"
         :color_white="color_white"></Expert_mode>
@@ -90,7 +91,20 @@
                 wt_options: ["processingwt1", "processingwt2"],
                 moi_options: ["processingmoi1", "processingmoi2"],
 
+                expert_mode_cost: undefined,
+                expert_mode_gwp: undefined,
+
                 label: "Expert mode"
+            }
+        },
+        methods: {
+            getNewValues(new_values) {
+                this.expert_mode_cost = new_values[0]
+                this.expert_mode_gwp = new_values[1]
+                this.log()
+            },
+            log() {
+                console.log("log todo")
             }
         }
     }
