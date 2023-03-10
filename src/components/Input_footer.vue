@@ -3,14 +3,14 @@
     <div class="footer">
         <div class="footer_content">
 
-            <p class="footer_percentage">15%</p>
+            <p class="footer_percentage">{{ progressValue }}%</p>
 
             <v-progress-linear
                 v-bind:bg-color=color_green
                 bg-opacity="0.2"
                 v-bind:color=color_green
                 height="10"
-                v-model="value"
+                v-model="progressValue"
             >
             </v-progress-linear>
 
@@ -86,10 +86,17 @@
 
 <script>
 export default {
-    props: ["color_green", "color_lightgrey"],
+    props: ["id", "color_green", "color_lightgrey"],
   data: () => ({
-    value: 15,
+    progressValue: 0,
     footerbuttontext: ["‹", "1", "2", "3", "4", "5", "›"],
   }),
+  mounted: {
+        setViewSpecificValues() {
+            if(this.id === "waste") {
+                this.progressValue = 20
+            }
+        }
+    }
 };
 </script>

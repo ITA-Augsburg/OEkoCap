@@ -20,6 +20,7 @@
 
         <router-link :to='{name:"WasteView"}'>
             <v-btn
+            @click="clearAppInput()"
             class="start_button"
             v-bind:color=color_green
             elevation="5"
@@ -35,7 +36,14 @@
 <script>
 export default {
     props: ["color_green"],
-  data: () => ({
-  }),
+    emits: ["clearAppInput"],
+    data: () => ({
+    }),
+    methods: {
+        clearAppInput() {
+            console.log("clearAppInput emitted from Start.vue")
+            this.$emit("clearAppInput", undefined)
+        }
+    }
 };
 </script>

@@ -7,6 +7,7 @@ slider sind komisch wenn man die pfeiltasten drückt
 expert-mode-input type-check noch nicht gemacht (und auch sonst nirgendwo)
 
 waste -> separation -> matrix -> textile -> processing
+error, waiting, results
 
 -eingabe-json initialisieren mit undefined überall
 
