@@ -11,7 +11,7 @@
     :color_green="color_green"
     :color_white="color_white"></Input_textile>
     <Input_footer
-    v-bind:id="textile"
+    v-bind:id=id
     v-bind:color_green="color_green"
     v-bind:color_lightgrey="color_lightgrey"></Input_footer>
 </template>
@@ -21,6 +21,7 @@ export default {
     props: ["subheader_textile", "color_green", "color_white", "color_lightgrey"],
     emits: ["clearAppInput"],
     data: () => ({
+        id: "textile"
     }),
 };
 </script>

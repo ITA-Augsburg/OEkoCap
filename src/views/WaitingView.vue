@@ -9,7 +9,7 @@
     :text_3="subheader_empty"></Input_subheader>
     <Waiting></Waiting>
     <Input_footer
-    v-bind:id="wait"
+    v-bind:id=id
     v-bind:color_green="color_green"
     v-bind:color_lightgrey="color_lightgrey"></Input_footer>
 </template>
@@ -19,6 +19,7 @@ export default {
     props: ["subheader_empty", "color_green", "color_lightgrey"],
     emits: ["clearAppInput"],
     data: () => ({
+        id: "wait"
     }),
 };
 </script>

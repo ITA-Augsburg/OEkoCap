@@ -15,62 +15,123 @@
             </v-progress-linear>
 
             <div class="footer_buttoncontainer">
-                <!-- <v-btn
-                    v-for="(text, i) in footerbuttontext"
-                    v-bind:key="i"
-                    icon=""
-                    v-bind:color=color_lightgrey
-                    elevation="12"
-                    width="45px"
-                    height="45px"
-                >
-                    <p class="footer_button_text">{{ text }}</p>
-                </v-btn> -->
                 <v-btn
                 icon=""
                 v-bind:color=color_lightgrey
+                @click="this.backButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">‹</p></v-btn>
+
                 <v-btn
+                v-if="this.id === 'waste'"
                 icon=""
                 v-bind:color=color_green
+                @click="oneButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">1</p></v-btn>
                 <v-btn
+                v-if="this.id !== 'waste'"
                 icon=""
                 v-bind:color=color_lightgrey
+                @click="oneButton()"
+                elevation="12"
+                width="45px"
+                height="45px"
+                ><p class="footer_button_text">1</p></v-btn>
+
+                <v-btn
+                v-if="this.id === 'separation'"
+                icon=""
+                v-bind:color=color_green
+                @click="twoButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">2</p></v-btn>
                 <v-btn
+                v-if="this.id !== 'separation'"
                 icon=""
                 v-bind:color=color_lightgrey
+                @click="twoButton()"
+                elevation="12"
+                width="45px"
+                height="45px"
+                ><p class="footer_button_text">2</p></v-btn>
+                <v-btn
+                v-if="this.id !== 'separation'"
+                icon=""
+                v-bind:color=color_lightgrey
+                @click="twoButton()"
+                elevation="12"
+                width="45px"
+                height="45px"
+                ><p class="footer_button_text">2</p></v-btn>
+
+                <v-btn
+                v-if="this.id === 'matrix'"
+                icon=""
+                v-bind:color=color_green
+                @click="threeButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">3</p></v-btn>
                 <v-btn
+                v-if="this.id !== 'matrix'"
                 icon=""
                 v-bind:color=color_lightgrey
+                @click="threeButton()"
+                elevation="12"
+                width="45px"
+                height="45px"
+                ><p class="footer_button_text">3</p></v-btn>
+
+                <v-btn
+                v-if="this.id === 'textile'"
+                icon=""
+                v-bind:color=color_green
+                @click="fourButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">4</p></v-btn>
                 <v-btn
+                v-if="this.id !== 'textile'"
                 icon=""
                 v-bind:color=color_lightgrey
+                @click="fourButton()"
+                elevation="12"
+                width="45px"
+                height="45px"
+                ><p class="footer_button_text">4</p></v-btn>
+
+                <v-btn
+                v-if="this.id === 'processing'"
+                icon=""
+                v-bind:color=color_green
+                @click="fiveButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">5</p></v-btn>
                 <v-btn
+                v-if="this.id !== 'processing'"
                 icon=""
                 v-bind:color=color_lightgrey
+                @click="fiveButton()"
+                elevation="12"
+                width="45px"
+                height="45px"
+                ><p class="footer_button_text">5</p></v-btn>
+
+                <v-btn
+                icon=""
+                v-bind:color=color_lightgrey
+                @click="nextButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
@@ -86,16 +147,61 @@
 
 <script>
 export default {
-    props: ["id", "color_green", "color_lightgrey"],
+    props: ["app_input" ,"id", "color_green", "color_lightgrey"],
   data: () => ({
-    progressValue: 0,
+    progressValue: 20,
     footerbuttontext: ["‹", "1", "2", "3", "4", "5", "›"],
   }),
-  mounted: {
-        setViewSpecificValues() {
-            if(this.id === "waste") {
-                this.progressValue = 20
+  methods: {
+        nextButton() {
+            switch(this.id) {
+                case "waste":
+                    this.progressValue = 20
+                    //check mandatory values
+                    //set default values if needed
+                    //set disabled-buttons
+                    //switch to the next page
+                    break
+                case "separation":
+                    //todo
+                    break
+                case "matrix":
+                    //todo
+                    break
+                case "textile":
+                    //todo
+                    break
+                case "processing":
+                    //todo
+                    break
+                case "error":
+                    //todo
+                    break
+                case "waiting":
+                    //todo
+                    break
+                case "results":
+                    //todo
+                    break
             }
+        },
+        backButton() {
+            
+        },
+        oneButton() {
+
+        },
+        twoButton() {
+
+        },
+        threeButton() {
+
+        },
+        fourButton() {
+
+        },
+        fiveButton() {
+
         }
     }
 };

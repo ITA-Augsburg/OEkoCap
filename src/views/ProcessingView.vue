@@ -12,7 +12,7 @@
     :color_white="color_white"
     :color_lightgrey="color_lightgrey"></Input_processing>
     <Input_footer
-    v-bind:id="processing"
+    v-bind:id=id
     v-bind:color_green="color_green"
     v-bind:color_lightgrey="color_lightgrey"></Input_footer>
 </template>
@@ -22,6 +22,7 @@ export default {
     props: ["subheader_processing", "color_green", "color_white", "color_lightgrey"],
     emits: ["clearAppInput"],
     data: () => ({
+        id: "processing"
     }),
 };
 </script>
