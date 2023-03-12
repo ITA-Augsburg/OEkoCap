@@ -2,13 +2,16 @@
     width: var(--content-width);
     margin: 0px calc((100vw - var(--content-width)) / 2) 0px calc((100vw - var(--content-width)) / 2);
     height: calc(100vh - 438px - 157.5px);
-    overflow:scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
     position: relative;
+    align-content: center;
 }
 
 .start_logocontainer {
     display: flex;
     flex-wrap: nowrap;
+    margin-top: calc((100vh - 438px - 157.5px - 290px) / 2);
 }
 
 .start_text {

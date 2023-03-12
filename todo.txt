@@ -112,10 +112,12 @@ output_page_content.js: createPdfContent(...) -> pdf-Datei mit Daten füllen
 
 wenn eingabe zwingend erforderlich, das mit einem stern signalisieren zB.: Type*
 
-dark mode - light mode button
+dark mode?
 
 Mit allen möglichen Eingaben die recycling.exe aufrufen, schauen ob ich die Texte richtig übernommen habe
 Prepreg Production vielleicht mit kleinem p in createHTML Zeile 162
+
+für displays größer als fhd anpassen
 
 ---
 
