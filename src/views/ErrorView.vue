@@ -9,17 +9,24 @@
     :text_3="subheader_error"></Input_subheader>
     <Error></Error>
     <Input_footer
-    v-bind:id=id
-    v-bind:color_green="color_green"
-    v-bind:color_lightgrey="color_lightgrey"></Input_footer>
+    :id=id
+    :progressValue=progressValue
+    :color_green="color_green"
+    :color_lightgrey="color_lightgrey"
+    @updateInputFooter="updateInputFooter()"></Input_footer>
 </template>
 
 <script>
 export default {
-    props: ["subheader_error", "color_green", "color_lightgrey"],
-    emits: ["clearAppInput"],
+    props: ["progressValue", "subheader_error", "color_green", "color_lightgrey"],
+    emits: ["clearAppInput", "updateInputFooter"],
     data: () => ({
-        id: "err"
+        id: "err",
     }),
+    methods: {
+        updateInputFooter() {
+            this.$emit("updateInputFooter", undefined)
+        }
+    }
 };
 </script>

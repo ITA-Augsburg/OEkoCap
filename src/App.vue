@@ -7,7 +7,14 @@
     <Header></Header>
 
     <RouterView
-    @clearAppInput="clearAppInput()"/>
+    :progressValue=footerProgressBar
+    :button2enabled=button2enabled
+    :button3enabled=button3enabled
+    :button4enabled=button4enabled
+    :button5enabled=button5enabled
+    @clearAppInput="clearAppInput()"
+    @updateInputFooter="updateInputFooter()"/>
+    
 
     <VMain>
       
@@ -19,6 +26,11 @@
 <script>
 export default {
   data: () => ({
+    button2enabled: false,
+    button3enabled: false,
+    button4enabled: false,
+    button5enabled: false,
+    footerProgressBar: 0,
     app_input: {
       "waste": {
         "type": undefined,
@@ -85,7 +97,7 @@ export default {
       console.log(this.app_input)
     },
     clearAppInput() {
-      console.log("App.vue clearAppInput() called")
+      // console.log("App.vue clearAppInput() called")
       this.app_input = {
         "waste": {
           "type": undefined,
@@ -147,6 +159,25 @@ export default {
         }
       }
       // this.log()
+    },
+    updateInputFooter() {
+      if(this.app_input.processing_1.type !== undefined &&
+      this.app_input.processing_1.wandstärke_mm !== undefined) {
+        this.footerProgressBar = 80
+      } else if(this.app_input.textile_process.throughput_kg_per_h !== undefined &&
+      this.app_input.textile_process.areal_weight_g_per_sqm !== undefined ) {
+        this.footerProgressBar = 60
+        this.button5enabled = true
+      } else if(this.app_input.polymer.matrix_type !== undefined) {
+        this.footerProgressBar = 40
+        this.button4enabled = true
+      } else if(this.app_input.separation.type !== undefined) {
+        this.footerProgressBar = 20
+        this.button3enabled = true
+      } else if(this.app_input.waste.type !== undefined) {
+        this.footerProgressBar = 0
+        this.button2enabled = true
+      }
     }
   },
 };

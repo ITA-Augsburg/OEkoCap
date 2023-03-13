@@ -41,7 +41,7 @@ export default {
     }),
     methods: {
         clearAppInput() {
-            console.log("clearAppInput emitted from Start.vue")
+            // console.log("clearAppInput emitted from Start.vue")
             this.$emit("clearAppInput", undefined)
         }
     }

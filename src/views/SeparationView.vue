@@ -11,17 +11,29 @@
     :color_green="color_green"
     :color_white="color_white"></Input_separation>
     <Input_footer
-    v-bind:id=id
-    v-bind:color_green="color_green"
-    v-bind:color_lightgrey="color_lightgrey"></Input_footer>
+    :id=id
+    :progressValue=progressValue
+    :color_green=color_green
+    :color_lightgrey=color_lightgrey
+    :button2enabled=button2enabled
+    :button3enabled=button3enabled
+    :button4enabled=button4enabled
+    :button5enabled=button5enabled
+    @updateInputFooter="updateInputFooter()"></Input_footer>
 </template>
 
 <script>
 export default {
-    props: ["subheader_separation", "color_green", "color_white", "color_lightgrey"],
-    emits: ["clearAppInput"],
+    props: ["button2enabled", "button3enabled", "button4enabled", "button5enabled",
+    "progressValue", "subheader_separation", "color_green", "color_white", "color_lightgrey"],
+    emits: ["clearAppInput", "updateInputFooter"],
     data: () => ({
-        id: "separation"
+        id: "separation",
     }),
+    methods: {
+        updateInputFooter() {
+            this.$emit("updateInputFooter", undefined)
+        }
+    }
 };
 </script>

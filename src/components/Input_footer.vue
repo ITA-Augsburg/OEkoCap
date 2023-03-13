@@ -6,28 +6,44 @@
             <p class="footer_percentage">{{ progressValue }}%</p>
 
             <v-progress-linear
-                v-bind:bg-color=color_green
+                :bg-color=color_green
                 bg-opacity="0.2"
-                v-bind:color=color_green
+                :color=color_green
                 height="10"
-                v-model="progressValue"
+                :model-value=progressValue
             >
             </v-progress-linear>
 
             <div class="footer_buttoncontainer">
+
+<!-- BUTTON BACK -->
+                <router-link
+                :to=backButtonRoute
+                v-if="this.id !== 'waiting' || this.id !== 'err' || this.id !== 'results'">
+                    <v-btn
+                    icon=""
+                    @click="backButton()"
+                    :color=color_lightgrey
+                    elevation="12"
+                    width="45px"
+                    height="45px"
+                    ><p class="footer_button_text">‹</p></v-btn>
+                </router-link>
                 <v-btn
+                v-if="this.id === 'waiting' || this.id === 'err' || this.id === 'results'"
+                disabled
                 icon=""
-                v-bind:color=color_lightgrey
-                @click="this.backButton()"
+                :color=color_lightgrey
                 elevation="12"
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">‹</p></v-btn>
 
+<!-- BUTTON 1 -->
                 <v-btn
                 v-if="this.id === 'waste'"
                 icon=""
-                v-bind:color=color_green
+                :color=color_green
                 @click="oneButton()"
                 elevation="12"
                 width="45px"
@@ -36,102 +52,157 @@
                 <v-btn
                 v-if="this.id !== 'waste'"
                 icon=""
-                v-bind:color=color_lightgrey
+                :color=color_lightgrey
                 @click="oneButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">1</p></v-btn>
 
+<!-- BUTTON 2 -->
                 <v-btn
                 v-if="this.id === 'separation'"
                 icon=""
-                v-bind:color=color_green
+                :color=color_green
                 @click="twoButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">2</p></v-btn>
                 <v-btn
-                v-if="this.id !== 'separation'"
+                v-if="this.id !== 'separation' && button2enabled"
                 icon=""
-                v-bind:color=color_lightgrey
+                :color=color_lightgrey
                 @click="twoButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">2</p></v-btn>
                 <v-btn
-                v-if="this.id !== 'separation'"
+                v-if="this.id !== 'separation' && !button2enabled"
+                disabled
                 icon=""
-                v-bind:color=color_lightgrey
+                :color=color_lightgrey
                 @click="twoButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">2</p></v-btn>
 
+<!-- BUTTON 3 -->
                 <v-btn
                 v-if="this.id === 'matrix'"
                 icon=""
-                v-bind:color=color_green
+                :color=color_green
                 @click="threeButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">3</p></v-btn>
                 <v-btn
-                v-if="this.id !== 'matrix'"
+                v-if="this.id !== 'matrix' && button3enabled"
                 icon=""
-                v-bind:color=color_lightgrey
+                :color=color_lightgrey
+                @click="threeButton()"
+                elevation="12"
+                width="45px"
+                height="45px"
+                ><p class="footer_button_text">3</p></v-btn>
+                <v-btn
+                v-if="this.id !== 'matrix' && !button3enabled"
+                disabled
+                icon=""
+                :color=color_lightgrey
                 @click="threeButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">3</p></v-btn>
 
+<!-- BUTTON 4 -->
+                <router-link
+                :to='{name:"MatrixView"}'
+                v-if="this.id === 'textile'">
+                    <v-btn
+                    icon=""
+                    :color=color_green
+                    @click="fourButton()"
+                    elevation="12"
+                    width="45px"
+                    height="45px"
+                    ><p class="footer_button_text">4</p></v-btn>
+                </router-link>
                 <v-btn
-                v-if="this.id === 'textile'"
+                v-if="this.id !== 'textile' && button4enabled"
                 icon=""
-                v-bind:color=color_green
+                :color=color_lightgrey
                 @click="fourButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">4</p></v-btn>
                 <v-btn
-                v-if="this.id !== 'textile'"
+                v-if="this.id !== 'textile' && !button4enabled"
+                disabled
                 icon=""
-                v-bind:color=color_lightgrey
+                :color=color_lightgrey
                 @click="fourButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">4</p></v-btn>
 
+<!-- BUTTON 5 -->
                 <v-btn
                 v-if="this.id === 'processing'"
                 icon=""
-                v-bind:color=color_green
+                :color=color_green
                 @click="fiveButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">5</p></v-btn>
+                <router-link
+                :to='{name:"ProcessingView"}'
+                v-if="this.id !== 'processing' && button5enabled">
+                    <v-btn
+                    icon=""
+                    :color=color_lightgrey
+                    @click="fiveButton()"
+                    elevation="12"
+                    width="45px"
+                    height="45px"
+                    ><p class="footer_button_text">5</p></v-btn>
+                </router-link>
                 <v-btn
-                v-if="this.id !== 'processing'"
+                v-if="this.id !== 'processing' && !button5enabled"
+                disabled
                 icon=""
-                v-bind:color=color_lightgrey
+                :color=color_lightgrey
                 @click="fiveButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">5</p></v-btn>
-
+                
+<!-- BUTTON NEXT -->
+                <router-link
+                :to=nextButtonRoute
+                v-if="this.id !== 'waiting' || this.id !== 'err' || this.id !== 'results'">
+                    <v-btn
+                    icon=""
+                    @click="nextButton()"
+                    :color=color_lightgrey
+                    elevation="12"
+                    width="45px"
+                    height="45px"
+                    ><p class="footer_button_text">›</p></v-btn>
+                </router-link>
                 <v-btn
+                v-if="this.id === 'waiting' || this.id === 'err' || this.id === 'results'"
+                disabled
                 icon=""
-                v-bind:color=color_lightgrey
-                @click="nextButton()"
+                :color=color_lightgrey
                 elevation="12"
                 width="45px"
                 height="45px"
@@ -147,61 +218,87 @@
 
 <script>
 export default {
-    props: ["app_input" ,"id", "color_green", "color_lightgrey"],
-  data: () => ({
-    progressValue: 20,
-    footerbuttontext: ["‹", "1", "2", "3", "4", "5", "›"],
-  }),
-  methods: {
-        nextButton() {
+    props: ["button2enabled", "button3enabled", "button4enabled", "button5enabled",
+    "app_input", "progressValue", "id", "color_green", "color_lightgrey"],
+    emits: ["updateInputFooter"],
+    data: () => ({
+        footerbuttontext: ["‹", "1", "2", "3", "4", "5", "›"],
+        backButtonRoute: "",
+        nextButtonRoute: ""
+    }),
+    methods: {
+        backButton() {
             switch(this.id) {
                 case "waste":
-                    this.progressValue = 20
-                    //check mandatory values
-                    //set default values if needed
-                    //set disabled-buttons
-                    //switch to the next page
+                    this.backButtonRoute = {name: "WasteView"}
                     break
                 case "separation":
-                    //todo
+                    this.backButtonRoute = {name: "WasteView"}
                     break
                 case "matrix":
-                    //todo
+                    this.backButtonRoute = {name: "SeparationView"}
                     break
                 case "textile":
-                    //todo
+                    this.backButtonRoute = {name: "MatrixView"}
                     break
                 case "processing":
-                    //todo
-                    break
-                case "error":
-                    //todo
+                    this.backButtonRoute = {name: "TextileView"}
                     break
                 case "waiting":
-                    //todo
+                    this.backButtonRoute = {name: "WaitingView"}
+                    break
+                case "err":
+                    this.backButtonRoute = {name: "ErrorView"}
                     break
                 case "results":
-                    //todo
+                    this.backButtonRoute = {name: "ResultsView"}
                     break
             }
         },
-        backButton() {
+        oneButton() {
             
         },
-        oneButton() {
-
-        },
         twoButton() {
-
+            
         },
         threeButton() {
-
+            
         },
         fourButton() {
-
+            
         },
         fiveButton() {
-
+            
+        },
+        nextButton() {
+            this.$emit("updateInputFooter", undefined)
+            switch(this.id) {
+                case "waste":
+                    this.nextButtonRoute = {name:"SeparationView"}
+                    //check mandatory values
+                    //set default values if needed
+                    break
+                case "separation":
+                    this.nextButtonRoute = {name:"MatrixView"}
+                    break
+                case "matrix":
+                    this.nextButtonRoute = {name:"TextileView"}
+                    break
+                case "textile":
+                    this.nextButtonRoute = {name:"ProcessingView"}
+                    break
+                case "processing":
+                    this.nextButtonRoute = {name:"ProcessingView"}
+                    break
+                case "waiting":
+                    this.nextButtonRoute = {name: "WaitingView"}
+                    break
+                case "err":
+                    this.nextButtonRoute = {name: "ErrorView"}
+                    break
+                case "results":
+                    this.nextButtonRoute = {name: "ResultsView"}
+            }
         }
     }
 };

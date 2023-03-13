@@ -7,7 +7,7 @@
 <template>
     <Start_subheader></Start_subheader>
     <Start
-    v-bind:color_green="color_green"
+    :color_green="color_green"
     @clearAppInput="clearAppInput()"></Start>
     <Start_footer></Start_footer>
 </template>
@@ -15,12 +15,12 @@
 <script>
 export default {
     props: ["color_green"],
-    emits: ["clearAppInput"],
+    emits: ["clearAppInput", "updateInputFooter"],
     data: () => ({
     }),
     methods: {
         clearAppInput() {
-            console.log("StartView.vue clearAppInput emitted")
+            // console.log("StartView.vue clearAppInput emitted")
             this.$emit("clearAppInput", undefined)
         }
     }
