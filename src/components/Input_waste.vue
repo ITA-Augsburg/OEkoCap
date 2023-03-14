@@ -9,13 +9,13 @@
         variant="solo"
         :bg-color=color_green
         :color=color_white
-        v-model="waste_type"
-        v-on:update:model-value="updateWasteRoute()"
+        v-model=this.waste_type
+        v-on:update:model-value="[updateWasteRoute(), saveNewInputs()]"
         ></v-select>
 
         <v-checkbox
         v-if="waste_type === undefined || waste_type === 'End of Life'"
-        @click="updateWasteRoute()"
+        @click="[updateWasteRoute(), saveNewInputs()]"
         class="checkbox waste_size_checkbox"
         label="Waste Size > 1.5m"
         :color=color_green
@@ -33,6 +33,7 @@
 
         <p class="text waste_fvc_text">Fiber volume content</p>
         <v-slider
+        v-on:update:model-value="saveNewInputs()"
         class="slider"
         :color=color_green
         :thumb-color=color_green
@@ -48,6 +49,7 @@
         class="text waste_coarse_text">Coarse Shredding - Mass loss</p>
         <v-slider
         v-if="waste_type === undefined || waste_type === 'End of Life' && size1dot5 === true"
+        v-on:update:model-value="saveNewInputs()"
         class="slider"
         :color=color_green
         :thumb-color=color_green
@@ -75,6 +77,7 @@
 
         <p class="text waste_fine_text">Fine Shredding - Mass loss</p>
         <v-slider
+        v-on:update:model-value="saveNewInputs()"
         class="slider"
         :color=color_green
         :thumb-color=color_green
@@ -87,7 +90,7 @@
         <p class="percentage waste_fine_percentage">{{ waste_fine }}%</p>
 
         <Expert_mode
-        @newExpertModeValues="getNewValues($event)"
+        @newExpertModeValues="newExpertModeValues($event)"
         :label=label
         :color_green="color_green"
         :color_white="color_white"></Expert_mode>
@@ -99,6 +102,7 @@
     import Expert_mode from "./Expert_mode.vue"
     export default {
         props: ["color_green", "color_white"],
+        emits: ["saveNewInputs"],
         components: {
             Expert_mode: Expert_mode
         },
@@ -132,10 +136,39 @@
                 }
                 // this.log()
             },
-            getNewValues(new_values) {
+            newExpertModeValues(new_values) {
                 this.transport_cost = new_values[0]
                 this.transport_gwp = new_values[1]
+                this.$emit(
+                        "saveNewInputs",
+                    {
+                        waste_type: this.waste_type,
+                        waste_size: this.size1dot5,
+                        waste_fvc: this.waste_fvc,
+                        waste_coarse: this.waste_coarse,
+                        waste_fine: this.waste_fine,
+                        transport_cost: this.transport_cost,
+                        transport_gwp: this.transport_gwp
+                    })
                 // this.log()
+            },
+            saveNewInputs() {
+                // console.log(this.waste_fvc)
+                setTimeout(() => {
+                    // console.log(this.waste_fvc)
+                    // this.log()
+                    this.$emit(
+                        "saveNewInputs",
+                    {
+                        waste_type: this.waste_type,
+                        waste_size: this.size1dot5,
+                        waste_fvc: this.waste_fvc,
+                        waste_coarse: this.waste_coarse,
+                        waste_fine: this.waste_fine,
+                        transport_cost: this.transport_cost,
+                        transport_gwp: this.transport_gwp
+                    })
+                }, 20);
             },
             log() {
                 console.log("waste_type:"+this.waste_type)
@@ -145,6 +178,7 @@
                 console.log("waste_fine:"+this.waste_fine)
                 console.log("waste_tr_cost:"+this.transport_cost)
                 console.log("waste_tr_gwp:"+this.transport_gwp)
+                console.log()
             }
         }
     }

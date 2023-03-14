@@ -56,7 +56,7 @@
         ></v-select>
 
         <Expert_mode
-        @newExpertModeValues="getNewValues($event)"
+        @newExpertModeValues="newExpertModeValues($event)"
         :label=label
         :color_green="color_green"
         :color_white="color_white"></Expert_mode>
@@ -109,7 +109,7 @@
                     this.textile_ml = 2
                 }
             },
-            getNewValues(new_values) {
+            newExpertModeValues(new_values) {
                 this.expert_mode_cost = new_values[0]
                 this.expert_mode_gwp = new_values[1]
                 this.log()
