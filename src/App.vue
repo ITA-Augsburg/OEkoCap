@@ -13,6 +13,14 @@
     :button4enabled=button4enabled
     :button5enabled=button5enabled
 
+    :waste_type_prop=this.app_input.waste.type
+    :waste_size_prop=this.app_input.waste.size_bigger_1dot5_m
+    :waste_fvc_prop=this.app_input.waste.fvc_percent
+    :waste_coarse_prop=setWasteCoarseProp()
+    :waste_fine_prop=setWasteFineProp()
+    :waste_transport_cost_prop=this.app_input.transport.euro_per_kg
+    :waste_transport_gwp_prop=this.app_input.transport.co2_equv_per_kg
+
     @clearAppInput="clearAppInput()"
     @updateInputFooter="updateInputFooter()"
     @saveNewInputs="saveNewInputs($event)"/>
@@ -34,26 +42,27 @@ export default {
     button5enabled: false,
     footerProgressBar: 0,
 
+    //default values are set here, these are passed to and visualized in child-components
     app_input: {
       "waste": {
         "type": undefined,
-        "quantity_to": undefined,
-        "size_bigger_1dot5_m": undefined,
-        "fvc_percent": undefined
+        "quantity_to": 1,
+        "size_bigger_1dot5_m": false,
+        "fvc_percent": 60.00
       },
       "transport": {
         "euro_per_kg": undefined,
         "co2_equv_per_kg": undefined
       },
       "shredding_1": {
-        "type": undefined,
-        "mass_loss_percent": undefined,
+        "type": "Coarse",
+        "mass_loss_percent": 5.0,
         "euro_per_kg": undefined,
         "co2_equv_per_kg": undefined
       },
       "shredding_2": {
-        "type": undefined,
-        "mass_loss_percent": undefined,
+        "type": "Fine",
+        "mass_loss_percent": 5.0,
         "euro_per_kg": undefined,
         "co2_equv_per_kg": undefined
       },
@@ -117,7 +126,16 @@ export default {
         this.app_input.transport.euro_per_kg = new_values.transport_cost
         this.app_input.transport.co2_equv_per_kg = new_values.transport_gwp
 
-        // this.logWaste()
+        //if coarse present then shred1type coarse and shred2type fine, else shred1type fine and shred2type undefined
+        this.setWasteCoarseProp()
+        this.setWasteFineProp()
+
+        //unlock footer-button-2 if mandatory inputs for WasteView given
+        if(this.app_input.waste.type !== undefined) {
+          this.button2enabled = true
+        }
+
+        this.logWaste()
       } //else if(Object.prototype.hasOwnProperty.call(new_values, "todo"))
     },
     updateInputFooter() {
@@ -134,9 +152,8 @@ export default {
       } else if(this.app_input.separation.type !== undefined) {
         this.footerProgressBar = 20
         this.button3enabled = true
-      } else if(this.app_input.waste.type !== undefined) {
+      } else {
         this.footerProgressBar = 0
-        this.button2enabled = true
       }
     },
     clearAppInput() {
@@ -202,6 +219,24 @@ export default {
         }
       }
       // this.log()
+    },
+    setWasteCoarseProp() {
+      if(this.app_input.shredding_1.type === undefined) {
+        return undefined
+      } else if(this.app_input.shredding_1.type === "Coarse") {
+        return this.app_input.shredding_1.mass_loss_percent
+      } else if(this.app_input.shredding_1.type === "Fine") {
+        return undefined
+      }
+    },
+    setWasteFineProp() {
+      if(this.app_input.shredding_1.type === undefined) {
+        return undefined
+      } else if(this.app_input.shredding_1.type === "Coarse") {
+        return this.app_input.shredding_2.mass_loss_percent
+      } else if(this.app_input.shredding_1.type === "Fine") {
+        return this.app_input.shredding_1.mass_loss_percent
+      }
     },
     log() {
       console.log(this.app_input)

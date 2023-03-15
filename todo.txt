@@ -1,8 +1,6 @@
 aktuelle arbeitszeit
 
 
-wenn auf eine frühere page geht, da was ändert und dann mit einem zahl-knopf weitergeht dann müssen die geänderten werte gespeichert werden
-
 INFO
 waste-seite: expert mode rausgenommen weil consider transport dasselbe ist
 slider sind komisch wenn man die pfeiltasten drückt

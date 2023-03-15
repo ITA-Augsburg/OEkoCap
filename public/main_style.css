@@ -14,4 +14,8 @@ by lower imports */
 @import "./css/waiting.css";
 @import "./css/results.css";
 @import "./css/error.css";
-@import "./css/footer.css"
+@import "./css/footer.css";
+
+/* [v-cloak] {
+    display: none;
+} */

@@ -92,8 +92,12 @@
         <Expert_mode
         @newExpertModeValues="newExpertModeValues($event)"
         :label=label
+        :expert_mode_cost_prop="waste_transport_cost_prop"
+        :expert_mode_gwp_prop="waste_transport_gwp_prop"
         :color_green="color_green"
-        :color_white="color_white"></Expert_mode>
+        :color_white="color_white"
+        ></Expert_mode>
+        
     </div>
 
 </template>
@@ -101,7 +105,8 @@
 <script>
     import Expert_mode from "./Expert_mode.vue"
     export default {
-        props: ["color_green", "color_white"],
+        props: ["waste_type_prop", "waste_size_prop", "waste_fvc_prop", "waste_coarse_prop", "waste_fine_prop", "waste_transport_cost_prop", "waste_transport_gwp_prop",
+        "color_green", "color_white"],
         emits: ["saveNewInputs"],
         components: {
             Expert_mode: Expert_mode
@@ -109,14 +114,14 @@
         data() {
             return {
                 type_options: ['Cut-Off', 'End of Life'],
-                waste_type: undefined,
-                size1dot5: false,
-                waste_fvc: 60.00,
-                waste_coarse: 5.0,
-                waste_fine: 5.0,
+                waste_type: this.waste_type_prop,
+                size1dot5: this.waste_size_prop,
+                waste_fvc: this.waste_fvc_prop,
+                waste_coarse: this.waste_coarse_prop,
+                waste_fine: this.waste_fine_prop,
 
-                transport_cost: undefined,
-                transport_gwp: undefined,
+                transport_cost: this.waste_transport_cost_prop,
+                transport_gwp: this.waste_transport_gwp_prop,
 
                 label: "Consider Transportation"
             }

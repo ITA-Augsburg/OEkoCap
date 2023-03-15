@@ -14,8 +14,10 @@
 
 <script>
 export default {
-    props: ["color_green"],
-    emits: ["clearAppInput", "updateInputFooter"],
+    props: ["waste_type_prop", "waste_size_prop", "waste_fvc_prop", "waste_coarse_prop", "waste_fine_prop", "waste_transport_cost_prop", "waste_transport_gwp_prop",
+    "button2enabled", "button3enabled", "button4enabled", "button5enabled",
+    "progressValue", "color_green"],
+    emits: ["clearAppInput", "updateInputFooter", "saveNewInputs"],
     data: () => ({
     }),
     methods: {

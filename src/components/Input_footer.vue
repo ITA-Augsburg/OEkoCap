@@ -49,15 +49,18 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">1</p></v-btn>
-                <v-btn
-                v-if="this.id !== 'waste'"
-                icon=""
-                :color=color_lightgrey
-                @click="oneButton()"
-                elevation="12"
-                width="45px"
-                height="45px"
-                ><p class="footer_button_text">1</p></v-btn>
+                <router-link
+                :to='{name: "WasteView"}'
+                v-if="this.id !== 'waste'">
+                    <v-btn
+                    icon=""
+                    :color=color_lightgrey
+                    @click="oneButton()"
+                    elevation="12"
+                    width="45px"
+                    height="45px"
+                    ><p class="footer_button_text">1</p></v-btn>
+                </router-link>
 
 <!-- BUTTON 2 -->
                 <v-btn
@@ -69,15 +72,18 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">2</p></v-btn>
-                <v-btn
-                v-if="this.id !== 'separation' && button2enabled"
-                icon=""
-                :color=color_lightgrey
-                @click="twoButton()"
-                elevation="12"
-                width="45px"
-                height="45px"
-                ><p class="footer_button_text">2</p></v-btn>
+                <router-link
+                :to='{name: "SeparationView"}'
+                v-if="this.id !== 'separation' && button2enabled">
+                    <v-btn
+                    icon=""
+                    :color=color_lightgrey
+                    @click="twoButton()"
+                    elevation="12"
+                    width="45px"
+                    height="45px"
+                    ><p class="footer_button_text">2</p></v-btn>
+                </router-link>
                 <v-btn
                 v-if="this.id !== 'separation' && !button2enabled"
                 disabled
@@ -272,11 +278,16 @@ export default {
         },
         nextButton() {
             this.$emit("updateInputFooter", undefined)
+            // console.log(this.button2enabled)
             switch(this.id) {
+                //mandatory fields are checked in app.vue->saveNewInputs()
+                //if user clicks next-button and non-mandatory fields are still undefined, they get their default value here in setDefaultValues()
                 case "waste":
-                    this.nextButtonRoute = {name:"SeparationView"}
-                    //check mandatory values
-                    //set default values if needed
+                    if(this.button2enabled) {
+                        this.nextButtonRoute = {name:"SeparationView"}
+                    } else {
+                        alert("Please choose a type before continuing.")
+                    }
                     break
                 case "separation":
                     this.nextButtonRoute = {name:"MatrixView"}
@@ -299,6 +310,9 @@ export default {
                 case "results":
                     this.nextButtonRoute = {name: "ResultsView"}
             }
+        },
+        updateInputFooter() {
+            
         }
     }
 };

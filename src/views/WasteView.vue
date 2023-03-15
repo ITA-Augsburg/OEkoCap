@@ -10,23 +10,35 @@
     <Input_waste
     :color_green="color_green"
     :color_white="color_white"
+
+    :waste_type_prop=waste_type_prop
+    :waste_size_prop=waste_size_prop
+    :waste_fvc_prop=waste_fvc_prop
+    :waste_coarse_prop=waste_coarse_prop
+    :waste_fine_prop=waste_fine_prop
+    :waste_transport_cost_prop=waste_transport_cost_prop
+    :waste_transport_gwp_prop=waste_transport_gwp_prop
+
     @saveNewInputs="saveNewInputs($event)"></Input_waste>
     <Input_footer
     :id=id
     :progressValue=progressValue
     :color_green=color_green
     :color_lightgrey=color_lightgrey
+
     :button2enabled=button2enabled
     :button3enabled=button3enabled
     :button4enabled=button4enabled
     :button5enabled=button5enabled
+    
     @updateInputFooter="updateInputFooter()"></Input_footer>
     
 </template>
 
 <script>
 export default {
-    props: ["button2enabled", "button3enabled", "button4enabled", "button5enabled",
+    props: ["waste_type_prop", "waste_size_prop", "waste_fvc_prop", "waste_coarse_prop", "waste_fine_prop", "waste_transport_cost_prop", "waste_transport_gwp_prop",
+    "button2enabled", "button3enabled", "button4enabled", "button5enabled",
     "progressValue", "subheader_waste", "color_green", "color_white", "color_lightgrey"],
     emits: ["clearAppInput", "updateInputFooter", "saveNewInputs"],
     data: () => ({
@@ -40,7 +52,7 @@ export default {
             // console.log("hi from wasteView")
             // console.log(new_values)
             this.$emit("saveNewInputs", new_values)
-        }
+        },
     }
 };
 </script>

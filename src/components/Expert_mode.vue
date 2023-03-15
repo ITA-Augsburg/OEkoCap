@@ -2,9 +2,10 @@
 
     <v-switch
     class="switch"
-    :label= label
     inset
+    :label= label
     :color=color_green
+    v-model="switchState"
     @click="showHideExpertMode()"
     ></v-switch>
 
@@ -24,7 +25,7 @@
     v-model=expert_mode_gwp
     @update:model-value="propagateNewValues()"
     class="textfield co2_textfield"
-    label="kg CO2-äq./kg"
+    label="kg CO2-eq./kg"
     variant="solo"
     :bg-color=color_green
     :color=color_white
@@ -35,13 +36,18 @@
 <script>
 
     export default {
-        props: ["label", "color_green", "color_white"],
+        props: ["expert_mode_cost_prop", "expert_mode_gwp_prop", "label", "color_green", "color_white"],
         emits: ["newExpertModeValues"],
+        mounted() {
+            if(this.expert_mode_cost_prop !== undefined || this.expert_mode_gwp_prop !== undefined) {
+                this.switchState = true
+            }
+        },
         data() {
             return {
                 switchState: false,
-                expert_mode_cost: undefined,
-                expert_mode_gwp: undefined,
+                expert_mode_cost: this.expert_mode_cost_prop,
+                expert_mode_gwp: this.expert_mode_gwp_prop,
             }
         },
         methods: {
@@ -55,9 +61,56 @@
                 }
             },
             propagateNewValues() {
+                //Das Monster
+                //transport-cost and -gwp values are only propagated (and saved in App.vue->app_input) if they're numbers.
                 // console.log("propagated")
-                // console.log(this.transporexpert_mode_cost + " " + this.expert_mode_gwp)
-                this.$emit("newExpertModeValues", [this.expert_mode_cost, this.expert_mode_gwp])
+                // console.log(this.expert_mode_cost + " " + this.expert_mode_gwp)
+                if(this.expert_mode_cost === undefined && this.expert_mode_gwp === undefined) {
+                    this.$emit("newExpertModeValues", [this.expert_mode_cost, this.expert_mode_gwp])
+                } else if(this.expert_mode_cost === undefined && this.expert_mode_gwp !== undefined) {
+                    if(isNaN(parseFloat(String(this.expert_mode_gwp).replaceAll(",", ".")))) {
+                        if(this.expert_mode_gwp !== "") {
+                            alert("Please enter a number for 'kg CO2-eq./kg'.")
+                        }
+                        this.expert_mode_gwp = undefined
+                        this.propagateNewValues()
+                    } else {
+                        this.$emit("newExpertModeValues", [this.expert_mode_cost, parseFloat(String(this.expert_mode_gwp).replaceAll(",", "."))])
+                    }
+                } else if(this.expert_mode_cost !== undefined && this.expert_mode_gwp === undefined) {
+                    if(isNaN(parseFloat(String(this.expert_mode_cost).replaceAll(",", ".")))) {
+                        if(this.expert_mode_cost !== "") {
+                            alert("Please enter a number for '€/kg'.")
+                        }
+                        this.expert_mode_cost = undefined
+                        this.propagateNewValues()
+                    } else {
+                        this.$emit("newExpertModeValues", [parseFloat(String(this.expert_mode_cost).replaceAll(",", ".")), this.expert_mode_gwp])
+                    }
+                } else {
+                    if(isNaN(parseFloat(String(this.expert_mode_cost).replaceAll(",", "."))) && isNaN(parseFloat(String(this.expert_mode_gwp).replaceAll(",", ".")))) {
+                        if(this.expert_mode_cost !== "" && this.expert_mode_gwp !== "") {
+                            alert("Please enter a number for 'kg CO2-eq./kg' and '€/kg'.")
+                        }
+                        this.expert_mode_cost = undefined
+                        this.expert_mode_gwp = undefined
+                        this.propagateNewValues()
+                    } else if(isNaN(parseFloat(String(this.expert_mode_cost).replaceAll(",", "."))) && !isNaN(parseFloat(String(this.expert_mode_gwp).replaceAll(",", ".")))) {
+                        if(this.expert_mode_cost !== "") {
+                            alert("Please enter a number for '€/kg'.")
+                        }
+                        this.expert_mode_cost = undefined
+                        this.propagateNewValues()
+                    } else if(!isNaN(parseFloat(String(this.expert_mode_cost).replaceAll(",", "."))) && isNaN(parseFloat(String(this.expert_mode_gwp).replaceAll(",", ".")))) {
+                        if(this.expert_mode_gwp !== "") {
+                            alert("Please enter a number for 'kg CO2-eq./kg'.")
+                        }
+                        this.expert_mode_gwp = undefined
+                        this.propagateNewValues()
+                    } else {
+                        this.$emit("newExpertModeValues", [parseFloat(String(this.expert_mode_cost).replaceAll(",", ".")), parseFloat(String(this.expert_mode_gwp).replaceAll(",", "."))])
+                    }
+                }
             }
         }
     }
