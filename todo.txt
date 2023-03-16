@@ -1,5 +1,5 @@
 aktuelle arbeitszeit
-
+15.10 - 
 
 INFO
 waste-seite: expert mode rausgenommen weil consider transport dasselbe ist

@@ -44,7 +44,6 @@
                 v-if="this.id === 'waste'"
                 icon=""
                 :color=color_green
-                @click="oneButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
@@ -55,7 +54,6 @@
                     <v-btn
                     icon=""
                     :color=color_lightgrey
-                    @click="oneButton()"
                     elevation="12"
                     width="45px"
                     height="45px"
@@ -67,7 +65,6 @@
                 v-if="this.id === 'separation'"
                 icon=""
                 :color=color_green
-                @click="twoButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
@@ -78,7 +75,6 @@
                     <v-btn
                     icon=""
                     :color=color_lightgrey
-                    @click="twoButton()"
                     elevation="12"
                     width="45px"
                     height="45px"
@@ -89,7 +85,6 @@
                 disabled
                 icon=""
                 :color=color_lightgrey
-                @click="twoButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
@@ -100,7 +95,6 @@
                 v-if="this.id === 'matrix'"
                 icon=""
                 :color=color_green
-                @click="threeButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
@@ -109,7 +103,6 @@
                 v-if="this.id !== 'matrix' && button3enabled"
                 icon=""
                 :color=color_lightgrey
-                @click="threeButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
@@ -119,7 +112,6 @@
                 disabled
                 icon=""
                 :color=color_lightgrey
-                @click="threeButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
@@ -132,7 +124,6 @@
                     <v-btn
                     icon=""
                     :color=color_green
-                    @click="fourButton()"
                     elevation="12"
                     width="45px"
                     height="45px"
@@ -142,7 +133,6 @@
                 v-if="this.id !== 'textile' && button4enabled"
                 icon=""
                 :color=color_lightgrey
-                @click="fourButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
@@ -152,7 +142,6 @@
                 disabled
                 icon=""
                 :color=color_lightgrey
-                @click="fourButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
@@ -163,7 +152,6 @@
                 v-if="this.id === 'processing'"
                 icon=""
                 :color=color_green
-                @click="fiveButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
@@ -174,7 +162,6 @@
                     <v-btn
                     icon=""
                     :color=color_lightgrey
-                    @click="fiveButton()"
                     elevation="12"
                     width="45px"
                     height="45px"
@@ -185,7 +172,6 @@
                 disabled
                 icon=""
                 :color=color_lightgrey
-                @click="fiveButton()"
                 elevation="12"
                 width="45px"
                 height="45px"
@@ -261,21 +247,6 @@ export default {
                     break
             }
         },
-        oneButton() {
-            
-        },
-        twoButton() {
-            
-        },
-        threeButton() {
-            
-        },
-        fourButton() {
-            
-        },
-        fiveButton() {
-            
-        },
         nextButton() {
             this.$emit("updateInputFooter", undefined)
             // console.log(this.button2enabled)
@@ -311,9 +282,6 @@ export default {
                     this.nextButtonRoute = {name: "ResultsView"}
             }
         },
-        updateInputFooter() {
-            
-        }
     }
 };
 </script>

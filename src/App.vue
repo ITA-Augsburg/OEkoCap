@@ -141,19 +141,19 @@ export default {
     updateInputFooter() {
       if(this.app_input.processing_1.type !== undefined &&
       this.app_input.processing_1.wandstärke_mm !== undefined) {
-        this.footerProgressBar = 80
+        this.footerProgressBar = 99
       } else if(this.app_input.textile_process.throughput_kg_per_h !== undefined &&
       this.app_input.textile_process.areal_weight_g_per_sqm !== undefined ) {
-        this.footerProgressBar = 60
+        this.footerProgressBar = 80
         this.button5enabled = true
       } else if(this.app_input.polymer.matrix_type !== undefined) {
-        this.footerProgressBar = 40
+        this.footerProgressBar = 60
         this.button4enabled = true
       } else if(this.app_input.separation.type !== undefined) {
-        this.footerProgressBar = 20
+        this.footerProgressBar = 40
         this.button3enabled = true
-      } else {
-        this.footerProgressBar = 0
+      } else if(this.app_input.waste.type !== undefined) {
+        this.footerProgressBar = 20
       }
     },
     clearAppInput() {
