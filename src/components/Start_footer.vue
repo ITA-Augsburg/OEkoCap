@@ -12,7 +12,14 @@
                 
             </div>
 
-            <p class="footer_copyright_text">© 2023 <u>ITA Augsburg</u></p>
+            <p class="footer_copyright_text">© 2023 
+                <a
+                class="footer_copyright_link"
+                href="https://ita-augsburg.com/"
+                target="_blank">
+                    ITA Augsburg
+                </a>
+            </p>
 
         </div>
     </div>

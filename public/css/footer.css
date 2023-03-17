@@ -39,6 +39,12 @@
     margin: 10px 0px;
     color: var(--color-grey);
 }
+.footer_copyright_link:visited {
+    color: var(--color-grey);
+}
+.footer_copyright_link:hover {
+    color: var(--color-green);
+}
 
 .sponsor_container {
     display: flex;
