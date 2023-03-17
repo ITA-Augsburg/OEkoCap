@@ -92,10 +92,10 @@
         <Expert_mode
         @newExpertModeValues="newExpertModeValues($event)"
         :label=label
-        :expert_mode_cost_prop="waste_transport_cost_prop"
-        :expert_mode_gwp_prop="waste_transport_gwp_prop"
-        :color_green="color_green"
-        :color_white="color_white"
+        :expert_mode_cost_prop=waste_transport_cost_prop
+        :expert_mode_gwp_prop=waste_transport_gwp_prop
+        :color_green=color_green
+        :color_white=color_white
         ></Expert_mode>
         
     </div>

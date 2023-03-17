@@ -8,8 +8,8 @@
     <Input_subheader
     :text_3="subheader_textile"></Input_subheader>
     <Input_textile
-    :color_green="color_green"
-    :color_white="color_white"></Input_textile>
+    :color_green=color_green
+    :color_white=color_white></Input_textile>
     <Input_footer
     :id=id
     :progressValue=progressValue
@@ -26,6 +26,8 @@
 export default {
     props: ["waste_type_prop", "waste_size_prop", "waste_fvc_prop", "waste_coarse_prop", "waste_fine_prop", "waste_transport_cost_prop", "waste_transport_gwp_prop",
     "sep_type_prop", "sep_cost_prop", "sep_gwp_prop",
+    "matrix_thermo_type_prop", "matrix_polymer_prop", "matrix_fvc_prop", "matrix_insertion_prop", "matrix_cost_prop", "matrix_gwp_prop",
+
     "button2enabled", "button3enabled", "button4enabled", "button5enabled",
     "progressValue", "subheader_textile", "color_green", "color_white", "color_lightgrey"],
     emits: ["clearAppInput", "updateInputFooter", "saveNewInputs"],

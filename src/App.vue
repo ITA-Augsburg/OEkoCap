@@ -25,6 +25,13 @@
     :sep_cost_prop=this.app_input.separation.euro_per_kg
     :sep_gwp_prop=this.app_input.separation.co2_equv_per_kg
 
+    :matrix_thermo_type_prop=this.app_input.polymer.thermo_type
+    :matrix_polymer_prop=this.app_input.polymer.matrix_type
+    :matrix_fvc_prop=this.app_input.polymer.fvc_percent
+    :matrix_insertion_prop=this.matrixInsertionCheckbox
+    :matrix_cost_prop=this.app_input.polymer.euro_per_kg
+    :matrix_gwp_prop=this.app_input.polymer.co2_equv_per_kg
+
     @clearAppInput="clearAppInput()"
     @updateInputFooter="updateInputFooter()"
     @saveNewInputs="saveNewInputs($event)"/>
@@ -45,6 +52,8 @@ export default {
     button4enabled: false,
     button5enabled: false,
     footerProgressBar: 0,
+
+    matrixInsertionCheckbox: false,
 
     //default values are set here, these are passed to and visualized in child-components
     app_input: {
@@ -78,9 +87,9 @@ export default {
       "polymer": {
         "thermo_type": undefined,
         "matrix_type": undefined,
-        "fvc_percent": undefined,
-        "feedstock_type": undefined,
-        "state_of_origin": undefined,
+        "fvc_percent": 25,
+        "feedstock_type": "fossilbased",
+        "state_of_origin": "virgin",
         "euro_per_kg": undefined,
         "co2_equv_per_kg": undefined
       },
@@ -149,7 +158,22 @@ export default {
         if(this.app_input.separation.type !== undefined) {
           this.button3enabled = true
         }
-        this.logSep()
+        // this.logSep()
+
+      } else if(Object.prototype.hasOwnProperty.call(new_values, "matrix_type")) {
+        this.app_input.polymer.thermo_type = new_values.matrix_type
+        this.app_input.polymer.matrix_type = new_values.matrix_polymer
+        this.app_input.polymer.fvc_percent = new_values.matrix_fvc
+        this.matrixInsertionCheckbox = new_values.matrix_insertion
+        this.app_input.polymer.euro_per_kg = new_values.matrix_cost
+        this.app_input.polymer.co2_equv_per_kg = new_values.matrix_gwp
+
+        //unlock footer-button-4 if mandatory inputs for MatrixView given
+        if(this.app_input.polymer.thermo_type !== undefined && 
+        this.app_input.polymer.matrix_type !== undefined) {
+          this.button4enabled = true
+        }
+        // this.logMatrix()
 
       }
     },
@@ -160,10 +184,8 @@ export default {
       } else if(this.app_input.textile_process.throughput_kg_per_h !== undefined &&
       this.app_input.textile_process.areal_weight_g_per_sqm !== undefined ) {
         this.footerProgressBar = 80
-        this.button5enabled = true
       } else if(this.app_input.polymer.matrix_type !== undefined) {
         this.footerProgressBar = 60
-        this.button4enabled = true
       } else if(this.app_input.separation.type !== undefined) {
         this.footerProgressBar = 40
       } else if(this.app_input.waste.type !== undefined) {
@@ -257,24 +279,34 @@ export default {
     },
     logWaste() {
       console.log(
-          this.app_input.waste.type,
-          this.app_input.waste.size_bigger_1dot5_m,
-          this.app_input.waste.fvc_percent,
-          this.app_input.shredding_1.type,
-          this.app_input.shredding_1.mass_loss_percent,
-          this.app_input.shredding_2.type,
-          this.app_input.shredding_2.mass_loss_percent,
-          this.app_input.transport.euro_per_kg,
-          this.app_input.transport.co2_equv_per_kg
-        )
+        this.app_input.waste.type,
+        this.app_input.waste.size_bigger_1dot5_m,
+        this.app_input.waste.fvc_percent,
+        this.app_input.shredding_1.type,
+        this.app_input.shredding_1.mass_loss_percent,
+        this.app_input.shredding_2.type,
+        this.app_input.shredding_2.mass_loss_percent,
+        this.app_input.transport.euro_per_kg,
+        this.app_input.transport.co2_equv_per_kg
+      )
     },
     logSep() {
       console.log(
-          this.app_input.separation.type,
-          this.app_input.separation.euro_per_kg,
-          this.app_input.separation.co2_equv_per_kg
-        )
+        this.app_input.separation.type,
+        this.app_input.separation.euro_per_kg,
+        this.app_input.separation.co2_equv_per_kg
+      )
     },
+    logMatrix() {
+      console.log(
+        this.app_input.polymer.thermo_type,
+        this.app_input.polymer.matrix_type,
+        this.app_input.polymer.fvc_percent,
+        this.matrixInsertionCheckbox,
+        this.app_input.polymer.euro_per_kg,
+        this.app_input.polymer.co2_equv_per_kg
+      )
+    }
   },
 };
 </script>

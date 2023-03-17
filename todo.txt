@@ -3,10 +3,14 @@ aktuelle arbeitszeit
 
 wenn nutzer per url nicht auf der ersten seite landet dann auf erste seite switchen (heisst, in jeder view prüfen ob vorherige eingaben schon getätigt)
 
-INFO
+BUGS
+slider ergeben werte mit 6 nachkommastellen wenn man die pfeiltasten drückt
+
+INFO/FRAGEN
 waste-seite: expert mode rausgenommen weil consider transport dasselbe ist
-slider sind komisch wenn man die pfeiltasten drückt
-expert-mode-input type-check noch nicht gemacht (und auch sonst nirgendwo)
+was ist der defaultwert bei polymer->feedstock_type?
+
+TODO
 
 waste -> separation -> matrix -> textile -> processing
 error, waiting, results
@@ -81,18 +85,9 @@ MATRIX
 		mass loss: wählbar
 		wall th.: 0.5 / 1 / 2
 
+---
 
-TODO
-
--processing method of insertion umbenennen
-	neue bezeichnung?
-		so lassen
--results
-	benchmarkprocesse?
-	balkendiagramm package suchen
-		erst später
-
-
+SPÄTER
 
 wenn recycling.exe fehler, keine json zurückgibt, dann die ganze prozesskette loggen, wie es zum Fehler gekommen ist.
 
@@ -106,13 +101,7 @@ output_page_content.js:
 
 dokumentation wie? testen wie?
 
----
-
-SPÄTER
-
 output_page_content.js: createPdfContent(...) -> pdf-Datei mit Daten füllen
-
-wenn eingabe zwingend erforderlich, das mit einem stern signalisieren zB.: Type*
 
 dark mode?
 
@@ -120,20 +109,5 @@ Mit allen möglichen Eingaben die recycling.exe aufrufen, schauen ob ich die Tex
 Prepreg Production vielleicht mit kleinem p in createHTML Zeile 162
 
 für displays größer als fhd anpassen
-
----
-
-FRAGEN
-
-Soll das Formular die einzige Möglichkeit sein den Output runterladen zu können? Wenn ja, welche Daten sollen erhoben werden und welche optional?
-
-Wie sollen tooltips markiert werden? (kleines "?" neben dem Text oder Text gepunktet unterstrichen?)
-
-Auf wie viele Nachkommastellen sollen die Ausgaben gerundet werden? (bei default sind es 10+ Nks.)
-
-Masstab für flextural strength mpa? (wie co2/kg)
-tensileModulus_GPa
-flexuralModulus_GPa
-tensileStrength_MPa
 
 ---
