@@ -47,7 +47,7 @@
     .header_textcontainer {
         position: absolute;
         top: 28px;
-        left: calc(100vw - 340px);
+        left: calc(100vw - 300px);
         display: flex;
         flex-wrap: nowrap;
     }

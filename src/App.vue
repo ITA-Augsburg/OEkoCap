@@ -32,6 +32,13 @@
     :matrix_cost_prop=this.app_input.polymer.euro_per_kg
     :matrix_gwp_prop=this.app_input.polymer.co2_equv_per_kg
 
+    :textile_type_prop=this.app_input.textile_process.type
+    :textile_ml_prop=this.app_input.textile_process.mass_loss_percent
+    :textile_tp_prop=this.app_input.textile_process.throughput_kg_per_h
+    :textile_aw_prop=this.app_input.textile_process.areal_weight_g_per_sqm
+    :textile_cost_prop=this.app_input.textile_process.euro_per_kg
+    :textile_gwp_prop=this.app_input.textile_process.co2_equv_per_kg
+
     @clearAppInput="clearAppInput()"
     @updateInputFooter="updateInputFooter()"
     @saveNewInputs="saveNewInputs($event)"/>
@@ -175,6 +182,28 @@ export default {
         }
         // this.logMatrix()
 
+      } else if(Object.prototype.hasOwnProperty.call(new_values, "textile_type")) {
+        this.app_input.textile_process.type = new_values.textile_type
+        this.app_input.textile_process.mass_loss_percent = new_values.textile_ml
+        this.app_input.textile_process.throughput_kg_per_h = new_values.textile_tp
+        this.app_input.textile_process.areal_weight_g_per_sqm = new_values.textile_aw
+        this.app_input.textile_process.euro_per_kg = new_values.textile_cost
+        this.app_input.textile_process.co2_equv_per_kg = new_values.textile_gwp
+
+        //unlock footer-button-5 if mandatory inputs for TextileView given
+        if(this.app_input.textile_process.type !== undefined &&
+        this.app_input.textile_process.throughput_kg_per_h !== undefined &&
+        this.app_input.textile_process.areal_weight_g_per_sqm !== undefined) {
+          this.button5enabled = true
+        }
+
+        //lock footer-button-5 if mandatory inputs for TextileView switch back to undefined
+        if(this.app_input.textile_process.type === undefined ||
+        this.app_input.textile_process.throughput_kg_per_h === undefined ||
+        this.app_input.textile_process.areal_weight_g_per_sqm === undefined) {
+          this.button5enabled = false
+        }
+        // this.logTextile()
       }
     },
     updateInputFooter() {
@@ -305,6 +334,16 @@ export default {
         this.matrixInsertionCheckbox,
         this.app_input.polymer.euro_per_kg,
         this.app_input.polymer.co2_equv_per_kg
+      )
+    },
+    logTextile() {
+      console.log(
+        this.app_input.textile_process.type,
+        this.app_input.textile_process.mass_loss_percent,
+        this.app_input.textile_process.throughput_kg_per_h,
+        this.app_input.textile_process.areal_weight_g_per_sqm,
+        this.app_input.textile_process.euro_per_kg,
+        this.app_input.textile_process.co2_equv_per_kg
       )
     }
   },

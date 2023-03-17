@@ -4,7 +4,7 @@
 
         <v-select
         v-model=textile_type
-        v-on:update:model-value="updateTextileRoute()"
+        v-on:update:model-value="[updateTextileRoute(), saveNewInputs()]"
         class="select textile_type_select"
         label="Type"
         :items=type_options
@@ -25,6 +25,7 @@
         <v-slider
         v-if="textile_type !== undefined"
         v-model=textile_ml
+        v-on:update:model-value="saveNewInputs()"
         class="slider"
         :color=color_green
         :thumb-color=color_green
@@ -37,6 +38,7 @@
 
         <v-select
         v-model=textile_tp
+        v-on:update:model-value="saveNewInputs()"
         class="select textile_throughput_select"
         label="Throughput"
         :items=throughput_options
@@ -47,6 +49,7 @@
 
         <v-select
         v-model=textile_aw
+        v-on:update:model-value="saveNewInputs()"
         class="select textile_aw_select"
         label="Areal weight"
         :items=aw_options
@@ -59,7 +62,9 @@
         @newExpertModeValues="newExpertModeValues($event)"
         :label=label
         :color_green="color_green"
-        :color_white="color_white"></Expert_mode>
+        :color_white="color_white"
+        :expert_mode_cost_prop=textile_cost_prop
+        :expert_mode_gwp_prop=textile_gwp_prop></Expert_mode>
 
     </div>
 
@@ -68,7 +73,9 @@
 <script>
     import Expert_mode from "./Expert_mode.vue"
     export default {
-        props: ["color_green", "color_white"],
+        props: ["textile_type_prop", "textile_ml_prop", "textile_tp_prop", "textile_aw_prop", "textile_cost_prop", "textile_gwp_prop",
+        "color_green", "color_white"],
+        emits: ["saveNewInputs"],
         components: {
             Expert_mode: Expert_mode
         },
@@ -79,16 +86,31 @@
                 throughput_options: [""],
                 aw_options: [""],
 
-                textile_type: undefined,
-                textile_ml: undefined,
-                textile_tp: undefined,
-                textile_aw: undefined,
+                textile_type: this.textile_type_prop,
+                textile_ml: this.textile_ml_prop,
+                textile_tp: this.textile_tp_prop,
+                textile_aw: this.textile_aw_prop,
 
-                expert_mode_cost: undefined,
-                expert_mode_gwp: undefined,
+                expert_mode_cost: this.textile_cost_prop,
+                expert_mode_gwp: this.textile_gwp_prop,
 
                 label: "Expert mode"
             }
+        },
+        mounted() {
+            if(this.textile_type === "Dry-laid") {
+                    this.ml_options = [5, 15, 5]
+                    this.throughput_options = [20, 40, 60]
+                    this.aw_options = [100, 250, 500, 1000]
+                } else if(this.textile_type === "Air-laid") {
+                    this.ml_options = [5, 15, 5]
+                    this.throughput_options = [120]
+                    this.aw_options = [300, 500, 800]
+                } else if(this.textile_type === "Wet-laid") {
+                    this.ml_options = [2, 5, 3]
+                    this.throughput_options = [30, 59, 119]
+                    this.aw_options = [50, 100, 200]
+                }
         },
         methods: {
             updateTextileRoute() {
@@ -97,22 +119,58 @@
                     this.throughput_options = [20, 40, 60]
                     this.aw_options = [100, 250, 500, 1000]
                     this.textile_ml = 5
+                    this.textile_tp = undefined
+                    this.textile_aw = undefined
                 } else if(this.textile_type === "Air-laid") {
                     this.ml_options = [5, 15, 5]
                     this.throughput_options = [120]
                     this.aw_options = [300, 500, 800]
                     this.textile_ml = 5
+                    this.textile_tp = undefined
+                    this.textile_aw = undefined
                 } else if(this.textile_type === "Wet-laid") {
                     this.ml_options = [2, 5, 3]
                     this.throughput_options = [30, 59, 119]
                     this.aw_options = [50, 100, 200]
-                    this.textile_ml = 2
+                    this.textile_ml = 5
+                    this.textile_tp = undefined
+                    this.textile_aw = undefined
                 }
             },
             newExpertModeValues(new_values) {
                 this.expert_mode_cost = new_values[0]
                 this.expert_mode_gwp = new_values[1]
-                this.log()
+                //setTimeout needed to properly update slider values
+                setTimeout(() => {
+                    // this.log()
+                    this.$emit(
+                        "saveNewInputs",
+                    {
+                        textile_type: this.textile_type,
+                        textile_ml: this.textile_ml,
+                        textile_tp: this.textile_tp,
+                        textile_aw: this.textile_aw,
+                        textile_cost: this.expert_mode_cost,
+                        textile_gwp: this.expert_mode_gwp
+                    })
+                }, 20);
+                // this.log()
+            },
+            saveNewInputs() {
+                //setTimeout needed to properly update slider values
+                setTimeout(() => {
+                    // this.log()
+                    this.$emit(
+                        "saveNewInputs",
+                    {
+                        textile_type: this.textile_type,
+                        textile_ml: this.textile_ml,
+                        textile_tp: this.textile_tp,
+                        textile_aw: this.textile_aw,
+                        textile_cost: this.expert_mode_cost,
+                        textile_gwp: this.expert_mode_gwp
+                    })
+                }, 20);
             },
             log() {
                 console.log("textile_type:" + this.textile_type)

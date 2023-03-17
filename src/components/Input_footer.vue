@@ -278,8 +278,11 @@ export default {
                     }
                     break
                 case "textile":
-                    alert("input_footer->nextButton TODO")
-                    // this.nextButtonRoute = {name:"ProcessingView"}
+                    if(this.button5enabled) {
+                        this.nextButtonRoute = {name:"ProcessingView"}
+                    } else {
+                        alert("Please choose a type, throughput and areal weight before continuing.")
+                    }
                     break
                 case "processing":
                     this.nextButtonRoute = {name:"ProcessingView"}

@@ -12,17 +12,17 @@
       <router-link
       :to='{name: "StartView"}'
       class="header_text">
-        <p >Calculator</p>
+        <p>Calculator</p>
       </router-link>
       <router-link
       :to='{name: "StartView"}'
       class="header_text">
-        <p class="header_text">Guideline</p>
+        <p>Guideline</p>
       </router-link>
       <router-link
       :to='{name: "StartView"}'
       class="header_text">
-        <p class="header_text">Project</p>
+        <p>Project</p>
       </router-link>
     </p>
   </div>

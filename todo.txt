@@ -1,5 +1,6 @@
 aktuelle arbeitszeit
-
+17.35 - 18.10 -> 00.35
+18.40 - 
 
 wenn nutzer per url nicht auf der ersten seite landet dann auf erste seite switchen (heisst, in jeder view prüfen ob vorherige eingaben schon getätigt)
 
