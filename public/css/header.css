@@ -17,12 +17,16 @@
     position: absolute;
     top: 28px;
     left: calc(50vw + 250px);
+    display: flex;
+    flex-wrap: nowrap;
     color: var(--color-white);
     font-size: 20px;
 }
 
 .header_text {
-    padding: 0px 10px;
+    color: #F2F2F2;
+    text-decoration: none;
+    margin: 0px 10px;
 }
 
 @media (max-width: 1215px) {
@@ -43,10 +47,15 @@
     .header_textcontainer {
         position: absolute;
         top: 28px;
-        left: calc(100vw - 300px);
+        left: calc(100vw - 340px);
+        display: flex;
+        flex-wrap: nowrap;
     }
     
     .header_text {
-        padding: 0px 10px;
+        color: #F2F2F2;
+        text-decoration: none;
+        width: fit-content;
+        margin: 0px 10px;
     }
 }
