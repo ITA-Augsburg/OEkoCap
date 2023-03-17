@@ -21,6 +21,10 @@
     :waste_transport_cost_prop=this.app_input.transport.euro_per_kg
     :waste_transport_gwp_prop=this.app_input.transport.co2_equv_per_kg
 
+    :sep_type_prop=this.app_input.separation.type
+    :sep_cost_prop=this.app_input.separation.euro_per_kg
+    :sep_gwp_prop=this.app_input.separation.co2_equv_per_kg
+
     @clearAppInput="clearAppInput()"
     @updateInputFooter="updateInputFooter()"
     @saveNewInputs="saveNewInputs($event)"/>
@@ -134,9 +138,20 @@ export default {
         if(this.app_input.waste.type !== undefined) {
           this.button2enabled = true
         }
+        // this.logWaste()
 
-        this.logWaste()
-      } //else if(Object.prototype.hasOwnProperty.call(new_values, "todo"))
+      } else if(Object.prototype.hasOwnProperty.call(new_values, "sep_type")) {
+        this.app_input.separation.type = new_values.sep_type
+        this.app_input.separation.euro_per_kg = new_values.sep_cost
+        this.app_input.separation.co2_equv_per_kg = new_values.sep_gwp
+
+        //unlock footer-button-3 if mandatory inputs for SeparationView given
+        if(this.app_input.separation.type !== undefined) {
+          this.button3enabled = true
+        }
+        this.logSep()
+
+      }
     },
     updateInputFooter() {
       if(this.app_input.processing_1.type !== undefined &&
@@ -151,7 +166,6 @@ export default {
         this.button4enabled = true
       } else if(this.app_input.separation.type !== undefined) {
         this.footerProgressBar = 40
-        this.button3enabled = true
       } else if(this.app_input.waste.type !== undefined) {
         this.footerProgressBar = 20
       }
@@ -252,6 +266,13 @@ export default {
           this.app_input.shredding_2.mass_loss_percent,
           this.app_input.transport.euro_per_kg,
           this.app_input.transport.co2_equv_per_kg
+        )
+    },
+    logSep() {
+      console.log(
+          this.app_input.separation.type,
+          this.app_input.separation.euro_per_kg,
+          this.app_input.separation.co2_equv_per_kg
         )
     },
   },

@@ -1,5 +1,7 @@
 aktuelle arbeitszeit
-15.10 - 
+
+
+wenn nutzer per url nicht auf der ersten seite landet dann auf erste seite switchen (heisst, in jeder view prüfen ob vorherige eingaben schon getätigt)
 
 INFO
 waste-seite: expert mode rausgenommen weil consider transport dasselbe ist

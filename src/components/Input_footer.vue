@@ -99,14 +99,17 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">3</p></v-btn>
-                <v-btn
-                v-if="this.id !== 'matrix' && button3enabled"
-                icon=""
-                :color=color_lightgrey
-                elevation="12"
-                width="45px"
-                height="45px"
-                ><p class="footer_button_text">3</p></v-btn>
+                <router-link
+                :to='{name: "MatrixView"}'
+                v-if="this.id !== 'matrix' && button3enabled">
+                    <v-btn
+                    icon=""
+                    :color=color_lightgrey
+                    elevation="12"
+                    width="45px"
+                    height="45px"
+                    ><p class="footer_button_text">3</p></v-btn>
+                </router-link>
                 <v-btn
                 v-if="this.id !== 'matrix' && !button3enabled"
                 disabled

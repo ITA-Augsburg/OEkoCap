@@ -9,12 +9,19 @@
     :text_3="subheader_separation"></Input_subheader>
     <Input_separation
     :color_green="color_green"
-    :color_white="color_white"></Input_separation>
+    :color_white="color_white"
+
+    :sep_type_prop=sep_type_prop
+    :sep_cost_prop=sep_cost_prop
+    :sep_gwp_prop=sep_gwp_prop
+    @saveNewInputs="saveNewInputs($event)"></Input_separation>
     <Input_footer
     :id=id
+
     :progressValue=progressValue
     :color_green=color_green
     :color_lightgrey=color_lightgrey
+
     :button2enabled=button2enabled
     :button3enabled=button3enabled
     :button4enabled=button4enabled
@@ -25,6 +32,7 @@
 <script>
 export default {
     props: ["waste_type_prop", "waste_size_prop", "waste_fvc_prop", "waste_coarse_prop", "waste_fine_prop", "waste_transport_cost_prop", "waste_transport_gwp_prop",
+    "sep_type_prop", "sep_cost_prop", "sep_gwp_prop",
     "button2enabled", "button3enabled", "button4enabled", "button5enabled",
     "progressValue", "subheader_separation", "color_green", "color_white", "color_lightgrey"],
     emits: ["clearAppInput", "updateInputFooter", "saveNewInputs"],
@@ -34,6 +42,9 @@ export default {
     methods: {
         updateInputFooter() {
             this.$emit("updateInputFooter", undefined)
+        },
+        saveNewInputs(new_values) {
+            this.$emit("saveNewInputs", new_values)
         }
     }
 };

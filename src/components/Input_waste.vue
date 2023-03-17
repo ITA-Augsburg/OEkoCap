@@ -159,6 +159,7 @@
             },
             saveNewInputs() {
                 // console.log(this.waste_fvc)
+                //setTimeout needed to properly update slider values
                 setTimeout(() => {
                     // console.log(this.waste_fvc)
                     // this.log()
