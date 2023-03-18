@@ -144,17 +144,7 @@
             newExpertModeValues(new_values) {
                 this.transport_cost = new_values[0]
                 this.transport_gwp = new_values[1]
-                this.$emit(
-                        "saveNewInputs",
-                    {
-                        waste_type: this.waste_type,
-                        waste_size: this.size1dot5,
-                        waste_fvc: this.waste_fvc,
-                        waste_coarse: this.waste_coarse,
-                        waste_fine: this.waste_fine,
-                        transport_cost: this.transport_cost,
-                        transport_gwp: this.transport_gwp
-                    })
+                this.saveNewInputs()
                 // this.log()
             },
             saveNewInputs() {

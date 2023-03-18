@@ -49,13 +49,7 @@
             newExpertModeValues(new_values) {
                 this.expert_mode_cost = new_values[0]
                 this.expert_mode_gwp = new_values[1]
-                this.$emit(
-                        "saveNewInputs",
-                    {
-                        sep_type: this.separation_type,
-                        sep_cost: this.expert_mode_cost,
-                        sep_gwp: this.expert_mode_gwp
-                    })
+                this.saveNewInputs()
                 // this.log()
             },
             saveNewInputs() {

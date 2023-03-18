@@ -105,20 +105,7 @@
             newExpertModeValues(new_values) {
                 this.expert_mode_cost = new_values[0]
                 this.expert_mode_gwp = new_values[1]
-                //setTimeout needed to properly update slider values
-                setTimeout(() => {
-                    // this.log()
-                    this.$emit(
-                        "saveNewInputs",
-                    {
-                        matrix_type: this.matrix_type,
-                        matrix_polymer: this.matrix_polymer,
-                        matrix_fvc: this.matrix_fvc,
-                        matrix_insertion: this.matrix_insertion,
-                        matrix_cost: this.expert_mode_cost,
-                        matrix_gwp: this.expert_mode_gwp
-                    })
-                }, 20);
+                this.saveNewInputs()
                 // this.log()
             },
             saveNewInputs() {

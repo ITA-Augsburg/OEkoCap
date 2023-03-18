@@ -37,6 +37,9 @@
 export default {
     props: ["color_green"],
     emits: ["clearAppInput"],
+    mounted() {
+        this.$emit("clearAppInput", undefined)
+    },
     data: () => ({
     }),
     methods: {

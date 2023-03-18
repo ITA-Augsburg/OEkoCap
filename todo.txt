@@ -1,15 +1,22 @@
 aktuelle arbeitszeit
-17.35 - 18.10 -> 00.35
-18.40 - 
 
-wenn nutzer per url nicht auf der ersten seite landet dann auf erste seite switchen (heisst, in jeder view prüfen ob vorherige eingaben schon getätigt)
 
 BUGS
 slider ergeben werte mit 6 nachkommastellen wenn man die pfeiltasten drückt
+wenn auf seite 3 zurückgesprungen, gibt es keine polymer-optionen
+wenn auf seite 3 zurückgesprungen und neuer type gewählt -> polymer wird undefined in der anzeige aber man kenn trotzdem auf die nächste seite kommen
+wenn nutzer per url nicht auf der ersten seite landet dann auf erste seite switchen (heisst, in jeder view prüfen ob vorherige eingaben schon getätigt)
+calculate-button disabled ist nicht sichtbar genug
 
 INFO/FRAGEN
 waste-seite: expert mode rausgenommen weil consider transport dasselbe ist
 was ist der defaultwert bei polymer->feedstock_type?
+sollen sowohl type als auch subtype einen mass-loss-slider haben, wenn process zweistufig?
+sollen sowohl type als auch subtype einen wall-thickness-select haben, wenn process zweistufig?
+sollen sowohl prozess und subprozess eine eigene expert-mode eingabe haben? (in der input-json gibt es expert-mode felder für proc1 und proc2)
+wenn matrix-thermotype thermoset, welche auswahl gibt es bei processing-subtype bzw soll processing-subtype angezeigt werden?
+ich brauche die genaue Bezeichnungen der app_input-json felder (z.B.: "Thermoplast Powder" oder "thermoplast_powder" oder "thermoplastPowder")
+
 
 TODO
 

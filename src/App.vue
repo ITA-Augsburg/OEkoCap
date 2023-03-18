@@ -12,6 +12,7 @@
     :button3enabled=button3enabled
     :button4enabled=button4enabled
     :button5enabled=button5enabled
+    :buttonCalculateEnabled=buttonCalculateEnabled
 
     :waste_type_prop=this.app_input.waste.type
     :waste_size_prop=this.app_input.waste.size_bigger_1dot5_m
@@ -39,6 +40,13 @@
     :textile_cost_prop=this.app_input.textile_process.euro_per_kg
     :textile_gwp_prop=this.app_input.textile_process.co2_equv_per_kg
 
+    :proc_1_type_prop=this.app_input.processing_1.type
+    :proc_1_ml_prop=this.app_input.processing_1.mass_loss_percent
+    :proc_1_wt_prop=this.app_input.processing_1.wandstärke_mm
+    :proc_1_cost_prop=this.app_input.processing_1.euro_per_kg
+    :proc_1_gwp_prop=this.app_input.processing_1.co2_equv_per_kg
+    :proc_2_type_prop=this.app_input.processing_2.type
+
     @clearAppInput="clearAppInput()"
     @updateInputFooter="updateInputFooter()"
     @saveNewInputs="saveNewInputs($event)"/>
@@ -58,9 +66,11 @@ export default {
     button3enabled: false,
     button4enabled: false,
     button5enabled: false,
+    buttonCalculateEnabled: false,
     footerProgressBar: 0,
 
     matrixInsertionCheckbox: false,
+    processingMethodOfInsertion: undefined,
 
     //default values are set here, these are passed to and visualized in child-components
     app_input: {
@@ -110,7 +120,7 @@ export default {
       },
       "processing_1": {
         "type": undefined,
-        "mass_loss_percent": undefined,
+        "mass_loss_percent": 10,
         "wandstärke_mm": undefined,
         "euro_per_kg": undefined,
         "co2_equv_per_kg": undefined
@@ -168,6 +178,14 @@ export default {
         // this.logSep()
 
       } else if(Object.prototype.hasOwnProperty.call(new_values, "matrix_type")) {
+        //reset processing values if matrix-type or matrix-method-of-insertion changes since processing values depend on matrix-type and matrix-method-of-insertion
+        if(new_values.matrix_type !== this.app_input.polymer.thermo_type ||
+        new_values.matrix_insertion !== this.matrixInsertionCheckbox) {
+          this.app_input.processing_1.type = undefined
+          this.app_input.processing_2.type = undefined
+          this.processingMethodOfInsertion = undefined
+        }
+
         this.app_input.polymer.thermo_type = new_values.matrix_type
         this.app_input.polymer.matrix_type = new_values.matrix_polymer
         this.app_input.polymer.fvc_percent = new_values.matrix_fvc
@@ -204,6 +222,26 @@ export default {
           this.button5enabled = false
         }
         // this.logTextile()
+
+      } else if(Object.prototype.hasOwnProperty.call(new_values, "proc_type")) {
+        this.app_input.processing_1.type = new_values.proc_type
+        this.app_input.processing_2.type = new_values.proc_subtype
+        this.app_input.processing_1.mass_loss_percent = new_values.proc_ml
+        this.app_input.processing_1.wandstärke_mm = new_values.proc_wt
+        this.processingMethodOfInsertion = new_values.proc_moi
+        this.app_input.processing_1.euro_per_kg = new_values.proc_cost
+        this.app_input.processing_1.co2_equv_per_kg = new_values.proc_gwp
+
+        //unlock calculate-button if mandatory inputs for ProcessingView given
+        //lock calculate-button if mandatory inputs for ProcessingView switch back to undefined
+        if(this.app_input.processing_1.type !== undefined &&
+        this.app_input.processing_1.wandstärke_mm !== undefined) {
+          this.buttonCalculateEnabled = true
+        } else {
+          this.buttonCalculateEnabled = false
+        }
+
+        // this.logProcessing()
       }
     },
     updateInputFooter() {
@@ -344,6 +382,21 @@ export default {
         this.app_input.textile_process.areal_weight_g_per_sqm,
         this.app_input.textile_process.euro_per_kg,
         this.app_input.textile_process.co2_equv_per_kg
+      )
+    },
+    logProcessing() {
+      console.log(
+        this.app_input.processing_1.type,
+        this.app_input.processing_2.type,
+        this.app_input.processing_1.mass_loss_percent,
+        this.app_input.processing_1.wandstärke_mm,
+        this.processingMethodOfInsertion,
+        this.app_input.processing_1.euro_per_kg,
+        this.app_input.processing_1.co2_equv_per_kg,
+        // this.app_input.processing_2.mass_loss_percent,
+        // this.app_input.processing_2.wandstärke_mm,
+        // this.app_input.processing_2.euro_per_kg,
+        // this.app_input.processing_2.co2_equv_per_kg
       )
     }
   },

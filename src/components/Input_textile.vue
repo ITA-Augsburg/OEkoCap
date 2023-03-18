@@ -140,20 +140,7 @@
             newExpertModeValues(new_values) {
                 this.expert_mode_cost = new_values[0]
                 this.expert_mode_gwp = new_values[1]
-                //setTimeout needed to properly update slider values
-                setTimeout(() => {
-                    // this.log()
-                    this.$emit(
-                        "saveNewInputs",
-                    {
-                        textile_type: this.textile_type,
-                        textile_ml: this.textile_ml,
-                        textile_tp: this.textile_tp,
-                        textile_aw: this.textile_aw,
-                        textile_cost: this.expert_mode_cost,
-                        textile_gwp: this.expert_mode_gwp
-                    })
-                }, 20);
+                this.saveNewInputs()
                 // this.log()
             },
             saveNewInputs() {
