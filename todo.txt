@@ -3,10 +3,8 @@ aktuelle arbeitszeit
 
 BUGS
 slider ergeben werte mit 6 nachkommastellen wenn man die pfeiltasten drückt
-wenn auf seite 3 zurückgesprungen, gibt es keine polymer-optionen
-wenn auf seite 3 zurückgesprungen und neuer type gewählt -> polymer wird undefined in der anzeige aber man kenn trotzdem auf die nächste seite kommen
-wenn nutzer per url nicht auf der ersten seite landet dann auf erste seite switchen (heisst, in jeder view prüfen ob vorherige eingaben schon getätigt)
-calculate-button disabled ist nicht sichtbar genug
+auf waitingView sind 2 sets von <, > buttons
+wenn auf processingView mandatory values gewählt aber dann auf next-button gedrückt dann wird progressbar=99 bzw kommt man nicht weiter auf waitingView
 
 INFO/FRAGEN
 waste-seite: expert mode rausgenommen weil consider transport dasselbe ist
@@ -19,6 +17,8 @@ ich brauche die genaue Bezeichnungen der app_input-json felder (z.B.: "Thermopla
 
 
 TODO
+
+wenn app_input sich ändert dann auch clearAppInput() ändern!
 
 waste -> separation -> matrix -> textile -> processing
 error, waiting, results

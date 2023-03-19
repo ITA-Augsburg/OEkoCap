@@ -11,6 +11,7 @@
     :color_green=color_green
     :color_white=color_white
     :color_lightgrey=color_lightgrey
+    :color_darkgreen=color_darkgreen
     :buttonCalculateEnabled=buttonCalculateEnabled
     
     :proc_1_type_prop=proc_1_type_prop
@@ -43,8 +44,14 @@ export default {
     "proc_1_type_prop", "proc_1_ml_prop", "proc_1_wt_prop", "proc_1_cost_prop", "proc_1_gwp_prop", "proc_2_type_prop",
 
     "buttonCalculateEnabled", "button2enabled", "button3enabled", "button4enabled", "button5enabled",
-    "progressValue", "subheader_processing", "color_green", "color_white", "color_lightgrey"],
+    "progressValue", "subheader_processing", "color_green", "color_white", "color_lightgrey", "color_darkgreen"],
     emits: ["clearAppInput", "updateInputFooter", "saveNewInputs"],
+    mounted() {
+        //if user enters app on *url*/processing then redirect to *url*/, otherwise app_input could have missing mandatory values
+        if(this.waste_type_prop === undefined) {
+            this.$router.push({name: "StartView"})
+        }
+    },
     data: () => ({
         id: "processing",
     }),

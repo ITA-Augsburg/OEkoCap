@@ -40,6 +40,12 @@ export default {
     "buttonCalculateEnabled", "button2enabled", "button3enabled", "button4enabled", "button5enabled",
     "progressValue", "subheader_separation", "color_green", "color_white", "color_lightgrey"],
     emits: ["clearAppInput", "updateInputFooter", "saveNewInputs"],
+    mounted() {
+        //if user enters app on *url*/separation then redirect to *url*/, otherwise app_input could have missing mandatory values
+        if(this.waste_type_prop === undefined) {
+            this.$router.push({name: "StartView"})
+        }
+    },
     data: () => ({
         id: "separation",
     }),

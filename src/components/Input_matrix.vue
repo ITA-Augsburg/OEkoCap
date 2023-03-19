@@ -75,6 +75,13 @@
         components: {
             Expert_mode: Expert_mode
         },
+        mounted() {
+            if(this.matrix_type === "Thermoplast") {
+                this.polymer_options = ["PP", "PA6", "PET", "PLA"]
+            } else if(this.matrix_type === "Thermoset") {
+                this.polymer_options = ["EP"]
+            }
+        },
         data() {
             return {
                 type_options: ["Thermoplast", "Thermoset"],

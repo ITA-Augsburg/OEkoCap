@@ -184,6 +184,7 @@ export default {
           this.app_input.processing_1.type = undefined
           this.app_input.processing_2.type = undefined
           this.processingMethodOfInsertion = undefined
+          this.buttonCalculateEnabled = false
         }
 
         this.app_input.polymer.thermo_type = new_values.matrix_type
@@ -194,9 +195,17 @@ export default {
         this.app_input.polymer.co2_equv_per_kg = new_values.matrix_gwp
 
         //unlock footer-button-4 if mandatory inputs for MatrixView given
+        //lock footer-button-4 and 5 if mandatory inputs for MatrixView switch back to undefined
         if(this.app_input.polymer.thermo_type !== undefined && 
         this.app_input.polymer.matrix_type !== undefined) {
           this.button4enabled = true
+          //also unlock footer-button-5 if user has alredy been on textileView
+          if(this.app_input.textile_process.type !== undefined) {
+            this.button5enabled = true
+          }
+        } else {
+          this.button4enabled = false
+          this.button5enabled = false
         }
         // this.logMatrix()
 
@@ -264,23 +273,23 @@ export default {
       this.app_input = {
         "waste": {
           "type": undefined,
-          "quantity_to": undefined,
-          "size_bigger_1dot5_m": undefined,
-          "fvc_percent": undefined
+          "quantity_to": 1,
+          "size_bigger_1dot5_m": false,
+          "fvc_percent": 60.00
         },
         "transport": {
           "euro_per_kg": undefined,
           "co2_equv_per_kg": undefined
         },
         "shredding_1": {
-          "type": undefined,
-          "mass_loss_percent": undefined,
+          "type": "Coarse",
+          "mass_loss_percent": 5.0,
           "euro_per_kg": undefined,
           "co2_equv_per_kg": undefined
         },
         "shredding_2": {
-          "type": undefined,
-          "mass_loss_percent": undefined,
+          "type": "Fine",
+          "mass_loss_percent": 5.0,
           "euro_per_kg": undefined,
           "co2_equv_per_kg": undefined
         },
@@ -292,9 +301,9 @@ export default {
         "polymer": {
           "thermo_type": undefined,
           "matrix_type": undefined,
-          "fvc_percent": undefined,
-          "feedstock_type": undefined,
-          "state_of_origin": undefined,
+          "fvc_percent": 25,
+          "feedstock_type": "fossilbased",
+          "state_of_origin": "virgin",
           "euro_per_kg": undefined,
           "co2_equv_per_kg": undefined
         },
@@ -308,7 +317,7 @@ export default {
         },
         "processing_1": {
           "type": undefined,
-          "mass_loss_percent": undefined,
+          "mass_loss_percent": 10,
           "wandstärke_mm": undefined,
           "euro_per_kg": undefined,
           "co2_equv_per_kg": undefined
@@ -321,6 +330,14 @@ export default {
           "co2_equv_per_kg": undefined
         }
       }
+      this.button2enabled = false
+      this.button3enabled = false
+      this.button4enabled = false
+      this.button5enabled = false
+      this.buttonCalculateEnabled = false
+      this.footerProgressBar = 0
+      this.matrixInsertionCheckbox = false
+      this.processingMethodOfInsertion = undefined
       // this.log()
     },
     setWasteCoarseProp() {

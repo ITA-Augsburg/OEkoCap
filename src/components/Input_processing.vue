@@ -95,7 +95,7 @@
                 <v-btn
                 v-if="!buttonCalculateEnabled"
                 disabled
-                :color=color_green
+                :color=color_darkgreen
                 elevation="5"
                 width="225px"
                 height="55px"
@@ -111,7 +111,7 @@
     import Expert_mode from "./Expert_mode.vue"
     export default {
         props: ["proc_1_type_prop", "proc_1_ml_prop", "proc_1_wt_prop", "proc_1_cost_prop", "proc_1_gwp_prop", "proc_2_type_prop", "matrix_thermo_type_prop", "matrix_insertion_prop",
-        "buttonCalculateEnabled", "color_green", "color_white", "color_lightgrey"],
+        "buttonCalculateEnabled", "color_green", "color_white", "color_lightgrey", "color_darkgreen"],
         emits: ["saveNewInputs"],
         components: {
             Expert_mode: Expert_mode

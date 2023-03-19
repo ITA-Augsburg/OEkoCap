@@ -14,6 +14,7 @@ const props = {
     color_lightgrey: "#F2F2F2",
     color_grey: "#4A4A4A",
     color_green: "#55CD89",
+    color_darkgreen: "#7fc79f",
 
     subheader_waste: "WASTE",
     subheader_separation: "SEPARATION",
@@ -86,7 +87,8 @@ const routes = [
             subheader_processing: props.subheader_processing,
             color_green: props.color_green,
             color_white: props.color_white,
-            color_lightgrey: props.color_lightgrey
+            color_lightgrey: props.color_lightgrey,
+            color_darkgreen: props.color_darkgreen
         }
     },
     {
