@@ -63,6 +63,7 @@
         <Expert_mode
         @newExpertModeValues="newExpertModeValues($event)"
         :label=label
+        :disabled=false
         :color_green=color_green
         :color_white=color_white
         :expert_mode_cost_prop=proc_1_cost_prop

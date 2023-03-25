@@ -18,7 +18,11 @@
     :waste_size_prop=this.app_input.waste.size_bigger_1dot5_m
     :waste_fvc_prop=this.app_input.waste.fvc_percent
     :waste_coarse_prop=setWasteCoarseProp()
+    :waste_coarse_cost_prop=setWasteCoarseCostProp()
+    :waste_coarse_gwp_prop=setWasteCoarseGwpProp()
     :waste_fine_prop=setWasteFineProp()
+    :waste_fine_cost_prop=setWasteFineCostProp()
+    :waste_fine_gwp_prop=setWasteFineGwpProp()
     :waste_transport_cost_prop=this.app_input.transport.euro_per_kg
     :waste_transport_gwp_prop=this.app_input.transport.co2_equv_per_kg
 
@@ -145,26 +149,38 @@ export default {
         if(new_values.waste_coarse === undefined) {
           this.app_input.shredding_1.type = "Fine"
           this.app_input.shredding_1.mass_loss_percent = new_values.waste_fine
+          this.app_input.shredding_1.euro_per_kg = new_values.waste_fine_cost
+          this.app_input.shredding_1.co2_equv_per_kg = new_values.waste_fine_gwp
           this.app_input.shredding_2.type = undefined
           this.app_input.shredding_2.mass_loss_percent = undefined
+          this.app_input.shredding_2.euro_per_kg = undefined
+          this.app_input.shredding_2.co2_equv_per_kg = undefined
         } else {
           this.app_input.shredding_1.type = "Coarse"
           this.app_input.shredding_1.mass_loss_percent = new_values.waste_coarse
+          this.app_input.shredding_1.euro_per_kg = new_values.waste_coarse_cost
+          this.app_input.shredding_1.co2_equv_per_kg = new_values.waste_coarse_gwp
           this.app_input.shredding_2.type = "Fine"
           this.app_input.shredding_2.mass_loss_percent = new_values.waste_fine
+          this.app_input.shredding_2.euro_per_kg = new_values.waste_fine_cost
+          this.app_input.shredding_2.co2_equv_per_kg = new_values.waste_fine_gwp
         }
         this.app_input.transport.euro_per_kg = new_values.transport_cost
         this.app_input.transport.co2_equv_per_kg = new_values.transport_gwp
 
         //if coarse present then shred1type coarse and shred2type fine, else shred1type fine and shred2type undefined
         this.setWasteCoarseProp()
+        this.setWasteCoarseCostProp()
+        this.setWasteCoarseGwpProp()
         this.setWasteFineProp()
+        this.setWasteFineCostProp()
+        this.setWasteFineGwpProp()
 
         //unlock footer-button-2 if mandatory inputs for WasteView given
         if(this.app_input.waste.type !== undefined) {
           this.button2enabled = true
         }
-        // this.logWaste()
+        this.logWaste()
 
       } else if(Object.prototype.hasOwnProperty.call(new_values, "sep_type")) {
         this.app_input.separation.type = new_values.sep_type
@@ -360,6 +376,24 @@ export default {
         return undefined
       }
     },
+    setWasteCoarseCostProp() {
+      if(this.app_input.shredding_1.type === undefined) {
+        return undefined
+      } else if(this.app_input.shredding_1.type === "Coarse") {
+        return this.app_input.shredding_1.euro_per_kg
+      } else if(this.app_input.shredding_1.type === "Fine") {
+        return undefined
+      }
+    },
+    setWasteCoarseGwpProp() {
+      if(this.app_input.shredding_1.type === undefined) {
+        return undefined
+      } else if(this.app_input.shredding_1.type === "Coarse") {
+        return this.app_input.shredding_1.co2_equv_per_kg
+      } else if(this.app_input.shredding_1.type === "Fine") {
+        return undefined
+      }
+    },
     setWasteFineProp() {
       if(this.app_input.shredding_1.type === undefined) {
         return undefined
@@ -367,6 +401,24 @@ export default {
         return this.app_input.shredding_2.mass_loss_percent
       } else if(this.app_input.shredding_1.type === "Fine") {
         return this.app_input.shredding_1.mass_loss_percent
+      }
+    },
+    setWasteFineCostProp() {
+      if(this.app_input.shredding_1.type === undefined) {
+        return undefined
+      } else if(this.app_input.shredding_1.type === "Coarse") {
+        return this.app_input.shredding_2.euro_per_kg
+      } else if(this.app_input.shredding_1.type === "Fine") {
+        return this.app_input.shredding_1.euro_per_kg
+      }
+    },
+    setWasteFineGwpProp() {
+      if(this.app_input.shredding_1.type === undefined) {
+        return undefined
+      } else if(this.app_input.shredding_1.type === "Coarse") {
+        return this.app_input.shredding_2.co2_equv_per_kg
+      } else if(this.app_input.shredding_1.type === "Fine") {
+        return this.app_input.shredding_1.co2_equv_per_kg
       }
     },
     log() {
@@ -379,8 +431,12 @@ export default {
         this.app_input.waste.fvc_percent,
         this.app_input.shredding_1.type,
         this.app_input.shredding_1.mass_loss_percent,
+        this.app_input.shredding_1.euro_per_kg,
+        this.app_input.shredding_1.co2_equv_per_kg,
         this.app_input.shredding_2.type,
         this.app_input.shredding_2.mass_loss_percent,
+        this.app_input.shredding_2.euro_per_kg,
+        this.app_input.shredding_2.co2_equv_per_kg,
         this.app_input.transport.euro_per_kg,
         this.app_input.transport.co2_equv_per_kg
       )

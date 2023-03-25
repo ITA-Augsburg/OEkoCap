@@ -16,6 +16,7 @@
         <Expert_mode
         @newExpertModeValues="newExpertModeValues($event)"
         :label=label
+        :disabled=false
         :expert_mode_cost_prop="sep_cost_prop"
         :expert_mode_gwp_prop="sep_gwp_prop"
         :color_green="color_green"

@@ -1,7 +1,7 @@
 .input_area {
     width: var(--content-width);
     margin: 0px calc((100vw - var(--content-width)) / 2) 0px calc((100vw - var(--content-width)) / 2);
-    height: calc(100vh - 285px - 185px);
+    height: calc(100vh - 80px - 205px - 177.5px); /*total height - header h - subheader h - footer h*/
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;

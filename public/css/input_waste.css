@@ -19,9 +19,13 @@
 }
 
 .waste_fine_text {
-    margin: 10px 10px 0px 10px;
+    margin: 30px 10px 0px 10px;
 }
 
 .waste_fine_percentage {
-    top: 310px;
+    top: 360px;
+}
+
+.waste_fine_percentage_2 {
+    top: 520px;
 }

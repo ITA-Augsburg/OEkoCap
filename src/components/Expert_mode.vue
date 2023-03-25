@@ -1,12 +1,22 @@
 <template>
 
     <v-switch
+    v-if="!disabled"
     class="switch"
     inset
-    :label= label
+    :label=label
     :color=color_green
     v-model="switchState"
     @click="showHideExpertMode()"
+    ></v-switch>
+    <v-switch
+    v-if="disabled"
+    class="switch"
+    disabled
+    inset
+    :label=label
+    :color=color_green
+    v-model="switchState"
     ></v-switch>
 
     <v-text-field
@@ -36,8 +46,8 @@
 <script>
 
     export default {
-        props: ["expert_mode_cost_prop", "expert_mode_gwp_prop", "label", "color_green", "color_white"],
-        emits: ["newExpertModeValues"],
+        props: ["disabled", "expert_mode_cost_prop", "expert_mode_gwp_prop", "label", "color_green", "color_white"],
+        emits: ["newExpertModeValues", "updateWasteUI"],
         mounted() {
             if(this.expert_mode_cost_prop !== undefined || this.expert_mode_gwp_prop !== undefined) {
                 this.switchState = true
@@ -47,12 +57,13 @@
             return {
                 switchState: false,
                 expert_mode_cost: this.expert_mode_cost_prop,
-                expert_mode_gwp: this.expert_mode_gwp_prop,
+                expert_mode_gwp: this.expert_mode_gwp_prop
             }
         },
         methods: {
             showHideExpertMode() {
                 this.switchState = !this.switchState
+                this.$emit("updateWasteUI", undefined)
                 // console.log(this.switchState)
                 if(this.switchState === false) {
                     this.expert_mode_cost = undefined
@@ -66,7 +77,7 @@
                 // console.log("propagated")
                 // console.log(this.expert_mode_cost + " " + this.expert_mode_gwp)
                 if(this.expert_mode_cost === undefined && this.expert_mode_gwp === undefined) {
-                    this.$emit("newExpertModeValues", [this.expert_mode_cost, this.expert_mode_gwp])
+                    this.$emit("newExpertModeValues", [this.expert_mode_cost, this.expert_mode_gwp, this.label])
                 } else if(this.expert_mode_cost === undefined && this.expert_mode_gwp !== undefined) {
                     if(isNaN(parseFloat(String(this.expert_mode_gwp).replaceAll(",", ".")))) {
                         if(this.expert_mode_gwp !== "") {
@@ -75,7 +86,7 @@
                         this.expert_mode_gwp = undefined
                         this.propagateNewValues()
                     } else {
-                        this.$emit("newExpertModeValues", [this.expert_mode_cost, parseFloat(String(this.expert_mode_gwp).replaceAll(",", "."))])
+                        this.$emit("newExpertModeValues", [this.expert_mode_cost, parseFloat(String(this.expert_mode_gwp).replaceAll(",", ".")), this.label])
                     }
                 } else if(this.expert_mode_cost !== undefined && this.expert_mode_gwp === undefined) {
                     if(isNaN(parseFloat(String(this.expert_mode_cost).replaceAll(",", ".")))) {
@@ -85,7 +96,7 @@
                         this.expert_mode_cost = undefined
                         this.propagateNewValues()
                     } else {
-                        this.$emit("newExpertModeValues", [parseFloat(String(this.expert_mode_cost).replaceAll(",", ".")), this.expert_mode_gwp])
+                        this.$emit("newExpertModeValues", [parseFloat(String(this.expert_mode_cost).replaceAll(",", ".")), this.expert_mode_gwp, this.label])
                     }
                 } else {
                     if(isNaN(parseFloat(String(this.expert_mode_cost).replaceAll(",", "."))) && isNaN(parseFloat(String(this.expert_mode_gwp).replaceAll(",", ".")))) {
@@ -108,7 +119,7 @@
                         this.expert_mode_gwp = undefined
                         this.propagateNewValues()
                     } else {
-                        this.$emit("newExpertModeValues", [parseFloat(String(this.expert_mode_cost).replaceAll(",", ".")), parseFloat(String(this.expert_mode_gwp).replaceAll(",", "."))])
+                        this.$emit("newExpertModeValues", [parseFloat(String(this.expert_mode_cost).replaceAll(",", ".")), parseFloat(String(this.expert_mode_gwp).replaceAll(",", ".")), this.label])
                     }
                 }
             }

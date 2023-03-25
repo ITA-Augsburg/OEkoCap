@@ -1,5 +1,7 @@
 aktuelle arbeitszeit
-11.25 - 
+11.25 - 12.40 -> 01.15
+13.15 - 14.55 -> 01.40
+16.15 - 
 
 BUGS
 slider ergeben werte mit 6 nachkommastellen wenn man die pfeiltasten drückt
@@ -7,6 +9,8 @@ auf waitingView sind 2 sets von <, > buttons
 wenn auf processingView mandatory values gewählt aber dann auf next-button gedrückt dann wird progressbar=99 bzw kommt man nicht weiter auf waitingView
 wenn neu gestartet aber seite nicht neu geladen dann bleibt progreessbar immer auf 0 (siehe video)
 clear_all button hat komischen hover-rahmen
+waste-coarse-expmode und waste-fine-expmode klappen wieder zu wenn ich von einer späteren seite komme
+sachen noch im monatsplaner
 
 
 
