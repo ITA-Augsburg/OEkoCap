@@ -10,6 +10,8 @@
     <Input_textile
     :color_green=color_green
     :color_white=color_white
+
+    :matrix_insertion_prop=matrix_insertion_prop
     
     :textile_type_prop=textile_type_prop
     :textile_ml_prop=textile_ml_prop

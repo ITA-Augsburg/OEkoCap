@@ -187,6 +187,16 @@ export default {
           this.buttonCalculateEnabled = false
         }
 
+        //reset textile values if matrix-method-of-insertion changes since textile values depend on matrix-method-of-insertion
+        if(new_values.matrix_insertion !== this.matrixInsertionCheckbox) {
+          this.app_input.textile_process.type = undefined
+          this.app_input.textile_process.mass_loss_percent = undefined
+          this.app_input.textile_process.throughput_kg_per_h = undefined
+          this.app_input.textile_process.areal_weight_g_per_sqm = undefined
+          this.app_input.textile_process.co2_equv_per_kg = undefined
+          this.app_input.textile_process.euro_per_kg = undefined
+        }
+
         this.app_input.polymer.thermo_type = new_values.matrix_type
         this.app_input.polymer.matrix_type = new_values.matrix_polymer
         this.app_input.polymer.fvc_percent = new_values.matrix_fvc
@@ -199,6 +209,7 @@ export default {
         if(this.app_input.polymer.thermo_type !== undefined && 
         this.app_input.polymer.matrix_type !== undefined) {
           this.button4enabled = true
+          this.button5enabled = false
           //also unlock footer-button-5 if user has alredy been on textileView
           if(this.app_input.textile_process.type !== undefined) {
             this.button5enabled = true

@@ -73,7 +73,8 @@
 <script>
     import Expert_mode from "./Expert_mode.vue"
     export default {
-        props: ["textile_type_prop", "textile_ml_prop", "textile_tp_prop", "textile_aw_prop", "textile_cost_prop", "textile_gwp_prop",
+        props: ["matrix_insertion_prop",
+        "textile_type_prop", "textile_ml_prop", "textile_tp_prop", "textile_aw_prop", "textile_cost_prop", "textile_gwp_prop",
         "color_green", "color_white"],
         emits: ["saveNewInputs"],
         components: {
@@ -98,15 +99,20 @@
             }
         },
         mounted() {
-            if(this.textile_type === "Dry-laid") {
+            if(this.matrix_insertion_prop) {
+                this.type_options = ["Dry-laid with Thermoplastfiber", "Air-laid with Thermoplastfiber", "Wet-laid with Thermoplastfiber"]
+            } else {
+                this.type_options = ["Dry-laid", "Air-laid", "Wet-laid"]
+            }
+            if(this.textile_type === "Dry-laid" || this.textile_type === "Dry-laid with Thermoplastfiber") {
                     this.ml_options = [5, 15, 5]
                     this.throughput_options = [20, 40, 60]
                     this.aw_options = [100, 250, 500, 1000]
-                } else if(this.textile_type === "Air-laid") {
+                } else if(this.textile_type === "Air-laid" || this.textile_type === "Air-laid with Thermoplastfiber") {
                     this.ml_options = [5, 15, 5]
                     this.throughput_options = [120]
                     this.aw_options = [300, 500, 800]
-                } else if(this.textile_type === "Wet-laid") {
+                } else if(this.textile_type === "Wet-laid" || this.textile_type === "Wet-laid with Thermoplastfiber") {
                     this.ml_options = [2, 5, 3]
                     this.throughput_options = [30, 59, 119]
                     this.aw_options = [50, 100, 200]
@@ -114,21 +120,21 @@
         },
         methods: {
             updateTextileRoute() {
-                if(this.textile_type === "Dry-laid") {
+                if(this.textile_type === "Dry-laid" || this.textile_type === "Dry-laid with Thermoplastfiber") {
                     this.ml_options = [5, 15, 5]
                     this.throughput_options = [20, 40, 60]
                     this.aw_options = [100, 250, 500, 1000]
                     this.textile_ml = 5
                     this.textile_tp = undefined
                     this.textile_aw = undefined
-                } else if(this.textile_type === "Air-laid") {
+                } else if(this.textile_type === "Air-laid" || this.textile_type === "Air-laid with Thermoplastfiber") {
                     this.ml_options = [5, 15, 5]
                     this.throughput_options = [120]
                     this.aw_options = [300, 500, 800]
                     this.textile_ml = 5
                     this.textile_tp = undefined
                     this.textile_aw = undefined
-                } else if(this.textile_type === "Wet-laid") {
+                } else if(this.textile_type === "Wet-laid" || this.textile_type === "Wet-laid with Thermoplastfiber") {
                     this.ml_options = [2, 5, 3]
                     this.throughput_options = [30, 59, 119]
                     this.aw_options = [50, 100, 200]
