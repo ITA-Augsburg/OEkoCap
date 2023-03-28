@@ -20,7 +20,7 @@
     ></v-switch>
 
     <v-text-field
-    v-if="switchState"
+    v-if="switchState && !disabled"
     v-model=expert_mode_cost
     @update:model-value="propagateNewValues()"
     class="textfield cost_textfield"
@@ -31,7 +31,7 @@
     ></v-text-field>
 
     <v-text-field
-    v-if="switchState"
+    v-if="switchState && !disabled"
     v-model=expert_mode_gwp
     @update:model-value="propagateNewValues()"
     class="textfield co2_textfield"

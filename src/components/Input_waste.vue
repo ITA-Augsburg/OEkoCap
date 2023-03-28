@@ -14,7 +14,7 @@
         ></v-select>
 
         <v-checkbox
-        v-if="waste_type === undefined || waste_type === 'End of Life'"
+        v-if="waste_type === 'End of Life'"
         @click="[updateWasteRoute(), saveNewInputs()]"
         class="checkbox waste_size_checkbox"
         label="Waste Size > 1.5m"
@@ -23,7 +23,7 @@
         ></v-checkbox>
 
         <v-checkbox
-        v-if="waste_type === 'Cut-Off'"
+        v-if="waste_type === undefined || waste_type === 'Cut-Off'"
         disabled
         class="checkbox waste_size_checkbox"
         label="Waste Size > 1.5m"
@@ -48,7 +48,7 @@
         <p
         class="text waste_coarse_text">Coarse Shredding - Mass loss</p>
         <v-slider
-        v-if="waste_type === undefined || waste_type === 'End of Life' && size1dot5 === true"
+        v-if="waste_type === 'End of Life' && size1dot5 === true"
         v-on:update:model-value="saveNewInputs()"
         class="slider"
         :color=color_green
@@ -60,7 +60,7 @@
         v-model="waste_coarse"
         ></v-slider>
         <v-slider
-        v-if="waste_type === 'Cut-Off' || waste_type === 'End of Life' && size1dot5 === false"
+        v-if="waste_type === undefined || waste_type === 'Cut-Off' || waste_type === 'End of Life' && size1dot5 === false"
         disabled
         class="slider"
         :color=color_green
@@ -108,7 +108,7 @@
         :step="0.1"
         v-model="waste_fine"
         ></v-slider>
-        <p id="fine_percent" class="percentage waste_fine_percentage">{{ waste_fine }}%</p>
+        <p id="fine_percentage" class="percentage waste_fine_percentage">{{ waste_fine }}%</p>
 
         <Expert_mode
         @newExpertModeValues="newExpertModeValues($event)"
@@ -145,6 +145,15 @@
         components: {
             Expert_mode: Expert_mode
         },
+        mounted() {
+            //reposition fine-shredding-mass-loss-percent if Coarse-exp-mode "open"
+            if(this.waste_type === "End of Life" && this.size1dot5 === true) {
+                this.coarse_expmode_disabled = false
+            }
+            if(this.coarse_cost !== undefined || this.coarse_gwp !== undefined) {
+                document.getElementById("fine_percentage").classList.add("waste_fine_percentage_2")
+            }
+        },
         data() {
             return {
                 type_options: ['Cut-Off', 'End of Life'],
@@ -164,7 +173,7 @@
                 fine_expmode_label: "Fine shredding expert mode",
                 transport_label: "Consider Transportation",
 
-                coarse_expmode_disabled: false
+                coarse_expmode_disabled: true
             }
         },
         methods: {
@@ -176,11 +185,13 @@
                     this.coarse_expmode_disabled = true
                     this.coarse_cost = undefined
                     this.coarse_gwp = undefined
+                    document.getElementById("fine_percentage").classList.remove("waste_fine_percentage_2")
                 } else if(this.waste_type === "End of Life" && this.size1dot5 === false) {
                     this.waste_coarse = undefined
                     this.coarse_expmode_disabled = true
                     this.coarse_cost = undefined
                     this.coarse_gwp = undefined
+                    document.getElementById("fine_percentage").classList.remove("waste_fine_percentage_2")
                 } else if(this.waste_type === "End of Life" && this.size1dot5 === true) {
                     this.coarse_expmode_disabled = false
                     if(this.waste_coarse === undefined) {
@@ -227,7 +238,7 @@
                 }, 20);
             },
             updateWasteUI() {
-                document.getElementById("fine_percent").classList.toggle("waste_fine_percentage_2")
+                document.getElementById("fine_percentage").classList.toggle("waste_fine_percentage_2")
             },
             log() {
                 console.log("waste_type:"+this.waste_type)

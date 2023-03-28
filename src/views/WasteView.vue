@@ -15,7 +15,11 @@
     :waste_size_prop=waste_size_prop
     :waste_fvc_prop=waste_fvc_prop
     :waste_coarse_prop=waste_coarse_prop
+    :waste_coarse_cost_prop=waste_coarse_cost_prop
+    :waste_coarse_gwp_prop=waste_coarse_gwp_prop
     :waste_fine_prop=waste_fine_prop
+    :waste_fine_cost_prop=waste_fine_cost_prop
+    :waste_fine_gwp_prop=waste_fine_gwp_prop
     :waste_transport_cost_prop=waste_transport_cost_prop
     :waste_transport_gwp_prop=waste_transport_gwp_prop
 
