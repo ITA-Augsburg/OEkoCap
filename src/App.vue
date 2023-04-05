@@ -16,7 +16,7 @@
 
     :waste_type_prop=this.app_input.waste.type
     :waste_size_prop=this.app_input.waste.size_bigger_1dot5_m
-    :waste_fvc_prop=this.app_input.waste.fvc_percent
+    :waste_fmc_prop=this.app_input.waste.fmc_percent
     :waste_coarse_prop=setWasteCoarseProp()
     :waste_coarse_cost_prop=setWasteCoarseCostProp()
     :waste_coarse_gwp_prop=setWasteCoarseGwpProp()
@@ -32,7 +32,7 @@
 
     :matrix_thermo_type_prop=this.app_input.polymer.thermo_type
     :matrix_polymer_prop=this.app_input.polymer.matrix_type
-    :matrix_fvc_prop=this.app_input.polymer.fvc_percent
+    :matrix_fmc_prop=this.app_input.polymer.fmc_percent
     :matrix_insertion_prop=this.matrixInsertionCheckbox
     :matrix_cost_prop=this.app_input.polymer.euro_per_kg
     :matrix_gwp_prop=this.app_input.polymer.co2_equv_per_kg
@@ -49,11 +49,19 @@
     :proc_1_wt_prop=this.app_input.processing_1.wandstärke_mm
     :proc_1_cost_prop=this.app_input.processing_1.euro_per_kg
     :proc_1_gwp_prop=this.app_input.processing_1.co2_equv_per_kg
+    
     :proc_2_type_prop=this.app_input.processing_2.type
+    :proc_2_ml_prop=this.app_input.processing_2.mass_loss_percent
+    :proc_2_wt_prop=this.app_input.processing_2.wandstärke_mm
+    :proc_2_cost_prop=this.app_input.processing_2.euro_per_kg
+    :proc_2_gwp_prop=this.app_input.processing_2.co2_equv_per_kg
+
+    :proc_moi_prop=this.processingMethodOfInsertion
 
     @clearAppInput="clearAppInput()"
     @updateInputFooter="updateInputFooter()"
-    @saveNewInputs="saveNewInputs($event)"/>
+    @saveNewInputs="saveNewInputs($event)"
+    @calculateButton="calculateButton()"/>
     
 
     <VMain>
@@ -82,7 +90,7 @@ export default {
         "type": undefined,
         "quantity_to": 1,
         "size_bigger_1dot5_m": false,
-        "fvc_percent": 60.00
+        "fmc_percent": 60.00
       },
       "transport": {
         "euro_per_kg": undefined,
@@ -90,7 +98,7 @@ export default {
       },
       "shredding_1": {
         "type": "Coarse",
-        "mass_loss_percent": 5.0,
+        "mass_loss_percent": undefined,
         "euro_per_kg": undefined,
         "co2_equv_per_kg": undefined
       },
@@ -108,8 +116,8 @@ export default {
       "polymer": {
         "thermo_type": undefined,
         "matrix_type": undefined,
-        "fvc_percent": 25,
-        "feedstock_type": "fossilbased",
+        "fmc_percent": 25,
+        "feedstock_type": "biodegredable",
         "state_of_origin": "virgin",
         "euro_per_kg": undefined,
         "co2_equv_per_kg": undefined
@@ -131,7 +139,7 @@ export default {
       },
       "processing_2": {
         "type": undefined,
-        "mass_loss_percent": undefined,
+        "mass_loss_percent": 10,
         "wandstärke_mm": undefined,
         "euro_per_kg": undefined,
         "co2_equv_per_kg": undefined
@@ -145,7 +153,7 @@ export default {
       if(Object.prototype.hasOwnProperty.call(new_values, "waste_type")) {
         this.app_input.waste.type = new_values.waste_type
         this.app_input.waste.size_bigger_1dot5_m = new_values.waste_size
-        this.app_input.waste.fvc_percent = new_values.waste_fvc
+        this.app_input.waste.fmc_percent = new_values.waste_fmc
         if(new_values.waste_coarse === undefined) {
           this.app_input.shredding_1.type = "Fine"
           this.app_input.shredding_1.mass_loss_percent = new_values.waste_fine
@@ -180,7 +188,7 @@ export default {
         if(this.app_input.waste.type !== undefined) {
           this.button2enabled = true
         }
-        this.logWaste()
+        // this.logWaste()
 
       } else if(Object.prototype.hasOwnProperty.call(new_values, "sep_type")) {
         this.app_input.separation.type = new_values.sep_type
@@ -198,7 +206,9 @@ export default {
         if(new_values.matrix_type !== this.app_input.polymer.thermo_type ||
         new_values.matrix_insertion !== this.matrixInsertionCheckbox) {
           this.app_input.processing_1.type = undefined
+          this.app_input.processing_1.wandstärke_mm = undefined
           this.app_input.processing_2.type = undefined
+          this.app_input.processing_2.wandstärke_mm = undefined
           this.processingMethodOfInsertion = undefined
           this.buttonCalculateEnabled = false
         }
@@ -215,13 +225,13 @@ export default {
 
         this.app_input.polymer.thermo_type = new_values.matrix_type
         this.app_input.polymer.matrix_type = new_values.matrix_polymer
-        this.app_input.polymer.fvc_percent = new_values.matrix_fvc
+        this.app_input.polymer.fmc_percent = new_values.matrix_fmc
         this.matrixInsertionCheckbox = new_values.matrix_insertion
         this.app_input.polymer.euro_per_kg = new_values.matrix_cost
         this.app_input.polymer.co2_equv_per_kg = new_values.matrix_gwp
 
         //unlock footer-button-4 if mandatory inputs for MatrixView given
-        //lock footer-button-4 and 5 if mandatory inputs for MatrixView switch back to undefined
+        //lock footer-button-4 and -5 if mandatory inputs for MatrixView switch back to undefined
         if(this.app_input.polymer.thermo_type !== undefined && 
         this.app_input.polymer.matrix_type !== undefined) {
           this.button4enabled = true
@@ -259,32 +269,50 @@ export default {
         }
         // this.logTextile()
 
-      } else if(Object.prototype.hasOwnProperty.call(new_values, "proc_type")) {
-        this.app_input.processing_1.type = new_values.proc_type
-        this.app_input.processing_2.type = new_values.proc_subtype
-        this.app_input.processing_1.mass_loss_percent = new_values.proc_ml
-        this.app_input.processing_1.wandstärke_mm = new_values.proc_wt
+      } else if(Object.prototype.hasOwnProperty.call(new_values, "proc_1_type")) {
+        this.app_input.processing_1.type = new_values.proc_1_type
+        this.app_input.processing_1.mass_loss_percent = new_values.proc_1_ml
+        this.app_input.processing_1.wandstärke_mm = new_values.proc_1_wt
+        this.app_input.processing_1.euro_per_kg = new_values.proc_1_cost
+        this.app_input.processing_1.co2_equv_per_kg = new_values.proc_1_gwp
+
+        this.app_input.processing_2.type = new_values.proc_2_type
+        this.app_input.processing_2.mass_loss_percent = new_values.proc_2_ml
+        this.app_input.processing_2.wandstärke_mm = new_values.proc_2_wt
+        this.app_input.processing_2.euro_per_kg = new_values.proc_2_cost
+        this.app_input.processing_2.co2_equv_per_kg = new_values.proc_2_gwp
+
         this.processingMethodOfInsertion = new_values.proc_moi
-        this.app_input.processing_1.euro_per_kg = new_values.proc_cost
-        this.app_input.processing_1.co2_equv_per_kg = new_values.proc_gwp
 
         //unlock calculate-button if mandatory inputs for ProcessingView given
         //lock calculate-button if mandatory inputs for ProcessingView switch back to undefined
-        if(this.app_input.processing_1.type !== undefined &&
-        this.app_input.processing_1.wandstärke_mm !== undefined) {
+        if(this.app_input.polymer.thermo_type === "Thermoset") {
+          if(this.app_input.processing_1.type !== undefined &&
+          this.app_input.processing_1.wandstärke_mm !== undefined &&
+          this.processingMethodOfInsertion !== undefined) {
           this.buttonCalculateEnabled = true
-        } else {
-          this.buttonCalculateEnabled = false
+          } else {
+            this.buttonCalculateEnabled = false
+          }
+        } else if(this.app_input.polymer.thermo_type === "Thermoplast") {
+          if(this.app_input.processing_1.type !== undefined &&
+          this.app_input.processing_1.wandstärke_mm !== undefined &&
+          this.app_input.processing_2.type !== undefined &&
+          this.app_input.processing_2.wandstärke_mm !== undefined &&
+          this.processingMethodOfInsertion !== undefined) {
+          this.buttonCalculateEnabled = true
+          } else {
+            this.buttonCalculateEnabled = false
+          }
         }
+        
 
         // this.logProcessing()
       }
     },
     updateInputFooter() {
-      if(this.app_input.processing_1.type !== undefined &&
-      this.app_input.processing_1.wandstärke_mm !== undefined) {
-        this.footerProgressBar = 99
-      } else if(this.app_input.textile_process.throughput_kg_per_h !== undefined &&
+      if(this.footerProgressBar === 99) return
+      else if(this.app_input.textile_process.throughput_kg_per_h !== undefined &&
       this.app_input.textile_process.areal_weight_g_per_sqm !== undefined ) {
         this.footerProgressBar = 80
       } else if(this.app_input.polymer.matrix_type !== undefined) {
@@ -302,7 +330,7 @@ export default {
           "type": undefined,
           "quantity_to": 1,
           "size_bigger_1dot5_m": false,
-          "fvc_percent": 60.00
+          "fmc_percent": 60.00
         },
         "transport": {
           "euro_per_kg": undefined,
@@ -310,7 +338,7 @@ export default {
         },
         "shredding_1": {
           "type": "Coarse",
-          "mass_loss_percent": 5.0,
+          "mass_loss_percent": undefined,
           "euro_per_kg": undefined,
           "co2_equv_per_kg": undefined
         },
@@ -328,8 +356,8 @@ export default {
         "polymer": {
           "thermo_type": undefined,
           "matrix_type": undefined,
-          "fvc_percent": 25,
-          "feedstock_type": "fossilbased",
+          "fmc_percent": 25,
+          "feedstock_type": "biodegredable",
           "state_of_origin": "virgin",
           "euro_per_kg": undefined,
           "co2_equv_per_kg": undefined
@@ -351,7 +379,7 @@ export default {
         },
         "processing_2": {
           "type": undefined,
-          "mass_loss_percent": undefined,
+          "mass_loss_percent": 10,
           "wandstärke_mm": undefined,
           "euro_per_kg": undefined,
           "co2_equv_per_kg": undefined
@@ -421,14 +449,67 @@ export default {
         return this.app_input.shredding_1.co2_equv_per_kg
       }
     },
+    formatAppInputKeys() {
+      //undefined -> ""; End of Life -> EoL; 
+      //waste
+      if(this.app_input.waste.type === "End of Life") this.app_input.waste.type = "EoL"
+      //transport
+      if(this.app_input.transport.euro_per_kg === undefined) this.app_input.transport.euro_per_kg = ""
+      if(this.app_input.transport.co2_equv_per_kg === undefined) this.app_input.transport.co2_equv_per_kg = ""
+      //shredding 1 and 2
+      if(this.app_input.shredding_1.euro_per_kg === undefined) this.app_input.shredding_1.euro_per_kg = ""
+      if(this.app_input.shredding_1.co2_equv_per_kg === undefined) this.app_input.shredding_1.co2_equv_per_kg = ""
+      if(this.app_input.shredding_2.type === undefined) this.app_input.shredding_2.type = ""
+      if(this.app_input.shredding_2.mass_loss_percent === undefined) this.app_input.shredding_2.mass_loss_percent = ""
+      if(this.app_input.shredding_2.euro_per_kg === undefined) this.app_input.shredding_2.euro_per_kg = ""
+      if(this.app_input.shredding_2.co2_equv_per_kg === undefined) this.app_input.shredding_2.co2_equv_per_kg = ""
+      //separation
+      if(this.app_input.separation.euro_per_kg === undefined) this.app_input.separation.euro_per_kg = ""
+      if(this.app_input.separation.co2_equv_per_kg === undefined) this.app_input.separation.co2_equv_per_kg = ""
+      //matrix
+      if(this.app_input.polymer.euro_per_kg === undefined) this.app_input.polymer.euro_per_kg = ""
+      if(this.app_input.polymer.co2_equv_per_kg === undefined) this.app_input.polymer.co2_equv_per_kg = ""
+      //textile
+      if(this.app_input.textile_process.type === "Dry-laid") this.app_input.textile_process.type = "Carding"
+      if(this.app_input.textile_process.type === "Air-laid") this.app_input.textile_process.type = "AirLaying"
+      if(this.app_input.textile_process.type === "Wet-laid") this.app_input.textile_process.type = "WetLaying"
+      if(this.app_input.textile_process.type === "Dry-laid with Thermoplastfiber") this.app_input.textile_process.type = "CardingWithTF"
+      if(this.app_input.textile_process.type === "Air-laid with Thermoplastfiber") this.app_input.textile_process.type = "AirLayingWithTF"
+      if(this.app_input.textile_process.type === "Wet-laid with Thermoplastfiber") this.app_input.textile_process.type = "WetLayingWithTF"
+      if(this.app_input.textile_process.euro_per_kg === undefined) this.app_input.textile_process.euro_per_kg = ""
+      if(this.app_input.textile_process.co2_equv_per_kg === undefined) this.app_input.textile_process.co2_equv_per_kg = ""
+      //processing
+      if(this.app_input.processing_1.euro_per_kg === undefined) this.app_input.processing_1.euro_per_kg = ""
+      if(this.app_input.processing_1.co2_equv_per_kg === undefined) this.app_input.processing_1.co2_equv_per_kg = ""
+      if(this.processingMethodOfInsertion === "Thermoplastfiber") {
+        this.app_input.processing_1.type = "DoubleBeltPressing"
+        this.app_input.processing_2.type = "IRCompressionMoulding"
+      } else if(this.processingMethodOfInsertion === "Thermoplast powder") {
+        this.app_input.processing_1.type = "DoubleBeltPressingWithPowder"
+        this.app_input.processing_2.type = "IRCompressionMoulding"
+      } else if(this.processingMethodOfInsertion === "Thermoplast foil") {
+        this.app_input.processing_1.type = "DoubleBeltPressingWithFoil"
+        this.app_input.processing_2.type = "IRCompressionMoulding"
+      }
+      if(this.app_input.processing_2.type === undefined) this.app_input.processing_2.type = ""
+      if(this.app_input.processing_2.mass_loss_percent === undefined) this.app_input.processing_2.mass_loss_percent = ""
+      if(this.app_input.processing_2.wandstärke_mm === undefined) this.app_input.processing_2.wandstärke_mm = ""
+      if(this.app_input.processing_2.euro_per_kg === undefined) this.app_input.processing_2.euro_per_kg = ""
+      if(this.app_input.processing_2.co2_equv_per_kg === undefined) this.app_input.processing_2.co2_equv_per_kg = ""
+    },
+    calculateButton() {
+      this.footerProgressBar = 99
+      this.formatAppInputKeys()
+      this.log()
+    },
     log() {
-      console.log(this.app_input)
+      console.log(JSON.stringify(this.app_input, null, 2))
     },
     logWaste() {
       console.log(
         this.app_input.waste.type,
         this.app_input.waste.size_bigger_1dot5_m,
-        this.app_input.waste.fvc_percent,
+        this.app_input.waste.fmc_percent,
         this.app_input.shredding_1.type,
         this.app_input.shredding_1.mass_loss_percent,
         this.app_input.shredding_1.euro_per_kg,

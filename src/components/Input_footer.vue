@@ -74,6 +74,7 @@
                 v-if="this.id !== 'separation' && button2enabled">
                     <v-btn
                     icon=""
+                    @click="updateInputFooter()"
                     :color=color_lightgrey
                     elevation="12"
                     width="45px"
@@ -104,6 +105,7 @@
                 v-if="this.id !== 'matrix' && button3enabled">
                     <v-btn
                     icon=""
+                    @click="updateInputFooter()"
                     :color=color_lightgrey
                     elevation="12"
                     width="45px"
@@ -134,6 +136,7 @@
                 v-if="this.id !== 'textile' && button4enabled">
                     <v-btn
                     icon=""
+                    @click="updateInputFooter()"
                     :color=color_lightgrey
                     elevation="12"
                     width="45px"
@@ -164,6 +167,7 @@
                 v-if="this.id !== 'processing' && button5enabled">
                     <v-btn
                     icon=""
+                    @click="updateInputFooter()"
                     :color=color_lightgrey
                     elevation="12"
                     width="45px"
@@ -204,7 +208,14 @@
                 ><p class="footer_button_text">›</p></v-btn>
             </div>
 
-            <p class="footer_copyright_text">© 2023 <u>ITA Augsburg</u></p>
+            <p class="footer_copyright_text">© 2023 
+                <a
+                class="footer_copyright_link"
+                href="https://ita-augsburg.com/"
+                target="_blank">
+                    ITA Augsburg
+                </a>
+            </p>
 
         </div>
     </div>
@@ -250,8 +261,11 @@ export default {
                     break
             }
         },
-        nextButton() {
+        updateInputFooter() {
             this.$emit("updateInputFooter", undefined)
+        },
+        nextButton() {
+            this.updateInputFooter()
             // console.log(this.button2enabled)
             switch(this.id) {
                 //mandatory fields are checked in app.vue->saveNewInputs()

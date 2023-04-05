@@ -25,9 +25,10 @@
     @update:model-value="propagateNewValues()"
     class="textfield cost_textfield"
     label="€/kg"
+    single-line
+    suffix="€/kg"
     variant="solo"
     :bg-color=color_green
-    :color=color_white
     ></v-text-field>
 
     <v-text-field
@@ -36,9 +37,10 @@
     @update:model-value="propagateNewValues()"
     class="textfield co2_textfield"
     label="kg CO2-eq./kg"
+    single-line
+    suffix="kg CO2-eq./kg"
     variant="solo"
     :bg-color=color_green
-    :color=color_white
     ></v-text-field>
 
 </template>
@@ -46,7 +48,7 @@
 <script>
 
     export default {
-        props: ["disabled", "expert_mode_cost_prop", "expert_mode_gwp_prop", "label", "color_green", "color_white"],
+        props: ["disabled", "expert_mode_cost_prop", "expert_mode_gwp_prop", "label", "color_green"],
         emits: ["newExpertModeValues", "updateWasteUI"],
         mounted() {
             if(this.expert_mode_cost_prop !== undefined || this.expert_mode_gwp_prop !== undefined) {

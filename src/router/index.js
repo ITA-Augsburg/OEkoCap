@@ -11,6 +11,7 @@ import ErrorView from '../views/ErrorView.vue'
 
 const props = {
     color_white: "#FFFFFF",
+    color_black: "#000000",
     color_lightgrey: "#F2F2F2",
     color_grey: "#4A4A4A",
     color_green: "#55CD89",
@@ -42,7 +43,6 @@ const routes = [
         props: {
             subheader_waste: props.subheader_waste,
             color_green: props.color_green,
-            color_white: props.color_white,
             color_lightgrey: props.color_lightgrey
         }
     },
@@ -53,7 +53,6 @@ const routes = [
         props: {
             subheader_separation: props.subheader_separation,
             color_green: props.color_green,
-            color_white: props.color_white,
             color_lightgrey: props.color_lightgrey
         }
     },
@@ -64,7 +63,6 @@ const routes = [
         props: {
             subheader_matrix: props.subheader_matrix,
             color_green: props.color_green,
-            color_white: props.color_white,
             color_lightgrey: props.color_lightgrey
         }
     },
@@ -75,7 +73,6 @@ const routes = [
         props: {
             subheader_textile: props.subheader_textile,
             color_green: props.color_green,
-            color_white: props.color_white,
             color_lightgrey: props.color_lightgrey
         }
     },
@@ -86,7 +83,6 @@ const routes = [
         props: {
             subheader_processing: props.subheader_processing,
             color_green: props.color_green,
-            color_white: props.color_white,
             color_lightgrey: props.color_lightgrey,
             color_darkgreen: props.color_darkgreen
         }

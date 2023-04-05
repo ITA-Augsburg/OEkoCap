@@ -2,8 +2,9 @@
     width: var(--content-width);
     margin: 0px calc((100vw - var(--content-width)) / 2) 0px calc((100vw - var(--content-width)) / 2);
     height: calc(100vh - 80px - 205px - 177.5px); /*total height - header h - subheader h - footer h*/
+    min-height: 250px;
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: visible;
     position: relative;
 }
 
@@ -12,7 +13,7 @@
     height: 50px;
 }
 .select .v-label {
-    color: var(--color-white);
+    color: var(--color-grey);
     font-size: 20px;
     opacity: 1;
 }
@@ -57,10 +58,10 @@
 .textfield {
     height: 50px;
     margin: 30px 10px 0px 10px;
-    width: calc(var(--content-width) - 37px);
+    width: calc(var(--content-width) - 20px);
 }
 .textfield .v-label {
-    color: var(--color-white);
+    color: var(--color-grey);
     font-size: 20px;
     opacity: 1;
 }

@@ -2,16 +2,19 @@
     width: var(--content-width);
     margin: 0px calc((100vw - var(--content-width)) / 2) 0px calc((100vw - var(--content-width)) / 2);
     height: calc(100vh - 80px - 358px - 150px); /*total height - header h - subheader h - footer h*/
-    overflow-y: auto;
-    overflow-x: hidden;
-    position: relative;
+    min-height: 492px;
     align-content: center;
 }
 
 .start_logocontainer {
     display: flex;
     flex-wrap: nowrap;
-    margin-top: calc((100vh - 438px - 157.5px - 290px) / 2);
+    margin-top: calc((100vh - 80px - 358px - 157.5px - 290px) / 2);
+}
+@media (max-height: 1080px) {
+    .start_logocontainer {
+        margin-top: 97.25px;
+    }
 }
 
 .start_text {

@@ -7,10 +7,11 @@
         v-on:update:model-value="[updateMatrixRoute(), saveNewInputs()]"
         class="select matrix_type_select"
         label="Type"
+        single-line
+        suffix="Type"
         :items=type_options
         variant="solo"
         :bg-color=color_green
-        :color=color_white
         ></v-select>
 
         <v-select
@@ -18,15 +19,16 @@
         v-on:update:model-value="saveNewInputs()"
         class="select matrix_polymer_select"
         label="Polymer"
+        single-line
+        suffix="Polymer"
         :items=polymer_options
         variant="solo"
         :bg-color=color_green
-        :color=color_white
         ></v-select>
 
-        <p class="text matrix_fvc_text">Fiber volume content</p>
+        <p class="text matrix_fmc_text">Fiber mass content</p>
         <v-slider
-        v-model="matrix_fvc"
+        v-model="matrix_fmc"
         v-on:update:model-value="saveNewInputs()"
         class="slider"
         :color=color_green
@@ -36,7 +38,7 @@
         :max="35"
         :step="1"
         ></v-slider>
-        <p class="percentage matrix_fvc_percentage">{{ matrix_fvc }}%</p>
+        <p class="percentage matrix_fmc_percentage">{{ matrix_fmc }}%</p>
 
         <v-checkbox
         v-if="matrix_type !== 'Thermoset'"
@@ -59,7 +61,6 @@
         :label=label
         :disabled=false
         :color_green="color_green"
-        :color_white="color_white"
         :expert_mode_cost_prop="matrix_cost_prop"
         :expert_mode_gwp_prop="matrix_gwp_prop"></Expert_mode>
 
@@ -70,8 +71,8 @@
 <script>
     import Expert_mode from "./Expert_mode.vue"
     export default {
-        props: ["matrix_thermo_type_prop", "matrix_polymer_prop", "matrix_fvc_prop", "matrix_insertion_prop", "matrix_cost_prop", "matrix_gwp_prop",
-        "color_green", "color_white"],
+        props: ["matrix_thermo_type_prop", "matrix_polymer_prop", "matrix_fmc_prop", "matrix_insertion_prop", "matrix_cost_prop", "matrix_gwp_prop",
+        "color_green"],
         emits: ["saveNewInputs"],
         components: {
             Expert_mode: Expert_mode
@@ -90,7 +91,7 @@
 
                 matrix_type: this.matrix_thermo_type_prop,
                 matrix_polymer: this.matrix_polymer_prop,
-                matrix_fvc: this.matrix_fvc_prop,
+                matrix_fmc: this.matrix_fmc_prop,
                 matrix_insertion: this.matrix_insertion_prop,
 
                 expert_mode_cost: this.matrix_cost_prop,
@@ -125,7 +126,7 @@
                     {
                         matrix_type: this.matrix_type,
                         matrix_polymer: this.matrix_polymer,
-                        matrix_fvc: this.matrix_fvc,
+                        matrix_fmc: this.matrix_fmc,
                         matrix_insertion: this.matrix_insertion,
                         matrix_cost: this.expert_mode_cost,
                         matrix_gwp: this.expert_mode_gwp
@@ -135,7 +136,7 @@
             log() {
                 console.log("matrix_type:" + this.matrix_type)
                 console.log("matrix_polymer:" + this.matrix_polymer)
-                console.log("matrix_fvc:" + this.matrix_fvc)
+                console.log("matrix_fmc:" + this.matrix_fmc)
                 console.log("matrix_insertion:" + this.matrix_insertion)
                 console.log("matrix_cost:" + this.expert_mode_cost)
                 console.log("matrix_gwp:" + this.expert_mode_gwp)

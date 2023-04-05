@@ -7,10 +7,11 @@
         v-on:update:model-value="[updateTextileRoute(), saveNewInputs()]"
         class="select textile_type_select"
         label="Type"
+        single-line
+        suffix="Type"
         :items=type_options
         variant="solo"
         :bg-color=color_green
-        :color=color_white
         ></v-select>
 
         <p class="text textile_ml_text">Mass loss</p>
@@ -41,10 +42,11 @@
         v-on:update:model-value="saveNewInputs()"
         class="select textile_throughput_select"
         label="Throughput"
+        single-line
+        suffix="Throughput"
         :items=throughput_options
         variant="solo"
-        :bg-color=color_green
-        :color=color_white
+        :bg-color=color_lightgrey
         ></v-select>
 
         <v-select
@@ -52,18 +54,18 @@
         v-on:update:model-value="saveNewInputs()"
         class="select textile_aw_select"
         label="Areal weight"
+        single-line
+        suffix="Areal weight"
         :items=aw_options
         variant="solo"
-        :bg-color=color_green
-        :color=color_white
+        :bg-color=color_lightgrey
         ></v-select>
 
         <Expert_mode
         @newExpertModeValues="newExpertModeValues($event)"
         :label=label
         :disabled=false
-        :color_green="color_green"
-        :color_white="color_white"
+        :color_green=color_green
         :expert_mode_cost_prop=textile_cost_prop
         :expert_mode_gwp_prop=textile_gwp_prop></Expert_mode>
 
@@ -76,7 +78,7 @@
     export default {
         props: ["matrix_insertion_prop",
         "textile_type_prop", "textile_ml_prop", "textile_tp_prop", "textile_aw_prop", "textile_cost_prop", "textile_gwp_prop",
-        "color_green", "color_white"],
+        "color_green", "color_lightgrey"],
         emits: ["saveNewInputs"],
         components: {
             Expert_mode: Expert_mode

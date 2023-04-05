@@ -5,10 +5,11 @@
         <v-select
         class="select waste_type_select"
         label="Type"
+        single-line
+        suffix="Type"
         :items=type_options
         variant="solo"
         :bg-color=color_green
-        :color=color_white
         v-model=this.waste_type
         v-on:update:model-value="[updateWasteRoute(), saveNewInputs()]"
         ></v-select>
@@ -31,7 +32,7 @@
         v-model="size1dot5"
         ></v-checkbox>
 
-        <p class="text waste_fvc_text">Fiber volume content</p>
+        <p class="text waste_fmc_text">Fiber mass content</p>
         <v-slider
         v-on:update:model-value="saveNewInputs()"
         class="slider"
@@ -41,12 +42,14 @@
         :min="10.00"
         :max="100.00"
         :step="1"
-        v-model="waste_fvc"
+        v-model="waste_fmc"
         ></v-slider>
-        <p class="percentage waste_fvc_percentage">{{ waste_fvc }}%</p>
+        <p class="percentage waste_fmc_percentage">{{ waste_fmc }}%</p>
 
-        <p
+        <p v-if="waste_type === 'End of Life' && size1dot5 === true"
         class="text waste_coarse_text">Coarse Shredding - Mass loss</p>
+        <p v-if="waste_type === undefined || waste_type === 'Cut-Off' || waste_type === 'End of Life' && size1dot5 === false"
+        class="text waste_coarse_text waste_coarse_text_disabled">Coarse Shredding - Mass loss</p>
         <v-slider
         v-if="waste_type === 'End of Life' && size1dot5 === true"
         v-on:update:model-value="saveNewInputs()"
@@ -72,7 +75,7 @@
         v-model="waste_coarse"
         ></v-slider>
         <p
-        v-if="this.waste_coarse !== undefined"
+        v-if="waste_type === 'End of Life' && size1dot5 === true"
         class="percentage waste_coarse_percentage">{{ waste_coarse }}%</p>
 
         <Expert_mode
@@ -84,7 +87,6 @@
         :expert_mode_cost_prop=waste_coarse_cost_prop
         :expert_mode_gwp_prop=waste_coarse_gwp_prop
         :color_green=color_green
-        :color_white=color_white
         ></Expert_mode>
         <Expert_mode
         v-if="coarse_expmode_disabled"
@@ -93,7 +95,6 @@
         :expert_mode_cost_prop=waste_coarse_cost_prop
         :expert_mode_gwp_prop=waste_coarse_gwp_prop
         :color_green=color_green
-        :color_white=color_white
         ></Expert_mode>
 
         <p class="text waste_fine_text">Fine Shredding - Mass loss</p>
@@ -117,7 +118,6 @@
         :expert_mode_cost_prop=waste_fine_cost_prop
         :expert_mode_gwp_prop=waste_fine_gwp_prop
         :color_green=color_green
-        :color_white=color_white
         ></Expert_mode>
 
         <br>
@@ -129,7 +129,6 @@
         :expert_mode_cost_prop=waste_transport_cost_prop
         :expert_mode_gwp_prop=waste_transport_gwp_prop
         :color_green=color_green
-        :color_white=color_white
         ></Expert_mode>
         
     </div>
@@ -139,8 +138,8 @@
 <script>
     import Expert_mode from "./Expert_mode.vue"
     export default {
-        props: ["waste_type_prop", "waste_size_prop", "waste_fvc_prop", "waste_coarse_prop", "waste_coarse_cost_prop", "waste_coarse_gwp_prop", "waste_fine_prop", "waste_fine_cost_prop", "waste_fine_gwp_prop", "waste_transport_cost_prop", "waste_transport_gwp_prop",
-        "color_green", "color_white"],
+        props: ["waste_type_prop", "waste_size_prop", "waste_fmc_prop", "waste_coarse_prop", "waste_coarse_cost_prop", "waste_coarse_gwp_prop", "waste_fine_prop", "waste_fine_cost_prop", "waste_fine_gwp_prop", "waste_transport_cost_prop", "waste_transport_gwp_prop",
+        "color_green"],
         emits: ["saveNewInputs"],
         components: {
             Expert_mode: Expert_mode
@@ -159,7 +158,7 @@
                 type_options: ['Cut-Off', 'End of Life'],
                 waste_type: this.waste_type_prop,
                 size1dot5: this.waste_size_prop,
-                waste_fvc: this.waste_fvc_prop,
+                waste_fmc: this.waste_fmc_prop,
                 waste_coarse: this.waste_coarse_prop,
                 coarse_cost: this.waste_coarse_cost_prop,
                 coarse_gwp: this.waste_coarse_gwp_prop,
@@ -215,17 +214,17 @@
                 // this.log()
             },
             saveNewInputs() {
-                // console.log(this.waste_fvc)
+                // console.log(this.waste_fmc)
                 //setTimeout needed to properly update slider values
                 setTimeout(() => {
-                    // console.log(this.waste_fvc)
+                    // console.log(this.waste_fmc)
                     // this.log()
                     this.$emit(
                         "saveNewInputs",
                     {
                         waste_type: this.waste_type,
                         waste_size: this.size1dot5,
-                        waste_fvc: this.waste_fvc,
+                        waste_fmc: this.waste_fmc,
                         waste_coarse: this.waste_coarse,
                         waste_coarse_cost: this.coarse_cost,
                         waste_coarse_gwp: this.coarse_gwp,
@@ -243,7 +242,7 @@
             log() {
                 console.log("waste_type:"+this.waste_type)
                 console.log("waste_size:"+this.size1dot5)
-                console.log("waste_fvc:"+this.waste_fvc)
+                console.log("waste_fmc:"+this.waste_fmc)
                 console.log("waste_coarse:"+this.waste_coarse)
                 console.log("waste_coarse_cost:"+this.coarse_cost)
                 console.log("waste_coarse_gwp:"+this.coarse_gwp)

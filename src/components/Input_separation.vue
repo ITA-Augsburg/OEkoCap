@@ -7,10 +7,11 @@
         v-on:update:model-value="saveNewInputs()"
         class="select separation_type_select"
         label="Type"
+        single-line
+        suffix="Type"
         :items=type_options
         variant="solo"
         :bg-color=color_green
-        :color=color_white
         ></v-select>
 
         <Expert_mode
@@ -20,7 +21,7 @@
         :expert_mode_cost_prop="sep_cost_prop"
         :expert_mode_gwp_prop="sep_gwp_prop"
         :color_green="color_green"
-        :color_white="color_white"></Expert_mode>
+        ></Expert_mode>
 
     </div>
 
@@ -30,7 +31,7 @@
     import Expert_mode from "./Expert_mode.vue"
     export default {
         props: ["sep_type_prop", "sep_cost_prop", "sep_gwp_prop",
-        "color_green", "color_white"],
+        "color_green"],
         emits: ["saveNewInputs"],
         components: {
             Expert_mode: Expert_mode

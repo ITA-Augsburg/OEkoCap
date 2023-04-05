@@ -3,30 +3,20 @@
     <div class="input_area">
 
         <v-select
-        v-model=proc_type
+        v-model=proc_1_type
         v-on:update:model-value="[saveNewInputs()]"
         class="select processing_type_select"
-        label="Type"
-        :items=type_options
+        label="Type - Step 1"
+        single-line
+        suffix="Type - Step 1"
+        :items=proc_1_type_options
         variant="solo"
         :bg-color=color_green
-        :color=color_white
         ></v-select>
 
-        <v-select
-        v-model=proc_subtype
-        v-on:update:model-value="[saveNewInputs()]"
-        class="select processing_subtype_select"
-        label="Subtype"
-        :items=subtype_options
-        variant="solo"
-        :bg-color=color_green
-        :color=color_white
-        ></v-select>
-
-        <p class="text processing_ml_text">Mass loss</p>
+        <p class="text processing_ml_text">Mass loss - Step 1</p>
         <v-slider
-        v-model=proc_ml
+        v-model=proc_1_ml
         v-on:update:model-value="[saveNewInputs()]"
         class="slider"
         :color=color_green
@@ -36,38 +26,152 @@
         :max="40"
         :step="0.1"
         ></v-slider>
-        <p class="percentage processing_ml_percentage">{{ proc_ml }}%</p>
+        <p class="percentage processing_1_ml_percentage">{{ proc_1_ml }}%</p>
 
         <v-select
-        v-model=proc_wt
+        v-model=proc_1_wt
         v-on:update:model-value="[saveNewInputs()]"
         class="select processing_wt_select"
         label="Wall thickness"
-        :items=wt_options
+        single-line
+        suffix="Wall thickness"
+        :items=proc_1_wt_options
         variant="solo"
-        :bg-color=color_green
-        :color=color_white
-        ></v-select>
-
-        <v-select
-        v-model=proc_moi
-        v-on:update:model-value="[saveNewInputs()]"
-        class="select processing_moi_select"
-        label="Method of insertion"
-        :items=moi_options
-        variant="solo"
-        :bg-color=color_green
-        :color=color_white
+        :bg-color=color_lightgrey
         ></v-select>
 
         <Expert_mode
         @newExpertModeValues="newExpertModeValues($event)"
-        :label=label
+        @updateWasteUI="updateWasteUI()"
+        :label=step1expmodelabel
         :disabled=false
         :color_green=color_green
-        :color_white=color_white
         :expert_mode_cost_prop=proc_1_cost_prop
         :expert_mode_gwp_prop=proc_1_gwp_prop></Expert_mode>
+        
+
+        <v-select
+        v-if="!proc_2_type_disabled"
+        v-model=proc_2_type
+        v-on:update:model-value="[saveNewInputs()]"
+        class="select processing_2_type_select"
+        label="Type - Step 2"
+        single-line
+        suffix="Type - Step 2"
+        :items=proc_2_type_options
+        variant="solo"
+        :bg-color=color_green
+        ></v-select>
+        <v-select
+        v-if="proc_2_type_disabled"
+        disabled
+        v-model=proc_2_type
+        class="select processing_2_type_select"
+        label="Type - Step 2"
+        single-line
+        suffix="Type - Step 2"
+        :items=proc_2_type_options
+        variant="solo"
+        :bg-color=color_green
+        ></v-select>
+
+        <p v-if="!proc_2_ml_disabled"
+        class="text processing_ml_text">Mass loss - Step 2</p>
+        <p v-if="proc_2_ml_disabled"
+        class="text processing_ml_text processing_2_ml_text_disabled">Mass loss - Step 2</p>
+        <v-slider
+        v-if="!proc_2_ml_disabled"
+        v-model=proc_2_ml
+        v-on:update:model-value="[saveNewInputs()]"
+        class="slider"
+        :color=color_green
+        :thumb-color=color_green
+        thumb-size="20"
+        :min="0.5"
+        :max="40"
+        :step="0.1"
+        ></v-slider>
+        <v-slider
+        v-if="proc_2_ml_disabled"
+        disabled
+        v-model=proc_2_ml
+        class="slider"
+        :color=color_green
+        :thumb-color=color_green
+        thumb-size="20"
+        :min="0.5"
+        :max="40"
+        :step="0.1"
+        ></v-slider>
+        <p v-if="!proc_2_ml_disabled"
+        id="proc_2_ml" class="percentage processing_2_ml_percentage">{{ proc_2_ml }}%</p>
+
+        <v-select
+        v-if="!proc_2_wt_disabled"
+        v-model=proc_2_wt
+        v-on:update:model-value="[saveNewInputs()]"
+        class="select processing_wt_select"
+        label="Wall thickness"
+        single-line
+        suffix="Wall thickness"
+        :items=proc_2_wt_options
+        variant="solo"
+        :bg-color=color_lightgrey
+        ></v-select>
+        <v-select
+        v-if="proc_2_wt_disabled"
+        disabled
+        v-model=proc_2_wt
+        class="select processing_wt_select"
+        label="Wall thickness"
+        single-line
+        suffix="Wall thickness"
+        :items=proc_2_wt_options
+        variant="solo"
+        :bg-color=color_lightgrey
+        ></v-select>
+
+        <Expert_mode
+        v-if="!proc_2_expmode_disabled"
+        @newExpertModeValues="newExpertModeValues($event)"
+        :label=step2expmodelabel
+        :disabled=false
+        :color_green=color_green
+        :expert_mode_cost_prop=proc_2_cost_prop
+        :expert_mode_gwp_prop=proc_2_gwp_prop></Expert_mode>
+        <Expert_mode
+        v-if="proc_2_expmode_disabled"
+        :label=step2expmodelabel
+        :disabled=true
+        :color_green=color_green
+        :expert_mode_cost_prop=proc_2_cost_prop
+        :expert_mode_gwp_prop=proc_2_gwp_prop></Expert_mode>
+
+
+        <v-select
+        v-if="!moi_disabled"
+        v-model=proc_moi
+        v-on:update:model-value="[saveNewInputs()]"
+        class="select processing_moi_select"
+        label="Method of insertion"
+        single-line
+        suffix="Method of insertion"
+        :items=moi_options
+        variant="solo"
+        :bg-color=color_lightgrey
+        ></v-select>
+        <v-select
+        v-if="moi_disabled"
+        disabled
+        v-model=proc_moi
+        class="select processing_moi_select processing_moi_select_disabled"
+        label="Method of insertion"
+        single-line
+        suffix="Method of insertion"
+        :items=moi_options
+        variant="solo"
+        :bg-color=color_lightgrey
+        ></v-select>
 
         <div class="processing_buttoncontainer">
             <div class="processing_clear_buttoncontainer">
@@ -84,9 +188,10 @@
 
             <div class="processing_calc_buttoncontainer">
                 <RouterLink
-                :to='{name:"WaitingView"}'
+                :to='{name:"ProcessingView"}'
                 v-if="buttonCalculateEnabled">
                     <v-btn
+                    @click="calculateButton()"
                     :color=color_green
                     elevation="5"
                     width="225px"
@@ -111,82 +216,148 @@
 <script>
     import Expert_mode from "./Expert_mode.vue"
     export default {
-        props: ["proc_1_type_prop", "proc_1_ml_prop", "proc_1_wt_prop", "proc_1_cost_prop", "proc_1_gwp_prop", "proc_2_type_prop", "matrix_thermo_type_prop", "matrix_insertion_prop",
-        "buttonCalculateEnabled", "color_green", "color_white", "color_lightgrey", "color_darkgreen"],
-        emits: ["saveNewInputs"],
+        props: [
+        "proc_1_type_prop", "proc_1_ml_prop", "proc_1_wt_prop", "proc_1_cost_prop", "proc_1_gwp_prop", "proc_2_type_prop", 
+        "proc_2_ml_prop", "proc_2_wt_prop", "proc_2_cost_prop", "proc_2_gwp_prop",
+        "proc_moi_prop", "matrix_thermo_type_prop", "matrix_insertion_prop",
+        "buttonCalculateEnabled", "color_green", "color_lightgrey", "color_darkgreen"],
+        emits: ["saveNewInputs", "calculateButton"],
         components: {
             Expert_mode: Expert_mode
         },
         data() {
             return {
-                type_options: [""],
-                subtype_options: [""],
-                wt_options: [""],
+                proc_1_type_options: [""],
+                proc_1_wt_options: [""],
+                proc_2_type_options: [""],
+                proc_2_wt_options: [""],
                 moi_options: [""],
 
-                proc_type: this.proc_1_type_prop,
-                proc_subtype: this.proc_2_type_prop,
-                proc_ml: this.proc_1_ml_prop,
-                proc_wt: this.proc_1_wt_prop,
-                proc_moi: undefined,
+                proc_1_type: this.proc_1_type_prop,
+                proc_1_ml: this.proc_1_ml_prop,
+                proc_1_wt: this.proc_1_wt_prop,
+                proc_1_cost: this.proc_1_cost_prop,
+                proc_1_gwp: this.proc_1_gwp_prop,
+                proc_2_type: this.proc_2_type_prop,
+                proc_2_ml: this.proc_2_ml_prop,
+                proc_2_wt: this.proc_2_wt_prop,
+                proc_2_cost: this.proc_2_cost_prop,
+                proc_2_gwp: this.proc_2_gwp_prop,
+                proc_moi: this.proc_moi_prop,
 
-                expert_mode_cost: this.proc_1_cost_prop,
-                expert_mode_gwp: this.proc_1_gwp_prop,
+                step1expmodelabel: "Process step 1 expert mode",
+                step2expmodelabel: "Process step 2 expert mode",
 
-                label: "Expert mode"
+                moi_disabled: false,
+                proc_2_type_disabled: false,
+                proc_2_ml_disabled: false,
+                proc_2_wt_disabled: false,
+                proc_2_expmode_disabled: false
             }
         },
         mounted() {
             //set select-options based on matrix-thermotype and matrix-insertion
             if(this.matrix_thermo_type_prop === "Thermoplast" && this.matrix_insertion_prop === true) {
-                this.type_options = ["Isothermal forming"]
-                this.subtype_options = ["Double belt press and organosheet heating + forming"]
-                this.wt_options = [0.5, 1, 2]
+                this.proc_1_type_options = ["Isothermal forming"]
+                this.proc_2_type_options = ["Doublebeltpress & organosheet heating, forming"]
+                this.proc_1_wt_options = [0.5, 1, 2]
+                this.proc_2_wt_options = [0.5, 1, 2]
+                this.proc_2_type_disabled = false
+                this.proc_2_ml_disabled = false
+                this.proc_2_ml = 10
+                this.proc_2_wt_disabled = false
+                this.proc_2_expmode_disabled = false
                 this.moi_options = ["Thermoplastfiber"]
+                this.proc_moi = "Thermoplastfiber"
+                this.moi_disabled = true
             } else if(this.matrix_thermo_type_prop === "Thermoplast" && this.matrix_insertion_prop === false) {
-                this.type_options = ["Isothermal forming"]
-                this.subtype_options = ["Double belt press and organosheet heating + forming"]
-                this.wt_options = [0.5, 1, 2]
+                this.proc_1_type_options = ["Isothermal forming"]
+                this.proc_2_type_options = ["Doublebeltpress & organosheet heating, forming"]
+                this.proc_1_wt_options = [0.5, 1, 2]
+                this.proc_2_wt_options = [0.5, 1, 2]
+                this.proc_2_type_disabled = false
+                this.proc_2_ml_disabled = false
+                this.proc_2_ml = 10
+                this.proc_2_wt_disabled = false
+                this.proc_2_expmode_disabled = false
                 this.moi_options = ["Thermoplast powder", "Thermoplast foil"]
+                this.moi_disabled = false
             } else if(this.matrix_thermo_type_prop === "Thermoset") {
-                this.type_options = ["Wet compression moulding", "Resin transfer moulding"]
-                this.subtype_options = [""]
-                this.wt_options = [0.5, 1, 2]
+                this.proc_1_type_options = ["Wet Compression Moulding", "Resin Transfer Moulding"]
+                this.proc_2_type_options = [""]
+                this.proc_2_type = undefined
+                this.proc_2_type_disabled = true
+                this.proc_2_ml_disabled = true
+                this.proc_2_ml = undefined
+                this.proc_1_wt_options = [0.5, 1, 2]
+                this.proc_2_wt_options = [""]
+                this.proc_2_wt = undefined
+                this.proc_2_wt_disabled = true
+                this.proc_2_expmode_disabled = true
                 this.moi_options = ["Thermoset (liquid)"]
+                this.proc_moi = "Thermoset (liquid)"
+                this.moi_disabled = true
+            }
+            this.saveNewInputs()
+            //reposition processing-2-mass-loss-percent if Process-step-1-expmode "open"
+            if(this.proc_1_cost !== undefined || this.proc_1_gwp !== undefined) {
+                document.getElementById("proc_2_ml").classList.add("processing_2_ml_percentage_2")
             }
         },
         methods: {
             newExpertModeValues(new_values) {
-                this.expert_mode_cost = new_values[0]
-                this.expert_mode_gwp = new_values[1]
+                if(new_values[2] === this.step1expmodelabel) {
+                    this.proc_1_cost = new_values[0]
+                    this.proc_1_gwp = new_values[1]
+                } else if(new_values[2] === this.step2expmodelabel) {
+                    this.proc_2_cost = new_values[0]
+                    this.proc_2_gwp = new_values[1]
+                }
                 this.saveNewInputs()
-                this.log()
+                // this.log()
             },
             saveNewInputs() {
+                if(this.proc_moi === "") {
+                    this.proc_moi = undefined
+                }
                 //setTimeout needed to properly update slider values
                 setTimeout(() => {
                     // this.log()
                     this.$emit(
                         "saveNewInputs",
                     {
-                        proc_type: this.proc_type,
-                        proc_subtype: this.proc_subtype,
-                        proc_ml: this.proc_ml,
-                        proc_wt: this.proc_wt,
-                        proc_moi: this.proc_moi,
-                        proc_cost: this.expert_mode_cost,
-                        proc_gwp: this.expert_mode_gwp
+                        proc_1_type: this.proc_1_type,
+                        proc_1_ml: this.proc_1_ml,
+                        proc_1_wt: this.proc_1_wt,
+                        proc_1_cost: this.proc_1_cost,
+                        proc_1_gwp: this.proc_1_gwp,
+                        proc_2_type: this.proc_2_type,
+                        proc_2_ml: this.proc_2_ml,
+                        proc_2_wt: this.proc_2_wt,
+                        proc_2_cost: this.proc_2_cost,
+                        proc_2_gwp: this.proc_2_gwp,
+                        proc_moi: this.proc_moi
                     })
                 }, 20);
             },
+            updateWasteUI() {
+                document.getElementById("proc_2_ml").classList.toggle("processing_2_ml_percentage_2")
+            },
+            calculateButton() {
+                this.$emit("calculateButton", undefined)
+            },
             log() {
-                console.log("proc_type:" + this.proc_type)
-                console.log("proc_subtype:" + this.proc_subtype)
-                console.log("proc_ml:" + this.proc_ml)
-                console.log("proc_wt:" + this.proc_wt)
+                console.log("proc_1_type:" + this.proc_1_type)
+                console.log("proc_1_ml:" + this.proc_1_ml)
+                console.log("proc_1_wt:" + this.proc_1_wt)
+                console.log("proc_1_cost:" + this.proc_1_cost)
+                console.log("proc_1_gwp:" + this.proc_1_gwp)
+                console.log("proc_2_type:" + this.proc_2_type)
+                console.log("proc_2_ml:" + this.proc_2_ml)
+                console.log("proc_2_wt:" + this.proc_2_wt)
+                console.log("proc_2_cost:" + this.proc_2_cost)
+                console.log("proc_2_gwp:" + this.proc_2_gwp)
                 console.log("proc_moi:" + this.proc_moi)
-                console.log("proc_expmode_cost:" + this.expert_mode_cost)
-                console.log("proc_expmode_gwp:" + this.expert_mode_gwp)
             }
         }
     }

@@ -2,16 +2,20 @@
     margin: 20px 10px 10px 10px;
 }
 
-.waste_fvc_text {
+.waste_fmc_text {
     margin: 20px 10px 0px 10px;
 }
 
-.waste_fvc_percentage {
+.waste_fmc_percentage {
     top: 160px;
 }
 
 .waste_coarse_text {
     margin: 10px 10px 0px 10px;
+}
+
+.waste_coarse_text_disabled {
+    opacity: 40%;
 }
 
 .waste_coarse_percentage {

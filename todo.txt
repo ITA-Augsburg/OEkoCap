@@ -4,23 +4,16 @@ aktuelle arbeitszeit
 BUGS
 slider ergeben werte mit 6 nachkommastellen wenn man die pfeiltasten drückt
 auf waitingView sind 2 sets von <, > buttons
-wenn auf processingView mandatory values gewählt aber dann auf next-button gedrückt dann wird progressbar=99 bzw kommt man nicht weiter auf waitingView
-wenn neu gestartet aber seite nicht neu geladen dann bleibt progreessbar immer auf 0 (siehe video)
-clear_all button hat komischen hover-rahmen
-sachen noch im monatsplaner
-
-
 
 INFO/FRAGEN
-sollen sowohl prozess und subprozess eine eigene expert-mode eingabe haben? (in der input-json gibt es expert-mode felder für proc1 und proc2)
-wenn matrix-thermotype thermoset, welche auswahl gibt es bei processing-subtype bzw soll processing-subtype angezeigt werden?
-ich brauche die genaue Bezeichnungen der app_input-json felder (z.B.: "Thermoplast Powder" oder "thermoplast_powder" oder "thermoplastPowder")
-in der frontend habe ich jetzt nicht nur die gui elemente sondern auch die logik teilweise. sollte die verwaltung von app_input im backend passieren? ist es schlimm dass es im frontend ist?
+siehe example_user_input_1 -> kann es sein dass shredding_1 Coarse ist und shredding_2 nichts ist?
+entweder bei der exeaufruf prüfen, sonst auf email antwort warten
 
+separation.type = ChemicalFibreReclamation steht noch aus
 
 TODO
 
-wenn werte von app_input sich ändern dann auch clearAppInput() ändern!
+wenn default-werte von app_input sich ändern dann auch clearAppInput() ändern!
 
 waste -> separation -> matrix -> textile -> processing
 error, waiting, results
