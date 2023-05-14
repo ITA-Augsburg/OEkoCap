@@ -501,6 +501,31 @@ export default {
       this.footerProgressBar = 99
       this.formatAppInputKeys()
       this.log()
+      // console.log(JSON.stringify(this.app_input))
+      let url = "https://localhost/meine_dateien/ita_webapp_back/submit_input.php";
+      fetch(url, {
+          method: "POST",
+          // mode: "cors", // no-cors, *cors, same-origin
+          // origin: "12.34.56.78:80",
+          headers: {
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify(this.app_input)
+      }).then(res => {
+          return res.text();
+      }).then(data => {
+          console.log("in then block");
+          console.log(data);
+          // navigate to resultsView, pass data as prop
+      })
+      //if server not responding notify user
+      .catch(rej => {
+          // navigate to errorView, pass error as prop
+
+          // console.log("Fehler beim Serveraufruf");
+          console.log("in catch block");
+          console.log(rej);
+      });
     },
     log() {
       console.log(JSON.stringify(this.app_input, null, 2))

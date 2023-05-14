@@ -1,13 +1,14 @@
-aktuelle arbeitszeit
 
 
 BUGS
+polymer "fmc_percent" muss "fvc_percent" sein in input.json
 slider ergeben werte mit 6 nachkommastellen wenn man die pfeiltasten drückt
 auf waitingView sind 2 sets von <, > buttons
 
 INFO/FRAGEN
 siehe example_user_input_1 -> kann es sein dass shredding_1 Coarse ist und shredding_2 nichts ist?
-entweder bei der exeaufruf prüfen, sonst auf email antwort warten
+	beim exe-aufruf möglich, im frontend zur zeit nicht
+soll es möglich sein textile-massloss als "" übergeben? bsp-inp-1 ist so.
 
 separation.type = ChemicalFibreReclamation steht noch aus
 
