@@ -1,7 +1,8 @@
 
 
 BUGS
-polymer "fmc_percent" muss "fvc_percent" sein in input.json
+"ladebildschirm" waitingView kann nicht angezeigt werden
+zahl-buttons on-click werden kurz rot?
 slider ergeben werte mit 6 nachkommastellen wenn man die pfeiltasten drückt
 auf waitingView sind 2 sets von <, > buttons
 
@@ -14,20 +15,15 @@ separation.type = ChemicalFibreReclamation steht noch aus
 
 TODO
 
+App.vue aufteilen
+Router props evnt. richtig übergeben
+app_input props als eine "app_input" prop übergeben
+App.vue -> calcButton(): auf error-seite navigieren wenn promise.reject
+
+
 wenn default-werte von app_input sich ändern dann auch clearAppInput() ändern!
 
-waste -> separation -> matrix -> textile -> processing
-error, waiting, results
-
--eingabe-json initialisieren mit undefined überall
-
--weiter knopf: prüfen ob mandatory inputs getätigt, optionale inputs sollen (wenn nicht gewählt) mit defaultwert versehen werden.
-
--zurück knopf, frühere zahl-knöpfe: zurück auf die jeweilige seite und inputfelder entsprechend der früheren auswahl anzeigen.
-
--spätere zahl-knöpfe: nicht wählbar
-
--header links: app_input auf undefined stellen und seite wächseln
+weiter knopf: prüfen ob mandatory inputs getätigt, optionale inputs sollen (wenn nicht gewählt) mit defaultwert versehen werden.
 
 WASTE
 	type: Cut-Off	->

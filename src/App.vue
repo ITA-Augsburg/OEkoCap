@@ -1,5 +1,6 @@
 <script setup>
   import Header from "./components/Header.vue"
+import router from "./router";
 </script>
 
 <template>
@@ -32,7 +33,7 @@
 
     :matrix_thermo_type_prop=this.app_input.polymer.thermo_type
     :matrix_polymer_prop=this.app_input.polymer.matrix_type
-    :matrix_fmc_prop=this.app_input.polymer.fmc_percent
+    :matrix_fmc_prop=this.app_input.polymer.fvc_percent
     :matrix_insertion_prop=this.matrixInsertionCheckbox
     :matrix_cost_prop=this.app_input.polymer.euro_per_kg
     :matrix_gwp_prop=this.app_input.polymer.co2_equv_per_kg
@@ -58,6 +59,8 @@
 
     :proc_moi_prop=this.processingMethodOfInsertion
 
+    :app_output_prop=this.appOutput
+
     @clearAppInput="clearAppInput()"
     @updateInputFooter="updateInputFooter()"
     @saveNewInputs="saveNewInputs($event)"
@@ -78,11 +81,13 @@ export default {
     button3enabled: false,
     button4enabled: false,
     button5enabled: false,
-    buttonCalculateEnabled: false,
+    buttonCalculateEnabled: true,
     footerProgressBar: 0,
 
     matrixInsertionCheckbox: false,
     processingMethodOfInsertion: undefined,
+
+    appOutput: undefined,
 
     //default values are set here, these are passed to and visualized in child-components
     app_input: {
@@ -116,7 +121,7 @@ export default {
       "polymer": {
         "thermo_type": undefined,
         "matrix_type": undefined,
-        "fmc_percent": 25,
+        "fvc_percent": 25,
         "feedstock_type": "biodegredable",
         "state_of_origin": "virgin",
         "euro_per_kg": undefined,
@@ -225,7 +230,7 @@ export default {
 
         this.app_input.polymer.thermo_type = new_values.matrix_type
         this.app_input.polymer.matrix_type = new_values.matrix_polymer
-        this.app_input.polymer.fmc_percent = new_values.matrix_fmc
+        this.app_input.polymer.fvc_percent = new_values.matrix_fmc
         this.matrixInsertionCheckbox = new_values.matrix_insertion
         this.app_input.polymer.euro_per_kg = new_values.matrix_cost
         this.app_input.polymer.co2_equv_per_kg = new_values.matrix_gwp
@@ -356,7 +361,7 @@ export default {
         "polymer": {
           "thermo_type": undefined,
           "matrix_type": undefined,
-          "fmc_percent": 25,
+          "fvc_percent": 25,
           "feedstock_type": "biodegredable",
           "state_of_origin": "virgin",
           "euro_per_kg": undefined,
@@ -498,25 +503,36 @@ export default {
       if(this.app_input.processing_2.co2_equv_per_kg === undefined) this.app_input.processing_2.co2_equv_per_kg = ""
     },
     calculateButton() {
+      router.push({name: "WaitingView"})
       this.footerProgressBar = 99
       this.formatAppInputKeys()
       this.log()
+      
       // console.log(JSON.stringify(this.app_input))
-      let url = "https://localhost/meine_dateien/ita_webapp_back/submit_input.php";
-      fetch(url, {
+      let url1 = "https://localhost/meine_dateien/ita_webapp_back/submit_input.php";
+      fetch(url1, {
           method: "POST",
           // mode: "cors", // no-cors, *cors, same-origin
           // origin: "12.34.56.78:80",
-          headers: {
-              "Content-Type": "application/json"
-          },
+          headers: {"Content-Type": "application/json"},
           body: JSON.stringify(this.app_input)
       }).then(res => {
           return res.text();
       }).then(data => {
-          console.log("in then block");
+          // console.log("in then block");
           console.log(data);
-          // navigate to resultsView, pass data as prop
+          let url2 = "https://localhost/meine_dateien/ita_webapp_back/get_output.php"
+          return fetch(url2, {
+            method: "POST",
+            headers: {"Content-Type": "application/text"},
+            body: data
+          })
+      }).then(res => {
+        return res.text()
+      }).then(data => {
+        console.log(data)
+        this.appOutput = data;
+        router.push({name: "ResultsView"})
       })
       //if server not responding notify user
       .catch(rej => {
