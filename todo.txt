@@ -1,7 +1,6 @@
 
 
 BUGS
-"ladebildschirm" waitingView kann nicht angezeigt werden
 zahl-buttons on-click werden kurz rot?
 slider ergeben werte mit 6 nachkommastellen wenn man die pfeiltasten drückt
 auf waitingView sind 2 sets von <, > buttons

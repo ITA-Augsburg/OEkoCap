@@ -1,3 +1,7 @@
+<!-- <script setup>
+    import router from "../router";
+</script> -->
+
 <template>
 
     <div class="input_area">
@@ -188,7 +192,7 @@
 
             <div class="processing_calc_buttoncontainer">
                 <RouterLink
-                :to='{name:"ProcessingView"}'
+                :to='{name:"WaitingView"}'
                 v-if="buttonCalculateEnabled">
                     <v-btn
                     @click="calculateButton()"

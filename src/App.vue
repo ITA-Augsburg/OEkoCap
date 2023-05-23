@@ -329,6 +329,7 @@ export default {
       }
     },
     clearAppInput() {
+      // this.calculateButton()
       // console.log("App.vue clearAppInput() called")
       this.app_input = {
         "waste": {
@@ -398,6 +399,7 @@ export default {
       this.footerProgressBar = 0
       this.matrixInsertionCheckbox = false
       this.processingMethodOfInsertion = undefined
+      this.appOutput = undefined
       // this.log()
     },
     setWasteCoarseProp() {
@@ -503,45 +505,45 @@ export default {
       if(this.app_input.processing_2.co2_equv_per_kg === undefined) this.app_input.processing_2.co2_equv_per_kg = ""
     },
     calculateButton() {
-      router.push({name: "WaitingView"})
       this.footerProgressBar = 99
       this.formatAppInputKeys()
       this.log()
       
       // console.log(JSON.stringify(this.app_input))
       let url1 = "https://localhost/meine_dateien/ita_webapp_back/submit_input.php";
-      fetch(url1, {
-          method: "POST",
-          // mode: "cors", // no-cors, *cors, same-origin
-          // origin: "12.34.56.78:80",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify(this.app_input)
-      }).then(res => {
-          return res.text();
-      }).then(data => {
-          // console.log("in then block");
-          console.log(data);
-          let url2 = "https://localhost/meine_dateien/ita_webapp_back/get_output.php"
-          return fetch(url2, {
+        fetch(url1, {
             method: "POST",
-            headers: {"Content-Type": "application/text"},
-            body: data
-          })
-      }).then(res => {
-        return res.text()
-      }).then(data => {
-        console.log(data)
-        this.appOutput = data;
-        router.push({name: "ResultsView"})
-      })
-      //if server not responding notify user
-      .catch(rej => {
-          // navigate to errorView, pass error as prop
+            // mode: "cors", // no-cors, *cors, same-origin
+            // origin: "12.34.56.78:80",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(this.app_input)
+        }).then(res => {
+            return res.text();
+        }).then(data => {
+            // console.log("in then block");
+            console.log(data);
+            let url2 = "https://localhost/meine_dateien/ita_webapp_back/get_output.php"
+            return fetch(url2, {
+              method: "POST",
+              headers: {"Content-Type": "application/text"},
+              body: data
+            })
+        }).then(res => {
+          return res.text()
+        }).then(data => {
+          console.log(data)
+          this.appOutput = data;
+          router.push({name: "ResultsView"})
+        })
+        //if server not responding notify user
+        .catch(rej => {
+            // navigate to errorView, pass error as prop
 
-          // console.log("Fehler beim Serveraufruf");
-          console.log("in catch block");
-          console.log(rej);
-      });
+            // console.log("Fehler beim Serveraufruf");
+            console.log("in catch block");
+            console.log(rej);
+            router.push({name: "ErrorView"})
+        });
     },
     log() {
       console.log(JSON.stringify(this.app_input, null, 2))
