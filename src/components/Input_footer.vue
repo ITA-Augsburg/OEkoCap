@@ -19,7 +19,7 @@
 <!-- BUTTON BACK -->
                 <router-link
                 :to=backButtonRoute
-                v-if="this.id !== 'waiting' || this.id !== 'err' || this.id !== 'results'">
+                v-if="this.id !== 'waiting' && this.id !== 'err' && this.id !== 'results'">
                     <v-btn
                     icon=""
                     @click="backButton()"
@@ -50,7 +50,7 @@
                 ><p class="footer_button_text">1</p></v-btn>
                 <router-link
                 :to='{name: "WasteView"}'
-                v-if="this.id !== 'waste'">
+                v-if="this.id !== 'waste' && this.id !== 'waiting' && this.id !== 'err' && this.id !== 'results'">
                     <v-btn
                     icon=""
                     :color=color_lightgrey
@@ -59,6 +59,15 @@
                     height="45px"
                     ><p class="footer_button_text">1</p></v-btn>
                 </router-link>
+                <v-btn
+                v-if="this.id === 'waiting' || this.id === 'err' || this.id === 'results'"
+                disabled
+                icon=""
+                :color=color_lightgrey
+                elevation="12"
+                width="45px"
+                height="45px"
+                ><p class="footer_button_text">1</p></v-btn>
 
 <!-- BUTTON 2 -->
                 <v-btn
@@ -187,7 +196,7 @@
 <!-- BUTTON NEXT -->
                 <router-link
                 :to=nextButtonRoute
-                v-if="this.id !== 'waiting' || this.id !== 'err' || this.id !== 'results'">
+                v-if="this.id !== 'waiting' && this.id !== 'err' && this.id !== 'results'">
                     <v-btn
                     icon=""
                     @click="nextButton()"

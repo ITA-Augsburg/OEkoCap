@@ -27,7 +27,7 @@
         <canvas id="line_chart" style="max-width: 420px;padding-left:30px;"></canvas>
         <canvas id="bar_chart" style="max-width: 420px;padding-left:30px;"></canvas>
         <canvas id="pie_chart"></canvas>
-        <canvas id="gwp_minmax" style="max-width: 420px;padding-left:30px;margin-top:50px;"></canvas>
+        <canvas id="gwp_minmax" style="max-width: 420px;padding-left:30px;"></canvas>
         <canvas id="flexuralStrength0_MPa" style="max-width: 420px;padding-left:30px;margin-top:50px;"></canvas>
 
     </div>

@@ -1,9 +1,9 @@
 
 
 BUGS
+exe aufruf cors problem
 zahl-buttons on-click werden kurz rot?
 slider ergeben werte mit 6 nachkommastellen wenn man die pfeiltasten drückt
-auf waitingView sind 2 sets von <, > buttons
 
 INFO/FRAGEN
 siehe example_user_input_1 -> kann es sein dass shredding_1 Coarse ist und shredding_2 nichts ist?

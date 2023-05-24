@@ -513,7 +513,7 @@ export default {
       let url1 = "https://localhost/meine_dateien/ita_webapp_back/submit_input.php";
         fetch(url1, {
             method: "POST",
-            // mode: "cors", // no-cors, *cors, same-origin
+            mode: "cors", // no-cors, *cors, same-origin
             // origin: "12.34.56.78:80",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(this.app_input)
@@ -525,6 +525,7 @@ export default {
             let url2 = "https://localhost/meine_dateien/ita_webapp_back/get_output.php"
             return fetch(url2, {
               method: "POST",
+              mode: "cors",
               headers: {"Content-Type": "application/text"},
               body: data
             })
