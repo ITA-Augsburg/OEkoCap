@@ -27,7 +27,7 @@
         :max="40"
         :step="0.1"
         ></v-slider>
-        <p class="percentage processing_1_ml_percentage">{{ proc_1_ml }}%</p>
+        <p class="percentage processing_1_ml_percentage">{{ Math.round(proc_1_ml * 10) / 10 }}%</p>
 
         <v-select
         v-model=proc_1_wt
@@ -105,7 +105,7 @@
         :step="0.1"
         ></v-slider>
         <p v-if="!proc_2_ml_disabled"
-        id="proc_2_ml" class="percentage processing_2_ml_percentage">{{ proc_2_ml }}%</p>
+        id="proc_2_ml" class="percentage processing_2_ml_percentage">{{ Math.round(proc_2_ml * 10) / 10 }}%</p>
 
         <v-select
         v-if="!proc_2_wt_disabled"

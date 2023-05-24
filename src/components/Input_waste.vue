@@ -76,7 +76,7 @@
         ></v-slider>
         <p
         v-if="waste_type === 'End of Life' && size1dot5 === true"
-        class="percentage waste_coarse_percentage">{{ waste_coarse }}%</p>
+        class="percentage waste_coarse_percentage">{{ Math.round(waste_coarse * 10) / 10 }}%</p>
 
         <Expert_mode
         v-if="!coarse_expmode_disabled"
@@ -109,7 +109,7 @@
         :step="0.1"
         v-model="waste_fine"
         ></v-slider>
-        <p id="fine_percentage" class="percentage waste_fine_percentage">{{ waste_fine }}%</p>
+        <p id="fine_percentage" class="percentage waste_fine_percentage">{{ Math.round(waste_fine * 10) / 10 }}%</p>
 
         <Expert_mode
         @newExpertModeValues="newExpertModeValues($event)"
