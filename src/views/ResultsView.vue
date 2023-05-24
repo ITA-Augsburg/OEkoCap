@@ -8,7 +8,8 @@
     <Input_subheader
     :text_3="subheader_results"></Input_subheader>
     <Results
-    :app_output_prop=app_output_prop></Results>
+    :app_output_prop=app_output_prop
+    :color_green=color_green></Results>
     <Input_footer
     :id=id
     :progressValue=progressValue
