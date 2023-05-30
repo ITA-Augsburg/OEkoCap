@@ -480,9 +480,9 @@ export default {
       if(this.app_input.textile_process.type === "Dry-laid") this.app_input.textile_process.type = "Carding"
       if(this.app_input.textile_process.type === "Air-laid") this.app_input.textile_process.type = "AirLaying"
       if(this.app_input.textile_process.type === "Wet-laid") this.app_input.textile_process.type = "WetLaying"
-      if(this.app_input.textile_process.type === "Dry-laid with Thermoplastfiber") this.app_input.textile_process.type = "CardingWithTF"
-      if(this.app_input.textile_process.type === "Air-laid with Thermoplastfiber") this.app_input.textile_process.type = "AirLayingWithTF"
-      if(this.app_input.textile_process.type === "Wet-laid with Thermoplastfiber") this.app_input.textile_process.type = "WetLayingWithTF"
+      if(this.app_input.textile_process.type === "Dry-laid with Thermoplastfiber") this.app_input.textile_process.type = "Carding"
+      if(this.app_input.textile_process.type === "Air-laid with Thermoplastfiber") this.app_input.textile_process.type = "AirLaying"
+      if(this.app_input.textile_process.type === "Wet-laid with Thermoplastfiber") this.app_input.textile_process.type = "WetLaying"
       if(this.app_input.textile_process.euro_per_kg === undefined) this.app_input.textile_process.euro_per_kg = ""
       if(this.app_input.textile_process.co2_equv_per_kg === undefined) this.app_input.textile_process.co2_equv_per_kg = ""
       //processing

@@ -76,7 +76,7 @@
 <script>
     import Expert_mode from "./Expert_mode.vue"
     export default {
-        props: ["matrix_insertion_prop",
+        props: ["matrix_insertion_prop", "waste_coarse_prop", "waste_fine_prop",
         "textile_type_prop", "textile_ml_prop", "textile_tp_prop", "textile_aw_prop", "textile_cost_prop", "textile_gwp_prop",
         "color_green", "color_lightgrey"],
         emits: ["saveNewInputs"],
@@ -103,9 +103,19 @@
         },
         mounted() {
             if(this.matrix_insertion_prop) {
-                this.type_options = ["Dry-laid with Thermoplastfiber", "Air-laid with Thermoplastfiber", "Wet-laid with Thermoplastfiber"]
+                if(this.waste_coarse_prop === undefined && this.waste_fine_prop !== undefined ||
+                this.waste_coarse_prop !== undefined && this.waste_fine_prop !== undefined) {
+                    this.type_options = ["Wet-laid with Thermoplastfiber"]
+                } else {
+                    this.type_options = ["Dry-laid with Thermoplastfiber", "Air-laid with Thermoplastfiber", "Wet-laid with Thermoplastfiber"]
+                }
             } else {
-                this.type_options = ["Dry-laid", "Air-laid", "Wet-laid"]
+                if(this.waste_coarse_prop === undefined && this.waste_fine_prop !== undefined ||
+                this.waste_coarse_prop !== undefined && this.waste_fine_prop !== undefined) {
+                    this.type_options = ["Wet-laid"]
+                } else {
+                    this.type_options = ["Dry-laid", "Air-laid", "Wet-laid"]
+                }
             }
             if(this.textile_type === "Dry-laid" || this.textile_type === "Dry-laid with Thermoplastfiber") {
                     this.ml_options = [5, 15, 5]

@@ -12,6 +12,8 @@
     :color_lightgrey=color_lightgrey
 
     :matrix_insertion_prop=matrix_insertion_prop
+    :waste_coarse_prop=waste_coarse_prop
+    :waste_fine_prop=waste_fine_prop
     
     :textile_type_prop=textile_type_prop
     :textile_ml_prop=textile_ml_prop
