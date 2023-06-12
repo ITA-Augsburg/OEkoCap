@@ -275,12 +275,6 @@
                         waste_size: this.size1dot5,
                         waste_fmc: this.waste_fmc,
 
-                        // waste_coarse: this.waste_coarse,
-                        // waste_coarse_cost: this.coarse_cost,
-                        // waste_coarse_gwp: this.coarse_gwp,
-                        // waste_fine: this.waste_fine,
-                        // waste_fine_cost: this.fine_cost,
-                        // waste_fine_gwp: this.fine_gwp,
                         shred_1_type: this.shred_1_type,
                         shred_1_ml: this.shred_1_ml,
                         shred_1_gwp: this.shred_1_gwp,

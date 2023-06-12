@@ -81,7 +81,7 @@ import router from "./router";
 <script>
 export default {
   data: () => ({
-    button2enabled: false,
+    button2enabled: true,
     button3enabled: false,
     button4enabled: false,
     button5enabled: false,
@@ -106,7 +106,7 @@ export default {
         "co2_equv_per_kg": undefined
       },
       "shredding_1": {
-        "type": "Coarse",
+        "type": undefined,
         "mass_loss_percent": undefined,
         "euro_per_kg": undefined,
         "co2_equv_per_kg": undefined
@@ -191,7 +191,8 @@ export default {
         if(this.app_input.separation.type !== undefined) {
           this.button3enabled = true
         }
-        // this.logSep()
+        this.logWaste()
+        this.logSep()
 
       } else if(Object.prototype.hasOwnProperty.call(new_values, "matrix_type")) {
         //reset processing values if matrix-type or matrix-method-of-insertion changes since processing values depend on matrix-type and matrix-method-of-insertion
@@ -330,7 +331,7 @@ export default {
           "co2_equv_per_kg": undefined
         },
         "shredding_1": {
-          "type": "Coarse",
+          "type": undefined,
           "mass_loss_percent": undefined,
           "euro_per_kg": undefined,
           "co2_equv_per_kg": undefined
@@ -378,7 +379,7 @@ export default {
           "co2_equv_per_kg": undefined
         }
       }
-      this.button2enabled = false
+      this.button2enabled = true
       this.button3enabled = false
       this.button4enabled = false
       this.button5enabled = false
