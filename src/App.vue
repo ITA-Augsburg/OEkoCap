@@ -184,7 +184,7 @@ export default {
         if(this.app_input.waste.type !== undefined) {
           this.button2enabled = true
         }
-        this.logWaste()
+        // this.logWaste()
 
       } else if(Object.prototype.hasOwnProperty.call(new_values, "sep_type")) {
         this.app_input.separation.type = new_values.sep_type
@@ -195,7 +195,7 @@ export default {
         if(this.app_input.separation.type !== undefined) {
           this.button3enabled = true
         }
-        this.logSep()
+        // this.logSep()
 
       } else if(Object.prototype.hasOwnProperty.call(new_values, "matrix_type")) {
         //reset processing values if matrix-type or matrix-method-of-insertion changes since processing values depend on matrix-type and matrix-method-of-insertion
@@ -268,13 +268,13 @@ export default {
       } else if(Object.prototype.hasOwnProperty.call(new_values, "proc_1_type")) {
         this.app_input.processing_1.type = new_values.proc_1_type
         this.app_input.processing_1.mass_loss_percent = new_values.proc_1_ml
-        this.app_input.processing_1.wandstärke_mm = new_values.proc_1_wt
+        this.app_input.processing_1.wandstärke_mm = new_values.proc_wt
         this.app_input.processing_1.euro_per_kg = new_values.proc_1_cost
         this.app_input.processing_1.co2_equv_per_kg = new_values.proc_1_gwp
 
         this.app_input.processing_2.type = new_values.proc_2_type
         this.app_input.processing_2.mass_loss_percent = new_values.proc_2_ml
-        this.app_input.processing_2.wandstärke_mm = new_values.proc_2_wt
+        this.app_input.processing_2.wandstärke_mm = new_values.proc_wt
         this.app_input.processing_2.euro_per_kg = new_values.proc_2_cost
         this.app_input.processing_2.co2_equv_per_kg = new_values.proc_2_gwp
 
@@ -301,7 +301,6 @@ export default {
             this.buttonCalculateEnabled = false
           }
         }
-        
 
         // this.logProcessing()
       }
@@ -538,16 +537,18 @@ export default {
     logProcessing() {
       console.log(
         this.app_input.processing_1.type,
-        this.app_input.processing_2.type,
         this.app_input.processing_1.mass_loss_percent,
-        this.app_input.processing_1.wandstärke_mm,
-        this.processingMethodOfInsertion,
         this.app_input.processing_1.euro_per_kg,
         this.app_input.processing_1.co2_equv_per_kg,
-        // this.app_input.processing_2.mass_loss_percent,
-        // this.app_input.processing_2.wandstärke_mm,
-        // this.app_input.processing_2.euro_per_kg,
-        // this.app_input.processing_2.co2_equv_per_kg
+
+        this.app_input.processing_2.type,
+        this.app_input.processing_2.mass_loss_percent,
+        this.app_input.processing_2.euro_per_kg,
+        this.app_input.processing_2.co2_equv_per_kg,
+
+        this.app_input.processing_1.wandstärke_mm,
+        this.app_input.processing_2.wandstärke_mm,
+        this.processingMethodOfInsertion,
       )
     }
   },

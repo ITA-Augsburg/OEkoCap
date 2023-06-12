@@ -29,18 +29,6 @@
         ></v-slider>
         <p class="percentage processing_1_ml_percentage">{{ Math.round(proc_1_ml * 10) / 10 }}%</p>
 
-        <v-select
-        v-model=proc_1_wt
-        v-on:update:model-value="[saveNewInputs()]"
-        class="select processing_wt_select"
-        label="Wall thickness"
-        single-line
-        suffix="Wall thickness"
-        :items=proc_1_wt_options
-        variant="solo"
-        :bg-color=color_lightgrey
-        ></v-select>
-
         <Expert_mode
         @newExpertModeValues="newExpertModeValues($event)"
         @updateWasteUI="updateWasteUI()"
@@ -63,23 +51,9 @@
         variant="solo"
         :bg-color=color_green
         ></v-select>
-        <v-select
-        v-if="proc_2_type_disabled"
-        disabled
-        v-model=proc_2_type
-        class="select processing_2_type_select"
-        label="Type - Step 2"
-        single-line
-        suffix="Type - Step 2"
-        :items=proc_2_type_options
-        variant="solo"
-        :bg-color=color_green
-        ></v-select>
 
         <p v-if="!proc_2_ml_disabled"
         class="text processing_ml_text">Mass loss - Step 2</p>
-        <p v-if="proc_2_ml_disabled"
-        class="text processing_ml_text processing_2_ml_text_disabled">Mass loss - Step 2</p>
         <v-slider
         v-if="!proc_2_ml_disabled"
         v-model=proc_2_ml
@@ -92,45 +66,8 @@
         :max="40"
         :step="0.1"
         ></v-slider>
-        <v-slider
-        v-if="proc_2_ml_disabled"
-        disabled
-        v-model=proc_2_ml
-        class="slider"
-        :color=color_green
-        :thumb-color=color_green
-        thumb-size="20"
-        :min="0.5"
-        :max="40"
-        :step="0.1"
-        ></v-slider>
         <p v-if="!proc_2_ml_disabled"
         id="proc_2_ml" class="percentage processing_2_ml_percentage">{{ Math.round(proc_2_ml * 10) / 10 }}%</p>
-
-        <v-select
-        v-if="!proc_2_wt_disabled"
-        v-model=proc_2_wt
-        v-on:update:model-value="[saveNewInputs()]"
-        class="select processing_wt_select"
-        label="Wall thickness"
-        single-line
-        suffix="Wall thickness"
-        :items=proc_2_wt_options
-        variant="solo"
-        :bg-color=color_lightgrey
-        ></v-select>
-        <v-select
-        v-if="proc_2_wt_disabled"
-        disabled
-        v-model=proc_2_wt
-        class="select processing_wt_select"
-        label="Wall thickness"
-        single-line
-        suffix="Wall thickness"
-        :items=proc_2_wt_options
-        variant="solo"
-        :bg-color=color_lightgrey
-        ></v-select>
 
         <Expert_mode
         v-if="!proc_2_expmode_disabled"
@@ -140,14 +77,18 @@
         :color_green=color_green
         :expert_mode_cost_prop=proc_2_cost_prop
         :expert_mode_gwp_prop=proc_2_gwp_prop></Expert_mode>
-        <Expert_mode
-        v-if="proc_2_expmode_disabled"
-        :label=step2expmodelabel
-        :disabled=true
-        :color_green=color_green
-        :expert_mode_cost_prop=proc_2_cost_prop
-        :expert_mode_gwp_prop=proc_2_gwp_prop></Expert_mode>
 
+        <v-select
+        v-model=proc_wt
+        v-on:update:model-value="[saveNewInputs()]"
+        class="select processing_wt_select"
+        label="Wall thickness"
+        single-line
+        suffix="Wall thickness"
+        :items=proc_wt_options
+        variant="solo"
+        :bg-color=color_lightgrey
+        ></v-select>
 
         <v-select
         v-if="!moi_disabled"
@@ -229,19 +170,17 @@
         data() {
             return {
                 proc_1_type_options: [""],
-                proc_1_wt_options: [""],
+                proc_wt_options: [""],
                 proc_2_type_options: [""],
-                proc_2_wt_options: [""],
                 moi_options: [""],
 
                 proc_1_type: this.proc_1_type_prop,
                 proc_1_ml: this.proc_1_ml_prop,
-                proc_1_wt: this.proc_1_wt_prop,
+                proc_wt: this.proc_1_wt_prop,
                 proc_1_cost: this.proc_1_cost_prop,
                 proc_1_gwp: this.proc_1_gwp_prop,
                 proc_2_type: this.proc_2_type_prop,
                 proc_2_ml: this.proc_2_ml_prop,
-                proc_2_wt: this.proc_2_wt_prop,
                 proc_2_cost: this.proc_2_cost_prop,
                 proc_2_gwp: this.proc_2_gwp_prop,
                 proc_moi: this.proc_moi_prop,
@@ -261,8 +200,7 @@
             if(this.matrix_thermo_type_prop === "Thermoplast" && this.matrix_insertion_prop === true) {
                 this.proc_1_type_options = ["Isothermal forming"]
                 this.proc_2_type_options = ["Doublebeltpress & organosheet heating, forming"]
-                this.proc_1_wt_options = [0.5, 1, 2]
-                this.proc_2_wt_options = [0.5, 1, 2]
+                this.proc_wt_options = [0.5, 1, 2]
                 this.proc_2_type_disabled = false
                 this.proc_2_ml_disabled = false
                 this.proc_2_ml = 10
@@ -274,8 +212,7 @@
             } else if(this.matrix_thermo_type_prop === "Thermoplast" && this.matrix_insertion_prop === false) {
                 this.proc_1_type_options = ["Isothermal forming"]
                 this.proc_2_type_options = ["Doublebeltpress & organosheet heating, forming"]
-                this.proc_1_wt_options = [0.5, 1, 2]
-                this.proc_2_wt_options = [0.5, 1, 2]
+                this.proc_wt_options = [0.5, 1, 2]
                 this.proc_2_type_disabled = false
                 this.proc_2_ml_disabled = false
                 this.proc_2_ml = 10
@@ -290,8 +227,7 @@
                 this.proc_2_type_disabled = true
                 this.proc_2_ml_disabled = true
                 this.proc_2_ml = undefined
-                this.proc_1_wt_options = [0.5, 1, 2]
-                this.proc_2_wt_options = [""]
+                this.proc_wt_options = [0.5, 1, 2]
                 this.proc_2_wt = undefined
                 this.proc_2_wt_disabled = true
                 this.proc_2_expmode_disabled = true
@@ -329,12 +265,11 @@
                     {
                         proc_1_type: this.proc_1_type,
                         proc_1_ml: this.proc_1_ml,
-                        proc_1_wt: this.proc_1_wt,
+                        proc_wt: this.proc_wt,
                         proc_1_cost: this.proc_1_cost,
                         proc_1_gwp: this.proc_1_gwp,
                         proc_2_type: this.proc_2_type,
                         proc_2_ml: this.proc_2_ml,
-                        proc_2_wt: this.proc_2_wt,
                         proc_2_cost: this.proc_2_cost,
                         proc_2_gwp: this.proc_2_gwp,
                         proc_moi: this.proc_moi
