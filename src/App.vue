@@ -8,6 +8,7 @@ import router from "./router";
     <Header></Header>
 
     <RouterView
+    :startedCorrectly=startedCorrectly
     :progressValue=footerProgressBar
     :button2enabled=button2enabled
     :button3enabled=button3enabled
@@ -68,7 +69,8 @@ import router from "./router";
     @clearAppInput="clearAppInput()"
     @updateInputFooter="updateInputFooter()"
     @saveNewInputs="saveNewInputs($event)"
-    @calculateButton="calculateButton()"/>
+    @calculateButton="calculateButton()"
+    @startedCorrectlyF="startedCorrectlyF()"/>
     
 
     <VMain>
@@ -87,6 +89,8 @@ export default {
     button5enabled: false,
     buttonCalculateEnabled: true,
     footerProgressBar: 0,
+
+    startedCorrectly: false,
 
     matrixInsertionCheckbox: false,
     processingMethodOfInsertion: undefined,
@@ -191,7 +195,6 @@ export default {
         if(this.app_input.separation.type !== undefined) {
           this.button3enabled = true
         }
-        this.logWaste()
         this.logSep()
 
       } else if(Object.prototype.hasOwnProperty.call(new_values, "matrix_type")) {
@@ -481,6 +484,9 @@ export default {
             console.log(rej);
             router.push({name: "ErrorView"})
         });
+    },
+    startedCorrectlyF() {
+      this.startedCorrectly = true
     },
     log() {
       console.log(JSON.stringify(this.app_input, null, 2))

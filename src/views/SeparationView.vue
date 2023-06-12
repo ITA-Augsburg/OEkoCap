@@ -40,13 +40,13 @@ export default {
     "textile_type_prop", "textile_ml_prop", "textile_tp_prop", "textile_aw_prop", "textile_cost_prop", "textile_gwp_prop",
     "proc_1_type_prop", "proc_1_ml_prop", "proc_1_wt_prop", "proc_1_cost_prop", "proc_1_gwp_prop", "proc_2_type_prop", "proc_2_ml_prop", "proc_2_wt_prop", "proc_2_cost_prop", "proc_2_gwp_prop", "proc_moi_prop",
 
-    "app_output_prop",
+    "app_output_prop", "startedCorrectly",
     "buttonCalculateEnabled", "button2enabled", "button3enabled", "button4enabled", "button5enabled",
     "progressValue", "subheader_separation", "color_green", "color_lightgrey"],
-    emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton"],
+    emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "startedCorrectlyF"],
     mounted() {
         //if user enters app on *url*/separation then redirect to *url*/, otherwise app_input could have missing mandatory values
-        if(this.waste_type_prop === undefined) {
+        if(!this.startedCorrectly) {
             this.$router.push({name: "StartView"})
         }
     },
