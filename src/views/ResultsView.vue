@@ -20,7 +20,11 @@
 
 <script>
 export default {
-    props: ["waste_type_prop", "waste_size_prop", "waste_fmc_prop", "waste_coarse_prop", "waste_coarse_cost_prop", "waste_coarse_gwp_prop", "waste_fine_prop", "waste_fine_cost_prop", "waste_fine_gwp_prop", "waste_transport_cost_prop", "waste_transport_gwp_prop",
+    props: ["waste_type_prop", "waste_size_prop", "waste_fmc_prop",
+    
+    "shred_1_type_prop", "shred_1_ml_prop", "shred_1_gwp_prop", "shred_1_cost_prop", "shred_2_type_prop", "shred_2_ml_prop", "shred_2_gwp_prop", "shred_2_cost_prop",
+    
+    "waste_transport_cost_prop", "waste_transport_gwp_prop",
     "sep_type_prop", "sep_cost_prop", "sep_gwp_prop",
     "matrix_thermo_type_prop", "matrix_polymer_prop", "matrix_fmc_prop", "matrix_insertion_prop", "matrix_cost_prop", "matrix_gwp_prop",
     "textile_type_prop", "textile_ml_prop", "textile_tp_prop", "textile_aw_prop", "textile_cost_prop", "textile_gwp_prop",

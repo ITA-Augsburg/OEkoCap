@@ -10,6 +10,10 @@
     top: 160px;
 }
 
+.waste_fmc_percentage_2 {
+    top: 120px;
+}
+
 .waste_coarse_text {
     margin: 10px 10px 0px 10px;
 }
@@ -32,4 +36,8 @@
 
 .waste_fine_percentage_2 {
     top: 520px;
+}
+
+.waste_fine_percentage_3 {
+    top: 215px;
 }

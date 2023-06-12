@@ -76,7 +76,7 @@
 <script>
     import Expert_mode from "./Expert_mode.vue"
     export default {
-        props: ["matrix_insertion_prop", "waste_coarse_prop", "waste_fine_prop",
+        props: ["matrix_insertion_prop", "shred_1_type_prop", "shred_2_type_prop",
         "textile_type_prop", "textile_ml_prop", "textile_tp_prop", "textile_aw_prop", "textile_cost_prop", "textile_gwp_prop",
         "color_green", "color_lightgrey"],
         emits: ["saveNewInputs"],
@@ -103,17 +103,17 @@
         },
         mounted() {
             if(this.matrix_insertion_prop) {
-                if(this.waste_coarse_prop === undefined && this.waste_fine_prop !== undefined ||
-                this.waste_coarse_prop !== undefined && this.waste_fine_prop !== undefined) {
+                if(this.shred_1_type_prop === "Fine" && this.shred_2_type_prop !== undefined ||
+                this.shred_1_type_prop !== "Coarse" && this.shred_2_type_prop !== "Fine") {
                     this.type_options = ["Wet-laid with Thermoplastfiber"]
-                } else {
+                } else if(this.shred_1_type_prop === "Cutting" && this.shred_2_type_prop !== undefined) {
                     this.type_options = ["Dry-laid with Thermoplastfiber", "Air-laid with Thermoplastfiber", "Wet-laid with Thermoplastfiber"]
                 }
             } else {
-                if(this.waste_coarse_prop === undefined && this.waste_fine_prop !== undefined ||
-                this.waste_coarse_prop !== undefined && this.waste_fine_prop !== undefined) {
+                if(this.shred_1_type_prop === "Fine" && this.shred_2_type_prop !== undefined ||
+                this.shred_1_type_prop !== "Coarse" && this.shred_2_type_prop !== "Fine") {
                     this.type_options = ["Wet-laid"]
-                } else {
+                } else if(this.shred_1_type_prop === "Cutting" && this.shred_2_type_prop !== undefined) {
                     this.type_options = ["Dry-laid", "Air-laid", "Wet-laid"]
                 }
             }
