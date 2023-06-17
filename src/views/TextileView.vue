@@ -12,8 +12,6 @@
     :color_lightgrey=color_lightgrey
 
     :matrix_insertion_prop=matrix_insertion_prop
-    :shred_1_type_prop=shred_1_type_prop
-    :shred_2_type_prop=shred_2_type_prop
     
     :textile_type_prop=textile_type_prop
     :textile_ml_prop=textile_ml_prop
