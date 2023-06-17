@@ -98,18 +98,8 @@
         <p id="fine_percentage" class="percentage waste_fine_percentage">{{ Math.round(shred_2_ml * 10) / 10 }}%</p>
 
         <Expert_mode
-        v-if="this.waste_type === 'End of Life'"
         @newExpertModeValues="newExpertModeValues($event)"
         :label=fine_expmode_label
-        :disabled=false
-        :expert_mode_cost_prop=shred_2_cost_prop
-        :expert_mode_gwp_prop=shred_2_gwp_prop
-        :color_green=color_green
-        ></Expert_mode>
-        <Expert_mode
-        v-if="this.waste_type === 'Cut-Off'"
-        @newExpertModeValues="newExpertModeValues($event)"
-        :label=cutting_expmode_label
         :disabled=false
         :expert_mode_cost_prop=shred_2_cost_prop
         :expert_mode_gwp_prop=shred_2_gwp_prop
@@ -180,7 +170,6 @@
 
                 coarse_expmode_label: "Coarse shredding expert mode",
                 fine_expmode_label: "Fine shredding expert mode",
-                cutting_expmode_label: "Cutting expert mode",
                 transport_label: "Consider Transportation",
 
                 coarse_expmode_disabled: true
@@ -198,7 +187,7 @@
                     document.getElementById("fine_percentage").classList.remove("waste_fine_percentage_2")
                     document.getElementById("fine_percentage").classList.remove("waste_fine_percentage_3")
                     if(this.waste_type === "Cut-Off") {
-                        this.shred_2_type = "Cutting"
+                        this.shred_2_type = "Fine"
                         this.shred_2_ml = 5.0
                         this.coarse_expmode_disabled = undefined
                         document.getElementById("fine_percentage").classList.add("waste_fine_percentage_3")
@@ -226,7 +215,7 @@
                 } else if(new_values[2] === this.coarse_expmode_label) {
                     this.shred_1_cost = new_values[0]
                     this.shred_1_gwp = new_values[1]
-                } else if(new_values[2] === this.fine_expmode_label || new_values[2] === this.cutting_expmode_label) {
+                } else if(new_values[2] === this.fine_expmode_label) {
                     this.shred_2_cost = new_values[0]
                     this.shred_2_gwp = new_values[1]
                 }
@@ -263,12 +252,14 @@
             log() {
                 console.log("waste_type:"+this.waste_type)
                 console.log("waste_size:"+this.size1dot5)
-                console.log("waste_coarse:"+this.waste_coarse)
-                console.log("waste_coarse_cost:"+this.coarse_cost)
-                console.log("waste_coarse_gwp:"+this.coarse_gwp)
-                console.log("waste_fine:"+this.waste_fine)
-                console.log("waste_fine_cost:"+this.fine_cost)
-                console.log("waste_fine_gwp:"+this.fine_gwp)
+                console.log("shred_1_type:"+this.shred_1_type)
+                console.log("shred_1_ml:"+this.shred_1_ml)
+                console.log("shred_1_cost:"+this.shred_1_cost)
+                console.log("shred_1_gwp:"+this.shred_1_gwp)
+                console.log("shred_2_type:"+this.shred_2_type)
+                console.log("shred_2_ml:"+this.shred_2_ml)
+                console.log("shred_2_cost:"+this.shred_2_cost)
+                console.log("shred_2_gwp:"+this.shred_2_gwp)
                 console.log("waste_tr_cost:"+this.transport_cost)
                 console.log("waste_tr_gwp:"+this.transport_gwp)
                 console.log()
