@@ -83,10 +83,7 @@
         :color_green=color_green
         ></Expert_mode>
 
-        <p v-if="this.waste_type === 'End of Life'"
-        class="text waste_fine_text">Fine Shredding - Mass loss</p>
-        <p v-if="this.waste_type === 'Cut-Off'"
-        class="text waste_fine_text">Cutting - Mass loss</p>
+        <p class="text waste_fine_text">Fine Shredding - Mass loss</p>
         <v-slider
         v-on:update:model-value="saveNewInputs()"
         class="slider"
