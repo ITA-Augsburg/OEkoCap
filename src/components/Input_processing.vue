@@ -82,9 +82,9 @@
         v-model=proc_wt
         v-on:update:model-value="[saveNewInputs()]"
         class="select processing_wt_select"
-        label="Wall thickness"
+        label="Wall thickness [mm]"
         single-line
-        suffix="Wall thickness"
+        suffix="Wall thickness [mm]"
         :items=proc_wt_options
         variant="solo"
         :bg-color=color_lightgrey

@@ -41,9 +41,9 @@
         v-model=textile_tp
         v-on:update:model-value="saveNewInputs()"
         class="select textile_throughput_select"
-        label="Throughput"
+        label="Throughput [kg/h/m]"
         single-line
-        suffix="Throughput"
+        suffix="Throughput [kg/h/m]"
         :items=throughput_options
         variant="solo"
         :bg-color=color_lightgrey
@@ -53,9 +53,9 @@
         v-model=textile_aw
         v-on:update:model-value="saveNewInputs()"
         class="select textile_aw_select"
-        label="Areal weight"
+        label="Areal weight [g/m²]"
         single-line
-        suffix="Areal weight"
+        suffix="Areal weight [g/m²]"
         :items=aw_options
         variant="solo"
         :bg-color=color_lightgrey
