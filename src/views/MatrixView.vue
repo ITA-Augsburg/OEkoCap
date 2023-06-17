@@ -31,7 +31,7 @@
 
 <script>
 export default {
-    props: ["waste_type_prop", "waste_size_prop", "waste_fmc_prop",
+    props: ["waste_type_prop", "waste_size_prop",
     
     "shred_1_type_prop", "shred_1_ml_prop", "shred_1_gwp_prop", "shred_1_cost_prop", "shred_2_type_prop", "shred_2_ml_prop", "shred_2_gwp_prop", "shred_2_cost_prop",
     

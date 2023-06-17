@@ -18,7 +18,6 @@ import router from "./router";
 
     :waste_type_prop=this.app_input.waste.type
     :waste_size_prop=this.app_input.waste.size_bigger_1dot5_m
-    :waste_fmc_prop=this.app_input.waste.fmc_percent
 
     :shred_1_type_prop=this.app_input.shredding_1.type
     :shred_1_ml_prop=this.app_input.shredding_1.mass_loss_percent
@@ -166,7 +165,6 @@ export default {
       if(Object.prototype.hasOwnProperty.call(new_values, "waste_type")) {
         this.app_input.waste.type = new_values.waste_type
         this.app_input.waste.size_bigger_1dot5_m = new_values.waste_size
-        this.app_input.waste.fmc_percent = new_values.waste_fmc
 
         this.app_input.shredding_1.type = new_values.shred_1_type
         this.app_input.shredding_1.mass_loss_percent = new_values.shred_1_ml

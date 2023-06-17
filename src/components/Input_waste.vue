@@ -31,20 +31,6 @@
         v-model="size1dot5"
         ></v-checkbox>
 
-        <p class="text waste_fmc_text">Fiber mass content</p>
-        <v-slider
-        v-on:update:model-value="saveNewInputs()"
-        class="slider"
-        :color=color_green
-        :thumb-color=color_green
-        thumb-size="20"
-        :min="10.00"
-        :max="100.00"
-        :step="1"
-        v-model="waste_fmc"
-        ></v-slider>
-        <p class="percentage waste_fmc_percentage" id="waste_fmc_percentage">{{ waste_fmc }}%</p>
-
         <p v-if="waste_type === 'End of Life' && size1dot5 === true"
         class="text waste_coarse_text">Coarse Shredding - Mass loss</p>
         <p v-if="waste_type === undefined || waste_type === 'End of Life' && size1dot5 === false"
@@ -151,7 +137,7 @@
 <script>
     import Expert_mode from "./Expert_mode.vue"
     export default {
-        props: ["waste_type_prop", "waste_size_prop", "waste_fmc_prop",
+        props: ["waste_type_prop", "waste_size_prop",
 
         "shred_1_type_prop", "shred_1_ml_prop", "shred_1_gwp_prop", "shred_1_cost_prop", "shred_2_type_prop", "shred_2_ml_prop", "shred_2_gwp_prop", "shred_2_cost_prop",
 
@@ -171,7 +157,6 @@
             }
             if(this.waste_type === "Cut-Off") {
                 document.getElementById("fine_percentage").classList.add("waste_fine_percentage_3")
-                document.getElementById("waste_fmc_percentage").classList.add("waste_fmc_percentage_2")
                 this.coarse_expmode_disabled = undefined
             }
             if(this.shred_2_ml === undefined) {
@@ -183,14 +168,6 @@
                 type_options: ['Cut-Off', 'End of Life'],
                 waste_type: this.waste_type_prop,
                 size1dot5: this.waste_size_prop,
-                waste_fmc: this.waste_fmc_prop,
-
-                // waste_coarse: this.waste_coarse_prop,
-                // coarse_cost: this.waste_coarse_cost_prop,
-                // coarse_gwp: this.waste_coarse_gwp_prop,
-                // waste_fine: this.waste_fine_prop,
-                // fine_cost: this.waste_fine_cost_prop,
-                // fine_gwp: this.waste_fine_gwp_prop,
 
                 shred_1_type: this.shred_1_type_prop,
                 shred_1_ml: this.shred_1_ml_prop,
@@ -223,13 +200,11 @@
                     this.shred_1_cost = undefined
                     document.getElementById("fine_percentage").classList.remove("waste_fine_percentage_2")
                     document.getElementById("fine_percentage").classList.remove("waste_fine_percentage_3")
-                    document.getElementById("waste_fmc_percentage").classList.remove("waste_fmc_percentage_2")
                     if(this.waste_type === "Cut-Off") {
                         this.shred_2_type = "Cutting"
                         this.shred_2_ml = 5.0
                         this.coarse_expmode_disabled = undefined
                         document.getElementById("fine_percentage").classList.add("waste_fine_percentage_3")
-                        document.getElementById("waste_fmc_percentage").classList.add("waste_fmc_percentage_2")
                     }
                     if(this.waste_type === "End of Life") {
                         this.shred_2_type = "Fine"
@@ -241,7 +216,6 @@
                     this.coarse_expmode_disabled = false
                     document.getElementById("fine_percentage").classList.remove("waste_fine_percentage_2")
                     document.getElementById("fine_percentage").classList.remove("waste_fine_percentage_3")
-                    document.getElementById("waste_fmc_percentage").classList.remove("waste_fmc_percentage_2")
                     if(this.shred_1_ml === undefined) {
                         this.shred_1_ml = 5.0
                     }
@@ -263,17 +237,14 @@
                 // this.log()
             },
             saveNewInputs() {
-                // console.log(this.waste_fmc)
                 //setTimeout needed to properly update slider values
                 setTimeout(() => {
-                    // console.log(this.waste_fmc)
                     // this.log()
                     this.$emit(
                         "saveNewInputs",
                     {
                         waste_type: this.waste_type,
                         waste_size: this.size1dot5,
-                        waste_fmc: this.waste_fmc,
 
                         shred_1_type: this.shred_1_type,
                         shred_1_ml: this.shred_1_ml,
@@ -295,7 +266,6 @@
             log() {
                 console.log("waste_type:"+this.waste_type)
                 console.log("waste_size:"+this.size1dot5)
-                console.log("waste_fmc:"+this.waste_fmc)
                 console.log("waste_coarse:"+this.waste_coarse)
                 console.log("waste_coarse_cost:"+this.coarse_cost)
                 console.log("waste_coarse_gwp:"+this.coarse_gwp)

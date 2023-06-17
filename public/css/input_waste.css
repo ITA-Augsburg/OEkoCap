@@ -2,16 +2,8 @@
     margin: 20px 10px 10px 10px;
 }
 
-.waste_fmc_text {
-    margin: 20px 10px 0px 10px;
-}
-
-.waste_fmc_percentage {
-    top: 160px;
-}
-
-.waste_fmc_percentage_2 {
-    top: 120px;
+.waste_size_checkbox {
+    margin-bottom: 20px;
 }
 
 .waste_coarse_text {
