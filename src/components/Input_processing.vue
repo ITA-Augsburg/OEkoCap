@@ -198,8 +198,8 @@
         mounted() {
             //set select-options based on matrix-thermotype and matrix-insertion
             if(this.matrix_thermo_type_prop === "Thermoplast" && this.matrix_insertion_prop === true) {
-                this.proc_1_type_options = ["Isothermal forming"]
-                this.proc_2_type_options = ["Doublebeltpress & organosheet heating, forming"]
+                this.proc_1_type_options = ["Doublebeltpress & organosheet heating, forming"]
+                this.proc_2_type_options = ["Isothermal forming"]
                 this.proc_wt_options = [0.5, 1, 2]
                 this.proc_2_type_disabled = false
                 this.proc_2_ml_disabled = false
@@ -210,8 +210,8 @@
                 this.proc_moi = "Thermoplastfiber"
                 this.moi_disabled = true
             } else if(this.matrix_thermo_type_prop === "Thermoplast" && this.matrix_insertion_prop === false) {
-                this.proc_1_type_options = ["Isothermal forming"]
-                this.proc_2_type_options = ["Doublebeltpress & organosheet heating, forming"]
+                this.proc_1_type_options = ["Doublebeltpress & organosheet heating, forming"]
+                this.proc_2_type_options = ["Isothermal forming"]
                 this.proc_wt_options = [0.5, 1, 2]
                 this.proc_2_type_disabled = false
                 this.proc_2_ml_disabled = false
