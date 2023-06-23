@@ -25,7 +25,50 @@
         <p>Project</p>
       </router-link>
     </p>
+    <svg 
+    xmlns="http://www.w3.org/2000/svg"
+    width="80"
+    height="80"
+    fill="#F2F2F2"
+    id="hamburger"
+    class="bi bi-list"
+    viewBox="0 0 16 16"
+    @click="()=>drawer=!drawer">
+      <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+    </svg>
   </div>
+
+  <v-navigation-drawer
+    v-model="drawer"
+    temporary
+    location="bottom"
+    width="328"
+  >
+    <v-list-item>
+      <router-link
+      :to='{name: "StartView"}'
+      class="header_text">
+        <p>Calculator</p>
+      </router-link>
+    </v-list-item>
+    <v-divider thickness="2" class="border-opacity-100"></v-divider>
+    <v-list-item>
+      <router-link
+      :to='{name: "StartView"}'
+      class="header_text">
+        <p>Guideline</p>
+      </router-link>
+    </v-list-item>
+    <v-divider thickness="2" class="border-opacity-100"></v-divider>
+    <v-list-item>
+      <router-link
+      :to='{name: "StartView"}'
+      class="header_text">
+        <p>Project</p>
+      </router-link>
+    </v-list-item>
+    <v-divider thickness="2" class="border-opacity-100"></v-divider>
+  </v-navigation-drawer>
 </template>
 
 <script>
@@ -33,7 +76,8 @@ export default {
   props: [],
   data() {
     return {
-      headerTextRight: ["Calculator", "Guideline", "Project"]
+      headerTextRight: ["Calculator", "Guideline", "Project"],
+      drawer: false
     }
   }
 }

@@ -29,6 +29,11 @@
     margin: 0px 10px;
 }
 
+#hamburger {
+    display: none;
+}
+
+/* if screen width below 1215px */
 @media (max-width: 1215px) {
 
     .header {
@@ -57,5 +62,26 @@
         text-decoration: none;
         width: fit-content;
         margin: 0px 10px;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .header_textcontainer {
+        display: none;
+    }
+
+    #hamburger {
+        display: block;
+        position: absolute;
+        right: 0px;
+        cursor: pointer;
+    }
+
+    .header_text {
+        color: #000000;
+        text-decoration: none;
+        font-size: 22px;
+        text-align: center;
     }
 }
