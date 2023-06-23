@@ -1,8 +1,4 @@
 
-viewport width >= 500px passt noch.
-Probleme unter 500
-- input area ist abgeschnitten		-> elemente schmaler machen, schriftgröße kleiner machen
-- results area ist abgeschnitten	-> elemente schmaler machen, schriftgröße kleiner machen
 
 BUGS
 zahl-buttons on-click werden kurz rot?
@@ -11,6 +7,7 @@ separation.type = ChemicalFibreReclamation steht noch aus?
 
 TODO
 
+auf results view eine neue art footer machen wo der drucken knopf zb drauf ist
 App.vue aufteilen
 Router props evnt. richtig übergeben
 app_input props als eine "app_input" prop übergeben
