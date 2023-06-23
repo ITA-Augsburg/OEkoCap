@@ -1,10 +1,8 @@
 
 viewport width >= 500px passt noch.
 Probleme unter 500
-- header punkte überlappen sich 		-> hamburger menu
-- subheader ist abgeschnitten			-> schriftgröße kleiner machen
-- main content ist abgeschnitten		-> elemente schmaler machen, schriftgröße kleiner machen
-- footer ist abgeschnitten				-> elemente mehr zusammenrücken und evtl kleiner machen
+- input area ist abgeschnitten		-> elemente schmaler machen, schriftgröße kleiner machen
+- results area ist abgeschnitten	-> elemente schmaler machen, schriftgröße kleiner machen
 
 BUGS
 zahl-buttons on-click werden kurz rot?
