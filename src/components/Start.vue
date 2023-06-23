@@ -4,11 +4,13 @@
 
         <div class="start_logocontainer">
             <v-img
+            class="frauenhofer_logo_start"
             v-bind:src='require("../assets/frauenhofer_logo.png")'
             alt="frauenhoferIGCV_logo"
             resize="false"></v-img>
 
             <v-img
+            class="ita_logo_start"
             v-bind:src='require("../assets/ita_logo_bunt.png")'
             alt="ITA_logo"
             resize="false"></v-img>

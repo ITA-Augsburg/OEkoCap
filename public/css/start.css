@@ -16,16 +16,33 @@
     flex-wrap: nowrap;
     margin-top: calc((100vh - 80px - 358px - 157.5px - 290px) / 2);
 }
+.start_text {
+    font-size: 27px;
+    text-align: center;
+    padding: 0px 40px 30px 40px;
+}
 @media (max-height: 1080px) {
     .start_logocontainer {
         margin-top: 97.25px;
     }
 }
-
-.start_text {
-    font-size: 27px;
-    text-align: center;
-    padding: 0px 40px 30px 40px;
+@media (max-width: 500px) {
+    .start_logocontainer {
+        margin-top: 0px;
+        display: block;
+        height: 230px;
+    }
+    .frauenhofer_logo_start {
+        margin-top: 20px;
+        height: 75px;
+    }
+    .ita_logo_start {
+        height: 115px;
+    }
+    .start_text {
+        margin: auto;
+        font-size: 22px;
+    }
 }
 
 .start_button {
