@@ -42,7 +42,7 @@
     v-model="drawer"
     temporary
     location="bottom"
-    width="328"
+    width="325"
   >
     <v-list-item>
       <router-link
