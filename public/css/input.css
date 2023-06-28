@@ -1,8 +1,7 @@
 .input_area {
     width: var(--content-width);
     margin: 0px calc((100vw - var(--content-width)) / 2) 30px calc((100vw - var(--content-width)) / 2);
-    /* height: fit-content; */
-    min-height: calc(100vh - 80px - 205px - 177.5px); /*total height - header h - subheader h - footer h*/;
+    min-height: calc(100vh - 80px - 205px - 177.5px - 30px); /*total height - header h - subheader h - footer h - margin-bottom*/;
     /* overflow-y: visible;
     overflow-x: hidden; */
     position: relative;
@@ -11,7 +10,7 @@
     .input_area {
         width: 100vw;
         margin: 0px 0px 30px 0px;
-        min-height: calc(100vh - 80px - 205px - 145px); /*total height - header h - subheader h - footer h*/
+        min-height: calc(100vh - 80px - 205px - 145px - 30px); /*total height - header h - subheader h - footer h - margin-bottom*/
     }
 }
 

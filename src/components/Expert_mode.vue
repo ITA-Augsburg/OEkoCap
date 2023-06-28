@@ -75,7 +75,7 @@
             },
             propagateNewValues() {
                 //Das Monster
-                //transport-cost and -gwp values are only propagated (and saved in App.vue->app_input) if they're numbers.
+                //expmode-cost and -gwp values are only propagated (and saved in App.vue->app_input) if they're numbers.
                 // console.log("propagated")
                 // console.log(this.expert_mode_cost + " " + this.expert_mode_gwp)
                 if(this.expert_mode_cost === undefined && this.expert_mode_gwp === undefined) {

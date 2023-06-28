@@ -1,7 +1,7 @@
 
 
 BUGS
-zahl-buttons on-click werden kurz rot?
+
 
 separation.type = ChemicalFibreReclamation steht noch aus?
 
