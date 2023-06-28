@@ -11,6 +11,7 @@
     .input_area {
         width: 320px;
         margin: 0px calc((100vw - 320px) / 2) 0px calc((100vw - 320px) / 2);
+        height: calc(100vh - 80px - 205px - 145px); /*total height - header h - subheader h - footer h*/
     }
 }
 

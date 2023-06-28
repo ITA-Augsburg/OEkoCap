@@ -1,11 +1,12 @@
 <template>
 
-    <div class="footer">
+    <div class="input_footer">
         <div class="footer_content">
 
             <p class="footer_percentage">{{ progressValue }}%</p>
 
             <v-progress-linear
+                class="footer_progressbar"
                 :bg-color=color_green
                 bg-opacity="0.2"
                 :color=color_green
