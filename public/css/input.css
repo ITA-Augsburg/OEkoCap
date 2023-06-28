@@ -1,17 +1,17 @@
 .input_area {
     width: var(--content-width);
-    margin: 0px calc((100vw - var(--content-width)) / 2) 0px calc((100vw - var(--content-width)) / 2);
-    height: calc(100vh - 80px - 205px - 177.5px); /*total height - header h - subheader h - footer h*/
-    min-height: 250px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    margin: 0px calc((100vw - var(--content-width)) / 2) 30px calc((100vw - var(--content-width)) / 2);
+    /* height: fit-content; */
+    min-height: calc(100vh - 80px - 205px - 177.5px); /*total height - header h - subheader h - footer h*/;
+    /* overflow-y: visible;
+    overflow-x: hidden; */
     position: relative;
 }
 @media (max-width: 500px) {
     .input_area {
-        width: 320px;
-        margin: 0px calc((100vw - 320px) / 2) 0px calc((100vw - 320px) / 2);
-        height: calc(100vh - 80px - 205px - 145px); /*total height - header h - subheader h - footer h*/
+        width: 100vw;
+        margin: 0px 0px 30px 0px;
+        min-height: calc(100vh - 80px - 205px - 145px); /*total height - header h - subheader h - footer h*/
     }
 }
 
@@ -53,7 +53,7 @@
 }
 @media (max-width: 500px) {
     .slider {
-        width: calc(var(--content-width) - 20px - 200px);
+        width: calc(100vw - 80px);
     }
 }
 
@@ -76,6 +76,11 @@
     color: var(--color-grey);
     font-size: 20px;
     opacity: 1;
+}
+@media (max-width: 500px) {
+    .textfield {
+        width: auto;
+    }
 }
 
 .processing_buttoncontainer {

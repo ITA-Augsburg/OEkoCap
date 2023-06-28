@@ -10,4 +10,5 @@
 /* otherwise there is unwanted whitespace on the right side on mobile */
 body{
     overflow-x: hidden;
+    overflow-y: auto;
 }
