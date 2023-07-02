@@ -3,17 +3,18 @@
 BUGS
 
 
-separation.type = ChemicalFibreReclamation steht noch aus?
-
 TODO
 
 auf results view eine neue art footer machen wo der drucken knopf zb drauf ist
 App.vue aufteilen
 Router props evnt. richtig übergeben
 app_input props als eine "app_input" prop übergeben
-
+separation.type = ChemicalFibreReclamation steht noch aus?
 
 wenn default-werte von app_input sich ändern dann auch clearAppInput() ändern!
+
+FRAGEN
+im backend: sollen dateien periodisch gelöscht werden? (z.B. Dateien löschen die 6 Monate alt werden)
 
 WASTE
 	type: Cut-Off	->

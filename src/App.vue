@@ -128,7 +128,7 @@ export default {
       "polymer": {
         "thermo_type": undefined,
         "matrix_type": undefined,
-        "fvc_percent": 25,
+        "fvc_percent": 20,
         "feedstock_type": "biodegredable",
         "state_of_origin": "virgin",
         "euro_per_kg": undefined,
@@ -350,7 +350,7 @@ export default {
         "polymer": {
           "thermo_type": undefined,
           "matrix_type": undefined,
-          "fvc_percent": 25,
+          "fvc_percent": 20,
           "feedstock_type": "biodegredable",
           "state_of_origin": "virgin",
           "euro_per_kg": undefined,
@@ -483,6 +483,7 @@ export default {
         });
     },
     startedCorrectlyF() {
+      // User must start on the first page of the app. If for example user tries to start on url http://localhost:8080/processing then variable startedCorrectly is false and they're taken to the start-page
       this.startedCorrectly = true
     },
     log() {
