@@ -8,7 +8,11 @@
 }
 
 /* otherwise there is unwanted whitespace on the right side on mobile */
-body{
+body {
     overflow-x: hidden;
     overflow-y: auto;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
