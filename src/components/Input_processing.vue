@@ -5,7 +5,7 @@
 
         <v-select
         v-model=proc_1_type
-        v-on:update:model-value="[saveNewInputs()]"
+        v-on:update:model-value="[toggleStepTwo(), saveNewInputs()]"
         class="select processing_type_select"
         label="Type - Step 1"
         single-line
@@ -191,32 +191,29 @@
                 moi_disabled: false,
                 proc_2_type_disabled: false,
                 proc_2_ml_disabled: false,
-                proc_2_wt_disabled: false,
                 proc_2_expmode_disabled: false
             }
         },
         mounted() {
             //set select-options based on matrix-thermotype and matrix-insertion
             if(this.matrix_thermo_type_prop === "Thermoplast" && this.matrix_insertion_prop === true) {
-                this.proc_1_type_options = ["Doublebeltpress (Organosheet Production)"]
+                this.proc_1_type_options = ["Doublebeltpress (Organosheet Production)", "Compression Moulding"]
                 this.proc_2_type_options = ["Isothermal forming"]
                 this.proc_wt_options = [0.5, 1, 2]
                 this.proc_2_type_disabled = false
                 this.proc_2_ml_disabled = false
                 this.proc_2_ml = 10
-                this.proc_2_wt_disabled = false
                 this.proc_2_expmode_disabled = false
                 this.moi_options = ["Thermoplastfiber"]
                 this.proc_moi = "Thermoplastfiber"
                 this.moi_disabled = true
             } else if(this.matrix_thermo_type_prop === "Thermoplast" && this.matrix_insertion_prop === false) {
-                this.proc_1_type_options = ["Doublebeltpress (Organosheet Production)"]
+                this.proc_1_type_options = ["Doublebeltpress (Organosheet Production)", "Compression Moulding"]
                 this.proc_2_type_options = ["Isothermal forming"]
                 this.proc_wt_options = [0.5, 1, 2]
                 this.proc_2_type_disabled = false
                 this.proc_2_ml_disabled = false
                 this.proc_2_ml = 10
-                this.proc_2_wt_disabled = false
                 this.proc_2_expmode_disabled = false
                 this.moi_options = ["Thermoplast powder", "Thermoplast foil"]
                 this.moi_disabled = false
@@ -229,7 +226,6 @@
                 this.proc_2_ml = undefined
                 this.proc_wt_options = [0.5, 1, 2]
                 this.proc_2_wt = undefined
-                this.proc_2_wt_disabled = true
                 this.proc_2_expmode_disabled = true
                 this.moi_options = ["Thermoset (liquid)"]
                 this.proc_moi = "Thermoset (liquid)"
@@ -242,6 +238,22 @@
             }
         },
         methods: {
+            toggleStepTwo() {
+                if(this.proc_1_type === "Doublebeltpress (Organosheet Production)") {
+                    this.proc_2_type_disabled = false
+                    this.proc_2_ml_disabled = false
+                    this.proc_2_ml = 10
+                    this.proc_2_expmode_disabled = false
+                } else if(this.proc_1_type === "Compression Moulding") {
+                    this.proc_2_type_disabled = true
+                    this.proc_2_type = undefined
+                    this.proc_2_ml_disabled = true
+                    this.proc_2_ml = undefined
+                    this.proc_2_expmode_disabled = true
+                    this.proc_2_cost = undefined
+                    this.proc_2_gwp = undefined
+                }
+            },
             newExpertModeValues(new_values) {
                 if(new_values[2] === this.step1expmodelabel) {
                     this.proc_1_cost = new_values[0]

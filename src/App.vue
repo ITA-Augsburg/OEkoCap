@@ -289,18 +289,22 @@ export default {
             this.buttonCalculateEnabled = false
           }
         } else if(this.app_input.polymer.thermo_type === "Thermoplast") {
-          if(this.app_input.processing_1.type !== undefined &&
+          if(this.app_input.processing_1.type === "Doublebeltpress (Organosheet Production)" &&
           this.app_input.processing_1.wandstärke_mm !== undefined &&
           this.app_input.processing_2.type !== undefined &&
           this.app_input.processing_2.wandstärke_mm !== undefined &&
           this.processingMethodOfInsertion !== undefined) {
-          this.buttonCalculateEnabled = true
+            this.buttonCalculateEnabled = true
+          } else if(this.app_input.processing_1.type === "Compression Moulding" &&
+          this.app_input.processing_1.wandstärke_mm !== undefined &&
+          this.processingMethodOfInsertion !== undefined) {
+            this.buttonCalculateEnabled = true
           } else {
             this.buttonCalculateEnabled = false
           }
         }
 
-        // this.logProcessing()
+        this.logProcessing()
       }
     },
     updateInputFooter() {
@@ -424,15 +428,21 @@ export default {
       //processing
       if(this.app_input.processing_1.euro_per_kg === undefined) this.app_input.processing_1.euro_per_kg = ""
       if(this.app_input.processing_1.co2_equv_per_kg === undefined) this.app_input.processing_1.co2_equv_per_kg = ""
-      if(this.processingMethodOfInsertion === "Thermoplastfiber") {
-        this.app_input.processing_1.type = "DoubleBeltPressing"
-        this.app_input.processing_2.type = "IRCompressionMoulding"
-      } else if(this.processingMethodOfInsertion === "Thermoplast powder") {
-        this.app_input.processing_1.type = "DoubleBeltPressingWithPowder"
-        this.app_input.processing_2.type = "IRCompressionMoulding"
-      } else if(this.processingMethodOfInsertion === "Thermoplast foil") {
-        this.app_input.processing_1.type = "DoubleBeltPressingWithFoil"
-        this.app_input.processing_2.type = "IRCompressionMoulding"
+      if(this.app_input.processing_1.type === "Compression Moulding") {
+        this.app_input.processing_1.type = "CompressionMoulding" //ist das in der recycling.exe gueltig?
+        this.app_input.processing_2.type = ""
+      }
+      if(this.app_input.processing_1.type === "Doublebeltpress (Organosheet Production)") {
+        if(this.processingMethodOfInsertion === "Thermoplastfiber") {
+          this.app_input.processing_1.type = "DoubleBeltPressing"
+          this.app_input.processing_2.type = "IRCompressionMoulding"
+        } else if(this.processingMethodOfInsertion === "Thermoplast powder") {
+          this.app_input.processing_1.type = "DoubleBeltPressingWithPowder"
+          this.app_input.processing_2.type = "IRCompressionMoulding"
+        } else if(this.processingMethodOfInsertion === "Thermoplast foil") {
+          this.app_input.processing_1.type = "DoubleBeltPressingWithFoil"
+          this.app_input.processing_2.type = "IRCompressionMoulding"
+        }
       }
       if(this.app_input.processing_2.type === undefined) this.app_input.processing_2.type = ""
       if(this.app_input.processing_2.mass_loss_percent === undefined) this.app_input.processing_2.mass_loss_percent = ""
