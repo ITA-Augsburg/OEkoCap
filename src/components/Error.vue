@@ -2,7 +2,7 @@
 
     <div class="input_area">
 
-        <p class="text error_text">Error:<br>description</p>
+        <p class="text error_text">Error:<br>{{error_message_prop}}</p>
 
     </div>
 
@@ -10,8 +10,10 @@
 
 <script>
     export default {
+        props: ["error_message_prop"],
         data() {
             return {
+                
             }
         }
     }

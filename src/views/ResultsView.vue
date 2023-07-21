@@ -9,7 +9,8 @@
     :text_3="subheader_results"></Input_subheader>
     <Results
     :app_output_prop=app_output_prop
-    :color_green=color_green></Results>
+    :color_green=color_green
+    @setErrorMessage="setErrorMessage($event)"></Results>
     <Input_footer
     :id=id
     :progressValue=progressValue
@@ -30,16 +31,19 @@ export default {
     "textile_type_prop", "textile_ml_prop", "textile_tp_prop", "textile_aw_prop", "textile_cost_prop", "textile_gwp_prop",
     "proc_1_type_prop", "proc_1_ml_prop", "proc_1_wt_prop", "proc_1_cost_prop", "proc_1_gwp_prop", "proc_2_type_prop", "proc_2_ml_prop", "proc_2_wt_prop", "proc_2_cost_prop", "proc_2_gwp_prop", "proc_moi_prop",
 
-    "app_output_prop", "startedCorrectly",
+    "app_output_prop", "startedCorrectly", "error_message_prop",
     "buttonCalculateEnabled", "button2enabled", "button3enabled", "button4enabled", "button5enabled",
     "progressValue", "subheader_results", "color_green", "color_lightgrey"],
-    emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "startedCorrectlyF"],
+    emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "startedCorrectlyF", "setErrorMessage"],
     data: () => ({
         id: "results",
     }),
     methods: {
         updateInputFooter() {
             this.$emit("updateInputFooter", undefined)
+        },
+        setErrorMessage(message) {
+            this.$emit("setErrorMessage", message)
         }
     }
 };

@@ -64,12 +64,14 @@ import router from "./router";
     :proc_moi_prop=this.processingMethodOfInsertion
 
     :app_output_prop=this.appOutput
+    :error_message_prop=this.errorMessage
 
     @clearAppInput="clearAppInput()"
     @updateInputFooter="updateInputFooter()"
     @saveNewInputs="saveNewInputs($event)"
     @calculateButton="calculateButton()"
-    @startedCorrectlyF="startedCorrectlyF()"/>
+    @startedCorrectlyF="startedCorrectlyF()"
+    @setErrorMessage="setErrorMessage($event)"/>
     
 
     <VMain>
@@ -95,6 +97,7 @@ export default {
     processingMethodOfInsertion: undefined,
 
     appOutput: undefined,
+    errorMessage: undefined,
 
     //default values are set here, these are passed to and visualized in child-components
     app_input: {
@@ -487,14 +490,17 @@ export default {
             // navigate to errorView, pass error as prop
 
             // console.log("Fehler beim Serveraufruf");
-            console.log("in catch block");
             console.log(rej);
+            this.errorMessage = "Server not responding"
             router.push({name: "ErrorView"})
         });
     },
     startedCorrectlyF() {
       // User must start on the first page of the app. If for example user tries to start on url http://localhost:8080/processing then variable startedCorrectly is false and they're taken to the start-page
       this.startedCorrectly = true
+    },
+    setErrorMessage(message) {
+      this.errorMessage = message
     },
     log() {
       console.log(JSON.stringify(this.app_input, null, 2))
