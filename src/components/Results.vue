@@ -1,5 +1,5 @@
 <script setup>
-    import router from "@/router";
+import router from "@/router";
 import Chart from "chart.js/auto"
 </script>
 
@@ -12,24 +12,19 @@ import Chart from "chart.js/auto"
 
         <v-select
         class="select results_process_select"
-        label="Process"
+        label="Benchmark Process"
         single-line
-        suffix="Process"
+        suffix="Benchmark"
         :items=process_options
         variant="solo"
         :bg-color=color_green
         v-model=this.selected_process
-        v-on:update:model-value=[]
+        v-on:update:model-value=[updateBarChart()]
         ></v-select>
 
+        <canvas id="bar_chart" style="max-width: 420px;padding-left:30px;"></canvas>
+
         <canvas id="pie_chart"></canvas>
-
-
-
-        <!-- <canvas id="line_chart" style="max-width: 420px;padding-left:30px;"></canvas> -->
-        <!-- <canvas id="bar_chart" style="max-width: 420px;padding-left:30px;"></canvas> -->
-        <!-- <canvas id="gwp_minmax" style="max-width: 420px;padding-left:30px;"></canvas> -->
-        <!-- <canvas id="flexuralStrength0_MPa" style="max-width: 420px;padding-left:30px;margin-top:50px;"></canvas> -->
 
     </div>
 
@@ -41,82 +36,32 @@ import Chart from "chart.js/auto"
         emits: ["setErrorMessage"],
         mounted() {
 
-            this.setup()
-
-            // new Chart("line_chart", {
-            //     type: "line",
-            //     data: {
-            //         labels: ["A", "B", "C", "D"],
-            //         datasets: [{
-            //             label:"red",
-            //             data: [4, 2, 1, 5,],
-            //             backgroundColor: [
-            //                 // "rgba(255, 99, 132, 0.6)",
-            //                 // "rgba(123, 99, 132, 0.6)",
-            //                 // "rgba(45, 99, 132, 0.6)",
-            //                 // "rgba(33, 99, 34, 0.6)",
-            //                 "red"
-            //             ],
-            //             borderWidth: 1, borderColor: "#777", hoverBorderWidth: 3, hoverBorderColor: "#000"
-            //         },
-            //         {
-            //             label:"blue",
-            //             data: [1, 2, 4, 5,],
-            //             backgroundColor: [
-            //                 "blue"
-            //             ],
-            //             borderWidth: 1, borderColor: "#777", hoverBorderWidth: 3, hoverBorderColor: "#000"
-            //         }]
-            //     },
-            //     options: {
-            //         plugins: {
-            //             title: {
-            //                 display: true,
-            //                 text: "Title of this line chart",
-            //                 font: {
-            //                     size: 20
-            //                 }
-            //             },
-            //             legend: {
-            //                 position: "right",
-            //                 labels: {
-            //                     color: "black",
-            //                     font: {
-            //                         size: 15
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     },
-            // })
-
-            // new Chart("bar_chart", {
-            //     type: "bar",
-            //     data: {
-            //         labels: ["A", "B", "C", "D"],
-            //         datasets: [{
-            //             label:"numbers",
-            //             data: [4, 2, 1, 5,],
-            //             backgroundColor: [
-            //                 "rgba(255, 99, 132, 0.6)",
-            //                 "rgba(123, 99, 132, 0.6)",
-            //                 "rgba(45, 99, 132, 0.6)",
-            //                 "rgba(33, 99, 34, 0.6)",
-            //             ],
-            //             borderWidth: 1,
-            //             borderColor: "#777",
-            //             hoverBorderWidth: 3,
-            //             hoverBorderColor: "#000"
-            //         }]
-            //     },
-            //     options: {
-            //         title: {
-            //             display: true,
-            //             text: "Title of this line chart",
-            //         }
-            //     }
-            // })
-
+            this.checkOutput(),
+            this.setup(),
+            this.updateBarChart(),
+            new Chart("bar_chart", {
+                type: "bar",
+                data: {
+                    labels: [this.leftBarLabel, this.rightBarLabel],
+                    datasets: [{
+                        data: [[this.leftBarMin, this.leftBarMax], [this.rightBarMin, this.rightBarMax]],
+                        backgroundColor: [
+                            "red",
+                            "blue"
+                        ],
+                        borderWidth: 1,
+                        borderColor: "#777",
+                        hoverBorderWidth: 3,
+                        hoverBorderColor: "#000"
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "Test Title",
+                    }
+                }
+            })
             new Chart("pie_chart", {
                 type: "pie",
                 data: {
@@ -147,74 +92,17 @@ import Chart from "chart.js/auto"
                 }
             })
 
-            // new Chart("gwp_minmax", {
-            //     type: "bar",
-            //     data: {
-            //         labels: ["min", "max"],
-            //         datasets: [{
-            //             label:"Global Warming Potential",
-            //             data: [714.3512406919333, 7400.289657831437],
-            //             backgroundColor: [
-            //                 this.color_green,
-            //                 "red"
-            //             ],
-            //             borderWidth: 1,
-            //             borderColor: "#777",
-            //             hoverBorderWidth: 3,
-            //             hoverBorderColor: "#000"
-            //         }]
-            //     },
-            //     options: {
-            //         plugins: {
-            //             title: {
-            //             display: true,
-            //             text: "Global Warming Potential",
-            //             font: {
-            //                 size: 20
-            //             }
-            //             },
-            //         }
-            //     }
-            // })
-
-            // new Chart("flexuralStrength0_MPa", {
-            //     type: "line",
-            //     data: {
-            //         labels: ["value1", "value2", "value3", "value4", "value5", "value6", "value7"],
-            //         datasets: [{
-            //             label: "flexuralStrength0_MPa",
-            //             data: [26, 27, 29, 30, 32, 110, 117],
-            //             backgroundColor: this.color_green,
-            //             borderWidth: 1, borderColor: "#777", hoverBorderWidth: 3, hoverBorderColor: "#000"
-            //         }]
-            //     },
-            //     options: {
-            //         plugins: {
-            //             title: {
-            //                 display: true,
-            //                 text: "flexuralStrength0_MPa",
-            //                 font: {
-            //                     size: 20
-            //                 }
-            //             },
-            //             legend: {
-            //                 position: "bottom",
-            //                 labels: {
-            //                     color: "black",
-            //                     font: {
-            //                         size: 15
-            //                     }
-            //                 }
-            //             }
-            //         }
-            //     },
-            // })
-
         },
         data() {
             return {
                 process_options: [],
                 selected_process: undefined,
+                leftBarMin: undefined,
+                leftBarMax: undefined,
+                rightBarMin: undefined,
+                rightBarMax: undefined,
+                leftBarLabel: "Result",
+                rightBarLabel: "Benchmark",
 
                 test_output: {
                     "gwp": {
@@ -344,21 +232,49 @@ import Chart from "chart.js/auto"
                         }
                     ]
                 },
+                test_benchmarks: [
+                    {
+                        "name": "process1",
+                        "gwp_min": 5,
+                        "gwp_max": 10,
+                        "cost_min": 15,
+                        "cost_max": 20
+                    },
+                    {
+                        "name": "process2",
+                        "gwp_min": 5,
+                        "gwp_max": 10,
+                        "cost_min": 15,
+                        "cost_max": 20
+                    },
+                    {
+                            "name": "process3",
+                            "gwp_min": 5,
+                            "gwp_max": 10,
+                            "cost_min": 15,
+                            "cost_max": 20
+                        },
+                ],
             }
         },
         methods: {
+            checkOutput() {
+                if(!(Object.prototype.hasOwnProperty.call(this.test_output, "processes"))) {
+                    this.$emit("setErrorMessage", "Invalid Input. No output could be generated based from the given input.")
+                    router.push({name: "ErrorView"})
+                }
+            },
             setup() {
                 this.process_options = []
-                //check if output is valid, if valid fill process_options with output processes, if not valid go to errorView
-                if(Object.prototype.hasOwnProperty.call(this.test_output, "processes")) {
                     // console.log("valid output")
-                    for(let i=0; i<this.test_output.processes.length; i++) {
-                        this.process_options[i] = this.test_output.processes[i].name
+                    for(let i=0; i<this.test_benchmarks.length; i++) {
+                        this.process_options[i] = this.test_benchmarks[i].name
                     }
-                } else {
-                    // console.log("invalid output")
-                    this.$emit("setErrorMessage", "Invalid input")
-                    router.push({name: "ErrorView"})
+            },
+            updateBarChart() {
+                if(this.selected_process!==undefined) {
+                    //TODO
+                    return
                 }
             }
         }
