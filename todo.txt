@@ -5,6 +5,7 @@ BUGS
 
 TODO
 
+eingabe-elemente on-hover hilfetexte, mobile-version ein button mit den hilfetexte
 auf results view eine neue art footer machen wo der drucken knopf zb drauf ist
 App.vue aufteilen
 Router props evnt. richtig übergeben

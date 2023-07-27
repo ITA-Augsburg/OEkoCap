@@ -26,6 +26,33 @@ import Chart from "chart.js/auto"
 
         <canvas id="pie_chart"></canvas>
 
+        <!-- TODO: eingene css klassen, styling -->
+        <div class="processing_buttoncontainer">
+            <div class="processing_clear_buttoncontainer">
+                <!-- <RouterLink
+                :to='{name:"StartView"}'> -->
+                    <v-btn
+                    :color=color_lightgrey
+                    elevation="5"
+                    width="225px"
+                    height="55px"
+                    ><p class="processing_clear_button_text">COST</p></v-btn>
+                <!-- </RouterLink> -->
+            </div>
+
+            <div class="processing_calc_buttoncontainer">
+                <!-- <RouterLink
+                :to='{name:"WaitingView"}' -->
+                    <v-btn
+                    :color=color_green
+                    elevation="5"
+                    width="225px"
+                    height="55px"
+                    ><p class="processing_calc_button_text">GWP</p></v-btn>
+                <!-- </RouterLink> -->
+            </div>
+        </div>
+
     </div>
 
 </template>
@@ -35,6 +62,7 @@ import Chart from "chart.js/auto"
         props: ["app_output_prop", "color_green"],
         emits: ["setErrorMessage"],
         mounted() {
+            console.log(JSON.stringify(this.test_output, null, 2))
 
             this.checkOutput(),
             this.setup(),
@@ -65,10 +93,10 @@ import Chart from "chart.js/auto"
             new Chart("pie_chart", {
                 type: "pie",
                 data: {
-                    labels: ["A", "B", "C", "D"],
+                    labels: ["ResinTransferMoulding", "Carding", "Oxidation", "Pyrolysis"],
                     datasets: [{
-                        label:"numbers",
-                        data: [4, 2, 1, 5,],
+                        label:"value",
+                        data: [293.0, 109.0, 10.0, 96.0],
                         backgroundColor: [
                             "rgba(255, 99, 132, 0.6)",
                             "rgba(123, 99, 132, 0.6)",
@@ -97,10 +125,10 @@ import Chart from "chart.js/auto"
             return {
                 process_options: [],
                 selected_process: undefined,
-                leftBarMin: undefined,
-                leftBarMax: undefined,
-                rightBarMin: undefined,
-                rightBarMax: undefined,
+                leftBarMin: 2.5,//placeholders
+                leftBarMax: 5,
+                rightBarMin: 2,
+                rightBarMax: 7,
                 leftBarLabel: "Result",
                 rightBarLabel: "Benchmark",
 
@@ -266,7 +294,6 @@ import Chart from "chart.js/auto"
             },
             setup() {
                 this.process_options = []
-                    // console.log("valid output")
                     for(let i=0; i<this.test_benchmarks.length; i++) {
                         this.process_options[i] = this.test_benchmarks[i].name
                     }
