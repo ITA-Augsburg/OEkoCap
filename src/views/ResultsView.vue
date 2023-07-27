@@ -10,6 +10,7 @@
     <Results
     :app_output_prop=app_output_prop
     :color_green=color_green
+    :color_lightgrey=color_lightgrey
     @setErrorMessage="setErrorMessage($event)"></Results>
     <Input_footer
     :id=id

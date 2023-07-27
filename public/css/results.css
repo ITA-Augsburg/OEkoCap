@@ -1,3 +1,38 @@
 .results_process_select {
     margin: 20px 10px 10px 10px;
 }
+
+.results_buttoncontainer {
+    display: flex;
+    flex-wrap: nowrap;
+}
+.results_gwp_buttoncontainer {
+    margin: 60px 5px 20px 10px;
+}
+.results_cost_buttoncontainer {
+    margin: 60px 10px 20px 5px;
+}
+@media (max-width: 500px) {
+    .results_buttoncontainer {
+        display: block;
+    }
+    .results_gwp_buttoncontainer {
+        width: fit-content;
+        margin: 0px calc((100vw - 225px)/2);
+        margin-bottom: 40px;
+        padding-top: 20px;
+    }
+    .results_cost_buttoncontainer {
+        width: fit-content;
+        margin: 0px calc((100vw - 225px)/2);
+        padding-bottom: 20px;
+    }
+}
+.results_gwp_button_text {
+    color: var(--color-grey);
+    font-size: 25px;
+}
+.results_cost_button_text {
+    color: var(--color-white);
+    font-size: 25px;
+}

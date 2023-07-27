@@ -26,30 +26,23 @@ import Chart from "chart.js/auto"
 
         <canvas id="pie_chart"></canvas>
 
-        <!-- TODO: eingene css klassen, styling -->
-        <div class="processing_buttoncontainer">
-            <div class="processing_clear_buttoncontainer">
-                <!-- <RouterLink
-                :to='{name:"StartView"}'> -->
-                    <v-btn
-                    :color=color_lightgrey
-                    elevation="5"
-                    width="225px"
-                    height="55px"
-                    ><p class="processing_clear_button_text">COST</p></v-btn>
-                <!-- </RouterLink> -->
+        <div class="results_buttoncontainer">
+            <div class="results_gwp_buttoncontainer">
+                <v-btn
+                :color=color_lightgrey
+                elevation="5"
+                width="225px"
+                height="55px"
+                ><p class="results_gwp_button_text">GWP</p></v-btn>
             </div>
 
-            <div class="processing_calc_buttoncontainer">
-                <!-- <RouterLink
-                :to='{name:"WaitingView"}' -->
-                    <v-btn
-                    :color=color_green
-                    elevation="5"
-                    width="225px"
-                    height="55px"
-                    ><p class="processing_calc_button_text">GWP</p></v-btn>
-                <!-- </RouterLink> -->
+            <div class="results_cost_buttoncontainer">
+                <v-btn
+                :color=color_green
+                elevation="5"
+                width="225px"
+                height="55px"
+                ><p class="results_cost_button_text">COST</p></v-btn>
             </div>
         </div>
 
@@ -59,10 +52,10 @@ import Chart from "chart.js/auto"
 
 <script>
     export default {
-        props: ["app_output_prop", "color_green"],
+        props: ["app_output_prop", "color_green", "color_lightgrey"],
         emits: ["setErrorMessage"],
         mounted() {
-            console.log(JSON.stringify(this.test_output, null, 2))
+            // console.log(JSON.stringify(this.test_output, null, 2))
 
             this.checkOutput(),
             this.setup(),
