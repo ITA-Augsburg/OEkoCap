@@ -5,12 +5,13 @@
 .results_buttoncontainer {
     display: flex;
     flex-wrap: nowrap;
+    margin-bottom: 40px;
 }
 .results_gwp_buttoncontainer {
-    margin: 60px 5px 20px 10px;
+    margin: 20px 5px 20px 10px;
 }
 .results_cost_buttoncontainer {
-    margin: 60px 10px 20px 5px;
+    margin: 20px 10px 20px 5px;
 }
 @media (max-width: 500px) {
     .results_buttoncontainer {
@@ -28,11 +29,12 @@
         padding-bottom: 20px;
     }
 }
-.results_gwp_button_text {
-    color: var(--color-grey);
+.results_button_text {
     font-size: 25px;
 }
-.results_cost_button_text {
+.active_button_text {
     color: var(--color-white);
-    font-size: 25px;
+}
+.inactive_button_text {
+    color: var(--color-grey);
 }
