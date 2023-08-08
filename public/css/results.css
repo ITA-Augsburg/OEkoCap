@@ -38,3 +38,12 @@
 .inactive_button_text {
     color: var(--color-grey);
 }
+
+#bar_chart {
+    max-width: 480px;
+}
+@media (max-width: 500px) {
+    #bar_chart {
+        padding: 0px 10px;
+    }
+}

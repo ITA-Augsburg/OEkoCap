@@ -62,7 +62,7 @@ import Chart from "chart.js/auto"
             </div>
         </div>
 
-        <canvas id="bar_chart" style="max-width: 420px;padding-left:30px;"></canvas>
+        <canvas id="bar_chart"></canvas>
 
         <canvas id="pie_chart"></canvas>
 
@@ -341,23 +341,39 @@ import Chart from "chart.js/auto"
                     data: {
                         labels: [this.leftBarLabel, this.rightBarLabel],
                         datasets: [{
+                            label: ["asddds", "asd", "asd", "asd"],
                             data: this.barChartData,
                             backgroundColor: [
-                                "red",
-                                "blue"
+                                this.color_green,
+                                this.color_lightgrey
                             ],
+                            barThickness: 80,
                             borderWidth: 1,
                             borderColor: "#777",
-                            hoverBorderWidth: 3,
-                            hoverBorderColor: "#000"
+                            hoverBorderWidth: 2,
+                            hoverBorderColor: "#000",
+                            borderSkipped: false,
+                            hoverBackgroundColor: this.color_green
                         }]
                     },
                     options: {
-                        title: {
-                            display: true,
-                            text: "Test Title",
-                        },
-                        animation: false
+                        animation: false,
+                        hover: false,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: "bottom",
+                                labels: {
+                                    font: {
+                                        size: 16
+                                    },
+                                    
+                                }
+                            },
+                            tooltip: {
+                                enabled: false
+                            }
+                        }
                     }
                 })
             }

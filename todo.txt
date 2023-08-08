@@ -5,7 +5,10 @@ BUGS
 
 TODO
 
-BarChart: farben, font-size, darstellung ändern
+BarChart: 
+font-size
+genaue werte an der seite zeigen
+favicon reparieren
 
 eingabe-elemente on-hover hilfetexte, mobile-version ein button mit den hilfetexte
 auf results view eine neue art footer machen wo der drucken knopf zb drauf ist
