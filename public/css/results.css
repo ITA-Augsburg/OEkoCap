@@ -1,17 +1,14 @@
-.results_process_select {
-    margin: 20px 10px 10px 10px;
-}
-
 .results_buttoncontainer {
     display: flex;
     flex-wrap: nowrap;
-    margin-bottom: 40px;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 .results_gwp_buttoncontainer {
-    margin: 20px 5px 20px 10px;
+    margin: 20px 5px 10px 10px;
 }
 .results_cost_buttoncontainer {
-    margin: 20px 10px 20px 5px;
+    margin: 20px 10px 10px 5px;
 }
 @media (max-width: 500px) {
     .results_buttoncontainer {
@@ -37,6 +34,10 @@
 }
 .inactive_button_text {
     color: var(--color-grey);
+}
+
+.results_process_select {
+    margin: 20px 10px 40px 10px;
 }
 
 #bar_chart {

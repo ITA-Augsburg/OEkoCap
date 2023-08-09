@@ -10,18 +10,6 @@ import Chart from "chart.js/auto"
         <p>{{app_output_prop}}</p>
         <!-- JSON.stringify(app_output_prop, null, 2) -->
 
-        <v-select
-        class="select results_process_select"
-        label="Benchmark Process"
-        single-line
-        suffix="Benchmark"
-        :items=process_options
-        variant="solo"
-        :bg-color=color_green
-        v-model=this.selected_process
-        v-on:update:model-value=[handleBenchmarkSelect()]
-        ></v-select>
-
         <div class="results_buttoncontainer">
             <div class="results_gwp_buttoncontainer">
                 <v-btn
@@ -62,6 +50,18 @@ import Chart from "chart.js/auto"
             </div>
         </div>
 
+        <v-select
+        class="select results_process_select"
+        label="Benchmark Process"
+        single-line
+        suffix="Benchmark"
+        :items=process_options
+        variant="solo"
+        :bg-color=color_green
+        v-model=this.selected_process
+        v-on:update:model-value=[handleBenchmarkSelect()]
+        ></v-select>
+
         <canvas id="bar_chart"></canvas>
 
         <canvas id="pie_chart"></canvas>
@@ -89,37 +89,9 @@ import Chart from "chart.js/auto"
                 this.process_options[i] = this.test_benchmarks[i].name
             }
 
-            //create initial barchart
+            //create initial charts
             this.updateBarChart()
-            new Chart("pie_chart", {
-                type: "pie",
-                data: {
-                    labels: ["ResinTransferMoulding", "Carding", "Oxidation", "Pyrolysis"],
-                    datasets: [{
-                        label:"value",
-                        data: [293.0, 109.0, 10.0, 96.0],
-                        backgroundColor: [
-                            "rgba(255, 99, 132, 0.6)",
-                            "rgba(123, 99, 132, 0.6)",
-                            "rgba(45, 99, 132, 0.6)",
-                            "rgba(33, 99, 34, 0.6)",
-                        ],
-                        borderWidth: 1,
-                        borderColor: "#777",
-                        hoverBorderWidth: 3,
-                        hoverBorderColor: "#000"
-                    }]
-                },
-                options: {
-                    title: {
-                        display: true,
-                        text: "Title of this line chart",
-                    },
-                    layout: {
-                        padding: 60
-                    }
-                }
-            })
+            this.updatePieChart()
 
         },
         data() {
@@ -132,6 +104,10 @@ import Chart from "chart.js/auto"
                 barChartData: [[undefined, undefined], [undefined, undefined]],
                 leftBarLabel: "Result",
                 rightBarLabel: "Benchmark",
+                pieChart: undefined,
+                pieChartData: [],
+                pieChartTitle: "Calculated Processes",
+                pieChartColors: [],
 
                 test_output: {
                     "gwp": {
@@ -305,17 +281,37 @@ import Chart from "chart.js/auto"
                         this.leftBarLabel = "calculated gwp"
                         this.barChartData[0][0] = Math.round(this.test_output.gwp.minValue * 100)/100
                         this.barChartData[0][1] = Math.round(this.test_output.gwp.maxValue * 100)/100
+
+                        this.pieChartTitle = "Maximal gwp of each Process"
+                        this.test_output.processes.forEach((element, index) => {
+                            this.pieChartData[index] = element.maxGWPValue
+                        })
                         break
                     case "cost":
                         this.leftBarLabel = "calculated cost"
                         this.barChartData[0][0] = Math.round(this.test_output.cost.minValue_eur_per_kg * 100)/100
                         this.barChartData[0][1] = Math.round(this.test_output.cost.maxValue_eur_per_kg * 100)/100
+
+                        this.pieChartTitle = "Maximal total cost of each Process"
+                        this.test_output.processes.forEach((element, index) => {
+                            this.pieChartData[index] = element.maxCostTotalInEur
+                        })
                         break
                 }
+
+                let h = 56, s = 55, l = 57
+                for(let i=0; i<this.pieChartData.length; i++) {
+                    h += 90
+                    h>360 ? h-=361 : ""
+                    // console.log("rgb(" + r +", " + g + ", " + b + ")")
+                    this.pieChartColors[i] = "hsl(" + h +", " + s + "%, " + l + "%)"
+                }
+                // console.log(this.pieChartColors)
 
                 //benchmark needs to change from gwp to cost (and vice versa) if output switches
                 this.handleBenchmarkSelect()
                 // this.updateBarChart() happens in this.handleBenchmarkSelect() alredy
+                this.updatePieChart()
             },
             handleBenchmarkSelect() {
                 this.test_benchmarks.forEach(element => {
@@ -406,6 +402,55 @@ import Chart from "chart.js/auto"
                                             }
                                         })
                                     }
+                                }
+                            },
+                            tooltip: {
+                                enabled: false
+                            }
+                        }
+                    }
+                })
+            },
+            updatePieChart() {
+                if(this.pieChart !== undefined) this.pieChart.destroy()
+                this.pieChart = new Chart("pie_chart", {
+                    type: "pie",
+                    data: {
+                        // labels: ["ResinTransferMoulding", "Carding", "Oxidation", "Pyrolysis"],
+                        datasets: [{
+                            data: this.pieChartData,
+                            backgroundColor: this.pieChartColors,
+                            borderWidth: 1,
+                            borderColor: "#777",
+                            hoverBorderWidth: 3,
+                            hoverBorderColor: "#000"
+                        }]
+                    },
+                    options: {
+                        animation: false,
+                        hover: false,
+                        aspectRatio: 1.2,
+                        layout: {
+                            padding: 60
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: this.pieChartTitle,
+                                font: {
+                                    size: 20
+                                }
+                            },
+                            legend: {
+                                display: (this.pieChartData[0]!==undefined) ? true : false,
+                                position: "bottom",
+                                labels: {
+                                    font: {
+                                        size: 20
+                                    },
+                                    // generateLabels: (chart) => {
+
+                                    // }
                                 }
                             },
                             tooltip: {
