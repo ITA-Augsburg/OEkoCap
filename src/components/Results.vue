@@ -341,7 +341,6 @@ import Chart from "chart.js/auto"
                     data: {
                         labels: [this.leftBarLabel, this.rightBarLabel],
                         datasets: [{
-                            label: ["asddds", "asd", "asd", "asd"],
                             data: this.barChartData,
                             backgroundColor: [
                                 this.color_green,
@@ -359,15 +358,54 @@ import Chart from "chart.js/auto"
                     options: {
                         animation: false,
                         hover: false,
+                        aspectRatio: 1.3,
+                        scales: {
+                          x: {
+                            ticks: {
+                                font: {
+                                    size: 20
+                                }
+                            }
+                          },
+                          y: {
+                            ticks: {
+                                display: (this.barChartData[0][0]!==undefined || this.barChartData[1][0]!==undefined) ? true : false,
+                                font: {
+                                    size: 18
+                                }
+                            }
+                          }
+                        },
                         plugins: {
                             legend: {
-                                display: true,
+                                display: (this.barChartData[0][0]!==undefined || this.barChartData[1][0]!==undefined) ? true : false,
                                 position: "bottom",
                                 labels: {
                                     font: {
-                                        size: 16
+                                        size: 20
                                     },
-                                    
+                                    generateLabels: (chart) => {
+                                        if(this.barChartData[0][0] === undefined) {
+                                            return [{
+                                                text: "min: " + this.barChartData[1][0] + ", max: " + this.barChartData[1][1],
+                                                strokeStyle: chart.data.datasets[0].borderColor[1],
+                                                fillStyle: chart.data.datasets[0].backgroundColor[1]
+                                            }]
+                                        } else if(this.barChartData[1][0] === undefined) {
+                                            return [{
+                                                text: "min: " + this.barChartData[0][0] + ", max: " + this.barChartData[0][1],
+                                                strokeStyle: chart.data.datasets[0].borderColor[0],
+                                                fillStyle: chart.data.datasets[0].backgroundColor[0]
+                                            }]
+                                        }
+                                        return chart.data.labels.map((label, index) => {
+                                            return {
+                                                text: "min: " + this.barChartData[index][0] + ", max: " + this.barChartData[index][1],
+                                                strokeStyle: chart.data.datasets[0].borderColor[index],
+                                                fillStyle: chart.data.datasets[0].backgroundColor[index]
+                                            }
+                                        })
+                                    }
                                 }
                             },
                             tooltip: {
