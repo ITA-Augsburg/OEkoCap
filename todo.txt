@@ -5,7 +5,6 @@ BUGS
 
 TODO
 
-piechart legend
 another bar chart
 make input area wider on desktop?
 

@@ -42,6 +42,7 @@
 
 #bar_chart {
     max-width: 480px;
+    margin-bottom: 60px;
 }
 @media (max-width: 500px) {
     #bar_chart {

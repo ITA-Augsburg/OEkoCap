@@ -65,6 +65,7 @@ import Chart from "chart.js/auto"
         <canvas id="bar_chart"></canvas>
 
         <canvas id="pie_chart"></canvas>
+        <div id="pie_chart_legend"></div>
 
     </div>
 
@@ -279,22 +280,22 @@ import Chart from "chart.js/auto"
                 switch(id) {
                     case "gwp":
                         this.leftBarLabel = "calculated gwp"
-                        this.barChartData[0][0] = Math.round(this.test_output.gwp.minValue * 100)/100
-                        this.barChartData[0][1] = Math.round(this.test_output.gwp.maxValue * 100)/100
+                        this.barChartData[0][0] = Math.round(this.test_output.gwp.minValue * 100) / 100
+                        this.barChartData[0][1] = Math.round(this.test_output.gwp.maxValue * 100) / 100
 
                         this.pieChartTitle = "Maximal gwp of each Process"
                         this.test_output.processes.forEach((element, index) => {
-                            this.pieChartData[index] = element.maxGWPValue
+                            this.pieChartData[index] = Math.round(element.maxGWPValue * 100) / 100
                         })
                         break
                     case "cost":
                         this.leftBarLabel = "calculated cost"
-                        this.barChartData[0][0] = Math.round(this.test_output.cost.minValue_eur_per_kg * 100)/100
-                        this.barChartData[0][1] = Math.round(this.test_output.cost.maxValue_eur_per_kg * 100)/100
+                        this.barChartData[0][0] = Math.round(this.test_output.cost.minValue_eur_per_kg * 100) / 100
+                        this.barChartData[0][1] = Math.round(this.test_output.cost.maxValue_eur_per_kg * 100) / 100
 
                         this.pieChartTitle = "Maximal total cost of each Process"
                         this.test_output.processes.forEach((element, index) => {
-                            this.pieChartData[index] = element.maxCostTotalInEur
+                            this.pieChartData[index] = Math.round(element.maxCostTotalInEur * 100) / 100
                         })
                         break
                 }
@@ -380,23 +381,25 @@ import Chart from "chart.js/auto"
                                     font: {
                                         size: 20
                                     },
+                                    boxWidth: 25,
+                                    boxHeight: 25,
                                     generateLabels: (chart) => {
                                         if(this.barChartData[0][0] === undefined) {
                                             return [{
-                                                text: "min: " + this.barChartData[1][0] + ", max: " + this.barChartData[1][1],
+                                                text: "Min: " + this.barChartData[1][0] + ", Max: " + this.barChartData[1][1],
                                                 strokeStyle: chart.data.datasets[0].borderColor[1],
                                                 fillStyle: chart.data.datasets[0].backgroundColor[1]
                                             }]
                                         } else if(this.barChartData[1][0] === undefined) {
                                             return [{
-                                                text: "min: " + this.barChartData[0][0] + ", max: " + this.barChartData[0][1],
+                                                text: "Min: " + this.barChartData[0][0] + ", Max: " + this.barChartData[0][1],
                                                 strokeStyle: chart.data.datasets[0].borderColor[0],
                                                 fillStyle: chart.data.datasets[0].backgroundColor[0]
                                             }]
                                         }
                                         return chart.data.labels.map((label, index) => {
                                             return {
-                                                text: "min: " + this.barChartData[index][0] + ", max: " + this.barChartData[index][1],
+                                                text: "Min: " + this.barChartData[index][0] + ", Max: " + this.barChartData[index][1],
                                                 strokeStyle: chart.data.datasets[0].borderColor[index],
                                                 fillStyle: chart.data.datasets[0].backgroundColor[index]
                                             }
@@ -413,10 +416,11 @@ import Chart from "chart.js/auto"
             },
             updatePieChart() {
                 if(this.pieChart !== undefined) this.pieChart.destroy()
+                
                 this.pieChart = new Chart("pie_chart", {
                     type: "pie",
                     data: {
-                        // labels: ["ResinTransferMoulding", "Carding", "Oxidation", "Pyrolysis"],
+                        labels: ["ResinTransferMoulding", "Carding", "Oxidation", "Pyrolysis"],
                         datasets: [{
                             data: this.pieChartData,
                             backgroundColor: this.pieChartColors,
@@ -429,10 +433,7 @@ import Chart from "chart.js/auto"
                     options: {
                         animation: false,
                         hover: false,
-                        aspectRatio: 1.2,
-                        layout: {
-                            padding: 60
-                        },
+                        aspectRatio: 1,
                         plugins: {
                             title: {
                                 display: true,
@@ -442,23 +443,62 @@ import Chart from "chart.js/auto"
                                 }
                             },
                             legend: {
-                                display: (this.pieChartData[0]!==undefined) ? true : false,
+                                // display: false,
                                 position: "bottom",
+                                display: (this.pieChartData[0]!==undefined) ? true : false,
                                 labels: {
                                     font: {
                                         size: 20
                                     },
-                                    // generateLabels: (chart) => {
-
-                                    // }
+                                    boxWidth: 25,
+                                    boxHeight: 25,
+                                    generateLabels: (chart) => {
+                                        return chart.data.labels.map((label, index) => {
+                                            return {
+                                                text: label + ": " + this.pieChartData[index] + " (" + this.calculatePieChartPercent(index) + "%)",
+                                                strokeStyle: chart.data.datasets[0].borderColor[index],
+                                                fillStyle: chart.data.datasets[0].backgroundColor[index]
+                                            }
+                                        })
+                                    }
                                 }
                             },
                             tooltip: {
                                 enabled: false
                             }
-                        }
-                    }
+                        },
+                    },
+                    // If legend-items need to be underneath each other, this is the way
+                    // plugins: [{
+                    //     beforeInit: function(chart) {
+                    //     if (chart.canvas.id === "pie_chart") {
+                    //         const ul = document.createElement('ul');
+                    //         chart.data.labels.forEach((label, i) => {
+                    //         ul.innerHTML += `
+                    //             <li>
+                    //             <span style="background-color: ${ chart.data.datasets[0].backgroundColor[i] }">
+                    //                 ${ chart.data.datasets[0].data[i] }
+                    //             </span>
+                    //             ${ label }
+                    //             </li>
+                    //         `;
+                    //         });
+
+                    //         return document.getElementById("pie_chart_legend").appendChild(ul);
+                    //     }
+
+                    //     return;
+                    //     }
+                    // }]
                 })
+            },
+            calculatePieChartPercent(index) {
+                let sum = 0
+                this.pieChartData.forEach((element) => {
+                    sum += element
+                })
+                let element = (this.pieChartData[index] / (sum / 100))
+                return Math.round(element * 100) / 100
             }
         }
     }
