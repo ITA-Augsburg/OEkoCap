@@ -36,7 +36,7 @@
     color: var(--color-grey);
 }
 
-.results_process_select {
+.results_benchmark_process_select {
     margin: 20px 10px 40px 10px;
 }
 
@@ -46,6 +46,24 @@
 }
 @media (max-width: 500px) {
     #bar_chart {
+        padding: 0px 10px;
+    }
+}
+
+#pie_chart {
+    margin-bottom: 60px;
+}
+
+.results_process_select {
+    margin: 20px 10px 40px 10px;
+}
+
+#bar_chart_2 {
+    max-width: 480px;
+    margin-bottom: 60px;
+}
+@media (max-width: 500px) {
+    #bar_chart_2 {
         padding: 0px 10px;
     }
 }

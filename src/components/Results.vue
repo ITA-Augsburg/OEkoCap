@@ -51,21 +51,35 @@ import Chart from "chart.js/auto"
         </div>
 
         <v-select
-        class="select results_process_select"
-        label="Benchmark Process"
+        class="select results_benchmark_process_select"
+        label="Benchmark Processes"
         single-line
         suffix="Benchmark"
-        :items=process_options
+        :items=benchmark_process_options
         variant="solo"
         :bg-color=color_green
-        v-model=this.selected_process
+        v-model=this.selected_benchmark
         v-on:update:model-value=[handleBenchmarkSelect()]
         ></v-select>
 
         <canvas id="bar_chart"></canvas>
 
         <canvas id="pie_chart"></canvas>
-        <div id="pie_chart_legend"></div>
+        <!-- <div id="pie_chart_legend"></div> -->
+
+        <v-select
+        class="select results_process_select"
+        label="Calculated Processes"
+        single-line
+        suffix="Process"
+        :items=calculated_process_options
+        variant="solo"
+        :bg-color=color_green
+        v-model=this.selected_process
+        v-on:update:model-value=[handleProcessSelect()]
+        ></v-select>
+
+        <canvas id="bar_chart_2"></canvas>
 
     </div>
 
@@ -78,26 +92,35 @@ import Chart from "chart.js/auto"
         mounted() {
             // console.log(JSON.stringify(this.test_output, null, 2))
 
-            //check output validity
+            // check output validity
             if(!(Object.prototype.hasOwnProperty.call(this.test_output, "processes"))) {
                     this.$emit("setErrorMessage", "Invalid Input. No output could be generated based from the given input.")
                     router.push({name: "ErrorView"})
             }
 
-            //fill benchmark-select element
-            this.process_options = []
+            // fill benchmark-select element
+            this.benchmark_process_options = []
             for(let i=0; i<this.test_benchmarks.length; i++) {
-                this.process_options[i] = this.test_benchmarks[i].name
+                this.benchmark_process_options[i] = this.test_benchmarks[i].name
             }
 
-            //create initial charts
+            // fill calculated-processes-select element
+            this.calculated_process_options = []
+            for(let i=0; i<this.test_output.processes.length; i++) {
+                this.calculated_process_options[i] = this.test_output.processes[i].name
+            }
+
+            // create initial charts
             this.updateBarChart()
             this.updatePieChart()
+            this.updateBarChart2()
 
         },
         data() {
             return {
-                process_options: [],
+                benchmark_process_options: [],
+                calculated_process_options: [],
+                selected_benchmark: undefined,
                 selected_process: undefined,
                 gwp_button_active: false,
                 cost_button_active: false,
@@ -109,6 +132,9 @@ import Chart from "chart.js/auto"
                 pieChartData: [],
                 pieChartTitle: "Calculated Processes",
                 pieChartColors: [],
+                barChart2: undefined,
+                barChart2CalculatedDataset: [[undefined, undefined], [undefined, undefined], [undefined, undefined]],
+                barChart2BenchmarkDataset: [[undefined, undefined], [undefined, undefined], [undefined, undefined]],
 
                 test_output: {
                     "gwp": {
@@ -238,6 +264,7 @@ import Chart from "chart.js/auto"
                         }
                     ]
                 },
+                // benchmark used in the first bar chart
                 test_benchmarks: [
                     {
                         "name": "process1",
@@ -254,13 +281,52 @@ import Chart from "chart.js/auto"
                         "cost_max": 2100
                     },
                     {
-                            "name": "process3",
-                            "gwp_min": 700,
-                            "gwp_max": 1200,
-                            "cost_min": 1700,
-                            "cost_max": 2200
-                        },
+                        "name": "process3",
+                        "gwp_min": 700,
+                        "gwp_max": 1200,
+                        "cost_min": 1700,
+                        "cost_max": 2200
+                    },
                 ],
+                // benchmark used in the second bar chart
+                test_benchmarks_2: [
+                    {
+                        "name": "ResinTransferMoulding",
+                        "gwp_min": 500,
+                        "gwp_max": 1000,
+                        "cost_per_kg_min": 300,
+                        "cost_per_kg_max": 600,
+                        "total_cost_min": 1500,
+                        "total_cost_max": 2000
+                    },
+                    {
+                        "name": "Carding",
+                        "gwp_min": 600,
+                        "gwp_max": 1100,
+                        "cost_per_kg_min": 200,
+                        "cost_per_kg_max": 500,
+                        "total_cost_min": 1600,
+                        "total_cost_max": 2100
+                    },
+                    {
+                        "name": "Oxidation",
+                        "gwp_min": 700,
+                        "gwp_max": 1200,
+                        "cost_per_kg_min": 500,
+                        "cost_per_kg_max": 700,
+                        "total_cost_min": 1700,
+                        "total_cost_max": 2200
+                    },
+                    {
+                        "name": "Pyrolysis",
+                        "gwp_min": 500,
+                        "gwp_max": 1500,
+                        "cost_per_kg_min": 400,
+                        "cost_per_kg_max": 800,
+                        "total_cost_min": 1300,
+                        "total_cost_max": 2800
+                    },
+                ]
             }
         },
         methods: {
@@ -279,7 +345,7 @@ import Chart from "chart.js/auto"
                 //depending on which button is "active", show gwp or cost of output
                 switch(id) {
                     case "gwp":
-                        this.leftBarLabel = "calculated gwp"
+                        this.leftBarLabel = "Calculated GWP Range"
                         this.barChartData[0][0] = Math.round(this.test_output.gwp.minValue * 100) / 100
                         this.barChartData[0][1] = Math.round(this.test_output.gwp.maxValue * 100) / 100
 
@@ -289,7 +355,7 @@ import Chart from "chart.js/auto"
                         })
                         break
                     case "cost":
-                        this.leftBarLabel = "calculated cost"
+                        this.leftBarLabel = "Calculated Cost Range"
                         this.barChartData[0][0] = Math.round(this.test_output.cost.minValue_eur_per_kg * 100) / 100
                         this.barChartData[0][1] = Math.round(this.test_output.cost.maxValue_eur_per_kg * 100) / 100
 
@@ -316,20 +382,23 @@ import Chart from "chart.js/auto"
             },
             handleBenchmarkSelect() {
                 this.test_benchmarks.forEach(element => {
-                    if(this.selected_process === element.name) {
+                    if(this.selected_benchmark === element.name) {
                         //depending on which button is "active", show gwp or cost of benchmark
                         if(this.gwp_button_active) {
-                            this.rightBarLabel = element.name + " Benchmark gwp"
+                            this.rightBarLabel = element.name + " Benchmark GWP Range"
                             this.barChartData[1][0] = Math.round(element.gwp_min * 100)/100
                             this.barChartData[1][1] = Math.round(element.gwp_max * 100)/100
                         } else {
-                            this.rightBarLabel = element.name + " Benchmark cost"
+                            this.rightBarLabel = element.name + " Benchmark Cost Range"
                             this.barChartData[1][0] = Math.round(element.cost_min * 100)/100
                             this.barChartData[1][1] = Math.round(element.cost_max * 100)/100
                         }
                     }
                 })
                 this.updateBarChart()
+            },
+            handleProcessSelect() {
+
             },
             updateBarChart() {
                 if(this.barChart !== undefined) this.barChart.destroy()
@@ -499,6 +568,105 @@ import Chart from "chart.js/auto"
                 })
                 let element = (this.pieChartData[index] / (sum / 100))
                 return Math.round(element * 100) / 100
+            },
+            updateBarChart2() {
+                if(this.barChart2 !== undefined) this.barChart2.destroy()
+                this.barChart2 = new Chart("bar_chart_2", {
+                    type: "bar",
+                    data: {
+                        labels: ["GWP Range", "Cost/Kg Range", "Total Cost Range"],
+                        datasets: [
+                            {
+                                data: this.barChart2CalculatedDataset,
+                                backgroundColor: [
+                                    this.color_green,
+                                    // this.color_lightgrey
+                                ],
+                                barThickness: 20,
+                                borderWidth: 1,
+                                borderColor: "#777",
+                                hoverBorderWidth: 2,
+                                hoverBorderColor: "#000",
+                                borderSkipped: false,
+                                hoverBackgroundColor: this.color_green
+                            },
+                            {
+                                data: this.barChart2BenchmarkDataset,
+                                backgroundColor: [
+                                    // this.color_green,
+                                    this.color_lightgrey
+                                ],
+                                barThickness: 20,
+                                borderWidth: 1,
+                                borderColor: "#777",
+                                hoverBorderWidth: 2,
+                                hoverBorderColor: "#000",
+                                borderSkipped: false,
+                                hoverBackgroundColor: this.color_green
+                            }
+                        ]
+                    },
+                    options: {
+                        animation: false,
+                        hover: false,
+                        aspectRatio: 1.3,
+                        // scales: {
+                        //   x: {
+                        //     ticks: {
+                        //         font: {
+                        //             size: 20
+                        //         }
+                        //     }
+                        //   },
+                        //   y: {
+                        //     ticks: {
+                        //         display: (this.barChart2Data[0][0]!==undefined || this.barChart2Data[1][0]!==undefined) ? true : false,
+                        //         font: {
+                        //             size: 18
+                        //         }
+                        //     }
+                        //   }
+                        // },
+                        plugins: {
+                            // legend: {
+                            //     display: (this.barChart2Data[0][0]!==undefined || this.barChart2Data[1][0]!==undefined) ? true : false,
+                            //     position: "bottom",
+                            //     labels: {
+                            //         font: {
+                            //             size: 20
+                            //         },
+                            //         boxWidth: 25,
+                            //         boxHeight: 25,
+                            //         generateLabels: (chart) => {
+                            //             if(this.barChart2Data[0][0] === undefined) {
+                            //                 return [{
+                            //                     text: "Min: " + this.barChart2Data[1][0] + ", Max: " + this.barChart2Data[1][1],
+                            //                     strokeStyle: chart.data.datasets[0].borderColor[1],
+                            //                     fillStyle: chart.data.datasets[0].backgroundColor[1]
+                            //                 }]
+                            //             } else if(this.barChart2Data[1][0] === undefined) {
+                            //                 return [{
+                            //                     text: "Min: " + this.barChart2Data[0][0] + ", Max: " + this.barChart2Data[0][1],
+                            //                     strokeStyle: chart.data.datasets[0].borderColor[0],
+                            //                     fillStyle: chart.data.datasets[0].backgroundColor[0]
+                            //                 }]
+                            //             }
+                            //             return chart.data.labels.map((label, index) => {
+                            //                 return {
+                            //                     text: "Min: " + this.barChart2Data[index][0] + ", Max: " + this.barChart2Data[index][1],
+                            //                     strokeStyle: chart.data.datasets[0].borderColor[index],
+                            //                     fillStyle: chart.data.datasets[0].backgroundColor[index]
+                            //                 }
+                            //             })
+                            //         }
+                            //     }
+                            // },
+                            tooltip: {
+                                enabled: false
+                            }
+                        }
+                    }
+                })
             }
         }
     }
