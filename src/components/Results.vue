@@ -62,9 +62,13 @@ import Chart from "chart.js/auto"
         v-on:update:model-value=[handleBenchmarkSelect()]
         ></v-select>
 
-        <canvas id="bar_chart"></canvas>
+        <canvas
+        v-if="this.barChartData[0][0] !== undefined || this.barChartData[1][0] !== undefined"
+        id="bar_chart"></canvas>
 
-        <canvas id="pie_chart"></canvas>
+        <canvas
+        v-if="this.pieChartData[0] !== undefined"
+        id="pie_chart"></canvas>
         <!-- <div id="pie_chart_legend"></div> -->
 
         <v-select
@@ -79,7 +83,9 @@ import Chart from "chart.js/auto"
         v-on:update:model-value=[handleProcessSelect()]
         ></v-select>
 
-        <canvas id="bar_chart_2"></canvas>
+        <canvas
+        v-if="this.barChart2CalculatedDataset[0] !== undefined"
+        id="bar_chart_2"></canvas>
 
     </div>
 
@@ -109,12 +115,6 @@ import Chart from "chart.js/auto"
             for(let i=0; i<this.test_output.processes.length; i++) {
                 this.calculated_process_options[i] = this.test_output.processes[i].name
             }
-
-            // create initial charts
-            this.updateBarChart()
-            this.updatePieChart()
-            this.updateBarChart2()
-
         },
         data() {
             return {
@@ -341,7 +341,6 @@ import Chart from "chart.js/auto"
                 this.handleButton("cost")
             },
             handleButton(id) {
-
                 //depending on which button is "active", show gwp or cost of output
                 switch(id) {
                     case "gwp":
@@ -376,9 +375,19 @@ import Chart from "chart.js/auto"
                 // console.log(this.pieChartColors)
 
                 //benchmark needs to change from gwp to cost (and vice versa) if output switches
-                this.handleBenchmarkSelect()
-                // this.updateBarChart() happens in this.handleBenchmarkSelect() alredy
-                this.updatePieChart()
+                //Initially canvas-elements are missing, in order for a chart to render for the first time,
+                //some time is needed until the canvas-element is added
+                if(document.getElementById("bar_chart") === null || document.getElementById("pie_chart") === null) {
+                    setTimeout(() => {
+                        this.handleBenchmarkSelect()
+                        // this.updateBarChart() happens in this.handleBenchmarkSelect() alredy
+                        this.updatePieChart()
+                    }, 50)
+                } else {
+                    this.handleBenchmarkSelect()
+                    // this.updateBarChart() happens in this.handleBenchmarkSelect() alredy
+                    this.updatePieChart()
+                }
             },
             handleBenchmarkSelect() {
                 this.test_benchmarks.forEach(element => {
@@ -395,171 +404,197 @@ import Chart from "chart.js/auto"
                         }
                     }
                 })
-                this.updateBarChart()
+                if(document.getElementById("bar_chart") === null) {
+                    setTimeout(() => {
+                        this.updateBarChart()
+                }, 50);
+                } else {
+                    this.updateBarChart()
+                }
             },
             handleProcessSelect() {
-
+                //TODO
+                this.barChart2CalculatedDataset = [[1, 2], [3, 4], [5, 6]]
+                this.barChart2BenchmarkDataset = [[6, 5], [4, 3], [2, 1]]
+                
+                //Initially canvas-elements are missing, in order for a chart to render for the first time,
+                //some time is needed until the canvas-element is added
+                if(document.getElementById("bar_chart_2") === null) {
+                    setTimeout(() => {
+                        this.updateBarChart2()
+                    }, 50)
+                } else {
+                    this.updateBarChart2()
+                    console.log("not")
+                }
             },
             updateBarChart() {
-                if(this.barChart !== undefined) this.barChart.destroy()
-                this.barChart = new Chart("bar_chart", {
-                    type: "bar",
-                    data: {
-                        labels: [this.leftBarLabel, this.rightBarLabel],
-                        datasets: [{
-                            data: this.barChartData,
-                            backgroundColor: [
-                                this.color_green,
-                                this.color_lightgrey
-                            ],
-                            barThickness: 80,
-                            borderWidth: 1,
-                            borderColor: "#777",
-                            hoverBorderWidth: 2,
-                            hoverBorderColor: "#000",
-                            borderSkipped: false,
-                            hoverBackgroundColor: this.color_green
-                        }]
-                    },
-                    options: {
-                        animation: false,
-                        hover: false,
-                        aspectRatio: 1.3,
-                        scales: {
-                          x: {
-                            ticks: {
-                                font: {
-                                    size: 20
-                                }
-                            }
-                          },
-                          y: {
-                            ticks: {
-                                display: (this.barChartData[0][0]!==undefined || this.barChartData[1][0]!==undefined) ? true : false,
-                                font: {
-                                    size: 18
-                                }
-                            }
-                          }
+                if(this.barChart !== undefined) {
+                    this.barChart.destroy()
+                }
+                if(this.barChartData[0][0] !== undefined || this.barChartData[1][0] !== undefined) {
+                    this.barChart = new Chart("bar_chart", {
+                        type: "bar",
+                        data: {
+                            labels: [this.leftBarLabel, this.rightBarLabel],
+                            datasets: [{
+                                data: this.barChartData,
+                                backgroundColor: [
+                                    this.color_green,
+                                    this.color_lightgrey
+                                ],
+                                barThickness: 80,
+                                borderWidth: 1,
+                                borderColor: "#777",
+                                hoverBorderWidth: 2,
+                                hoverBorderColor: "#000",
+                                borderSkipped: false,
+                                hoverBackgroundColor: this.color_green
+                            }]
                         },
-                        plugins: {
-                            legend: {
-                                display: (this.barChartData[0][0]!==undefined || this.barChartData[1][0]!==undefined) ? true : false,
-                                position: "bottom",
-                                labels: {
+                        options: {
+                            animation: false,
+                            hover: false,
+                            aspectRatio: 1.3,
+                            scales: {
+                            x: {
+                                ticks: {
                                     font: {
                                         size: 20
-                                    },
-                                    boxWidth: 25,
-                                    boxHeight: 25,
-                                    generateLabels: (chart) => {
-                                        if(this.barChartData[0][0] === undefined) {
-                                            return [{
-                                                text: "Min: " + this.barChartData[1][0] + ", Max: " + this.barChartData[1][1],
-                                                strokeStyle: chart.data.datasets[0].borderColor[1],
-                                                fillStyle: chart.data.datasets[0].backgroundColor[1]
-                                            }]
-                                        } else if(this.barChartData[1][0] === undefined) {
-                                            return [{
-                                                text: "Min: " + this.barChartData[0][0] + ", Max: " + this.barChartData[0][1],
-                                                strokeStyle: chart.data.datasets[0].borderColor[0],
-                                                fillStyle: chart.data.datasets[0].backgroundColor[0]
-                                            }]
-                                        }
-                                        return chart.data.labels.map((label, index) => {
-                                            return {
-                                                text: "Min: " + this.barChartData[index][0] + ", Max: " + this.barChartData[index][1],
-                                                strokeStyle: chart.data.datasets[0].borderColor[index],
-                                                fillStyle: chart.data.datasets[0].backgroundColor[index]
-                                            }
-                                        })
                                     }
                                 }
                             },
-                            tooltip: {
-                                enabled: false
+                            y: {
+                                ticks: {
+                                    display: (this.barChartData[0][0]!==undefined || this.barChartData[1][0]!==undefined) ? true : false,
+                                    font: {
+                                        size: 18
+                                    }
+                                }
+                            }
+                            },
+                            plugins: {
+                                legend: {
+                                    display: (this.barChartData[0][0]!==undefined || this.barChartData[1][0]!==undefined) ? true : false,
+                                    position: "bottom",
+                                    labels: {
+                                        font: {
+                                            size: 20
+                                        },
+                                        boxWidth: 25,
+                                        boxHeight: 25,
+                                        generateLabels: (chart) => {
+                                            if(this.barChartData[0][0] === undefined) {
+                                                return [{
+                                                    text: "Min: " + this.barChartData[1][0] + ", Max: " + this.barChartData[1][1],
+                                                    strokeStyle: chart.data.datasets[0].borderColor[1],
+                                                    fillStyle: chart.data.datasets[0].backgroundColor[1]
+                                                }]
+                                            } else if(this.barChartData[1][0] === undefined) {
+                                                return [{
+                                                    text: "Min: " + this.barChartData[0][0] + ", Max: " + this.barChartData[0][1],
+                                                    strokeStyle: chart.data.datasets[0].borderColor[0],
+                                                    fillStyle: chart.data.datasets[0].backgroundColor[0]
+                                                }]
+                                            }
+                                            return chart.data.labels.map((label, index) => {
+                                                return {
+                                                    text: "Min: " + this.barChartData[index][0] + ", Max: " + this.barChartData[index][1],
+                                                    strokeStyle: chart.data.datasets[0].borderColor[index],
+                                                    fillStyle: chart.data.datasets[0].backgroundColor[index]
+                                                }
+                                            })
+                                        }
+                                    }
+                                },
+                                tooltip: {
+                                    enabled: false
+                                }
                             }
                         }
-                    }
-                })
+                    })
+                }
             },
             updatePieChart() {
-                if(this.pieChart !== undefined) this.pieChart.destroy()
-                
-                this.pieChart = new Chart("pie_chart", {
-                    type: "pie",
-                    data: {
-                        labels: ["ResinTransferMoulding", "Carding", "Oxidation", "Pyrolysis"],
-                        datasets: [{
-                            data: this.pieChartData,
-                            backgroundColor: this.pieChartColors,
-                            borderWidth: 1,
-                            borderColor: "#777",
-                            hoverBorderWidth: 3,
-                            hoverBorderColor: "#000"
-                        }]
-                    },
-                    options: {
-                        animation: false,
-                        hover: false,
-                        aspectRatio: 1,
-                        plugins: {
-                            title: {
-                                display: true,
-                                text: this.pieChartTitle,
-                                font: {
-                                    size: 20
-                                }
-                            },
-                            legend: {
-                                // display: false,
-                                position: "bottom",
-                                display: (this.pieChartData[0]!==undefined) ? true : false,
-                                labels: {
+                if(this.pieChart !== undefined) {
+                    this.pieChart.destroy()
+                }
+                if(this.pieChartData[0] !== undefined) {
+                    this.pieChart = new Chart("pie_chart", {
+                        type: "pie",
+                        data: {
+                            labels: ["ResinTransferMoulding", "Carding", "Oxidation", "Pyrolysis"],
+                            datasets: [{
+                                data: this.pieChartData,
+                                backgroundColor: this.pieChartColors,
+                                borderWidth: 1,
+                                borderColor: "#777",
+                                hoverBorderWidth: 3,
+                                hoverBorderColor: "#000"
+                            }]
+                        },
+                        options: {
+                            animation: false,
+                            hover: false,
+                            aspectRatio: 1,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: this.pieChartTitle,
                                     font: {
                                         size: 20
-                                    },
-                                    boxWidth: 25,
-                                    boxHeight: 25,
-                                    generateLabels: (chart) => {
-                                        return chart.data.labels.map((label, index) => {
-                                            return {
-                                                text: label + ": " + this.pieChartData[index] + " (" + this.calculatePieChartPercent(index) + "%)",
-                                                strokeStyle: chart.data.datasets[0].borderColor[index],
-                                                fillStyle: chart.data.datasets[0].backgroundColor[index]
-                                            }
-                                        })
                                     }
+                                },
+                                legend: {
+                                    // display: false,
+                                    position: "bottom",
+                                    display: (this.pieChartData[0]!==undefined) ? true : false,
+                                    labels: {
+                                        font: {
+                                            size: 20
+                                        },
+                                        boxWidth: 25,
+                                        boxHeight: 25,
+                                        generateLabels: (chart) => {
+                                            return chart.data.labels.map((label, index) => {
+                                                return {
+                                                    text: label + ": " + this.pieChartData[index] + " (" + this.calculatePieChartPercent(index) + "%)",
+                                                    strokeStyle: chart.data.datasets[0].borderColor[index],
+                                                    fillStyle: chart.data.datasets[0].backgroundColor[index]
+                                                }
+                                            })
+                                        }
+                                    }
+                                },
+                                tooltip: {
+                                    enabled: false
                                 }
                             },
-                            tooltip: {
-                                enabled: false
-                            }
                         },
-                    },
-                    // If legend-items need to be underneath each other, this is the way
-                    // plugins: [{
-                    //     beforeInit: function(chart) {
-                    //     if (chart.canvas.id === "pie_chart") {
-                    //         const ul = document.createElement('ul');
-                    //         chart.data.labels.forEach((label, i) => {
-                    //         ul.innerHTML += `
-                    //             <li>
-                    //             <span style="background-color: ${ chart.data.datasets[0].backgroundColor[i] }">
-                    //                 ${ chart.data.datasets[0].data[i] }
-                    //             </span>
-                    //             ${ label }
-                    //             </li>
-                    //         `;
-                    //         });
+                        // If legend-items need to be underneath each other, this is the way
+                        // plugins: [{
+                        //     beforeInit: function(chart) {
+                        //     if (chart.canvas.id === "pie_chart") {
+                        //         const ul = document.createElement('ul');
+                        //         chart.data.labels.forEach((label, i) => {
+                        //         ul.innerHTML += `
+                        //             <li>
+                        //             <span style="background-color: ${ chart.data.datasets[0].backgroundColor[i] }">
+                        //                 ${ chart.data.datasets[0].data[i] }
+                        //             </span>
+                        //             ${ label }
+                        //             </li>
+                        //         `;
+                        //         });
 
-                    //         return document.getElementById("pie_chart_legend").appendChild(ul);
-                    //     }
+                        //         return document.getElementById("pie_chart_legend").appendChild(ul);
+                        //     }
 
-                    //     return;
-                    //     }
-                    // }]
-                })
+                        //     return;
+                        //     }
+                        // }]
+                    })
+                }
             },
             calculatePieChartPercent(index) {
                 let sum = 0
@@ -570,103 +605,107 @@ import Chart from "chart.js/auto"
                 return Math.round(element * 100) / 100
             },
             updateBarChart2() {
-                if(this.barChart2 !== undefined) this.barChart2.destroy()
-                this.barChart2 = new Chart("bar_chart_2", {
-                    type: "bar",
-                    data: {
-                        labels: ["GWP Range", "Cost/Kg Range", "Total Cost Range"],
-                        datasets: [
-                            {
-                                data: this.barChart2CalculatedDataset,
-                                backgroundColor: [
-                                    this.color_green,
-                                    // this.color_lightgrey
-                                ],
-                                barThickness: 20,
-                                borderWidth: 1,
-                                borderColor: "#777",
-                                hoverBorderWidth: 2,
-                                hoverBorderColor: "#000",
-                                borderSkipped: false,
-                                hoverBackgroundColor: this.color_green
-                            },
-                            {
-                                data: this.barChart2BenchmarkDataset,
-                                backgroundColor: [
-                                    // this.color_green,
-                                    this.color_lightgrey
-                                ],
-                                barThickness: 20,
-                                borderWidth: 1,
-                                borderColor: "#777",
-                                hoverBorderWidth: 2,
-                                hoverBorderColor: "#000",
-                                borderSkipped: false,
-                                hoverBackgroundColor: this.color_green
-                            }
-                        ]
-                    },
-                    options: {
-                        animation: false,
-                        hover: false,
-                        aspectRatio: 1.3,
-                        // scales: {
-                        //   x: {
-                        //     ticks: {
-                        //         font: {
-                        //             size: 20
-                        //         }
-                        //     }
-                        //   },
-                        //   y: {
-                        //     ticks: {
-                        //         display: (this.barChart2Data[0][0]!==undefined || this.barChart2Data[1][0]!==undefined) ? true : false,
-                        //         font: {
-                        //             size: 18
-                        //         }
-                        //     }
-                        //   }
-                        // },
-                        plugins: {
-                            // legend: {
-                            //     display: (this.barChart2Data[0][0]!==undefined || this.barChart2Data[1][0]!==undefined) ? true : false,
-                            //     position: "bottom",
-                            //     labels: {
+                if(this.barChart2 !== undefined) {
+                    this.barChart2.destroy()
+                }
+                if(this.barChart2CalculatedDataset[0][0] !== undefined) {
+                    this.barChart2 = new Chart("bar_chart_2", {
+                        type: "bar",
+                        data: {
+                            labels: ["GWP Range", "Cost/Kg Range", "Total Cost Range"],
+                            datasets: [
+                                {
+                                    data: this.barChart2CalculatedDataset,
+                                    backgroundColor: [
+                                        this.color_green,
+                                        // this.color_lightgrey
+                                    ],
+                                    barThickness: 20,
+                                    borderWidth: 1,
+                                    borderColor: "#777",
+                                    hoverBorderWidth: 2,
+                                    hoverBorderColor: "#000",
+                                    borderSkipped: false,
+                                    hoverBackgroundColor: this.color_green
+                                },
+                                {
+                                    data: this.barChart2BenchmarkDataset,
+                                    backgroundColor: [
+                                        // this.color_green,
+                                        this.color_lightgrey
+                                    ],
+                                    barThickness: 20,
+                                    borderWidth: 1,
+                                    borderColor: "#777",
+                                    hoverBorderWidth: 2,
+                                    hoverBorderColor: "#000",
+                                    borderSkipped: false,
+                                    hoverBackgroundColor: this.color_green
+                                }
+                            ]
+                        },
+                        options: {
+                            animation: false,
+                            hover: false,
+                            aspectRatio: 1.3,
+                            // scales: {
+                            //   x: {
+                            //     ticks: {
                             //         font: {
                             //             size: 20
-                            //         },
-                            //         boxWidth: 25,
-                            //         boxHeight: 25,
-                            //         generateLabels: (chart) => {
-                            //             if(this.barChart2Data[0][0] === undefined) {
-                            //                 return [{
-                            //                     text: "Min: " + this.barChart2Data[1][0] + ", Max: " + this.barChart2Data[1][1],
-                            //                     strokeStyle: chart.data.datasets[0].borderColor[1],
-                            //                     fillStyle: chart.data.datasets[0].backgroundColor[1]
-                            //                 }]
-                            //             } else if(this.barChart2Data[1][0] === undefined) {
-                            //                 return [{
-                            //                     text: "Min: " + this.barChart2Data[0][0] + ", Max: " + this.barChart2Data[0][1],
-                            //                     strokeStyle: chart.data.datasets[0].borderColor[0],
-                            //                     fillStyle: chart.data.datasets[0].backgroundColor[0]
-                            //                 }]
-                            //             }
-                            //             return chart.data.labels.map((label, index) => {
-                            //                 return {
-                            //                     text: "Min: " + this.barChart2Data[index][0] + ", Max: " + this.barChart2Data[index][1],
-                            //                     strokeStyle: chart.data.datasets[0].borderColor[index],
-                            //                     fillStyle: chart.data.datasets[0].backgroundColor[index]
-                            //                 }
-                            //             })
                             //         }
                             //     }
+                            //   },
+                            //   y: {
+                            //     ticks: {
+                            //         display: (this.barChart2Data[0][0]!==undefined || this.barChart2Data[1][0]!==undefined) ? true : false,
+                            //         font: {
+                            //             size: 18
+                            //         }
+                            //     }
+                            //   }
                             // },
-                            tooltip: {
-                                enabled: false
+                            plugins: {
+                                // legend: {
+                                //     display: (this.barChart2Data[0][0]!==undefined || this.barChart2Data[1][0]!==undefined) ? true : false,
+                                //     position: "bottom",
+                                //     labels: {
+                                //         font: {
+                                //             size: 20
+                                //         },
+                                //         boxWidth: 25,
+                                //         boxHeight: 25,
+                                //         generateLabels: (chart) => {
+                                //             if(this.barChart2Data[0][0] === undefined) {
+                                //                 return [{
+                                //                     text: "Min: " + this.barChart2Data[1][0] + ", Max: " + this.barChart2Data[1][1],
+                                //                     strokeStyle: chart.data.datasets[0].borderColor[1],
+                                //                     fillStyle: chart.data.datasets[0].backgroundColor[1]
+                                //                 }]
+                                //             } else if(this.barChart2Data[1][0] === undefined) {
+                                //                 return [{
+                                //                     text: "Min: " + this.barChart2Data[0][0] + ", Max: " + this.barChart2Data[0][1],
+                                //                     strokeStyle: chart.data.datasets[0].borderColor[0],
+                                //                     fillStyle: chart.data.datasets[0].backgroundColor[0]
+                                //                 }]
+                                //             }
+                                //             return chart.data.labels.map((label, index) => {
+                                //                 return {
+                                //                     text: "Min: " + this.barChart2Data[index][0] + ", Max: " + this.barChart2Data[index][1],
+                                //                     strokeStyle: chart.data.datasets[0].borderColor[index],
+                                //                     fillStyle: chart.data.datasets[0].backgroundColor[index]
+                                //                 }
+                                //             })
+                                //         }
+                                //     }
+                                // },
+                                tooltip: {
+                                    enabled: false
+                                }
                             }
                         }
-                    }
-                })
+                    })
+                }
             }
         }
     }

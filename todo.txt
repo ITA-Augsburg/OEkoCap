@@ -1,10 +1,11 @@
 
 BUGS
 
-
 TODO
 
 handleProcessSelect()
+statt setTimeout html-element-eventlistener nutzen in results (handleButton(id), handleBenchmarkSelect(), handleProcessSelect())
+
 auf mobile results legenden abgeschnitten
 another bar chart
 make input area wider on desktop?
