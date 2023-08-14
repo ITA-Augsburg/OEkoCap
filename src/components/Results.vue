@@ -7,7 +7,7 @@ import Chart from "chart.js/auto"
 
     <div class="input_area">
 
-        <p>{{app_output_prop}}</p>
+        <!-- <p>{{app_output_prop}}</p> -->
         <!-- JSON.stringify(app_output_prop, null, 2) -->
 
         <div class="results_buttoncontainer">
@@ -64,7 +64,7 @@ import Chart from "chart.js/auto"
 
         <canvas
         v-if="this.barChartData[0][0] !== undefined || this.barChartData[1][0] !== undefined"
-        id="bar_chart"></canvas>
+        id="bar_chart" class="bar_chart"></canvas>
 
         <canvas
         v-if="this.pieChartData[0] !== undefined"
@@ -84,8 +84,16 @@ import Chart from "chart.js/auto"
         ></v-select>
 
         <canvas
-        v-if="this.barChart2CalculatedDataset[0] !== undefined"
-        id="bar_chart_2"></canvas>
+        v-if="this.barChartProcessGwpRangeData[0] !== undefined"
+        id="bar_chart_process_gwp_range" class="bar_chart"></canvas>
+
+        <canvas
+        v-if="this.barChartProcessCostPerKgRangeData[0] !== undefined"
+        id="bar_chart_process_cost_per_kg_range" class="bar_chart"></canvas>
+
+        <canvas
+        v-if="this.barChartProcessTotalCostRangeData[0] !== undefined"
+        id="bar_chart_process_total_cost_range" class="bar_chart"></canvas>
 
     </div>
 
@@ -118,23 +126,31 @@ import Chart from "chart.js/auto"
         },
         data() {
             return {
+                legendFont: 20,
+                legendFontS: 15,
+
                 benchmark_process_options: [],
-                calculated_process_options: [],
                 selected_benchmark: undefined,
-                selected_process: undefined,
                 gwp_button_active: false,
                 cost_button_active: false,
                 barChart: undefined,
                 barChartData: [[undefined, undefined], [undefined, undefined]],
-                leftBarLabel: "Result",
+                leftBarLabel: "Calculated",
                 rightBarLabel: "Benchmark",
+
                 pieChart: undefined,
                 pieChartData: [],
                 pieChartTitle: "Calculated Processes",
                 pieChartColors: [],
-                barChart2: undefined,
-                barChart2CalculatedDataset: [[undefined, undefined], [undefined, undefined], [undefined, undefined]],
-                barChart2BenchmarkDataset: [[undefined, undefined], [undefined, undefined], [undefined, undefined]],
+                
+                calculated_process_options: [],
+                selected_process: undefined,
+                barChartProcessGwpRange: undefined,
+                barChartProcessCostPerKgRange: undefined,
+                barChartProcessTotalCostRange: undefined,
+                barChartProcessGwpRangeData: [],
+                barChartProcessCostPerKgRangeData: [],
+                barChartProcessTotalCostRangeData: [],
 
                 test_output: {
                     "gwp": {
@@ -344,7 +360,7 @@ import Chart from "chart.js/auto"
                 //depending on which button is "active", show gwp or cost of output
                 switch(id) {
                     case "gwp":
-                        this.leftBarLabel = "Calculated GWP Range"
+                        this.leftBarLabel = "Calculated"
                         this.barChartData[0][0] = Math.round(this.test_output.gwp.minValue * 100) / 100
                         this.barChartData[0][1] = Math.round(this.test_output.gwp.maxValue * 100) / 100
 
@@ -354,7 +370,7 @@ import Chart from "chart.js/auto"
                         })
                         break
                     case "cost":
-                        this.leftBarLabel = "Calculated Cost Range"
+                        this.leftBarLabel = "Calculated"
                         this.barChartData[0][0] = Math.round(this.test_output.cost.minValue_eur_per_kg * 100) / 100
                         this.barChartData[0][1] = Math.round(this.test_output.cost.maxValue_eur_per_kg * 100) / 100
 
@@ -394,11 +410,11 @@ import Chart from "chart.js/auto"
                     if(this.selected_benchmark === element.name) {
                         //depending on which button is "active", show gwp or cost of benchmark
                         if(this.gwp_button_active) {
-                            this.rightBarLabel = element.name + " Benchmark GWP Range"
+                            this.rightBarLabel = "Benchmark" //element.name + " Benchmark"
                             this.barChartData[1][0] = Math.round(element.gwp_min * 100)/100
                             this.barChartData[1][1] = Math.round(element.gwp_max * 100)/100
                         } else {
-                            this.rightBarLabel = element.name + " Benchmark Cost Range"
+                            this.rightBarLabel = "Benchmark" //element.name + " Benchmark"
                             this.barChartData[1][0] = Math.round(element.cost_min * 100)/100
                             this.barChartData[1][1] = Math.round(element.cost_max * 100)/100
                         }
@@ -413,19 +429,61 @@ import Chart from "chart.js/auto"
                 }
             },
             handleProcessSelect() {
-                //TODO
-                this.barChart2CalculatedDataset = [[1, 2], [3, 4], [5, 6]]
-                this.barChart2BenchmarkDataset = [[6, 5], [4, 3], [2, 1]]
+                // fill this.barChartProcessGwpRangeData[0], barChartProcessCostPerKgRangeData[0], barChartProcessTotalCostRangeData[0]
+                for(let i=0; i<this.test_output.processes.length; i++) {
+                    if(this.test_output.processes[i].name === this.selected_process) {
+                        let minGwp = Math.round(this.test_output.processes[i].minGWPValue * 100)/100
+                        let maxGwp = Math.round(this.test_output.processes[i].maxGWPValue * 100)/100
+                        let minCostKg = Math.round(this.test_output.processes[i].minCostPerKg * 100)/100
+                        let maxCostKg = Math.round(this.test_output.processes[i].maxCostPerKg * 100)/100
+                        let minCostTotal = Math.round(this.test_output.processes[i].minCostTotalInEur * 100)/100
+                        let maxCostTotal = Math.round(this.test_output.processes[i].maxCostTotalInEur * 100)/100
+                        this.barChartProcessGwpRangeData[0] = [minGwp , maxGwp]
+                        this.barChartProcessCostPerKgRangeData[0] = [minCostKg , maxCostKg]
+                        this.barChartProcessTotalCostRangeData[0] = [minCostTotal ,maxCostTotal]
+                        break
+                    }
+                }
+
+                // check if a benchmark exists for selected process
+                for(let i=0; i<this.test_benchmarks_2.length; i++) {
+                    if(this.test_benchmarks_2[i].name === this.selected_process) {
+                        // fill // fill this.barChartProcessGwpRangeData[1], barChartProcessCostPerKgRangeData[1], barChartProcessTotalCostRangeData[1]
+                        let minGwp = Math.round(this.test_benchmarks_2[i].gwp_min * 100)/100
+                        let maxGwp = Math.round(this.test_benchmarks_2[i].gwp_max * 100)/100
+                        let minCostKg = Math.round(this.test_benchmarks_2[i].cost_per_kg_min * 100)/100
+                        let maxCostKg = Math.round(this.test_benchmarks_2[i].cost_per_kg_max * 100)/100
+                        let minCostTotal = Math.round(this.test_benchmarks_2[i].total_cost_min * 100)/100
+                        let maxCostTotal = Math.round(this.test_benchmarks_2[i].total_cost_max * 100)/100
+                        this.barChartProcessGwpRangeData[1] = [minGwp , maxGwp]
+                        this.barChartProcessCostPerKgRangeData[1] = [minCostKg , maxCostKg]
+                        this.barChartProcessTotalCostRangeData[1] = [minCostTotal ,maxCostTotal]
+                        break
+                    }
+                    // if no benchmark found for selected process then leave benchmark data empty
+                    if(i === (this.test_benchmarks_2.length - 1)) {
+                        this.barChartProcessGwpRangeData[1] = [undefined, undefined]
+                        this.barChartProcessCostPerKgRangeData[1] = [undefined, undefined]
+                        this.barChartProcessTotalCostRangeData[1] = [undefined, undefined]
+                        break
+                    }
+                }
                 
                 //Initially canvas-elements are missing, in order for a chart to render for the first time,
                 //some time is needed until the canvas-element is added
-                if(document.getElementById("bar_chart_2") === null) {
+                if(
+                document.getElementById("bar_chart_process_gwp_range") === null ||
+                document.getElementById("bar_chart_process_cost_per_kg_range") === null ||
+                document.getElementById("bar_chart_process_total_cost_range") === null) {
                     setTimeout(() => {
-                        this.updateBarChart2()
+                        this.updateBarChartProcessGwpRange()
+                        this.updateBarChartProcessCostPerKgRange()
+                        this.updateBarChartProcessTotalCostRange()
                     }, 50)
                 } else {
-                    this.updateBarChart2()
-                    console.log("not")
+                    this.updateBarChartProcessGwpRange()
+                    this.updateBarChartProcessCostPerKgRange()
+                    this.updateBarChartProcessTotalCostRange()
                 }
             },
             updateBarChart() {
@@ -446,8 +504,8 @@ import Chart from "chart.js/auto"
                                 barThickness: 80,
                                 borderWidth: 1,
                                 borderColor: "#777",
-                                hoverBorderWidth: 2,
-                                hoverBorderColor: "#000",
+                                // hoverBorderWidth: 2,
+                                // hoverBorderColor: "#000",
                                 borderSkipped: false,
                                 hoverBackgroundColor: this.color_green
                             }]
@@ -474,12 +532,19 @@ import Chart from "chart.js/auto"
                             }
                             },
                             plugins: {
+                                title: {
+                                    display: true,
+                                    text: this.gwp_button_active ? "GWP Range" : "Cost Range",
+                                    font: {
+                                        size: 20
+                                    }
+                                },
                                 legend: {
                                     display: (this.barChartData[0][0]!==undefined || this.barChartData[1][0]!==undefined) ? true : false,
                                     position: "bottom",
                                     labels: {
                                         font: {
-                                            size: 20
+                                            size: window.innerWidth >= 500 ? this.legendFont : this.legendFontS
                                         },
                                         boxWidth: 25,
                                         boxHeight: 25,
@@ -529,8 +594,8 @@ import Chart from "chart.js/auto"
                                 backgroundColor: this.pieChartColors,
                                 borderWidth: 1,
                                 borderColor: "#777",
-                                hoverBorderWidth: 3,
-                                hoverBorderColor: "#000"
+                                // hoverBorderWidth: 3,
+                                // hoverBorderColor: "#000"
                             }]
                         },
                         options: {
@@ -551,7 +616,7 @@ import Chart from "chart.js/auto"
                                     display: (this.pieChartData[0]!==undefined) ? true : false,
                                     labels: {
                                         font: {
-                                            size: 20
+                                            size: window.innerWidth >= 500 ? this.legendFont : this.legendFontS
                                         },
                                         boxWidth: 25,
                                         boxHeight: 25,
@@ -604,41 +669,27 @@ import Chart from "chart.js/auto"
                 let element = (this.pieChartData[index] / (sum / 100))
                 return Math.round(element * 100) / 100
             },
-            updateBarChart2() {
-                if(this.barChart2 !== undefined) {
-                    this.barChart2.destroy()
+            updateBarChartProcessGwpRange() {
+                if(this.barChartProcessGwpRange !== undefined) {
+                    this.barChartProcessGwpRange.destroy()
                 }
-                if(this.barChart2CalculatedDataset[0][0] !== undefined) {
-                    this.barChart2 = new Chart("bar_chart_2", {
+                if(this.barChartProcessGwpRangeData[0] !== undefined) {
+                    this.barChartProcessGwpRange = new Chart("bar_chart_process_gwp_range", {
                         type: "bar",
                         data: {
-                            labels: ["GWP Range", "Cost/Kg Range", "Total Cost Range"],
+                            labels: ["Calculated", "Benchmark"],
                             datasets: [
                                 {
-                                    data: this.barChart2CalculatedDataset,
+                                    data: this.barChartProcessGwpRangeData,
                                     backgroundColor: [
                                         this.color_green,
-                                        // this.color_lightgrey
-                                    ],
-                                    barThickness: 20,
-                                    borderWidth: 1,
-                                    borderColor: "#777",
-                                    hoverBorderWidth: 2,
-                                    hoverBorderColor: "#000",
-                                    borderSkipped: false,
-                                    hoverBackgroundColor: this.color_green
-                                },
-                                {
-                                    data: this.barChart2BenchmarkDataset,
-                                    backgroundColor: [
-                                        // this.color_green,
                                         this.color_lightgrey
                                     ],
-                                    barThickness: 20,
+                                    barThickness: 80,
                                     borderWidth: 1,
                                     borderColor: "#777",
-                                    hoverBorderWidth: 2,
-                                    hoverBorderColor: "#000",
+                                    // hoverBorderWidth: 2,
+                                    // hoverBorderColor: "#000",
                                     borderSkipped: false,
                                     hoverBackgroundColor: this.color_green
                                 }
@@ -648,57 +699,232 @@ import Chart from "chart.js/auto"
                             animation: false,
                             hover: false,
                             aspectRatio: 1.3,
-                            // scales: {
-                            //   x: {
-                            //     ticks: {
-                            //         font: {
-                            //             size: 20
-                            //         }
-                            //     }
-                            //   },
-                            //   y: {
-                            //     ticks: {
-                            //         display: (this.barChart2Data[0][0]!==undefined || this.barChart2Data[1][0]!==undefined) ? true : false,
-                            //         font: {
-                            //             size: 18
-                            //         }
-                            //     }
-                            //   }
-                            // },
+                            scales: {
+                              x: {
+                                ticks: {
+                                    font: {
+                                        size: 20
+                                    }
+                                }
+                              },
+                              y: {
+                                ticks: {
+                                    font: {
+                                        size: 18
+                                    }
+                                }
+                              }
+                            },
                             plugins: {
-                                // legend: {
-                                //     display: (this.barChart2Data[0][0]!==undefined || this.barChart2Data[1][0]!==undefined) ? true : false,
-                                //     position: "bottom",
-                                //     labels: {
-                                //         font: {
-                                //             size: 20
-                                //         },
-                                //         boxWidth: 25,
-                                //         boxHeight: 25,
-                                //         generateLabels: (chart) => {
-                                //             if(this.barChart2Data[0][0] === undefined) {
-                                //                 return [{
-                                //                     text: "Min: " + this.barChart2Data[1][0] + ", Max: " + this.barChart2Data[1][1],
-                                //                     strokeStyle: chart.data.datasets[0].borderColor[1],
-                                //                     fillStyle: chart.data.datasets[0].backgroundColor[1]
-                                //                 }]
-                                //             } else if(this.barChart2Data[1][0] === undefined) {
-                                //                 return [{
-                                //                     text: "Min: " + this.barChart2Data[0][0] + ", Max: " + this.barChart2Data[0][1],
-                                //                     strokeStyle: chart.data.datasets[0].borderColor[0],
-                                //                     fillStyle: chart.data.datasets[0].backgroundColor[0]
-                                //                 }]
-                                //             }
-                                //             return chart.data.labels.map((label, index) => {
-                                //                 return {
-                                //                     text: "Min: " + this.barChart2Data[index][0] + ", Max: " + this.barChart2Data[index][1],
-                                //                     strokeStyle: chart.data.datasets[0].borderColor[index],
-                                //                     fillStyle: chart.data.datasets[0].backgroundColor[index]
-                                //                 }
-                                //             })
-                                //         }
-                                //     }
-                                // },
+                                title: {
+                                    display: true,
+                                    text: "Process GWP Range",
+                                    font: {
+                                        size: 20
+                                    }
+                                },
+                                legend: {
+                                    position: "bottom",
+                                    labels: {
+                                        font: {
+                                            size: window.innerWidth >= 500 ? this.legendFont : this.legendFontS
+                                        },
+                                        boxWidth: 25,
+                                        boxHeight: 25,
+                                        generateLabels: (chart) => {
+                                            if(this.barChartProcessGwpRangeData[1][0] === undefined) {
+                                                return [{
+                                                    text: "Min: " + this.barChartProcessGwpRangeData[0][0] + ", Max: " + this.barChartProcessGwpRangeData[0][1],
+                                                    strokeStyle: chart.data.datasets[0].borderColor[0],
+                                                    fillStyle: chart.data.datasets[0].backgroundColor[0]
+                                                }]
+                                            }
+                                            return chart.data.labels.map((label, index) => {
+                                                return {
+                                                    text: "Min: " + this.barChartProcessGwpRangeData[index][0] + ", Max: " + this.barChartProcessGwpRangeData[index][1],
+                                                    strokeStyle: chart.data.datasets[0].borderColor[index],
+                                                    fillStyle: chart.data.datasets[0].backgroundColor[index]
+                                                }
+                                            })
+                                        }
+                                    }
+                                },
+                                tooltip: {
+                                    enabled: false
+                                }
+                            }
+                        }
+                    })
+                }
+            },
+            updateBarChartProcessCostPerKgRange() {
+                if(this.barChartProcessCostPerKgRange !== undefined) {
+                    this.barChartProcessCostPerKgRange.destroy()
+                }
+                if(this.barChartProcessCostPerKgRangeData[0] !== undefined) {
+                    this.barChartProcessCostPerKgRange = new Chart("bar_chart_process_cost_per_kg_range", {
+                        type: "bar",
+                        data: {
+                            labels: ["Calculated", "Benchmark"],
+                            datasets: [
+                                {
+                                    data: this.barChartProcessCostPerKgRangeData,
+                                    backgroundColor: [
+                                        this.color_green,
+                                        this.color_lightgrey
+                                    ],
+                                    barThickness: 80,
+                                    borderWidth: 1,
+                                    borderColor: "#777",
+                                    // hoverBorderWidth: 2,
+                                    // hoverBorderColor: "#000",
+                                    borderSkipped: false,
+                                    hoverBackgroundColor: this.color_green
+                                }
+                            ]
+                        },
+                        options: {
+                            animation: false,
+                            hover: false,
+                            aspectRatio: 1.3,
+                            scales: {
+                              x: {
+                                ticks: {
+                                    font: {
+                                        size: 20
+                                    }
+                                }
+                              },
+                              y: {
+                                ticks: {
+                                    font: {
+                                        size: 18
+                                    }
+                                }
+                              }
+                            },
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: "Process Cost per Kg Range",
+                                    font: {
+                                        size: 20
+                                    }
+                                },
+                                legend: {
+                                    position: "bottom",
+                                    labels: {
+                                        font: {
+                                            size: window.innerWidth >= 500 ? this.legendFont : this.legendFontS
+                                        },
+                                        boxWidth: 25,
+                                        boxHeight: 25,
+                                        generateLabels: (chart) => {
+                                            if(this.barChartProcessCostPerKgRangeData[1][0] === undefined) {
+                                                return [{
+                                                    text: "Min: " + this.barChartProcessCostPerKgRangeData[0][0] + ", Max: " + this.barChartProcessCostPerKgRangeData[0][1],
+                                                    strokeStyle: chart.data.datasets[0].borderColor[0],
+                                                    fillStyle: chart.data.datasets[0].backgroundColor[0]
+                                                }]
+                                            }
+                                            return chart.data.labels.map((label, index) => {
+                                                return {
+                                                    text: "Min: " + this.barChartProcessCostPerKgRangeData[index][0] + ", Max: " + this.barChartProcessCostPerKgRangeData[index][1],
+                                                    strokeStyle: chart.data.datasets[0].borderColor[index],
+                                                    fillStyle: chart.data.datasets[0].backgroundColor[index]
+                                                }
+                                            })
+                                        }
+                                    }
+                                },
+                                tooltip: {
+                                    enabled: false
+                                }
+                            }
+                        }
+                    })
+                }
+            },
+            updateBarChartProcessTotalCostRange() {
+                if(this.barChartProcessTotalCostRange !== undefined) {
+                    this.barChartProcessTotalCostRange.destroy()
+                }
+                if(this.barChartProcessTotalCostRangeData[0] !== undefined) {
+                    this.barChartProcessTotalCostRange = new Chart("bar_chart_process_total_cost_range", {
+                        type: "bar",
+                        data: {
+                            labels: ["Calculated", "Benchmark"],
+                            datasets: [
+                                {
+                                    data: this.barChartProcessTotalCostRangeData,
+                                    backgroundColor: [
+                                        this.color_green,
+                                        this.color_lightgrey
+                                    ],
+                                    barThickness: 80,
+                                    borderWidth: 1,
+                                    borderColor: "#777",
+                                    // hoverBorderWidth: 2,
+                                    // hoverBorderColor: "#000",
+                                    borderSkipped: false,
+                                    hoverBackgroundColor: this.color_green
+                                }
+                            ]
+                        },
+                        options: {
+                            animation: false,
+                            hover: false,
+                            aspectRatio: 1.3,
+                            scales: {
+                              x: {
+                                ticks: {
+                                    font: {
+                                        size: 20
+                                    }
+                                }
+                              },
+                              y: {
+                                ticks: {
+                                    font: {
+                                        size: 18
+                                    }
+                                }
+                              }
+                            },
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: "Process Total Cost Range",
+                                    font: {
+                                        size: 20
+                                    }
+                                },
+                                legend: {
+                                    position: "bottom",
+                                    labels: {
+                                        font: {
+                                            size: window.innerWidth >= 500 ? this.legendFont : this.legendFontS
+                                        },
+                                        boxWidth: 25,
+                                        boxHeight: 25,
+                                        generateLabels: (chart) => {
+                                            if(this.barChartProcessTotalCostRangeData[1][0] === undefined) {
+                                                return [{
+                                                    text: "Min: " + this.barChartProcessTotalCostRangeData[0][0] + ", Max: " + this.barChartProcessTotalCostRangeData[0][1],
+                                                    strokeStyle: chart.data.datasets[0].borderColor[0],
+                                                    fillStyle: chart.data.datasets[0].backgroundColor[0]
+                                                }]
+                                            }
+                                            return chart.data.labels.map((label, index) => {
+                                                return {
+                                                    text: "Min: " + this.barChartProcessTotalCostRangeData[index][0] + ", Max: " + this.barChartProcessTotalCostRangeData[index][1],
+                                                    strokeStyle: chart.data.datasets[0].borderColor[index],
+                                                    fillStyle: chart.data.datasets[0].backgroundColor[index]
+                                                }
+                                            })
+                                        }
+                                    }
+                                },
                                 tooltip: {
                                     enabled: false
                                 }

@@ -3,11 +3,7 @@ BUGS
 
 TODO
 
-handleProcessSelect()
-statt setTimeout html-element-eventlistener nutzen in results (handleButton(id), handleBenchmarkSelect(), handleProcessSelect())
-
-auf mobile results legenden abgeschnitten
-another bar chart
+wenn window resize durch 500 geht dann wegen legendFont die charts neu zeichnen (siehe firefox bookmark)
 make input area wider on desktop?
 
 eingabe-elemente on-hover hilfetexte, mobile-version ein button mit den hilfetexte
@@ -20,6 +16,7 @@ separation.type = ChemicalFibreReclamation steht noch aus?
 wenn default-werte von app_input sich ändern dann auch clearAppInput() ändern!
 
 FRAGEN
+Aktuell kann entweder nur gwp oder nur cost angezeigt werden. Soll es die möglichkeit geben beide gleichzeitig anzuzeigen?
 im backend: sollen dateien periodisch gelöscht werden? (z.B. Dateien löschen die 6 Monate alt werden)
 Auf der Ergebnis-Seite, sollen die Legenden-Elemente immer unter einander sein? Oder können sie ggf. auch nebeneinander sein?
 
