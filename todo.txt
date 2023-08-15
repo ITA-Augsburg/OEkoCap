@@ -1,5 +1,6 @@
 
 BUGS
+wenn window-width < 500 und header-menu offen und so resize auf 500+ dann bug
 
 TODO
 
@@ -12,6 +13,7 @@ App.vue aufteilen
 Router props evnt. richtig übergeben
 app_input props als eine "app_input" prop übergeben
 separation.type = ChemicalFibreReclamation steht noch aus?
+darkmode xd
 
 wenn default-werte von app_input sich ändern dann auch clearAppInput() ändern!
 

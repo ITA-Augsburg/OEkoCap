@@ -123,11 +123,25 @@ import Chart from "chart.js/auto"
             for(let i=0; i<this.test_output.processes.length; i++) {
                 this.calculated_process_options[i] = this.test_output.processes[i].name
             }
+
+            //if window-width passes through the value 500px, redraw charts (with different legend font size)
+            window.addEventListener("resize", () => {
+                if(this.wideWindow === false && window.innerWidth >= 500) {
+                    console.log("got big")
+                    this.updateAllCharts()
+                    this.wideWindow = true
+                } else if(this.wideWindow === true && window.innerWidth < 500) {
+                    console.log("got small")
+                    this.updateAllCharts()
+                    this.wideWindow = false
+                }
+            })
         },
         data() {
             return {
                 legendFont: 20,
                 legendFontS: 15,
+                wideWindow: window.innerWidth >= 500 ? true : false,
 
                 benchmark_process_options: [],
                 selected_benchmark: undefined,
@@ -932,6 +946,13 @@ import Chart from "chart.js/auto"
                         }
                     })
                 }
+            },
+            updateAllCharts() {
+                this.updateBarChart()
+                this.updatePieChart()
+                this.updateBarChartProcessGwpRange()
+                this.updateBarChartProcessCostPerKgRange()
+                this.updateBarChartProcessTotalCostRange()
             }
         }
     }
