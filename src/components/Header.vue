@@ -74,8 +74,20 @@
 <script>
 export default {
   props: [],
+  mounted() {
+    //if window-width passes through the value 500px, close drawer
+    window.addEventListener("resize", () => {
+              if(this.wideWindow === false && window.innerWidth >= 500) {
+                this.drawer = false
+                this.wideWindow = true
+              } else if(this.wideWindow === true && window.innerWidth < 500) {
+                this.wideWindow = false
+              }
+            })
+  },
   data() {
     return {
+      wideWindow: window.innerWidth >= 500 ? true : false,
       headerTextRight: ["Calculator", "Guideline", "Project"],
       drawer: false
     }

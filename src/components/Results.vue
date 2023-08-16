@@ -127,11 +127,9 @@ import Chart from "chart.js/auto"
             //if window-width passes through the value 500px, redraw charts (with different legend font size)
             window.addEventListener("resize", () => {
                 if(this.wideWindow === false && window.innerWidth >= 500) {
-                    console.log("got big")
                     this.updateAllCharts()
                     this.wideWindow = true
                 } else if(this.wideWindow === true && window.innerWidth < 500) {
-                    console.log("got small")
                     this.updateAllCharts()
                     this.wideWindow = false
                 }
