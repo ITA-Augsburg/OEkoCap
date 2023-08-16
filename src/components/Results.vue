@@ -378,7 +378,7 @@ import Chart from "chart.js/auto"
                         this.barChartData[0][0] = Math.round(this.test_output.gwp.minValue * 100) / 100
                         this.barChartData[0][1] = Math.round(this.test_output.gwp.maxValue * 100) / 100
 
-                        this.pieChartTitle = "Maximal gwp of each Process"
+                        this.pieChartTitle = "Maximal GWP of each Process"
                         this.test_output.processes.forEach((element, index) => {
                             this.pieChartData[index] = Math.round(element.maxGWPValue * 100) / 100
                         })
@@ -510,7 +510,7 @@ import Chart from "chart.js/auto"
                         data: {
                             labels: [this.leftBarLabel, this.rightBarLabel],
                             datasets: [{
-                                data: this.barChartData,
+                                data: this.checkBarChartData(this.barChartData),
                                 backgroundColor: [
                                     this.color_green,
                                     this.color_lightgrey
@@ -537,6 +537,7 @@ import Chart from "chart.js/auto"
                                 }
                             },
                             y: {
+                                min: 0,
                                 ticks: {
                                     display: (this.barChartData[0][0]!==undefined || this.barChartData[1][0]!==undefined) ? true : false,
                                     font: {
@@ -563,22 +564,23 @@ import Chart from "chart.js/auto"
                                         boxWidth: 25,
                                         boxHeight: 25,
                                         generateLabels: (chart) => {
+                                            let unit = this.gwp_button_active ? " kg CO²" : " €"
                                             if(this.barChartData[0][0] === undefined) {
                                                 return [{
-                                                    text: "Min: " + this.barChartData[1][0] + ", Max: " + this.barChartData[1][1],
+                                                    text: "Min: " + this.barChartData[1][0] + unit + ", Max: " + this.barChartData[1][1] + unit,
                                                     strokeStyle: chart.data.datasets[0].borderColor[1],
                                                     fillStyle: chart.data.datasets[0].backgroundColor[1]
                                                 }]
                                             } else if(this.barChartData[1][0] === undefined) {
                                                 return [{
-                                                    text: "Min: " + this.barChartData[0][0] + ", Max: " + this.barChartData[0][1],
+                                                    text: "Min: " + this.barChartData[0][0] + unit + ", Max: " + this.barChartData[0][1] + unit,
                                                     strokeStyle: chart.data.datasets[0].borderColor[0],
                                                     fillStyle: chart.data.datasets[0].backgroundColor[0]
                                                 }]
                                             }
                                             return chart.data.labels.map((label, index) => {
                                                 return {
-                                                    text: "Min: " + this.barChartData[index][0] + ", Max: " + this.barChartData[index][1],
+                                                    text: "Min: " + this.barChartData[index][0] + unit + ", Max: " + this.barChartData[index][1] + unit,
                                                     strokeStyle: chart.data.datasets[0].borderColor[index],
                                                     fillStyle: chart.data.datasets[0].backgroundColor[index]
                                                 }
@@ -635,9 +637,10 @@ import Chart from "chart.js/auto"
                                         boxWidth: 25,
                                         boxHeight: 25,
                                         generateLabels: (chart) => {
+                                            let unit = this.gwp_button_active ? " kg CO²" : " €"
                                             return chart.data.labels.map((label, index) => {
                                                 return {
-                                                    text: label + ": " + this.pieChartData[index] + " (" + this.calculatePieChartPercent(index) + "%)",
+                                                    text: label + ": " + this.pieChartData[index] + unit + " (" + this.calculatePieChartPercent(index) + "%)",
                                                     strokeStyle: chart.data.datasets[0].borderColor[index],
                                                     fillStyle: chart.data.datasets[0].backgroundColor[index]
                                                 }
@@ -694,7 +697,7 @@ import Chart from "chart.js/auto"
                             labels: ["Calculated", "Benchmark"],
                             datasets: [
                                 {
-                                    data: this.barChartProcessGwpRangeData,
+                                    data: this.checkBarChartData(this.barChartProcessGwpRangeData),
                                     backgroundColor: [
                                         this.color_green,
                                         this.color_lightgrey
@@ -722,6 +725,7 @@ import Chart from "chart.js/auto"
                                 }
                               },
                               y: {
+                                min: 0,
                                 ticks: {
                                     font: {
                                         size: 18
@@ -746,16 +750,17 @@ import Chart from "chart.js/auto"
                                         boxWidth: 25,
                                         boxHeight: 25,
                                         generateLabels: (chart) => {
+                                            let unit = " kg CO²"
                                             if(this.barChartProcessGwpRangeData[1][0] === undefined) {
                                                 return [{
-                                                    text: "Min: " + this.barChartProcessGwpRangeData[0][0] + ", Max: " + this.barChartProcessGwpRangeData[0][1],
+                                                    text: "Min: " + this.barChartProcessGwpRangeData[0][0] + unit + ", Max: " + this.barChartProcessGwpRangeData[0][1] + unit,
                                                     strokeStyle: chart.data.datasets[0].borderColor[0],
                                                     fillStyle: chart.data.datasets[0].backgroundColor[0]
                                                 }]
                                             }
                                             return chart.data.labels.map((label, index) => {
                                                 return {
-                                                    text: "Min: " + this.barChartProcessGwpRangeData[index][0] + ", Max: " + this.barChartProcessGwpRangeData[index][1],
+                                                    text: "Min: " + this.barChartProcessGwpRangeData[index][0] + unit + ", Max: " + this.barChartProcessGwpRangeData[index][1] + unit,
                                                     strokeStyle: chart.data.datasets[0].borderColor[index],
                                                     fillStyle: chart.data.datasets[0].backgroundColor[index]
                                                 }
@@ -782,7 +787,7 @@ import Chart from "chart.js/auto"
                             labels: ["Calculated", "Benchmark"],
                             datasets: [
                                 {
-                                    data: this.barChartProcessCostPerKgRangeData,
+                                    data: this.checkBarChartData(this.barChartProcessCostPerKgRangeData),
                                     backgroundColor: [
                                         this.color_green,
                                         this.color_lightgrey
@@ -810,6 +815,7 @@ import Chart from "chart.js/auto"
                                 }
                               },
                               y: {
+                                min: 0,
                                 ticks: {
                                     font: {
                                         size: 18
@@ -834,16 +840,17 @@ import Chart from "chart.js/auto"
                                         boxWidth: 25,
                                         boxHeight: 25,
                                         generateLabels: (chart) => {
+                                            let unit = " € / kg"
                                             if(this.barChartProcessCostPerKgRangeData[1][0] === undefined) {
                                                 return [{
-                                                    text: "Min: " + this.barChartProcessCostPerKgRangeData[0][0] + ", Max: " + this.barChartProcessCostPerKgRangeData[0][1],
+                                                    text: "Min: " + this.barChartProcessCostPerKgRangeData[0][0] + unit + ", Max: " + this.barChartProcessCostPerKgRangeData[0][1] + unit,
                                                     strokeStyle: chart.data.datasets[0].borderColor[0],
                                                     fillStyle: chart.data.datasets[0].backgroundColor[0]
                                                 }]
                                             }
                                             return chart.data.labels.map((label, index) => {
                                                 return {
-                                                    text: "Min: " + this.barChartProcessCostPerKgRangeData[index][0] + ", Max: " + this.barChartProcessCostPerKgRangeData[index][1],
+                                                    text: "Min: " + this.barChartProcessCostPerKgRangeData[index][0] + unit + ", Max: " + this.barChartProcessCostPerKgRangeData[index][1] + unit,
                                                     strokeStyle: chart.data.datasets[0].borderColor[index],
                                                     fillStyle: chart.data.datasets[0].backgroundColor[index]
                                                 }
@@ -870,7 +877,7 @@ import Chart from "chart.js/auto"
                             labels: ["Calculated", "Benchmark"],
                             datasets: [
                                 {
-                                    data: this.barChartProcessTotalCostRangeData,
+                                    data: this.checkBarChartData(this.barChartProcessTotalCostRangeData),
                                     backgroundColor: [
                                         this.color_green,
                                         this.color_lightgrey
@@ -898,6 +905,7 @@ import Chart from "chart.js/auto"
                                 }
                               },
                               y: {
+                                min: 0,
                                 ticks: {
                                     font: {
                                         size: 18
@@ -922,16 +930,17 @@ import Chart from "chart.js/auto"
                                         boxWidth: 25,
                                         boxHeight: 25,
                                         generateLabels: (chart) => {
+                                            let unit = " €"
                                             if(this.barChartProcessTotalCostRangeData[1][0] === undefined) {
                                                 return [{
-                                                    text: "Min: " + this.barChartProcessTotalCostRangeData[0][0] + ", Max: " + this.barChartProcessTotalCostRangeData[0][1],
+                                                    text: "Min: " + this.barChartProcessTotalCostRangeData[0][0] + unit + ", Max: " + this.barChartProcessTotalCostRangeData[0][1] + unit,
                                                     strokeStyle: chart.data.datasets[0].borderColor[0],
                                                     fillStyle: chart.data.datasets[0].backgroundColor[0]
                                                 }]
                                             }
                                             return chart.data.labels.map((label, index) => {
                                                 return {
-                                                    text: "Min: " + this.barChartProcessTotalCostRangeData[index][0] + ", Max: " + this.barChartProcessTotalCostRangeData[index][1],
+                                                    text: "Min: " + this.barChartProcessTotalCostRangeData[index][0] + unit + ", Max: " + this.barChartProcessTotalCostRangeData[index][1] + unit,
                                                     strokeStyle: chart.data.datasets[0].borderColor[index],
                                                     fillStyle: chart.data.datasets[0].backgroundColor[index]
                                                 }
@@ -946,6 +955,35 @@ import Chart from "chart.js/auto"
                         }
                     })
                 }
+            },
+            checkBarChartData(data) {
+                //bars dont show if their min and max values are the same. In this case the values for drawing the bar will be modified. The legend will still show the accurate values.
+                let modifiedData = []
+                let chartHeight = data[0][0]
+                let minBarHeight = undefined
+                for(let i=0; i<data.length; i++) {
+                    for(let j=0; j<data[0].length; j++) {
+                        data[i][j] > chartHeight ? chartHeight = data[i][j] : ""
+                    }
+                }
+                minBarHeight = (chartHeight / 100) * 2
+                for(let i=0; i<data.length; i++) {
+                    let barHeight = Math.abs(data[i][1] - data[i][0])
+                    if(barHeight < minBarHeight) {
+                        // bar height will be 2% of y-axis height
+                        let difference = minBarHeight - barHeight
+                        let newMin = data[i][0] - (difference / 2)
+                        let newMax = data[i][1] + (difference / 2)
+                        if(newMin < 0) {
+                            modifiedData.push([0, (newMax + Math.abs(newMin))])
+                        } else {
+                            modifiedData.push([newMin, newMax])
+                        }
+                    } else {
+                        modifiedData.push([data[i][0], data[i][1]])
+                    }
+                }
+                return modifiedData
             },
             updateAllCharts() {
                 this.updateBarChart()
