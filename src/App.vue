@@ -1,6 +1,6 @@
 <script setup>
   import Header from "./components/Header.vue"
-import router from "./router";
+  import router from "./router"
 </script>
 
 <template>
@@ -16,56 +16,11 @@ import router from "./router";
     :button5enabled=button5enabled
     :buttonCalculateEnabled=buttonCalculateEnabled
 
-    :waste_type_prop=this.app_input.waste.type
-    :waste_size_prop=this.app_input.waste.size_bigger_1dot5_m
-
-    :shred_1_type_prop=this.app_input.shredding_1.type
-    :shred_1_ml_prop=this.app_input.shredding_1.mass_loss_percent
-    :shred_1_gwp_prop=this.app_input.shredding_1.co2_equv_per_kg
-    :shred_1_cost_prop=this.app_input.shredding_1.euro_per_kg
-    :shred_2_type_prop=this.app_input.shredding_2.type
-    :shred_2_ml_prop=this.app_input.shredding_2.mass_loss_percent
-    :shred_2_gwp_prop=this.app_input.shredding_2.co2_equv_per_kg
-    :shred_2_cost_prop=this.app_input.shredding_2.euro_per_kg
-
-    :waste_transport_cost_prop=this.app_input.transport.euro_per_kg
-    :waste_transport_gwp_prop=this.app_input.transport.co2_equv_per_kg
-
-    :sep_type_prop=this.app_input.separation.type
-    :sep_cost_prop=this.app_input.separation.euro_per_kg
-    :sep_gwp_prop=this.app_input.separation.co2_equv_per_kg
-
-    :matrix_thermo_type_prop=this.app_input.polymer.thermo_type
-    :matrix_polymer_prop=this.app_input.polymer.matrix_type
-    :matrix_fmc_prop=this.app_input.polymer.fvc_percent
+    :app_input_prop=this.app_input
     :matrix_insertion_prop=this.matrixInsertionCheckbox
-    :matrix_cost_prop=this.app_input.polymer.euro_per_kg
-    :matrix_gwp_prop=this.app_input.polymer.co2_equv_per_kg
-
-    :textile_type_prop=this.app_input.textile_process.type
-    :textile_ml_prop=this.app_input.textile_process.mass_loss_percent
-    :textile_tp_prop=this.app_input.textile_process.throughput_kg_per_h
-    :textile_aw_prop=this.app_input.textile_process.areal_weight_g_per_sqm
-    :textile_cost_prop=this.app_input.textile_process.euro_per_kg
-    :textile_gwp_prop=this.app_input.textile_process.co2_equv_per_kg
-
-    :proc_1_type_prop=this.app_input.processing_1.type
-    :proc_1_ml_prop=this.app_input.processing_1.mass_loss_percent
-    :proc_1_wt_prop=this.app_input.processing_1.wandstärke_mm
-    :proc_1_cost_prop=this.app_input.processing_1.euro_per_kg
-    :proc_1_gwp_prop=this.app_input.processing_1.co2_equv_per_kg
-    
-    :proc_2_type_prop=this.app_input.processing_2.type
-    :proc_2_ml_prop=this.app_input.processing_2.mass_loss_percent
-    :proc_2_wt_prop=this.app_input.processing_2.wandstärke_mm
-    :proc_2_cost_prop=this.app_input.processing_2.euro_per_kg
-    :proc_2_gwp_prop=this.app_input.processing_2.co2_equv_per_kg
-
     :proc_moi_prop=this.processingMethodOfInsertion
-
     :app_output_prop=this.appOutput
     :error_message_prop=this.errorMessage
-
     @clearAppInput="clearAppInput()"
     @updateInputFooter="updateInputFooter()"
     @saveNewInputs="saveNewInputs($event)"
@@ -73,9 +28,7 @@ import router from "./router";
     @startedCorrectlyF="startedCorrectlyF()"
     @setErrorMessage="setErrorMessage($event)"/>
     
-
     <VMain>
-      
     </VMain>
     
   </VApp>
@@ -307,7 +260,7 @@ export default {
           }
         }
 
-        this.logProcessing()
+        // this.logProcessing()
       }
     },
     updateInputFooter() {
@@ -456,7 +409,7 @@ export default {
     calculateButton() {
       this.footerProgressBar = 99
       this.formatAppInputKeys()
-      this.log()
+      // this.log()
       
       // console.log(JSON.stringify(this.app_input))
       let url1 = "https://localhost/meine_dateien/ita_webapp_back/submit_input.php";
@@ -470,7 +423,7 @@ export default {
             return res.text();
         }).then(data => {
             // console.log("in then block");
-            console.log(data);
+            // console.log(data);
             let url2 = "https://localhost/meine_dateien/ita_webapp_back/get_output.php"
             return fetch(url2, {
               method: "POST",
@@ -481,7 +434,7 @@ export default {
         }).then(res => {
           return res.text()
         }).then(data => {
-          console.log(data)
+          // console.log(data)
           this.appOutput = data;
           router.push({name: "ResultsView"})
         })
@@ -567,5 +520,5 @@ export default {
       )
     }
   },
-};
+}
 </script>

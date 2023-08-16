@@ -66,8 +66,8 @@
         :label=label
         :disabled=false
         :color_green=color_green
-        :expert_mode_cost_prop=textile_cost_prop
-        :expert_mode_gwp_prop=textile_gwp_prop></Expert_mode>
+        :expert_mode_cost_prop=expert_mode_cost
+        :expert_mode_gwp_prop=expert_mode_gwp></Expert_mode>
 
     </div>
 
@@ -76,9 +76,7 @@
 <script>
     import Expert_mode from "./Expert_mode.vue"
     export default {
-        props: ["matrix_insertion_prop",
-        "textile_type_prop", "textile_ml_prop", "textile_tp_prop", "textile_aw_prop", "textile_cost_prop", "textile_gwp_prop",
-        "color_green", "color_lightgrey"],
+        props: ["app_input_prop", "matrix_insertion_prop", "color_green", "color_lightgrey"],
         emits: ["saveNewInputs"],
         components: {
             Expert_mode: Expert_mode
@@ -90,13 +88,13 @@
                 throughput_options: [""],
                 aw_options: [""],
 
-                textile_type: this.textile_type_prop,
-                textile_ml: this.textile_ml_prop,
-                textile_tp: this.textile_tp_prop,
-                textile_aw: this.textile_aw_prop,
+                textile_type: this.app_input_prop.textile_process.type,
+                textile_ml: this.app_input_prop.textile_process.mass_loss_percent,
+                textile_tp: this.app_input_prop.textile_process.throughput_kg_per_h,
+                textile_aw: this.app_input_prop.textile_process.areal_weight_g_per_sqm,
 
-                expert_mode_cost: this.textile_cost_prop,
-                expert_mode_gwp: this.textile_gwp_prop,
+                expert_mode_cost: this.app_input_prop.textile_process.euro_per_kg,
+                expert_mode_gwp: this.app_input_prop.textile_process.co2_equv_per_kg,
 
                 label: "Expert mode"
             }

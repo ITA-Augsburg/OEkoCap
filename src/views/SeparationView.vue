@@ -9,10 +9,7 @@
     :text_3="subheader_separation"></Input_subheader>
     <Input_separation
     :color_green=color_green
-
-    :sep_type_prop=sep_type_prop
-    :sep_cost_prop=sep_cost_prop
-    :sep_gwp_prop=sep_gwp_prop
+    :app_input_prop=app_input_prop
     @saveNewInputs="saveNewInputs($event)"></Input_separation>
     <Input_footer
     :id=id
@@ -30,19 +27,12 @@
 
 <script>
 export default {
-    props: ["waste_type_prop", "waste_size_prop",
-    
-    "shred_1_type_prop", "shred_1_ml_prop", "shred_1_gwp_prop", "shred_1_cost_prop", "shred_2_type_prop", "shred_2_ml_prop", "shred_2_gwp_prop", "shred_2_cost_prop",
-    
-    "waste_transport_cost_prop", "waste_transport_gwp_prop",
-    "sep_type_prop", "sep_cost_prop", "sep_gwp_prop",
-    "matrix_thermo_type_prop", "matrix_polymer_prop", "matrix_fmc_prop", "matrix_insertion_prop", "matrix_cost_prop", "matrix_gwp_prop",
-    "textile_type_prop", "textile_ml_prop", "textile_tp_prop", "textile_aw_prop", "textile_cost_prop", "textile_gwp_prop",
-    "proc_1_type_prop", "proc_1_ml_prop", "proc_1_wt_prop", "proc_1_cost_prop", "proc_1_gwp_prop", "proc_2_type_prop", "proc_2_ml_prop", "proc_2_wt_prop", "proc_2_cost_prop", "proc_2_gwp_prop", "proc_moi_prop",
-
+    props: [
+    "app_input_prop", "matrix_insertion_prop", "proc_moi_prop",
     "app_output_prop", "startedCorrectly",  "error_message_prop",
     "buttonCalculateEnabled", "button2enabled", "button3enabled", "button4enabled", "button5enabled",
-    "progressValue", "subheader_separation", "color_green", "color_lightgrey"],
+    "progressValue", "subheader_separation", "color_green", "color_lightgrey"
+    ],
     emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "startedCorrectlyF", "setErrorMessage"],
     mounted() {
         //if user enters app on *url*/separation then redirect to *url*/, otherwise app_input could have missing mandatory values

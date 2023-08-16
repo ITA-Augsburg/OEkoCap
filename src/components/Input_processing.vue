@@ -35,8 +35,8 @@
         :label=step1expmodelabel
         :disabled=false
         :color_green=color_green
-        :expert_mode_cost_prop=proc_1_cost_prop
-        :expert_mode_gwp_prop=proc_1_gwp_prop></Expert_mode>
+        :expert_mode_cost_prop=proc_1_cost
+        :expert_mode_gwp_prop=proc_1_gwp></Expert_mode>
         
 
         <v-select
@@ -75,8 +75,8 @@
         :label=step2expmodelabel
         :disabled=false
         :color_green=color_green
-        :expert_mode_cost_prop=proc_2_cost_prop
-        :expert_mode_gwp_prop=proc_2_gwp_prop></Expert_mode>
+        :expert_mode_cost_prop=proc_2_cost
+        :expert_mode_gwp_prop=proc_2_gwp></Expert_mode>
 
         <v-select
         v-model=proc_wt
@@ -158,11 +158,7 @@
 <script>
     import Expert_mode from "./Expert_mode.vue"
     export default {
-        props: [
-        "proc_1_type_prop", "proc_1_ml_prop", "proc_1_wt_prop", "proc_1_cost_prop", "proc_1_gwp_prop", "proc_2_type_prop", 
-        "proc_2_ml_prop", "proc_2_wt_prop", "proc_2_cost_prop", "proc_2_gwp_prop",
-        "proc_moi_prop", "matrix_thermo_type_prop", "matrix_insertion_prop",
-        "buttonCalculateEnabled", "color_green", "color_lightgrey", "color_darkgreen"],
+        props: ["app_input_prop", "proc_moi_prop", "matrix_insertion_prop", "buttonCalculateEnabled", "color_green", "color_lightgrey", "color_darkgreen"],
         emits: ["saveNewInputs", "calculateButton"],
         components: {
             Expert_mode: Expert_mode
@@ -174,16 +170,17 @@
                 proc_2_type_options: [""],
                 moi_options: [""],
 
-                proc_1_type: this.proc_1_type_prop,
-                proc_1_ml: this.proc_1_ml_prop,
-                proc_wt: this.proc_1_wt_prop,
-                proc_1_cost: this.proc_1_cost_prop,
-                proc_1_gwp: this.proc_1_gwp_prop,
-                proc_2_type: this.proc_2_type_prop,
-                proc_2_ml: this.proc_2_ml_prop,
-                proc_2_cost: this.proc_2_cost_prop,
-                proc_2_gwp: this.proc_2_gwp_prop,
+                proc_1_type: this.app_input_prop.processing_1.type,
+                proc_1_ml: this.app_input_prop.processing_1.mass_loss_percent,
+                proc_wt: this.app_input_prop.processing_1.wandstärke_mm,
+                proc_1_cost: this.app_input_prop.processing_1.euro_per_kg,
+                proc_1_gwp: this.app_input_prop.processing_1.co2_equv_per_kg,
+                proc_2_type: this.app_input_prop.processing_2.type,
+                proc_2_ml: this.app_input_prop.processing_2.mass_loss_percent,
+                proc_2_cost: this.app_input_prop.processing_2.euro_per_kg,
+                proc_2_gwp: this.app_input_prop.processing_2.co2_equv_per_kg,
                 proc_moi: this.proc_moi_prop,
+                matrix_type: this.app_input_prop.polymer.thermo_type,
 
                 step1expmodelabel: "Process step 1 expert mode",
                 step2expmodelabel: "Process step 2 expert mode",
@@ -196,7 +193,7 @@
         },
         mounted() {
             //set select-options based on matrix-thermotype and matrix-insertion
-            if(this.matrix_thermo_type_prop === "Thermoplast" && this.matrix_insertion_prop === true) {
+            if(this.matrix_type === "Thermoplast" && this.matrix_insertion_prop === true) {
                 this.proc_1_type_options = ["Doublebeltpress (Organosheet Production)", "Compression Moulding"]
                 this.proc_2_type_options = ["Isothermal forming"]
                 this.proc_wt_options = [0.5, 1, 2]
@@ -207,7 +204,7 @@
                 this.moi_options = ["Thermoplastfiber"]
                 this.proc_moi = "Thermoplastfiber"
                 this.moi_disabled = true
-            } else if(this.matrix_thermo_type_prop === "Thermoplast" && this.matrix_insertion_prop === false) {
+            } else if(this.matrix_type === "Thermoplast" && this.matrix_insertion_prop === false) {
                 this.proc_1_type_options = ["Doublebeltpress (Organosheet Production)", "Compression Moulding"]
                 this.proc_2_type_options = ["Isothermal forming"]
                 this.proc_wt_options = [0.5, 1, 2]
@@ -217,7 +214,7 @@
                 this.proc_2_expmode_disabled = false
                 this.moi_options = ["Thermoplast powder", "Thermoplast foil"]
                 this.moi_disabled = false
-            } else if(this.matrix_thermo_type_prop === "Thermoset") {
+            } else if(this.matrix_type === "Thermoset") {
                 this.proc_1_type_options = ["Wet Compression Moulding", "Resin Transfer Moulding"]
                 this.proc_2_type_options = [""]
                 this.proc_2_type = undefined

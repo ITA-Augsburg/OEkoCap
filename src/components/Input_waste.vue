@@ -70,16 +70,16 @@
         @updateWasteUI="updateWasteUI()"
         :label=coarse_expmode_label
         :disabled=false
-        :expert_mode_cost_prop=shred_1_cost_prop
-        :expert_mode_gwp_prop=shred_1_gwp_prop
+        :expert_mode_gwp_prop=shred_1_gwp
+        :expert_mode_cost_prop=shred_1_cost
         :color_green=color_green
         ></Expert_mode>
         <Expert_mode
         v-if="coarse_expmode_disabled && coarse_expmode_disabled !== undefined"
         :label=coarse_expmode_label
         :disabled=true
-        :expert_mode_cost_prop=shred_1_cost_prop
-        :expert_mode_gwp_prop=shred_1_gwp_prop
+        :expert_mode_cost_prop=shred_1_cost
+        :expert_mode_gwp_prop=shred_1_gwp
         :color_green=color_green
         ></Expert_mode>
 
@@ -101,8 +101,8 @@
         @newExpertModeValues="newExpertModeValues($event)"
         :label=fine_expmode_label
         :disabled=false
-        :expert_mode_cost_prop=shred_2_cost_prop
-        :expert_mode_gwp_prop=shred_2_gwp_prop
+        :expert_mode_cost_prop=shred_2_cost
+        :expert_mode_gwp_prop=shred_2_gwp
         :color_green=color_green
         ></Expert_mode>
 
@@ -112,8 +112,8 @@
         @newExpertModeValues="newExpertModeValues($event)"
         :label=transport_label
         :disabled=false
-        :expert_mode_cost_prop=waste_transport_cost_prop
-        :expert_mode_gwp_prop=waste_transport_gwp_prop
+        :expert_mode_cost_prop=transport_cost
+        :expert_mode_gwp_prop=transport_gwp
         :color_green=color_green
         ></Expert_mode>
         
@@ -124,12 +124,7 @@
 <script>
     import Expert_mode from "./Expert_mode.vue"
     export default {
-        props: ["waste_type_prop", "waste_size_prop",
-
-        "shred_1_type_prop", "shred_1_ml_prop", "shred_1_gwp_prop", "shred_1_cost_prop", "shred_2_type_prop", "shred_2_ml_prop", "shred_2_gwp_prop", "shred_2_cost_prop",
-
-        "waste_transport_cost_prop", "waste_transport_gwp_prop",
-        "color_green"],
+        props: ["app_input_prop", "color_green"],
         emits: ["saveNewInputs"],
         components: {
             Expert_mode: Expert_mode
@@ -153,20 +148,20 @@
         data() {
             return {
                 type_options: ['Cut-Off', 'End of Life'],
-                waste_type: this.waste_type_prop,
-                size1dot5: this.waste_size_prop,
+                waste_type: this.app_input_prop.waste.type,
+                size1dot5: this.app_input_prop.waste.size_bigger_1dot5_m,
 
-                shred_1_type: this.shred_1_type_prop,
-                shred_1_ml: this.shred_1_ml_prop,
-                shred_1_gwp: this.shred_1_gwp_prop,
-                shred_1_cost: this.shred_1_cost_prop,
-                shred_2_type: this.shred_2_type_prop,
-                shred_2_ml: this.shred_2_ml_prop,
-                shred_2_gwp: this.shred_2_gwp_prop,
-                shred_2_cost: this.shred_2_cost_prop,
+                shred_1_type: this.app_input_prop.shredding_1.type,
+                shred_1_ml: this.app_input_prop.shredding_1.mass_loss_percent,
+                shred_1_gwp: this.app_input_prop.shredding_1.co2_equv_per_kg,
+                shred_1_cost: this.app_input_prop.shredding_1.euro_per_kg,
+                shred_2_type: this.app_input_prop.shredding_2.type,
+                shred_2_ml: this.app_input_prop.shredding_2.mass_loss_percent,
+                shred_2_gwp: this.app_input_prop.shredding_2.co2_equv_per_kg,
+                shred_2_cost: this.app_input_prop.shredding_2.euro_per_kg,
 
-                transport_cost: this.waste_transport_cost_prop,
-                transport_gwp: this.waste_transport_gwp_prop,
+                transport_cost: this.app_input_prop.transport.euro_per_kg,
+                transport_gwp: this.app_input_prop.transport.co2_equv_per_kg,
 
                 coarse_expmode_label: "Coarse shredding expert mode",
                 fine_expmode_label: "Fine shredding expert mode",

@@ -18,8 +18,8 @@
         @newExpertModeValues="newExpertModeValues($event)"
         :label=label
         :disabled=false
-        :expert_mode_cost_prop="sep_cost_prop"
-        :expert_mode_gwp_prop="sep_gwp_prop"
+        :expert_mode_cost_prop=expert_mode_cost
+        :expert_mode_gwp_prop=expert_mode_gwp
         :color_green="color_green"
         ></Expert_mode>
 
@@ -30,8 +30,7 @@
 <script>
     import Expert_mode from "./Expert_mode.vue"
     export default {
-        props: ["sep_type_prop", "sep_cost_prop", "sep_gwp_prop",
-        "color_green"],
+        props: ["app_input_prop", "color_green"],
         emits: ["saveNewInputs"],
         components: {
             Expert_mode: Expert_mode
@@ -39,10 +38,10 @@
         data() {
             return {
                 type_options: ["Pyrolyse"],
-                separation_type: this.sep_type_prop,
+                separation_type: this.app_input_prop.separation.type,
 
-                expert_mode_cost: this.sep_cost_prop,
-                expert_mode_gwp: this.sep_gwp_prop,
+                expert_mode_cost: this.app_input_prop.separation.euro_per_kg,
+                expert_mode_gwp: this.app_input_prop.separation.co2_equv_per_kg,
 
                 label: "Expert mode"
             }

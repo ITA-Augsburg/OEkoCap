@@ -61,8 +61,8 @@
         :label=label
         :disabled=false
         :color_green="color_green"
-        :expert_mode_cost_prop="matrix_cost_prop"
-        :expert_mode_gwp_prop="matrix_gwp_prop"></Expert_mode>
+        :expert_mode_cost_prop=expert_mode_cost
+        :expert_mode_gwp_prop=expert_mode_gwp></Expert_mode>
 
     </div>
 
@@ -71,8 +71,7 @@
 <script>
     import Expert_mode from "./Expert_mode.vue"
     export default {
-        props: ["matrix_thermo_type_prop", "matrix_polymer_prop", "matrix_fmc_prop", "matrix_insertion_prop", "matrix_cost_prop", "matrix_gwp_prop",
-        "color_green"],
+        props: ["app_input_prop", "matrix_insertion_prop", "color_green"],
         emits: ["saveNewInputs"],
         components: {
             Expert_mode: Expert_mode
@@ -89,13 +88,13 @@
                 type_options: ["Thermoplast", "Thermoset"],
                 polymer_options: [""],
 
-                matrix_type: this.matrix_thermo_type_prop,
-                matrix_polymer: this.matrix_polymer_prop,
-                matrix_fmc: this.matrix_fmc_prop,
+                matrix_type: this.app_input_prop.polymer.thermo_type,
+                matrix_polymer: this.app_input_prop.polymer.matrix_type,
+                matrix_fmc: this.app_input_prop.polymer.fvc_percent,
                 matrix_insertion: this.matrix_insertion_prop,
 
-                expert_mode_cost: this.matrix_cost_prop,
-                expert_mode_gwp: this.matrix_gwp_prop,
+                expert_mode_cost: this.app_input_prop.polymer.euro_per_kg,
+                expert_mode_gwp: this.app_input_prop.polymer.co2_equv_per_kg,
 
                 label: "Expert mode"
             }

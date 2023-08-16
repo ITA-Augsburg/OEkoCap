@@ -1,23 +1,19 @@
 
 BUGS
-wenn window-width < 500 und header-menu offen und so resize auf 500+ dann bug
 
 TODO
 
-wenn window resize durch 500 geht dann wegen legendFont die charts neu zeichnen (siehe firefox bookmark)
-make input area wider on desktop?
-
 eingabe-elemente on-hover hilfetexte, mobile-version ein button mit den hilfetexte
 auf results view eine neue art footer machen wo der drucken knopf zb drauf ist
-App.vue aufteilen
-Router props evnt. richtig übergeben
-app_input props als eine "app_input" prop übergeben
+
+App.vue aufteilen?
 separation.type = ChemicalFibreReclamation steht noch aus?
-darkmode xd
+darkmode
 
 wenn default-werte von app_input sich ändern dann auch clearAppInput() ändern!
 
 FRAGEN
+Was ist Maßeinheit von GWP? In Results chart-legende einfügen
 Aktuell kann entweder nur gwp oder nur cost angezeigt werden. Soll es die möglichkeit geben beide gleichzeitig anzuzeigen?
 im backend: sollen dateien periodisch gelöscht werden? (z.B. Dateien löschen die 6 Monate alt werden)
 Auf der Ergebnis-Seite, sollen die Legenden-Elemente immer unter einander sein? Oder können sie ggf. auch nebeneinander sein?
