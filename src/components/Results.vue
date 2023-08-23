@@ -5,7 +5,7 @@ import Chart from "chart.js/auto"
 
 <template>
 
-    <div class="input_area">
+    <div class="results_area">
 
         <!-- <p>{{app_output_prop}}</p> -->
         <!-- JSON.stringify(app_output_prop, null, 2) -->

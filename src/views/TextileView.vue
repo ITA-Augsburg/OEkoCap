@@ -6,13 +6,13 @@
 
 <template>
     <Input_subheader
-    :text_3="subheader_textile"></Input_subheader>
+    :text_3="subheader_textile" />
     <Input_textile
     :app_input_prop=app_input_prop
     :matrix_insertion_prop=matrix_insertion_prop
     :color_green=color_green
     :color_lightgrey=color_lightgrey
-    @saveNewInputs="saveNewInputs($event)"></Input_textile>
+    @saveNewInputs="saveNewInputs($event)" />
     <Input_footer
     :id=id
     :progressValue=progressValue
@@ -22,7 +22,7 @@
     :button3enabled=button3enabled
     :button4enabled=button4enabled
     :button5enabled=button5enabled
-    @updateInputFooter="updateInputFooter()"></Input_footer>
+    @updateInputFooter="updateInputFooter()" />
 </template>
 
 <script>

@@ -6,15 +6,15 @@
 
 <template>
     <Input_subheader
-    :text_3="subheader_error"></Input_subheader>
+    :text_3="subheader_error" />
     <Error
-    :error_message_prop=error_message_prop></Error>
+    :error_message_prop=error_message_prop />
     <Input_footer
     :id=id
     :progressValue=progressValue
     :color_green=color_green
     :color_lightgrey=color_lightgrey
-    @updateInputFooter="updateInputFooter()"></Input_footer>
+    @updateInputFooter="updateInputFooter()" />
 </template>
 
 <script>

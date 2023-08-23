@@ -3,11 +3,10 @@ BUGS
 
 TODO
 
-eingabe-elemente on-hover hilfetexte, mobile-version ein button mit den hilfetexte
 auf results view eine neue art footer machen wo der drucken knopf zb drauf ist
-
-App.vue aufteilen?
-separation.type = ChemicalFibreReclamation steht noch aus?
+eingabe-elemente on-hover hilfetexte, mobile-version ein button mit den hilfetexte
+exe mit eingaben durchprobieren, herausfinden warum meistens keine gültige eingabe entsteht
+backend recherchieren, windows virtual-server?
 darkmode
 
 wenn default-werte von app_input sich ändern dann auch clearAppInput() ändern!

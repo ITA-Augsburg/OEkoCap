@@ -34,6 +34,12 @@
     }
 } */
 
+.results_footer {
+    width: 100vw;
+    height: fit-content;
+    background-color: var(--color-lightgrey);
+}
+
 .footer_content {
     width: var(--content-width);
     height: fit-content;
@@ -116,4 +122,15 @@
     .sponsor_text {
         display: none;
     }
+}
+
+.results_print_buttoncontainer {
+    margin: 20px 10px 20px 5px;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.results_print_button_text {
+    font-size: 25px;
+    color: var(--color-grey);
 }

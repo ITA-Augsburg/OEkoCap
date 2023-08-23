@@ -1,23 +1,19 @@
 <script setup>
     import Input_subheader from "../components/Input_subheader.vue"
     import Results from "../components/Results.vue"
-    import Input_footer from "../components/Input_footer.vue"
+    import Results_footer from "../components/Results_footer.vue"
 </script>
 
 <template>
     <Input_subheader
-    :text_3="subheader_results"></Input_subheader>
+    :text_3="subheader_results" />
     <Results
     :app_output_prop=app_output_prop
     :color_green=color_green
     :color_lightgrey=color_lightgrey
-    @setErrorMessage="setErrorMessage($event)"></Results>
-    <Input_footer
-    :id=id
-    :progressValue=progressValue
-    :color_green=color_green
-    :color_lightgrey=color_lightgrey
-    @updateInputFooter="updateInputFooter()"></Input_footer>
+    @setErrorMessage="setErrorMessage($event)" />
+    <Results_footer
+    :color_lightgrey=color_lightgrey />
 </template>
 
 <script>

@@ -6,11 +6,11 @@
 
 <template>
     <Input_subheader
-    :text_3="subheader_separation"></Input_subheader>
+    :text_3="subheader_separation" />
     <Input_separation
     :color_green=color_green
     :app_input_prop=app_input_prop
-    @saveNewInputs="saveNewInputs($event)"></Input_separation>
+    @saveNewInputs="saveNewInputs($event)" />
     <Input_footer
     :id=id
 
@@ -22,7 +22,7 @@
     :button3enabled=button3enabled
     :button4enabled=button4enabled
     :button5enabled=button5enabled
-    @updateInputFooter="updateInputFooter()"></Input_footer>
+    @updateInputFooter="updateInputFooter()" />
 </template>
 
 <script>

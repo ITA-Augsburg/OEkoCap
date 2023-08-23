@@ -5,7 +5,7 @@
 
 <template>
   <VApp>
-    <Header></Header>
+    <Header />
 
     <RouterView
     :startedCorrectly=startedCorrectly
@@ -26,10 +26,9 @@
     @saveNewInputs="saveNewInputs($event)"
     @calculateButton="calculateButton()"
     @startedCorrectlyF="startedCorrectlyF()"
-    @setErrorMessage="setErrorMessage($event)"/>
+    @setErrorMessage="setErrorMessage($event)" />
     
-    <VMain>
-    </VMain>
+    <VMain />
     
   </VApp>
 </template>

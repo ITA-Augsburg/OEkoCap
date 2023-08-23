@@ -6,7 +6,7 @@
 
 <template>
     <Input_subheader
-    :text_3="subheader_processing"></Input_subheader>
+    :text_3="subheader_processing" />
     <Input_processing
     :app_input_prop=app_input_prop
     :proc_moi_prop=proc_moi_prop
@@ -16,7 +16,7 @@
     :color_darkgreen=color_darkgreen
     :buttonCalculateEnabled=buttonCalculateEnabled
     @saveNewInputs="saveNewInputs($event)"
-    @calculateButton="calculateButton()"></Input_processing>
+    @calculateButton="calculateButton()" />
     <Input_footer
     :id=id
     :progressValue=progressValue
@@ -26,7 +26,7 @@
     :button3enabled=button3enabled
     :button4enabled=button4enabled
     :button5enabled=button5enabled
-    @updateInputFooter="updateInputFooter()"></Input_footer>
+    @updateInputFooter="updateInputFooter()" />
 </template>
 
 <script>
