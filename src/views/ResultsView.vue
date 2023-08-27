@@ -6,14 +6,16 @@
 
 <template>
     <Input_subheader
-    :text_3="subheader_results" />
+    :text_3=subheader_results />
     <Results
     :app_output_prop=app_output_prop
     :color_green=color_green
     :color_lightgrey=color_lightgrey
-    @setErrorMessage="setErrorMessage($event)" />
+    @setErrorMessage=setErrorMessage($event)
+    @chartsAsImages=chartsAsImages($event) />
     <Results_footer
-    :color_lightgrey=color_lightgrey />
+    :color_lightgrey=color_lightgrey
+    :data_urls_prop=images />
 </template>
 
 <script>
@@ -27,6 +29,7 @@ export default {
     emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "startedCorrectlyF", "setErrorMessage"],
     data: () => ({
         id: "results",
+        images: undefined
     }),
     methods: {
         updateInputFooter() {
@@ -34,6 +37,9 @@ export default {
         },
         setErrorMessage(message) {
             this.$emit("setErrorMessage", message)
+        },
+        chartsAsImages(images) {
+            this.images = images
         }
     }
 };

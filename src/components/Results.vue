@@ -102,7 +102,7 @@ import Chart from "chart.js/auto"
 <script>
     export default {
         props: ["app_output_prop", "color_green", "color_lightgrey"],
-        emits: ["setErrorMessage"],
+        emits: ["setErrorMessage", "chartsAsImages"],
         mounted() {
             // console.log(JSON.stringify(this.test_output, null, 2))
 
@@ -410,11 +410,13 @@ import Chart from "chart.js/auto"
                         this.handleBenchmarkSelect()
                         // this.updateBarChart() happens in this.handleBenchmarkSelect() alredy
                         this.updatePieChart()
+                        this.sendChartsAsImages()
                     }, 50)
                 } else {
                     this.handleBenchmarkSelect()
                     // this.updateBarChart() happens in this.handleBenchmarkSelect() alredy
                     this.updatePieChart()
+                    this.sendChartsAsImages()
                 }
             },
             handleBenchmarkSelect() {
@@ -491,11 +493,13 @@ import Chart from "chart.js/auto"
                         this.updateBarChartProcessGwpRange()
                         this.updateBarChartProcessCostPerKgRange()
                         this.updateBarChartProcessTotalCostRange()
+                        this.sendChartsAsImages()
                     }, 50)
                 } else {
                     this.updateBarChartProcessGwpRange()
                     this.updateBarChartProcessCostPerKgRange()
                     this.updateBarChartProcessTotalCostRange()
+                    this.sendChartsAsImages()
                 }
             },
             updateBarChart() {
@@ -989,6 +993,19 @@ import Chart from "chart.js/auto"
                 this.updateBarChartProcessGwpRange()
                 this.updateBarChartProcessCostPerKgRange()
                 this.updateBarChartProcessTotalCostRange()
+            },
+            sendChartsAsImages() {
+                // send currently displayed charts as images to results_footer component for pdf
+                let images = []
+                let charts = [this.barChart, this.pieChart, this.barChartProcessGwpRange, this.barChartProcessCostPerKgRange, this.barChartProcessTotalCostRange]
+                // check which charts exist
+                for(let i=0; i<charts.length; i++) {
+                    if(charts[i] !== undefined) {
+                        images.push({index: i, image: charts[i].toBase64Image()})
+                    }
+                }
+                // send existing charts as images
+                this.$emit("chartsAsImages", images)
             }
         }
     }

@@ -124,13 +124,13 @@
     }
 }
 
-.results_print_buttoncontainer {
+.results_pdf_buttoncontainer {
     margin: 20px 10px 20px 5px;
     display: flex;
     flex-direction: row-reverse;
 }
 
-.results_print_button_text {
-    font-size: 25px;
+.results_pdf_button_text {
+    font-size: 20px;
     color: var(--color-grey);
 }
