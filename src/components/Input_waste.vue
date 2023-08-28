@@ -1,19 +1,32 @@
+<script setup>
+    import Expert_mode from "./Expert_mode.vue"
+    import Tooltip from "./Tooltip.vue"
+    import Tooltip_texts from "../tooltip_texts.json"
+</script>
+
 <template>
-
+    
     <div class="input_area">
+        
+        <div class="element_plus_tooltip_wrap">
+            <v-select
+            class="select waste_type_select"
+            label="Type"
+            single-line
+            suffix="Type"
+            :items=type_options
+            variant="solo"
+            :bg-color=color_green
+            v-model=this.waste_type
+            v-on:update:model-value="[updateWasteRoute(), saveNewInputs()]"
+            ></v-select>
 
-        <v-select
-        class="select waste_type_select"
-        label="Type"
-        single-line
-        suffix="Type"
-        :items=type_options
-        variant="solo"
-        :bg-color=color_green
-        v-model=this.waste_type
-        v-on:update:model-value="[updateWasteRoute(), saveNewInputs()]"
-        ></v-select>
-
+            <Tooltip
+            :tooltip_class=select_tooltip_class
+            :tooltip_text=Tooltip_texts.waste_type_tooltip
+            ></Tooltip>
+        </div>
+        
         <v-checkbox
         v-if="waste_type === 'End of Life'"
         @click="[updateWasteRoute(), saveNewInputs()]"
@@ -122,13 +135,9 @@
 </template>
 
 <script>
-    import Expert_mode from "./Expert_mode.vue"
     export default {
         props: ["app_input_prop", "color_green"],
         emits: ["saveNewInputs"],
-        components: {
-            Expert_mode: Expert_mode
-        },
         mounted() {
             //reposition fine-shredding-mass-loss-percent if Coarse-exp-mode "open"
             if(this.waste_type === "End of Life" && this.size1dot5 === true) {
@@ -167,7 +176,9 @@
                 fine_expmode_label: "Fine shredding expert mode",
                 transport_label: "Consider Transportation",
 
-                coarse_expmode_disabled: true
+                coarse_expmode_disabled: true,
+
+                select_tooltip_class: "select_tooltip"
             }
         },
         methods: {
