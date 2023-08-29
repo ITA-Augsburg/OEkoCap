@@ -1,0 +1,38 @@
+.tooltip_container {
+    display: flex;
+    position: relative;
+}
+
+.tooltip {
+    height: 20px;
+    align-self: center;
+}
+
+.subheader_tooltip {
+    position: absolute;
+    right: -30px;
+    top: 12.5px;
+    margin: 0px;
+}
+
+.select_tooltip {
+    margin: 15px 10px 0px 0px;
+}
+
+.waste_size_tooltip {
+    position: absolute;
+    left: 215px;
+    top: 18px;
+}
+
+.waste_coarse_text_tooltip {
+    position: absolute;
+    left: 284px;
+    top: 15px;
+}
+
+.waste_coarse_exp_tooltip {
+    position: absolute;
+    left: 356px;
+    top: 18px;
+}

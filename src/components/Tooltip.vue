@@ -1,10 +1,10 @@
 <template>
-    <span :class=tooltip_class >
+    <div :class=tooltip_class >
         <svg
         xmlns="http://www.w3.org/2000/svg"
-        width="26"
-        height="26"
-        fill=#4a4a4a
+        width="20"
+        height="20"
+        fill=#929292
         class="bi bi-question-circle"
         viewBox="0 0 16 16"
         @click="tooltip_open = !tooltip_open">
@@ -17,7 +17,7 @@
         v-model=this.tooltip_open >
             {{ tooltip_text }}
         </v-tooltip>
-    </span>
+    </div>
 </template>
 
 <script>

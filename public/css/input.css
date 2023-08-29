@@ -14,16 +14,6 @@
     }
 }
 
-.element_plus_tooltip_wrap {
-    display: flex;
-}
-
-.select_tooltip {
-    margin: 20px 10px 0px 0px;
-    height: fit-content;
-    align-self: center;
-}
-
 .select {
     margin: 10px 10px 0px 10px;
     height: 50px;

@@ -6,7 +6,7 @@
 
 <template>
     <Input_subheader
-    :text_3="subheader_waste" />
+    :text_3=subheader_waste />
     <Input_waste
     :color_green=color_green
     :app_input_prop=app_input_prop

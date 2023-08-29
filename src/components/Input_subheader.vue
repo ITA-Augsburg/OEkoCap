@@ -1,9 +1,21 @@
+<script setup>
+  import Tooltip from "../components/Tooltip.vue"
+  import Tooltip_texts from "../tooltip_texts.json"
+</script>
+
 <template>
 
 <div class="subheader">
     <p class="subheader_text_1">ÖkoCaP</p>
     <p class="subheader_text_2">Calculator</p>
-    <p class="subheader_text_3">{{text_3}}</p>
+    <div class="subheader_text_3_container">
+      <p class="subheader_text_3">{{text_3}}</p>
+      <Tooltip
+      v-if="text_3 === 'WASTE'"
+      :tooltip_class=subheader_tooltip_class
+      :tooltip_text=Tooltip_texts.test />
+    </div>
+
 </div>
 
 </template>
@@ -12,6 +24,7 @@ export default {
   props: ["text_3"],
   data() {
     return {
+      subheader_tooltip_class: "tooltip subheader_tooltip"
     }
   }
 }

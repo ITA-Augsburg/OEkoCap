@@ -8,7 +8,7 @@
     
     <div class="input_area">
         
-        <div class="element_plus_tooltip_wrap">
+        <div class="tooltip_container">
             <v-select
             class="select waste_type_select"
             label="Type"
@@ -18,36 +18,48 @@
             variant="solo"
             :bg-color=color_green
             v-model=this.waste_type
-            v-on:update:model-value="[updateWasteRoute(), saveNewInputs()]"
-            ></v-select>
+            v-on:update:model-value="[updateWasteRoute(), saveNewInputs()]" />
 
             <Tooltip
             :tooltip_class=select_tooltip_class
-            :tooltip_text=Tooltip_texts.waste_type_tooltip
-            ></Tooltip>
+            :tooltip_text=Tooltip_texts.test />
         </div>
         
-        <v-checkbox
-        v-if="waste_type === 'End of Life'"
-        @click="[updateWasteRoute(), saveNewInputs()]"
-        class="checkbox waste_size_checkbox"
-        label="Waste Size > 1.5m"
-        :color=color_green
-        v-model="size1dot5"
-        ></v-checkbox>
-        <v-checkbox
-        v-if="waste_type === undefined"
-        disabled
-        class="checkbox waste_size_checkbox"
-        label="Waste Size > 1.5m"
-        :color=color_green
-        v-model="size1dot5"
-        ></v-checkbox>
+        <div class="tooltip_container"
+        v-if="waste_type === 'End of Life' || waste_type === undefined">
+            <v-checkbox
+            v-if="waste_type === 'End of Life'"
+            @click="[updateWasteRoute(), saveNewInputs()]"
+            class="checkbox waste_size_checkbox"
+            label="Waste Size > 1.5m"
+            :color=color_green
+            v-model="size1dot5" />
+            <v-checkbox
+            v-if="waste_type === undefined"
+            disabled
+            class="checkbox waste_size_checkbox"
+            label="Waste Size > 1.5m"
+            :color=color_green
+            v-model="size1dot5" />
 
-        <p v-if="waste_type === 'End of Life' && size1dot5 === true"
-        class="text waste_coarse_text">Coarse Shredding - Mass loss</p>
-        <p v-if="waste_type === undefined || waste_type === 'End of Life' && size1dot5 === false"
-        class="text waste_coarse_text waste_coarse_text_disabled">Coarse Shredding - Mass loss</p>
+            <Tooltip
+            :tooltip_class=waste_size_tooltip_class
+            :tooltip_text=Tooltip_texts.test />
+        </div>
+
+        <div class="tooltip_container"
+        v-if="
+        waste_type === undefined ||
+        waste_type === 'End of Life' && size1dot5 === true ||
+        waste_type === 'End of Life' && size1dot5 === false">
+            <p v-if="waste_type === 'End of Life' && size1dot5 === true"
+            class="text waste_coarse_text">Coarse Shredding - Mass loss</p>
+            <p v-if="waste_type === undefined || waste_type === 'End of Life' && size1dot5 === false"
+            class="text waste_coarse_text waste_coarse_text_disabled">Coarse Shredding - Mass loss</p>
+            <Tooltip
+            :tooltip_class=waste_coarse_tooltip_class
+            :tooltip_text=Tooltip_texts.test />
+        </div>
 
         <v-slider
         v-if="waste_type === 'End of Life' && size1dot5 === true"
@@ -59,8 +71,7 @@
         :min="0.5"
         :max="15"
         :step="0.1"
-        v-model="shred_1_ml"
-        ></v-slider>
+        v-model="shred_1_ml" />
         <v-slider
         v-if="waste_type === undefined || waste_type === 'End of Life' && size1dot5 === false"
         disabled
@@ -71,30 +82,35 @@
         :min="0.5"
         :max="15"
         :step="0.1"
-        v-model="shred_1_ml"
-        ></v-slider>
+        v-model="shred_1_ml" />
         <p
         v-if="waste_type === 'End of Life' && size1dot5 === true"
         class="percentage waste_coarse_percentage">{{ Math.round(shred_1_ml * 10) / 10 }}%</p>
 
-        <Expert_mode
-        v-if="!coarse_expmode_disabled && coarse_expmode_disabled !== undefined"
-        @newExpertModeValues="newExpertModeValues($event)"
-        @updateWasteUI="updateWasteUI()"
-        :label=coarse_expmode_label
-        :disabled=false
-        :expert_mode_gwp_prop=shred_1_gwp
-        :expert_mode_cost_prop=shred_1_cost
-        :color_green=color_green
-        ></Expert_mode>
-        <Expert_mode
-        v-if="coarse_expmode_disabled && coarse_expmode_disabled !== undefined"
-        :label=coarse_expmode_label
-        :disabled=true
-        :expert_mode_cost_prop=shred_1_cost
-        :expert_mode_gwp_prop=shred_1_gwp
-        :color_green=color_green
-        ></Expert_mode>
+        <div class="tooltip_container"
+        v-if="
+        !coarse_expmode_disabled && coarse_expmode_disabled !== undefined ||
+        coarse_expmode_disabled && coarse_expmode_disabled !== undefined">
+            <Expert_mode
+            v-if="!coarse_expmode_disabled && coarse_expmode_disabled !== undefined"
+            @newExpertModeValues="newExpertModeValues($event)"
+            @updateWasteUI="updateWasteUI()"
+            :label=coarse_expmode_label
+            :disabled=false
+            :expert_mode_gwp_prop=shred_1_gwp
+            :expert_mode_cost_prop=shred_1_cost
+            :color_green=color_green />
+            <Expert_mode
+            v-if="coarse_expmode_disabled && coarse_expmode_disabled !== undefined"
+            :label=coarse_expmode_label
+            :disabled=true
+            :expert_mode_cost_prop=shred_1_cost
+            :expert_mode_gwp_prop=shred_1_gwp
+            :color_green=color_green />
+            <Tooltip
+            :tooltip_class=waste_coarse_exp_tooltip_class
+            :tooltip_text=Tooltip_texts.test />
+        </div>
 
         <p class="text waste_fine_text">Fine Shredding - Mass loss</p>
         <v-slider
@@ -106,8 +122,7 @@
         :min="0.5"
         :max="15"
         :step="0.1"
-        v-model="shred_2_ml"
-        ></v-slider>
+        v-model="shred_2_ml" />
         <p id="fine_percentage" class="percentage waste_fine_percentage">{{ Math.round(shred_2_ml * 10) / 10 }}%</p>
 
         <Expert_mode
@@ -116,8 +131,7 @@
         :disabled=false
         :expert_mode_cost_prop=shred_2_cost
         :expert_mode_gwp_prop=shred_2_gwp
-        :color_green=color_green
-        ></Expert_mode>
+        :color_green=color_green />
 
         <br>
 
@@ -127,8 +141,7 @@
         :disabled=false
         :expert_mode_cost_prop=transport_cost
         :expert_mode_gwp_prop=transport_gwp
-        :color_green=color_green
-        ></Expert_mode>
+        :color_green=color_green />
         
     </div>
 
@@ -178,7 +191,10 @@
 
                 coarse_expmode_disabled: true,
 
-                select_tooltip_class: "select_tooltip"
+                select_tooltip_class: "tooltip select_tooltip",
+                waste_size_tooltip_class: "tooltip waste_size_tooltip",
+                waste_coarse_tooltip_class: "tooltip waste_coarse_text_tooltip",
+                waste_coarse_exp_tooltip_class: "tooltip waste_coarse_exp_tooltip"
             }
         },
         methods: {
