@@ -20,19 +20,18 @@
 }
 
 .waste_size_tooltip {
-    position: absolute;
-    left: 215px;
-    top: 18px;
+    margin: 5px 10px 0px 10px;
 }
 
 .waste_coarse_text_tooltip {
-    position: absolute;
-    left: 284px;
-    top: 15px;
+    margin: 10px 10px 0px 10px;
 }
 
-.waste_coarse_exp_tooltip {
-    position: absolute;
-    left: 356px;
-    top: 18px;
+.exp_mode_tooltip {
+    margin: 18px 10px 0px 10px;
+}
+
+.waste_fine_text_tooltip {
+    position: relative;
+    margin: 30px 10px 0px 10px;
 }

@@ -1,23 +1,36 @@
+<script setup>
+    import Tooltip from "./Tooltip.vue"
+</script>
+
 <template>
 
-    <v-switch
-    v-if="!disabled"
-    class="switch"
-    inset
-    :label=label
-    :color=color_green
-    v-model="switchState"
-    @click="showHideExpertMode()"
-    ></v-switch>
-    <v-switch
-    v-if="disabled"
-    class="switch"
-    disabled
-    inset
-    :label=label
-    :color=color_green
-    v-model="switchState"
-    ></v-switch>
+    <div class="tooltip_container">
+        <div class="switch_container">
+            <v-switch
+            v-if="!disabled"
+            class="switch"
+            inset
+            :label=label
+            :color=color_green
+            v-model="switchState"
+            @click="showHideExpertMode()"
+            ></v-switch>
+            <v-switch
+            v-if="disabled"
+            class="switch"
+            disabled
+            inset
+            :label=label
+            :color=color_green
+            v-model="switchState"
+            ></v-switch>
+        </div>
+        <Tooltip
+        v-if="tooltip_text_prop !== undefined"
+        :tooltip_class=exp_tooltip_class
+        :tooltip_text=tooltip_text_prop />
+    </div>
+    
 
     <v-text-field
     v-if="switchState && !disabled"
@@ -48,8 +61,8 @@
 <script>
 
     export default {
-        props: ["disabled", "expert_mode_cost_prop", "expert_mode_gwp_prop", "label", "color_green"],
-        emits: ["newExpertModeValues", "updateWasteUI"],
+        props: ["disabled", "expert_mode_cost_prop", "expert_mode_gwp_prop", "label", "color_green", "tooltip_text_prop"],
+        emits: ["newExpertModeValues"],
         mounted() {
             if(this.expert_mode_cost_prop !== undefined || this.expert_mode_gwp_prop !== undefined) {
                 this.switchState = true
@@ -59,13 +72,14 @@
             return {
                 switchState: false,
                 expert_mode_cost: this.expert_mode_cost_prop,
-                expert_mode_gwp: this.expert_mode_gwp_prop
+                expert_mode_gwp: this.expert_mode_gwp_prop,
+
+                exp_tooltip_class: "tooltip exp_mode_tooltip"
             }
         },
         methods: {
             showHideExpertMode() {
                 this.switchState = !this.switchState
-                this.$emit("updateWasteUI", undefined)
                 // console.log(this.switchState)
                 if(this.switchState === false) {
                     this.expert_mode_cost = undefined
