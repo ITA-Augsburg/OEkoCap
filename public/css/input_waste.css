@@ -20,10 +20,6 @@
     opacity: 40%;
 }
 
-.waste_coarse_percentage {
-    top: 0px;
-}
-
 .waste_fine_text {
     margin: 30px 0px 0px 10px;
     width: fit-content;
@@ -32,8 +28,4 @@
     .waste_fine_text {
         width: calc(100vw - 40px - 10px);
     }
-}
-
-.waste_fine_percentage {
-    top: 0px;
 }

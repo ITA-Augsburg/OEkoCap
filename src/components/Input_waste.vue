@@ -88,7 +88,7 @@
             v-model="shred_1_ml" />
             <p
             v-if="waste_type === 'End of Life' && size1dot5 === true"
-            class="percentage waste_coarse_percentage">{{ Math.round(shred_1_ml * 10) / 10 }}%</p>
+            class="percentage">{{ Math.round(shred_1_ml * 10) / 10 }}%</p>
         </div>
 
         <Expert_mode
@@ -126,7 +126,7 @@
             :max="15"
             :step="0.1"
             v-model="shred_2_ml" />
-            <p id="fine_percentage" class="percentage waste_fine_percentage">{{ Math.round(shred_2_ml * 10) / 10 }}%</p>
+            <p class="percentage">{{ Math.round(shred_2_ml * 10) / 10 }}%</p>
         </div>
 
         <Expert_mode
@@ -212,13 +212,10 @@
                     this.coarse_expmode_disabled = true
                     this.shred_1_gwp = undefined
                     this.shred_1_cost = undefined
-                    document.getElementById("fine_percentage").classList.remove("waste_fine_percentage_2")
-                    document.getElementById("fine_percentage").classList.remove("waste_fine_percentage_3")
                     if(this.waste_type === "Cut-Off") {
                         this.shred_2_type = "Fine"
                         this.shred_2_ml = 5.0
                         this.coarse_expmode_disabled = undefined
-                        document.getElementById("fine_percentage").classList.add("waste_fine_percentage_3")
                     }
                     if(this.waste_type === "End of Life") {
                         this.shred_2_type = "Fine"
@@ -228,8 +225,6 @@
                     this.shred_1_type = "Coarse"
                     this.shred_2_type = "Fine"
                     this.coarse_expmode_disabled = false
-                    document.getElementById("fine_percentage").classList.remove("waste_fine_percentage_2")
-                    document.getElementById("fine_percentage").classList.remove("waste_fine_percentage_3")
                     if(this.shred_1_ml === undefined) {
                         this.shred_1_ml = 5.0
                     }

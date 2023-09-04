@@ -10,19 +10,8 @@
     margin: 30px 0px 0px 10px
 }
 
-.processing_1_ml_percentage {
-    top: 130px;
-}
-
 .processing_2_ml_text_disabled {
     opacity: 40%;
-}
-
-.processing_2_ml_percentage {
-    top: 385px;
-}
-.processing_2_ml_percentage_2 {
-    top: 545px;
 }
 
 .processing_wt_select {

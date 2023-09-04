@@ -58,6 +58,7 @@
 .percentage {
     position: absolute;
     right: 15px;
+    top: 0px;
     font-size: 20px;
     color: var(--color-grey);
 }

@@ -27,18 +27,20 @@
         ></v-select>
 
         <p class="text matrix_fmc_text">Fiber Volume Content</p>
-        <v-slider
-        v-model="matrix_fmc"
-        v-on:update:model-value="saveNewInputs()"
-        class="slider"
-        :color=color_green
-        :thumb-color=color_green
-        thumb-size="20"
-        :min="10"
-        :max="30"
-        :step="10"
-        ></v-slider>
-        <p class="percentage matrix_fmc_percentage">{{ matrix_fmc }}%</p>
+        <div class="slider_container">
+            <v-slider
+            v-model="matrix_fmc"
+            v-on:update:model-value="saveNewInputs()"
+            class="slider"
+            :color=color_green
+            :thumb-color=color_green
+            thumb-size="20"
+            :min="10"
+            :max="30"
+            :step="10"
+            ></v-slider>
+            <p class="percentage">{{ matrix_fmc }}%</p>
+        </div>
 
         <v-checkbox
         v-if="matrix_type !== 'Thermoset'"

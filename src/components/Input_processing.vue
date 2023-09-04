@@ -16,22 +16,23 @@
         ></v-select>
 
         <p class="text processing_ml_text">Mass loss - Step 1</p>
-        <v-slider
-        v-model=proc_1_ml
-        v-on:update:model-value="[saveNewInputs()]"
-        class="slider"
-        :color=color_green
-        :thumb-color=color_green
-        thumb-size="20"
-        :min="0.5"
-        :max="40"
-        :step="0.1"
-        ></v-slider>
-        <p class="percentage processing_1_ml_percentage">{{ Math.round(proc_1_ml * 10) / 10 }}%</p>
+        <div class="slider_container">
+            <v-slider
+            v-model=proc_1_ml
+            v-on:update:model-value="[saveNewInputs()]"
+            class="slider"
+            :color=color_green
+            :thumb-color=color_green
+            thumb-size="20"
+            :min="0.5"
+            :max="40"
+            :step="0.1"
+            ></v-slider>
+            <p class="percentage">{{ Math.round(proc_1_ml * 10) / 10 }}%</p>
+        </div>
 
         <Expert_mode
         @newExpertModeValues="newExpertModeValues($event)"
-        @updateWasteUI="updateWasteUI()"
         :label=step1expmodelabel
         :disabled=false
         :color_green=color_green
@@ -54,20 +55,22 @@
 
         <p v-if="!proc_2_ml_disabled"
         class="text processing_ml_text">Mass loss - Step 2</p>
-        <v-slider
-        v-if="!proc_2_ml_disabled"
-        v-model=proc_2_ml
-        v-on:update:model-value="[saveNewInputs()]"
-        class="slider"
-        :color=color_green
-        :thumb-color=color_green
-        thumb-size="20"
-        :min="0.5"
-        :max="40"
-        :step="0.1"
-        ></v-slider>
-        <p v-if="!proc_2_ml_disabled"
-        id="proc_2_ml" class="percentage processing_2_ml_percentage">{{ Math.round(proc_2_ml * 10) / 10 }}%</p>
+        <div class="slider_container">
+            <v-slider
+            v-if="!proc_2_ml_disabled"
+            v-model=proc_2_ml
+            v-on:update:model-value="[saveNewInputs()]"
+            class="slider"
+            :color=color_green
+            :thumb-color=color_green
+            thumb-size="20"
+            :min="0.5"
+            :max="40"
+            :step="0.1"
+            ></v-slider>
+            <p v-if="!proc_2_ml_disabled"
+            id="proc_2_ml" class="percentage">{{ Math.round(proc_2_ml * 10) / 10 }}%</p>
+        </div>
 
         <Expert_mode
         v-if="!proc_2_expmode_disabled"
@@ -284,9 +287,6 @@
                         proc_moi: this.proc_moi
                     })
                 }, 20);
-            },
-            updateWasteUI() {
-                document.getElementById("proc_2_ml").classList.toggle("processing_2_ml_percentage_2")
             },
             calculateButton() {
                 this.$emit("calculateButton", undefined)

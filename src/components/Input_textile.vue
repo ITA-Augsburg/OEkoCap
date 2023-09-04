@@ -15,27 +15,29 @@
         ></v-select>
 
         <p class="text textile_ml_text">Mass loss</p>
-        <v-slider
-        v-if="textile_type === undefined"
-        disabled
-        class="slider"
-        :color=color_green
-        :thumb-color=color_green
-        thumb-size="20"
-        ></v-slider>
-        <v-slider
-        v-if="textile_type !== undefined"
-        v-model=textile_ml
-        v-on:update:model-value="saveNewInputs()"
-        class="slider"
-        :color=color_green
-        :thumb-color=color_green
-        thumb-size="20"
-        :min=ml_options[0]
-        :max=ml_options[1]
-        :step=ml_options[2]
-        ></v-slider>
-        <p v-if="textile_type !== undefined" class="percentage textile_ml_percentage">{{ textile_ml }}%</p>
+        <div class="slider_container">
+            <v-slider
+            v-if="textile_type === undefined"
+            disabled
+            class="slider"
+            :color=color_green
+            :thumb-color=color_green
+            thumb-size="20"
+            ></v-slider>
+            <v-slider
+            v-if="textile_type !== undefined"
+            v-model=textile_ml
+            v-on:update:model-value="saveNewInputs()"
+            class="slider"
+            :color=color_green
+            :thumb-color=color_green
+            thumb-size="20"
+            :min=ml_options[0]
+            :max=ml_options[1]
+            :step=ml_options[2]
+            ></v-slider>
+            <p v-if="textile_type !== undefined" class="percentage">{{ textile_ml }}%</p>
+        </div>
 
         <v-select
         v-model=textile_tp
