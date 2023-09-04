@@ -14,6 +14,7 @@
         <v-tooltip
         activator=parent
         location=bottom
+        maxWidth=500
         v-model=this.tooltip_open >
             {{ tooltip_text }}
         </v-tooltip>

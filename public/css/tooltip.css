@@ -8,6 +8,11 @@
     align-self: center;
 }
 
+.v-tooltip > .v-overlay__content {
+    background-color: rgba(var(--v-theme-surface-variant), 0.9) !important;
+    font-size:18px !important;
+}
+
 .subheader_tooltip {
     position: absolute;
     right: -30px;
