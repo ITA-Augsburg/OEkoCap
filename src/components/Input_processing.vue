@@ -1,21 +1,35 @@
-
+<script setup>
+    import Expert_mode from "./Expert_mode.vue"
+    import Tooltip from "./Tooltip.vue"
+    import Tooltip_texts from "../tooltip_texts.json"
+</script>
 <template>
 
     <div class="input_area">
 
-        <v-select
-        v-model=proc_1_type
-        v-on:update:model-value="[toggleStepTwo(), saveNewInputs()]"
-        class="select processing_type_select"
-        label="Type - Step 1"
-        single-line
-        suffix="Type - Step 1"
-        :items=proc_1_type_options
-        variant="solo"
-        :bg-color=color_green
-        ></v-select>
+        <div class="tooltip_container">
+            <v-select
+            v-model=proc_1_type
+            v-on:update:model-value="[toggleStepTwo(), saveNewInputs()]"
+            class="select processing_type_select"
+            label="Type - Step 1"
+            single-line
+            suffix="Type - Step 1"
+            :items=proc_1_type_options
+            variant="solo"
+            :bg-color=color_green />
 
-        <p class="text processing_ml_text">Mass loss - Step 1</p>
+            <Tooltip
+            :tooltip_class="'tooltip select_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
+
+        <div class="tooltip_container">
+            <p class="text processing_ml_text">Mass loss - Step 1</p>
+            <Tooltip
+            :tooltip_class="'tooltip processing_ml_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
         <div class="slider_container">
             <v-slider
             v-model=proc_1_ml
@@ -26,35 +40,47 @@
             thumb-size="20"
             :min="0.5"
             :max="40"
-            :step="0.1"
-            ></v-slider>
+            :step="0.1" />
             <p class="percentage">{{ Math.round(proc_1_ml * 10) / 10 }}%</p>
         </div>
 
         <Expert_mode
         @newExpertModeValues="newExpertModeValues($event)"
         :label=step1expmodelabel
+        :tooltip_text_prop=Tooltip_texts.test
         :disabled=false
         :color_green=color_green
         :expert_mode_cost_prop=proc_1_cost
-        :expert_mode_gwp_prop=proc_1_gwp></Expert_mode>
-        
+        :expert_mode_gwp_prop=proc_1_gwp />
 
-        <v-select
-        v-if="!proc_2_type_disabled"
-        v-model=proc_2_type
-        v-on:update:model-value="[saveNewInputs()]"
-        class="select processing_2_type_select"
-        label="Type - Step 2"
-        single-line
-        suffix="Type - Step 2"
-        :items=proc_2_type_options
-        variant="solo"
-        :bg-color=color_green
-        ></v-select>
+        <br><br>
 
-        <p v-if="!proc_2_ml_disabled"
-        class="text processing_ml_text">Mass loss - Step 2</p>
+        <div class="tooltip_container">
+            <v-select
+            v-if="!proc_2_type_disabled"
+            v-model=proc_2_type
+            v-on:update:model-value="[saveNewInputs()]"
+            class="select processing_2_type_select"
+            label="Type - Step 2"
+            single-line
+            suffix="Type - Step 2"
+            :items=proc_2_type_options
+            variant="solo"
+            :bg-color=color_green />
+
+            <Tooltip
+            :tooltip_class="'tooltip select_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
+
+        <div 
+        v-if="!proc_2_ml_disabled"
+        class="tooltip_container">
+            <p class="text processing_ml_text">Mass loss - Step 2</p>
+            <Tooltip
+            :tooltip_class="'tooltip processing_ml_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
         <div class="slider_container">
             <v-slider
             v-if="!proc_2_ml_disabled"
@@ -66,8 +92,7 @@
             thumb-size="20"
             :min="0.5"
             :max="40"
-            :step="0.1"
-            ></v-slider>
+            :step="0.1" />
             <p v-if="!proc_2_ml_disabled"
             id="proc_2_ml" class="percentage">{{ Math.round(proc_2_ml * 10) / 10 }}%</p>
         </div>
@@ -76,47 +101,59 @@
         v-if="!proc_2_expmode_disabled"
         @newExpertModeValues="newExpertModeValues($event)"
         :label=step2expmodelabel
+        :tooltip_text_prop=Tooltip_texts.test
         :disabled=false
         :color_green=color_green
         :expert_mode_cost_prop=proc_2_cost
-        :expert_mode_gwp_prop=proc_2_gwp></Expert_mode>
+        :expert_mode_gwp_prop=proc_2_gwp />
 
-        <v-select
-        v-model=proc_wt
-        v-on:update:model-value="[saveNewInputs()]"
-        class="select processing_wt_select"
-        label="Wall thickness [mm]"
-        single-line
-        suffix="Wall thickness [mm]"
-        :items=proc_wt_options
-        variant="solo"
-        :bg-color=color_lightgrey
-        ></v-select>
+        <br><br>
 
-        <v-select
-        v-if="!moi_disabled"
-        v-model=proc_moi
-        v-on:update:model-value="[saveNewInputs()]"
-        class="select processing_moi_select"
-        label="Method of insertion"
-        single-line
-        suffix="Method of insertion"
-        :items=moi_options
-        variant="solo"
-        :bg-color=color_lightgrey
-        ></v-select>
-        <v-select
-        v-if="moi_disabled"
-        disabled
-        v-model=proc_moi
-        class="select processing_moi_select processing_moi_select_disabled"
-        label="Method of insertion"
-        single-line
-        suffix="Method of insertion"
-        :items=moi_options
-        variant="solo"
-        :bg-color=color_lightgrey
-        ></v-select>
+        <div class="tooltip_container">
+            <v-select
+            v-model=proc_wt
+            v-on:update:model-value="[saveNewInputs()]"
+            class="select processing_wt_select"
+            label="Wall thickness [mm]"
+            single-line
+            suffix="Wall thickness [mm]"
+            :items=proc_wt_options
+            variant="solo"
+            :bg-color=color_lightgrey />
+
+            <Tooltip
+            :tooltip_class="'tooltip select_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
+
+        <div class="tooltip_container">
+            <v-select
+            v-if="!moi_disabled"
+            v-model=proc_moi
+            v-on:update:model-value="[saveNewInputs()]"
+            class="select processing_moi_select"
+            label="Method of insertion"
+            single-line
+            suffix="Method of insertion"
+            :items=moi_options
+            variant="solo"
+            :bg-color=color_lightgrey />
+            <v-select
+            v-if="moi_disabled"
+            disabled
+            v-model=proc_moi
+            class="select processing_moi_select processing_moi_select_disabled"
+            label="Method of insertion"
+            single-line
+            suffix="Method of insertion"
+            :items=moi_options
+            variant="solo"
+            :bg-color=color_lightgrey />
+
+            <Tooltip
+            :tooltip_class="'tooltip select_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
 
         <div class="processing_buttoncontainer">
             <div class="processing_clear_buttoncontainer">
@@ -159,7 +196,6 @@
 </template>
 
 <script>
-    import Expert_mode from "./Expert_mode.vue"
     export default {
         props: ["app_input_prop", "proc_moi_prop", "matrix_insertion_prop", "buttonCalculateEnabled", "color_green", "color_lightgrey", "color_darkgreen"],
         emits: ["saveNewInputs", "calculateButton"],

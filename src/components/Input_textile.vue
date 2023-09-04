@@ -1,20 +1,36 @@
+<script setup>
+    import Expert_mode from "./Expert_mode.vue"
+    import Tooltip from "./Tooltip.vue"
+    import Tooltip_texts from "../tooltip_texts.json"
+</script>
+
 <template>
 
     <div class="input_area">
 
-        <v-select
-        v-model=textile_type
-        v-on:update:model-value="[updateTextileRoute(), saveNewInputs()]"
-        class="select textile_type_select"
-        label="Type"
-        single-line
-        suffix="Type"
-        :items=type_options
-        variant="solo"
-        :bg-color=color_green
-        ></v-select>
+        <div class="tooltip_container">
+            <v-select
+            v-model=textile_type
+            v-on:update:model-value="[updateTextileRoute(), saveNewInputs()]"
+            class="select textile_type_select"
+            label="Type"
+            single-line
+            suffix="Type"
+            :items=type_options
+            variant="solo"
+            :bg-color=color_green />
 
-        <p class="text textile_ml_text">Mass loss</p>
+            <Tooltip
+            :tooltip_class="'tooltip select_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
+
+        <div class="tooltip_container">
+            <p class="text textile_ml_text">Mass loss</p>
+            <Tooltip
+            :tooltip_class="'tooltip textile_ml_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
         <div class="slider_container">
             <v-slider
             v-if="textile_type === undefined"
@@ -22,8 +38,7 @@
             class="slider"
             :color=color_green
             :thumb-color=color_green
-            thumb-size="20"
-            ></v-slider>
+            thumb-size="20" />
             <v-slider
             v-if="textile_type !== undefined"
             v-model=textile_ml
@@ -34,49 +49,58 @@
             thumb-size="20"
             :min=ml_options[0]
             :max=ml_options[1]
-            :step=ml_options[2]
-            ></v-slider>
+            :step=ml_options[2] />
             <p v-if="textile_type !== undefined" class="percentage">{{ textile_ml }}%</p>
         </div>
 
-        <v-select
-        v-model=textile_tp
-        v-on:update:model-value="saveNewInputs()"
-        class="select textile_throughput_select"
-        label="Throughput [kg/h/m]"
-        single-line
-        suffix="Throughput [kg/h/m]"
-        :items=throughput_options
-        variant="solo"
-        :bg-color=color_lightgrey
-        ></v-select>
+        <div class="tooltip_container">
+            <v-select
+            v-model=textile_tp
+            v-on:update:model-value="saveNewInputs()"
+            class="select textile_throughput_select"
+            label="Throughput [kg/h/m]"
+            single-line
+            suffix="Throughput [kg/h/m]"
+            :items=throughput_options
+            variant="solo"
+            :bg-color=color_lightgrey />
 
-        <v-select
-        v-model=textile_aw
-        v-on:update:model-value="saveNewInputs()"
-        class="select textile_aw_select"
-        label="Areal weight [g/m²]"
-        single-line
-        suffix="Areal weight [g/m²]"
-        :items=aw_options
-        variant="solo"
-        :bg-color=color_lightgrey
-        ></v-select>
+            <Tooltip
+            :tooltip_class="'tooltip select_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
+
+        <div class="tooltip_container">
+            <v-select
+            v-model=textile_aw
+            v-on:update:model-value="saveNewInputs()"
+            class="select textile_aw_select"
+            label="Areal weight [g/m²]"
+            single-line
+            suffix="Areal weight [g/m²]"
+            :items=aw_options
+            variant="solo"
+            :bg-color=color_lightgrey />
+
+            <Tooltip
+            :tooltip_class="'tooltip select_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
 
         <Expert_mode
         @newExpertModeValues="newExpertModeValues($event)"
         :label=label
+        :tooltip_text_prop=Tooltip_texts.test
         :disabled=false
         :color_green=color_green
         :expert_mode_cost_prop=expert_mode_cost
-        :expert_mode_gwp_prop=expert_mode_gwp></Expert_mode>
+        :expert_mode_gwp_prop=expert_mode_gwp />
 
     </div>
 
 </template>
 
 <script>
-    import Expert_mode from "./Expert_mode.vue"
     export default {
         props: ["app_input_prop", "matrix_insertion_prop", "color_green", "color_lightgrey"],
         emits: ["saveNewInputs"],

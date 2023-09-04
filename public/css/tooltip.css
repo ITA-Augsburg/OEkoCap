@@ -19,6 +19,10 @@
     margin: 15px 10px 0px 0px;
 }
 
+.exp_mode_tooltip {
+    margin: 18px 10px 0px 10px;
+}
+
 .waste_size_tooltip {
     margin: 5px 10px 0px 10px;
 }
@@ -27,11 +31,22 @@
     margin: 10px 10px 0px 10px;
 }
 
-.exp_mode_tooltip {
-    margin: 18px 10px 0px 10px;
+.waste_fine_text_tooltip {
+    margin: 30px 10px 0px 10px;
 }
 
-.waste_fine_text_tooltip {
-    position: relative;
+.matrix_fiber_text_tooltip {
+    margin: 20px 10px 0px 10px;
+}
+
+.matrix_insert_text_tooltip {
+    margin: 10px 10px 0px 10px;
+}
+
+.textile_ml_tooltip {
+    margin: 30px 10px 0px 10px;
+}
+
+.processing_ml_tooltip {
     margin: 30px 10px 0px 10px;
 }

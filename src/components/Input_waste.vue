@@ -21,7 +21,7 @@
             v-on:update:model-value="[updateWasteRoute(), saveNewInputs()]" />
 
             <Tooltip
-            :tooltip_class=select_tooltip_class
+            :tooltip_class="'tooltip select_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>
         
@@ -45,7 +45,7 @@
             </div>
 
             <Tooltip
-            :tooltip_class=waste_size_tooltip_class
+            :tooltip_class="'tooltip waste_size_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>
 
@@ -59,7 +59,7 @@
             <p v-if="waste_type === undefined || waste_type === 'End of Life' && size1dot5 === false"
             class="text waste_coarse_text waste_coarse_text_disabled">Coarse Shredding - Mass loss</p>
             <Tooltip
-            :tooltip_class=waste_coarse_tooltip_class
+            :tooltip_class="'tooltip waste_coarse_text_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>
 
@@ -112,7 +112,7 @@
         <div class="tooltip_container">
             <p class="text waste_fine_text">Fine Shredding - Mass loss</p>
             <Tooltip
-            :tooltip_class=waste_fine_tooltip_class
+            :tooltip_class="'tooltip waste_fine_text_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>
         <div class="slider_container">
@@ -196,11 +196,6 @@
                 transport_label: "Consider Transportation",
 
                 coarse_expmode_disabled: true,
-
-                select_tooltip_class: "tooltip select_tooltip",
-                waste_size_tooltip_class: "tooltip waste_size_tooltip",
-                waste_coarse_tooltip_class: "tooltip waste_coarse_text_tooltip",
-                waste_fine_tooltip_class: "tooltip waste_fine_text_tooltip",
             }
         },
         methods: {

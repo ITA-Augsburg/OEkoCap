@@ -11,7 +11,7 @@
     <div class="subheader_text_3_container">
       <p class="subheader_text_3">{{text_3}}</p>
       <Tooltip
-      v-if="text_3 === 'WASTE'"
+      v-if="tooltip_enabled === true"
       :tooltip_class=subheader_tooltip_class
       :tooltip_text=Tooltip_texts.test />
     </div>
@@ -21,7 +21,7 @@
 </template>
 <script>
 export default {
-  props: ["text_3"],
+  props: ["text_3", "tooltip_enabled"],
   data() {
     return {
       subheader_tooltip_class: "tooltip subheader_tooltip"

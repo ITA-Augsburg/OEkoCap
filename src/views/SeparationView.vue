@@ -6,7 +6,8 @@
 
 <template>
     <Input_subheader
-    :text_3="subheader_separation" />
+    :text_3="subheader_separation"
+    :tooltip_enabled=true />
     <Input_separation
     :color_green=color_green
     :app_input_prop=app_input_prop

@@ -6,7 +6,8 @@
 
 <template>
     <Input_subheader
-    :text_3="subheader_matrix" />
+    :text_3="subheader_matrix"
+    :tooltip_enabled=true />
     <Input_matrix
     :color_green=color_green
     :matrix_insertion_prop=matrix_insertion_prop

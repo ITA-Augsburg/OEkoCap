@@ -1,34 +1,44 @@
+<script setup>
+    import Expert_mode from "./Expert_mode.vue"
+    import Tooltip from "./Tooltip.vue"
+    import Tooltip_texts from "../tooltip_texts.json"
+</script>
+
 <template>
 
     <div class="input_area">
 
-        <v-select
-        v-model=separation_type
-        v-on:update:model-value="saveNewInputs()"
-        class="select separation_type_select"
-        label="Type"
-        single-line
-        suffix="Type"
-        :items=type_options
-        variant="solo"
-        :bg-color=color_green
-        ></v-select>
+        <div class="tooltip_container">
+            <v-select
+            v-model=separation_type
+            v-on:update:model-value=saveNewInputs()
+            class="select separation_type_select"
+            label="Type"
+            single-line
+            suffix="Type"
+            :items=type_options
+            variant="solo"
+            :bg-color=color_green />
+
+            <Tooltip
+            :tooltip_class="'tooltip select_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
 
         <Expert_mode
-        @newExpertModeValues="newExpertModeValues($event)"
+        @newExpertModeValues=newExpertModeValues($event)
         :label=label
+        :tooltip_text_prop=Tooltip_texts.test
         :disabled=false
         :expert_mode_cost_prop=expert_mode_cost
         :expert_mode_gwp_prop=expert_mode_gwp
-        :color_green="color_green"
-        ></Expert_mode>
+        :color_green=color_green />
 
     </div>
 
 </template>
 
 <script>
-    import Expert_mode from "./Expert_mode.vue"
     export default {
         props: ["app_input_prop", "color_green"],
         emits: ["saveNewInputs"],
@@ -54,6 +64,7 @@
                 // this.log()
             },
             saveNewInputs() {
+                // this.log()
                 this.$emit(
                         "saveNewInputs",
                     {
