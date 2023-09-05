@@ -277,7 +277,6 @@ export default {
     },
     clearAppInput() {
       // this.calculateButton()
-      // console.log("App.vue clearAppInput() called")
       this.app_input = {
         "waste": {
           "type": "End of Life",
@@ -410,7 +409,7 @@ export default {
       this.formatAppInputKeys()
       // this.log()
       
-      // console.log(JSON.stringify(this.app_input))
+      console.log(JSON.stringify(this.app_input, null, 2))
       let url1 = "https://localhost/meine_dateien/ita_webapp_back/submit_input.php";
         fetch(url1, {
             method: "POST",

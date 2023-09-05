@@ -105,7 +105,7 @@
         },
         mounted() {
             if(this.matrix_type === "Thermoplast") {
-                this.polymer_options = ["PP", "PA6", "PET", "PLA"]
+                this.polymer_options = ["PP", "PA6"]
             } else if(this.matrix_type === "Thermoset") {
                 this.polymer_options = ["EP"]
             }
@@ -129,7 +129,7 @@
         methods: {
             updateMatrixRoute() {
                 if(this.matrix_type === "Thermoplast") {
-                    this.polymer_options = ["PP", "PA6", "PET", "PLA"]
+                    this.polymer_options = ["PP", "PA6"]
                     this.matrix_polymer = undefined
                 } else if(this.matrix_type === "Thermoset") {
                     this.polymer_options = ["EP"]
