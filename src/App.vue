@@ -227,7 +227,11 @@ export default {
 
         this.app_input.processing_2.type = new_values.proc_2_type
         this.app_input.processing_2.mass_loss_percent = new_values.proc_2_ml
-        this.app_input.processing_2.wandstärke_mm = new_values.proc_wt
+        if(new_values.proc_2_type === undefined) {
+          this.app_input.processing_2.wandstärke_mm = undefined
+        } else {
+          this.app_input.processing_2.wandstärke_mm = new_values.proc_wt
+        }
         this.app_input.processing_2.euro_per_kg = new_values.proc_2_cost
         this.app_input.processing_2.co2_equv_per_kg = new_values.proc_2_gwp
 
@@ -236,10 +240,17 @@ export default {
         //unlock calculate-button if mandatory inputs for ProcessingView given
         //lock calculate-button if mandatory inputs for ProcessingView switch back to undefined
         if(this.app_input.polymer.thermo_type === "Thermoset") {
-          if(this.app_input.processing_1.type !== undefined &&
+          if(
+          ["Wet Compression Moulding", "Resin Transfer Moulding"].includes(this.app_input.processing_1.type) &&
           this.app_input.processing_1.wandstärke_mm !== undefined &&
-          this.processingMethodOfInsertion !== undefined) {
-          this.buttonCalculateEnabled = true
+          this.processingMethodOfInsertion !== undefined
+          ||
+          this.app_input.processing_1.type === "Prepreg Production" &&
+          this.app_input.processing_2.type !== undefined &&
+          this.app_input.processing_1.wandstärke_mm !== undefined &&
+          this.processingMethodOfInsertion !== undefined
+          ) {
+            this.buttonCalculateEnabled = true
           } else {
             this.buttonCalculateEnabled = false
           }
@@ -398,8 +409,27 @@ export default {
           this.app_input.processing_2.type = "IRCompressionMoulding"
         }
       }
+      if(this.app_input.processing_1.type === "Prepreg Production") this.app_input.processing_1.type = "PrepregProduction"
       if(this.app_input.processing_2.type === undefined) this.app_input.processing_2.type = ""
       if(this.app_input.processing_2.mass_loss_percent === undefined) this.app_input.processing_2.mass_loss_percent = ""
+      if(
+      ["0.34 kg/m³", "1.25 kg/m³", "2.25 kg/m³"].includes(this.app_input.processing_1.wandstärke_mm) ||
+      ["0.34 kg/m³", "1.25 kg/m³", "2.25 kg/m³"].includes(this.app_input.processing_2.wandstärke_mm)) {
+        if(
+        this.app_input.processing_1.wandstärke_mm === "0.34 kg/m³" ||
+        this.app_input.processing_2.wandstärke_mm === "0.34 kg/m³") {
+          this.app_input.processing_1.wandstärke_mm = 0.5
+          this.app_input.processing_2.wandstärke_mm = 0.5
+        } else if(
+        this.app_input.processing_1.wandstärke_mm === "1.25 kg/m³" ||
+        this.app_input.processing_2.wandstärke_mm === "1.25 kg/m³") {
+          this.app_input.processing_1.wandstärke_mm = 1
+          this.app_input.processing_2.wandstärke_mm = 1
+        } else {
+          this.app_input.processing_1.wandstärke_mm = 2
+          this.app_input.processing_2.wandstärke_mm = 2
+        }
+      }
       if(this.app_input.processing_2.wandstärke_mm === undefined) this.app_input.processing_2.wandstärke_mm = ""
       if(this.app_input.processing_2.euro_per_kg === undefined) this.app_input.processing_2.euro_per_kg = ""
       if(this.app_input.processing_2.co2_equv_per_kg === undefined) this.app_input.processing_2.co2_equv_per_kg = ""

@@ -55,9 +55,10 @@
 
         <br><br>
 
-        <div class="tooltip_container">
+        <div
+        class="tooltip_container"
+        v-if="!proc_2_type_disabled">
             <v-select
-            v-if="!proc_2_type_disabled"
             v-model=proc_2_type
             v-on:update:model-value="[saveNewInputs()]"
             class="select processing_2_type_select"
@@ -107,16 +108,28 @@
         :expert_mode_cost_prop=proc_2_cost
         :expert_mode_gwp_prop=proc_2_gwp />
 
-        <br><br>
+        <div v-if="!proc_2_expmode_disabled"><br><br></div>
 
         <div class="tooltip_container">
             <v-select
+            v-if="proc_1_type !== 'Prepreg Production' || proc_1_type === undefined"
             v-model=proc_wt
             v-on:update:model-value="[saveNewInputs()]"
             class="select processing_wt_select"
             label="Wall thickness [mm]"
             single-line
             suffix="Wall thickness [mm]"
+            :items=proc_wt_options
+            variant="solo"
+            :bg-color=color_lightgrey />
+            <v-select
+            v-if="proc_1_type === 'Prepreg Production'"
+            v-model=proc_wt
+            v-on:update:model-value="[saveNewInputs()]"
+            class="select processing_wt_select"
+            label="Utilization"
+            single-line
+            suffix="Utilization"
             :items=proc_wt_options
             variant="solo"
             :bg-color=color_lightgrey />
@@ -254,28 +267,55 @@
                 this.moi_options = ["Thermoplast powder", "Thermoplast foil"]
                 this.moi_disabled = false
             } else if(this.matrix_type === "Thermoset") {
-                this.proc_1_type_options = ["Wet Compression Moulding", "Resin Transfer Moulding"]
-                this.proc_2_type_options = [""]
-                this.proc_2_type = undefined
-                this.proc_2_type_disabled = true
-                this.proc_2_ml_disabled = true
-                this.proc_2_ml = undefined
-                this.proc_wt_options = [0.5, 1, 2]
-                this.proc_2_wt = undefined
-                this.proc_2_expmode_disabled = true
+                this.proc_1_type_options = ["Wet Compression Moulding", "Resin Transfer Moulding", "Prepreg Production"]
+                this.proc_2_type_options = ["Autoclave"]
+                if(
+                this.proc_1_type === "Wet Compression Moulding" ||
+                this.proc_1_type === "Resin Transfer Moulding" ||
+                this.proc_1_type === undefined) {
+                    this.proc_2_type = undefined
+                    this.proc_2_type_disabled = true
+                    this.proc_2_ml_disabled = true
+                    this.proc_2_ml = undefined
+                    this.proc_wt_options = [0.5, 1, 2]
+                    this.proc_2_expmode_disabled = true
+                }
+                if(this.proc_1_type === "Prepreg Production") {
+                    this.proc_2_type = this.app_input_prop.processing_2.type
+                    this.proc_2_type_disabled = false
+                    this.proc_2_ml_disabled = false
+                    this.proc_2_ml = this.app_input_prop.processing_2.mass_loss_percent
+                    this.proc_wt_options = ["0.34 kg/m³", "1.25 kg/m³", "2.25 kg/m³"]
+                    this.proc_2_expmode_disabled = false
+                }
                 this.moi_options = ["Thermoset (liquid)"]
                 this.proc_moi = "Thermoset (liquid)"
                 this.moi_disabled = true
             }
             this.saveNewInputs()
-            //reposition processing-2-mass-loss-percent if Process-step-1-expmode "open"
-            if(this.proc_1_cost !== undefined || this.proc_1_gwp !== undefined) {
-                document.getElementById("proc_2_ml").classList.add("processing_2_ml_percentage_2")
-            }
         },
         methods: {
             toggleStepTwo() {
-                if(this.proc_1_type === "Doublebeltpress (Organosheet Production)") {
+                //thermoset
+                if(this.proc_1_type === "Prepreg Production") {
+                    this.proc_2_type_disabled = false
+                    this.proc_2_ml_disabled = false
+                    this.proc_2_ml = 10
+                    this.proc_2_expmode_disabled = false
+                    this.proc_wt_options = ["0.34 kg/m³", "1.25 kg/m³", "2.25 kg/m³"]
+                    this.proc_wt = undefined
+                } else if(this.proc_1_type === "Wet Compression Moulding" || this.proc_1_type === "Resin Transfer Moulding") {
+                    this.proc_2_type_disabled = true
+                    this.proc_2_type = undefined
+                    this.proc_2_ml_disabled = true
+                    this.proc_2_ml = undefined
+                    this.proc_2_expmode_disabled = true
+                    this.proc_2_cost = undefined
+                    this.proc_2_gwp = undefined
+                    this.proc_wt_options = [0.5, 1, 2]
+                    this.proc_wt = undefined
+                //thermoplast
+                } else if(this.proc_1_type === "Doublebeltpress (Organosheet Production)") {
                     this.proc_2_type_disabled = false
                     this.proc_2_ml_disabled = false
                     this.proc_2_ml = 10
@@ -330,15 +370,15 @@
             log() {
                 console.log("proc_1_type:" + this.proc_1_type)
                 console.log("proc_1_ml:" + this.proc_1_ml)
-                console.log("proc_1_wt:" + this.proc_1_wt)
                 console.log("proc_1_cost:" + this.proc_1_cost)
                 console.log("proc_1_gwp:" + this.proc_1_gwp)
                 console.log("proc_2_type:" + this.proc_2_type)
                 console.log("proc_2_ml:" + this.proc_2_ml)
-                console.log("proc_2_wt:" + this.proc_2_wt)
+                console.log("proc_wt:" + this.proc_wt)
                 console.log("proc_2_cost:" + this.proc_2_cost)
                 console.log("proc_2_gwp:" + this.proc_2_gwp)
                 console.log("proc_moi:" + this.proc_moi)
+                console.log()
             }
         }
     }
