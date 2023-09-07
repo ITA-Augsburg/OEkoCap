@@ -1127,7 +1127,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
                                     },
                                     ticks: {
                                         font: {
-                                            size: 20
+                                            size: 18
                                         }
                                     }
                                 },
@@ -1143,7 +1143,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
                                     },
                                     ticks: {
                                         font: {
-                                            size: 20
+                                            size: 18
                                         }
                                     }
                                 }
@@ -1168,12 +1168,12 @@ import annotationPlugin from "chartjs-plugin-annotation"
                                         generateLabels: () => {
                                             return [
                                                 {
-                                                    text: "Strength Min: " + this.ashbyChartData.ellipses[0].yMin + ", Strength Max: " + this.ashbyChartData.ellipses[0].yMax,
+                                                    text: "Strength Min: " + this.ashbyChartData.ellipses[0].yMin + " MPa, Strength Max: " + this.ashbyChartData.ellipses[0].yMax + " MPa",
                                                     strokeStyle: "#000000",
                                                     fillStyle: this.ashbyChartData.ellipses[0].backgroundColor
                                                 },
                                                 {
-                                                    text: "Modulus Min: " + this.ashbyChartData.ellipses[0].xMin + ", Modulus Max: " + this.ashbyChartData.ellipses[0].xMax,
+                                                    text: "Modulus Min: " + this.ashbyChartData.ellipses[0].xMin + " GPa, Modulus Max: " + this.ashbyChartData.ellipses[0].xMax + " GPa",
                                                     strokeStyle: "#000000",
                                                     fillStyle: this.ashbyChartData.ellipses[0].backgroundColor
                                                 }
@@ -1310,7 +1310,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
                     tempMax = undefined
                 }
 
-                console.log(JSON.stringify(values, null, 2))
+                // console.log(JSON.stringify(values, null, 2))
                 return values
             },
             checkAshbyChartData(data) {

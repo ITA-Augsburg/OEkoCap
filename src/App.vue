@@ -437,9 +437,8 @@ export default {
     calculateButton() {
       this.footerProgressBar = 99
       this.formatAppInputKeys()
-      // this.log()
-      
-      console.log(JSON.stringify(this.app_input, null, 2))
+      this.log()
+
       let url1 = "https://localhost/meine_dateien/ita_webapp_back/submit_input.php";
         fetch(url1, {
             method: "POST",
