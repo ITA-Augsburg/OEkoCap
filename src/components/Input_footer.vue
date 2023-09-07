@@ -1,3 +1,7 @@
+<script setup>
+    import router from "../router"
+</script>
+
 <template>
 
     <div class="input_footer">
@@ -18,18 +22,15 @@
             <div class="footer_buttoncontainer">
 
 <!-- BUTTON BACK -->
-                <router-link
-                :to=backButtonRoute
-                v-if="this.id !== 'waiting' && this.id !== 'err' && this.id !== 'results'">
-                    <v-btn
-                    icon=""
-                    @click="backButton()"
-                    :color=color_lightgrey
-                    elevation="12"
-                    width="45px"
-                    height="45px"
-                    ><p class="footer_button_text">‹</p></v-btn>
-                </router-link>
+                <v-btn
+                v-if="this.id !== 'waiting' && this.id !== 'err' && this.id !== 'results'"
+                icon=""
+                @click="backButton()"
+                :color=color_lightgrey
+                elevation="12"
+                width="45px"
+                height="45px"
+                ><p class="footer_button_text">‹</p></v-btn>
                 <v-btn
                 v-if="this.id === 'waiting' || this.id === 'err' || this.id === 'results'"
                 disabled
@@ -38,7 +39,7 @@
                 elevation="12"
                 width="45px"
                 height="45px"
-                ><p class="footer_button_text">‹</p></v-btn>
+                ><p class="footer_disabled_button_text">‹</p></v-btn>
 
 <!-- BUTTON 1 -->
                 <v-btn
@@ -49,17 +50,15 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">1</p></v-btn>
-                <router-link
-                :to='{name: "WasteView"}'
-                v-if="this.id !== 'waste' && this.id !== 'waiting' && this.id !== 'err' && this.id !== 'results'">
-                    <v-btn
-                    icon=""
-                    :color=color_lightgrey
-                    elevation="12"
-                    width="45px"
-                    height="45px"
-                    ><p class="footer_button_text">1</p></v-btn>
-                </router-link>
+                <v-btn
+                v-if="this.id !== 'waste' && this.id !== 'waiting' && this.id !== 'err' && this.id !== 'results'"
+                icon=""
+                @click="handleButton('1')"
+                :color=color_lightgrey
+                elevation="12"
+                width="45px"
+                height="45px"
+                ><p class="footer_button_text">1</p></v-btn>
                 <v-btn
                 v-if="this.id === 'waiting' || this.id === 'err' || this.id === 'results'"
                 disabled
@@ -68,7 +67,7 @@
                 elevation="12"
                 width="45px"
                 height="45px"
-                ><p class="footer_button_text">1</p></v-btn>
+                ><p class="footer_disabled_button_text">1</p></v-btn>
 
 <!-- BUTTON 2 -->
                 <v-btn
@@ -79,18 +78,15 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">2</p></v-btn>
-                <router-link
-                :to='{name: "SeparationView"}'
-                v-if="this.id !== 'separation' && button2enabled">
-                    <v-btn
-                    icon=""
-                    @click="updateInputFooter()"
-                    :color=color_lightgrey
-                    elevation="12"
-                    width="45px"
-                    height="45px"
-                    ><p class="footer_button_text">2</p></v-btn>
-                </router-link>
+                <v-btn
+                v-if="this.id !== 'separation' && button2enabled"
+                icon=""
+                @click="handleButton('2')"
+                :color=color_lightgrey
+                elevation="12"
+                width="45px"
+                height="45px"
+                ><p class="footer_button_text">2</p></v-btn>
                 <v-btn
                 v-if="this.id !== 'separation' && !button2enabled"
                 disabled
@@ -99,7 +95,7 @@
                 elevation="12"
                 width="45px"
                 height="45px"
-                ><p class="footer_button_text">2</p></v-btn>
+                ><p class="footer_disabled_button_text">2</p></v-btn>
 
 <!-- BUTTON 3 -->
                 <v-btn
@@ -110,18 +106,15 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">3</p></v-btn>
-                <router-link
-                :to='{name: "MatrixView"}'
-                v-if="this.id !== 'matrix' && button3enabled">
-                    <v-btn
-                    icon=""
-                    @click="updateInputFooter()"
-                    :color=color_lightgrey
-                    elevation="12"
-                    width="45px"
-                    height="45px"
-                    ><p class="footer_button_text">3</p></v-btn>
-                </router-link>
+                <v-btn
+                v-if="this.id !== 'matrix' && button3enabled"
+                icon=""
+                @click="handleButton('3')"
+                :color=color_lightgrey
+                elevation="12"
+                width="45px"
+                height="45px"
+                ><p class="footer_button_text">3</p></v-btn>
                 <v-btn
                 v-if="this.id !== 'matrix' && !button3enabled"
                 disabled
@@ -130,7 +123,7 @@
                 elevation="12"
                 width="45px"
                 height="45px"
-                ><p class="footer_button_text">3</p></v-btn>
+                ><p class="footer_disabled_button_text">3</p></v-btn>
 
 <!-- BUTTON 4 -->
                 <v-btn
@@ -141,18 +134,15 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">4</p></v-btn>
-                <router-link
-                :to='{name:"TextileView"}'
-                v-if="this.id !== 'textile' && button4enabled">
-                    <v-btn
-                    icon=""
-                    @click="updateInputFooter()"
-                    :color=color_lightgrey
-                    elevation="12"
-                    width="45px"
-                    height="45px"
-                    ><p class="footer_button_text">4</p></v-btn>
-                </router-link>
+                <v-btn
+                v-if="this.id !== 'textile' && button4enabled"
+                icon=""
+                @click="handleButton('4')"
+                :color=color_lightgrey
+                elevation="12"
+                width="45px"
+                height="45px"
+                ><p class="footer_button_text">4</p></v-btn>
                 <v-btn
                 v-if="this.id !== 'textile' && !button4enabled"
                 disabled
@@ -161,7 +151,7 @@
                 elevation="12"
                 width="45px"
                 height="45px"
-                ><p class="footer_button_text">4</p></v-btn>
+                ><p class="footer_disabled_button_text">4</p></v-btn>
 
 <!-- BUTTON 5 -->
                 <v-btn
@@ -172,18 +162,15 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">5</p></v-btn>
-                <router-link
-                :to='{name:"ProcessingView"}'
-                v-if="this.id !== 'processing' && button5enabled">
-                    <v-btn
-                    icon=""
-                    @click="updateInputFooter()"
-                    :color=color_lightgrey
-                    elevation="12"
-                    width="45px"
-                    height="45px"
-                    ><p class="footer_button_text">5</p></v-btn>
-                </router-link>
+                <v-btn
+                v-if="this.id !== 'processing' && button5enabled"
+                icon=""
+                @click="handleButton('5')"
+                :color=color_lightgrey
+                elevation="12"
+                width="45px"
+                height="45px"
+                ><p class="footer_button_text">5</p></v-btn>
                 <v-btn
                 v-if="this.id !== 'processing' && !button5enabled"
                 disabled
@@ -192,21 +179,18 @@
                 elevation="12"
                 width="45px"
                 height="45px"
-                ><p class="footer_button_text">5</p></v-btn>
+                ><p class="footer_disabled_button_text">5</p></v-btn>
                 
 <!-- BUTTON NEXT -->
-                <router-link
-                :to=nextButtonRoute
-                v-if="this.id !== 'waiting' && this.id !== 'err' && this.id !== 'results'">
-                    <v-btn
-                    icon=""
-                    @click="nextButton()"
-                    :color=color_lightgrey
-                    elevation="12"
-                    width="45px"
-                    height="45px"
-                    ><p class="footer_button_text">›</p></v-btn>
-                </router-link>
+                <v-btn
+                v-if="this.id !== 'waiting' && this.id !== 'err' && this.id !== 'results'"
+                icon=""
+                @click="nextButton()"
+                :color=color_lightgrey
+                elevation="12"
+                width="45px"
+                height="45px"
+                ><p class="footer_button_text">›</p></v-btn>
                 <v-btn
                 v-if="this.id === 'waiting' || this.id === 'err' || this.id === 'results'"
                 disabled
@@ -215,7 +199,7 @@
                 elevation="12"
                 width="45px"
                 height="45px"
-                ><p class="footer_button_text">›</p></v-btn>
+                ><p class="footer_disabled_button_text">›</p></v-btn>
             </div>
 
             <p class="footer_copyright_text">© 2023 
@@ -238,36 +222,30 @@ export default {
     "progressValue", "id", "color_green", "color_lightgrey"],
     emits: ["updateInputFooter"],
     data: () => ({
-        footerbuttontext: ["‹", "1", "2", "3", "4", "5", "›"],
-        backButtonRoute: "",
-        nextButtonRoute: ""
     }),
     methods: {
         backButton() {
             switch(this.id) {
                 case "waste":
-                    this.backButtonRoute = {name: "WasteView"}
+                    router.push({name:"WasteView"})
                     break
                 case "separation":
-                    this.backButtonRoute = {name: "WasteView"}
+                    router.push({name:"WasteView"})
                     break
                 case "matrix":
-                    this.backButtonRoute = {name: "SeparationView"}
+                    router.push({name:"SeparationView"})
                     break
                 case "textile":
-                    this.backButtonRoute = {name: "MatrixView"}
+                    router.push({name:"MatrixView"})
                     break
                 case "processing":
-                    this.backButtonRoute = {name: "TextileView"}
+                    router.push({name:"TextileView"})
                     break
                 case "waiting":
-                    this.backButtonRoute = {name: "WaitingView"}
+                    router.push({name:"WaitingView"})
                     break
                 case "err":
-                    this.backButtonRoute = {name: "ErrorView"}
-                    break
-                case "results":
-                    this.backButtonRoute = {name: "ResultsView"}
+                    router.push({name:"ErrorView"})
                     break
             }
         },
@@ -282,45 +260,63 @@ export default {
                 //if user clicks next-button and non-mandatory fields are still undefined, they get their default value here in setDefaultValues()
                 case "waste":
                     if(this.button2enabled) {
-                        this.nextButtonRoute = {name:"SeparationView"}
+                        router.push({name:"SeparationView"})
                     } else {
                         alert("Please choose a type before continuing.")
                     }
                     break
                 case "separation":
                     if(this.button3enabled) {
-                        this.nextButtonRoute = {name:"MatrixView"}
+                        router.push({name:"MatrixView"})
+
                     } else {
                         alert("Please choose a type before continuing.")
                     }
                     break
                 case "matrix":
                     if(this.button4enabled) {
-                        this.nextButtonRoute = {name:"TextileView"}
+                        router.push({name:"TextileView"})
                     } else {
                         alert("Please choose a type and a polymer before continuing.")
                     }
                     break
                 case "textile":
                     if(this.button5enabled) {
-                        this.nextButtonRoute = {name:"ProcessingView"}
+                        router.push({name:"ProcessingView"})
                     } else {
                         alert("Please choose a type, throughput and areal weight before continuing.")
                     }
                     break
                 case "processing":
-                    this.nextButtonRoute = {name:"ProcessingView"}
+                    router.push({name:"ProcessingView"})
                     break
                 case "waiting":
-                    this.nextButtonRoute = {name: "WaitingView"}
+                    router.push({name:"WaitingView"})
                     break
                 case "err":
-                    this.nextButtonRoute = {name: "ErrorView"}
+                    router.push({name:"ErrorView"})
                     break
-                case "results":
-                    this.nextButtonRoute = {name: "ResultsView"}
             }
         },
+        handleButton(id) {
+            switch(id) {
+                case '1':
+                    router.push({name:"WasteView"})
+                    break
+                case '2':
+                    router.push({name:"SeparationView"})
+                    break
+                case '3':
+                    router.push({name:"MatrixView"})
+                    break
+                case '4':
+                    router.push({name:"TextileView"})
+                    break
+                case '5':
+                    router.push({name:"ProcessingView"})
+            }
+            this.updateInputFooter()
+        }
     }
 };
 </script>
