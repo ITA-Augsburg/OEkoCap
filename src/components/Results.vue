@@ -153,7 +153,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
 
         <canvas
         v-if="this.ashbyChartData !== undefined"
-        id="ashby_chart" />
+        id="ashby_chart" class="bar_chart" />
 
         <v-select
         class="select results_process_select"
@@ -1111,27 +1111,81 @@ import annotationPlugin from "chartjs-plugin-annotation"
                         type: "bubble",
                         data: {},
                         options: {
+                            animation: false,
+                            hover: false,
+                            aspectRatio: 1,
                             scales: {
-                            x: {
-                                min: 0,
-                                max: 100
-                            },
-                            y: {
-                                min: 0,
-                                max: 100
-                            }
-                            },
-                            responsive: true,
-                            plugins: {
-                                legend: {
-                                    position: 'top',
+                                x: {
+                                    min: 0,
+                                    max: this.ashbyChartData.xAxisRange,
+                                    title: {
+                                        display: true,
+                                        text: "Modulus",
+                                        font: {
+                                            size: 16
+                                        }
+                                    },
+                                    ticks: {
+                                        font: {
+                                            size: 20
+                                        }
+                                    }
                                 },
+                                y: {
+                                    min: 0,
+                                    max: this.ashbyChartData.yAxisRange,
+                                    title: {
+                                        display: true,
+                                        text: "Strength",
+                                        font: {
+                                            size: 16
+                                        }
+                                    },
+                                    ticks: {
+                                        font: {
+                                            size: 20
+                                        }
+                                    }
+                                }
+                            },
+                            plugins: {
                                 title: {
                                     display: true,
-                                    text: 'Chart.js Bubble Chart'
+                                    text: this.ashbyChartData.chartTitle,
+                                    font: {
+                                        size: 20
+                                    }
+                                },
+                                legend: {
+                                    display: true,
+                                    position: 'bottom',
+                                    labels: {
+                                        font: {
+                                            size: window.innerWidth >= 500 ? this.legendFont : this.legendFontS
+                                        },
+                                        boxWidth: 25,
+                                        boxHeight: 25,
+                                        generateLabels: () => {
+                                            return [
+                                                {
+                                                    text: "Strength Min: " + this.ashbyChartData.ellipses[0].yMin + ", Strength Max: " + this.ashbyChartData.ellipses[0].yMax,
+                                                    strokeStyle: "#000000",
+                                                    fillStyle: this.ashbyChartData.ellipses[0].backgroundColor
+                                                },
+                                                {
+                                                    text: "Modulus Min: " + this.ashbyChartData.ellipses[0].xMin + ", Modulus Max: " + this.ashbyChartData.ellipses[0].xMax,
+                                                    strokeStyle: "#000000",
+                                                    fillStyle: this.ashbyChartData.ellipses[0].backgroundColor
+                                                }
+                                            ]
+                                        }
+                                    },
+                                },
+                                tooltip: {
+                                    enabled: false
                                 },
                                 annotation: {
-                                    annotations: this.ashbyChartData
+                                    annotations: this.checkAshbyChartData(this.ashbyChartData)
                                 }
                             }
                         }
@@ -1151,59 +1205,69 @@ import annotationPlugin from "chartjs-plugin-annotation"
                     if(this.tensile_button_active && this.zero_button_active) {
                         //tensStren0 tensMod0
 
-                        //"globalen" min, max ermitteln für die achsen
-
                         this.ashbyChartData = {
-                            ellipse1: {
+                            ellipses: [{
                                 type: 'ellipse',
                                 xMin: values.tensMod0.min,
                                 xMax: values.tensMod0.max,
                                 yMin: values.tensStren0.min,
                                 yMax: values.tensStren0.max,
                                 backgroundColor: 'rgba(255, 99, 132, 0.25)'
-                            },
+                            }],
+                            xAxisRange: values.tensMod0.max + values.tensMod0.max * 0.1,
+                            yAxisRange: values.tensStren0.max + values.tensStren0.max * 0.1,
+                            chartTitle: "Tensileness range at 0°"
                         }
 
                     } else if(this.tensile_button_active && this.ninety_button_active) {
                         //tensStren90 tensMod90
 
                         this.ashbyChartData = {
-                            ellipse1: {
+                            ellipses: [{
                                 type: 'ellipse',
                                 xMin: values.tensMod90.min,
                                 xMax: values.tensMod90.max,
                                 yMin: values.tensStren90.min,
                                 yMax: values.tensStren90.max,
                                 backgroundColor: 'rgba(255, 99, 132, 0.25)'
-                            },
+                            }],
+                            xAxisRange: values.tensMod90.max + values.tensMod90.max * 0.1,
+                            yAxisRange: values.tensStren90.max + values.tensStren90.max * 0.1,
+                            chartTitle: "Tensileness range at 90°"
                         }
 
                     } else if(this.flexural_button_active && this.zero_button_active) {
                         //flexStren0 flexMod0
 
                         this.ashbyChartData = {
-                            ellipse1: {
+                            ellipses: [{
                                 type: 'ellipse',
                                 xMin: values.flexMod0.min,
                                 xMax: values.flexMod0.max,
                                 yMin: values.flexStren0.min,
                                 yMax: values.flexStren0.max,
                                 backgroundColor: 'rgba(255, 99, 132, 0.25)'
-                            },
+                            }],
+                            xAxisRange: values.flexMod0.max + values.flexMod0.max * 0.1,
+                            yAxisRange: values.flexStren0.max + values.flexStren0.max * 0.1,
+                            chartTitle: "Flexuralness range at 0°"
                         }
 
                     } else if(this.flexural_button_active && this.ninety_button_active) {
                         //flexStren90 flexMod90
 
                         this.ashbyChartData = {
-                            ellipse1: {
+                            ellipses: [{
                                 type: 'ellipse',
                                 xMin: values.flexMod90.min,
                                 xMax: values.flexMod90.max,
                                 yMin: values.flexStren90.min,
                                 yMax: values.flexStren90.max,
                                 backgroundColor: 'rgba(255, 99, 132, 0.25)'
-                            },
+                            }],
+                            xAxisRange: values.flexMod90.max + values.flexMod90.max * 0.1,
+                            yAxisRange: values.flexStren90.max + values.flexStren90.max * 0.1,
+                            chartTitle: "Flexuralness range at 90°"
                         }
 
                     }
@@ -1249,22 +1313,61 @@ import annotationPlugin from "chartjs-plugin-annotation"
                 console.log(JSON.stringify(values, null, 2))
                 return values
             },
-            minimum(numbers) {
-                // returns the smallest number from the numbers array
-                let temp = undefined
-                for(let i=0; i<numbers.length; i++) {
-                    if(temp === undefined || temp > numbers[i]) temp = numbers[i]
+            checkAshbyChartData(data) {
+                // for every ellipse check min and max values on each axis. If min-max range < 1% of the axis-range then ellipse won't show well. If min==max then ellipse won't show. Therefor modify values. Values in the legend won't be affected.
+                let modifiedData = {
+                    ellipses: [],
+                    xAxisRange: data.xAxisRange,
+                    yAxisRange: data.yAxisRange,
+                    chartTitle: data.chartTitle
                 }
-                return temp
-            },
-            maximum(numbers) {
-                // returns the largest number from the numbers array
-                let temp = undefined
-                for(let i=0; i<numbers.length; i++) {
-                    if(temp === undefined || temp < numbers[i]) temp = numbers[i]
+                for(let i=0; i<data.ellipses.length; i++) {
+                    let newEllipse = {
+                        type: 'ellipse',
+                        xMin: data.ellipses[i].xMin,
+                        xMax: data.ellipses[i].xMax,
+                        yMin: data.ellipses[i].yMin,
+                        yMax: data.ellipses[i].yMax,
+                        backgroundColor: data.ellipses[i].backgroundColor
+                    }
+                    // compare xMin and xMax, modify them if needed
+                    let currentWidth = Math.abs(newEllipse.xMax - newEllipse.xMin)
+                    let twoPercentWidth = modifiedData.xAxisRange * 0.02
+                    if(currentWidth < twoPercentWidth) {
+                        let sidePadding = (twoPercentWidth - currentWidth) / 2 // to be added left and right
+                        newEllipse.xMin = newEllipse.xMin - sidePadding
+                        newEllipse.xMax = newEllipse.xMax + sidePadding
+                    }
+                    // compare yMin and yMax, modify them if needed
+                    let currentHeight = Math.abs(newEllipse.yMax - newEllipse.yMin)
+                    let twoPercentHeight = modifiedData.yAxisRange * 0.02
+                    if(currentHeight < twoPercentHeight) {
+                        let sidePadding = (twoPercentHeight - currentHeight) / 2 // to be added above and below
+                        newEllipse.yMin = newEllipse.yMin - sidePadding
+                        newEllipse.yMax = newEllipse.yMax + sidePadding
+                    }
+                    modifiedData.ellipses[i] = newEllipse
                 }
-                return temp
+                // console.log(JSON.stringify(data, null, 2))
+                // console.log(JSON.stringify(modifiedData, null, 2))
+                return modifiedData.ellipses
             },
+            // minimum(numbers) {
+            //     // returns the smallest number from the numbers array
+            //     let temp = undefined
+            //     for(let i=0; i<numbers.length; i++) {
+            //         if(temp === undefined || temp > numbers[i]) temp = numbers[i]
+            //     }
+            //     return temp
+            // },
+            // maximum(numbers) {
+            //     // returns the largest number from the numbers array
+            //     let temp = undefined
+            //     for(let i=0; i<numbers.length; i++) {
+            //         if(temp === undefined || temp < numbers[i]) temp = numbers[i]
+            //     }
+            //     return temp
+            // },
             updateAllCharts() {
                 this.updateBarChart()
                 this.updatePieChart()
