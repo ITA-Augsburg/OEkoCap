@@ -1,119 +1,172 @@
-
+<script setup>
+    import Expert_mode from "./Expert_mode.vue"
+    import Tooltip from "./Tooltip.vue"
+    import Tooltip_texts from "../tooltip_texts.json"
+</script>
 <template>
 
     <div class="input_area">
 
-        <v-select
-        v-model=proc_1_type
-        v-on:update:model-value="[toggleStepTwo(), saveNewInputs()]"
-        class="select processing_type_select"
-        label="Type - Step 1"
-        single-line
-        suffix="Type - Step 1"
-        :items=proc_1_type_options
-        variant="solo"
-        :bg-color=color_green
-        ></v-select>
+        <div class="tooltip_container">
+            <v-select
+            v-model=proc_1_type
+            v-on:update:model-value="[toggleStepTwo(), saveNewInputs()]"
+            class="select processing_type_select"
+            label="Type - Step 1"
+            single-line
+            suffix="Type - Step 1"
+            :items=proc_1_type_options
+            variant="solo"
+            :bg-color=color_green />
 
-        <p class="text processing_ml_text">Mass loss - Step 1</p>
-        <v-slider
-        v-model=proc_1_ml
-        v-on:update:model-value="[saveNewInputs()]"
-        class="slider"
-        :color=color_green
-        :thumb-color=color_green
-        thumb-size="20"
-        :min="0.5"
-        :max="40"
-        :step="0.1"
-        ></v-slider>
-        <p class="percentage processing_1_ml_percentage">{{ Math.round(proc_1_ml * 10) / 10 }}%</p>
+            <Tooltip
+            :tooltip_class="'tooltip select_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
+
+        <div class="tooltip_container">
+            <p class="text processing_ml_text">Mass loss - Step 1</p>
+            <Tooltip
+            :tooltip_class="'tooltip processing_ml_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
+        <div class="slider_container">
+            <v-slider
+            v-model=proc_1_ml
+            v-on:update:model-value="[saveNewInputs()]"
+            class="slider"
+            :color=color_green
+            :thumb-color=color_green
+            thumb-size="20"
+            :min="0.5"
+            :max="40"
+            :step="0.1" />
+            <p class="percentage">{{ Math.round(proc_1_ml * 10) / 10 }}%</p>
+        </div>
 
         <Expert_mode
         @newExpertModeValues="newExpertModeValues($event)"
-        @updateWasteUI="updateWasteUI()"
         :label=step1expmodelabel
+        :tooltip_text_prop=Tooltip_texts.test
         :disabled=false
         :color_green=color_green
         :expert_mode_cost_prop=proc_1_cost
-        :expert_mode_gwp_prop=proc_1_gwp></Expert_mode>
-        
+        :expert_mode_gwp_prop=proc_1_gwp />
 
-        <v-select
-        v-if="!proc_2_type_disabled"
-        v-model=proc_2_type
-        v-on:update:model-value="[saveNewInputs()]"
-        class="select processing_2_type_select"
-        label="Type - Step 2"
-        single-line
-        suffix="Type - Step 2"
-        :items=proc_2_type_options
-        variant="solo"
-        :bg-color=color_green
-        ></v-select>
+        <br><br>
 
-        <p v-if="!proc_2_ml_disabled"
-        class="text processing_ml_text">Mass loss - Step 2</p>
-        <v-slider
+        <div
+        class="tooltip_container"
+        v-if="!proc_2_type_disabled">
+            <v-select
+            v-model=proc_2_type
+            v-on:update:model-value="[saveNewInputs()]"
+            class="select processing_2_type_select"
+            label="Type - Step 2"
+            single-line
+            suffix="Type - Step 2"
+            :items=proc_2_type_options
+            variant="solo"
+            :bg-color=color_green />
+
+            <Tooltip
+            :tooltip_class="'tooltip select_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
+
+        <div 
         v-if="!proc_2_ml_disabled"
-        v-model=proc_2_ml
-        v-on:update:model-value="[saveNewInputs()]"
-        class="slider"
-        :color=color_green
-        :thumb-color=color_green
-        thumb-size="20"
-        :min="0.5"
-        :max="40"
-        :step="0.1"
-        ></v-slider>
-        <p v-if="!proc_2_ml_disabled"
-        id="proc_2_ml" class="percentage processing_2_ml_percentage">{{ Math.round(proc_2_ml * 10) / 10 }}%</p>
+        class="tooltip_container">
+            <p class="text processing_ml_text">Mass loss - Step 2</p>
+            <Tooltip
+            :tooltip_class="'tooltip processing_ml_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
+        <div class="slider_container">
+            <v-slider
+            v-if="!proc_2_ml_disabled"
+            v-model=proc_2_ml
+            v-on:update:model-value="[saveNewInputs()]"
+            class="slider"
+            :color=color_green
+            :thumb-color=color_green
+            thumb-size="20"
+            :min="0.5"
+            :max="40"
+            :step="0.1" />
+            <p v-if="!proc_2_ml_disabled"
+            id="proc_2_ml" class="percentage">{{ Math.round(proc_2_ml * 10) / 10 }}%</p>
+        </div>
 
         <Expert_mode
         v-if="!proc_2_expmode_disabled"
         @newExpertModeValues="newExpertModeValues($event)"
         :label=step2expmodelabel
+        :tooltip_text_prop=Tooltip_texts.test
         :disabled=false
         :color_green=color_green
         :expert_mode_cost_prop=proc_2_cost
-        :expert_mode_gwp_prop=proc_2_gwp></Expert_mode>
+        :expert_mode_gwp_prop=proc_2_gwp />
 
-        <v-select
-        v-model=proc_wt
-        v-on:update:model-value="[saveNewInputs()]"
-        class="select processing_wt_select"
-        label="Wall thickness [mm]"
-        single-line
-        suffix="Wall thickness [mm]"
-        :items=proc_wt_options
-        variant="solo"
-        :bg-color=color_lightgrey
-        ></v-select>
+        <div v-if="!proc_2_expmode_disabled"><br><br></div>
 
-        <v-select
-        v-if="!moi_disabled"
-        v-model=proc_moi
-        v-on:update:model-value="[saveNewInputs()]"
-        class="select processing_moi_select"
-        label="Method of insertion"
-        single-line
-        suffix="Method of insertion"
-        :items=moi_options
-        variant="solo"
-        :bg-color=color_lightgrey
-        ></v-select>
-        <v-select
-        v-if="moi_disabled"
-        disabled
-        v-model=proc_moi
-        class="select processing_moi_select processing_moi_select_disabled"
-        label="Method of insertion"
-        single-line
-        suffix="Method of insertion"
-        :items=moi_options
-        variant="solo"
-        :bg-color=color_lightgrey
-        ></v-select>
+        <div class="tooltip_container">
+            <v-select
+            v-if="proc_1_type !== 'Prepreg Production' || proc_1_type === undefined"
+            v-model=proc_wt
+            v-on:update:model-value="[saveNewInputs()]"
+            class="select processing_wt_select"
+            label="Wall thickness [mm]"
+            single-line
+            suffix="Wall thickness [mm]"
+            :items=proc_wt_options
+            variant="solo"
+            :bg-color=color_lightgrey />
+            <v-select
+            v-if="proc_1_type === 'Prepreg Production'"
+            v-model=proc_wt
+            v-on:update:model-value="[saveNewInputs()]"
+            class="select processing_wt_select"
+            label="Utilization"
+            single-line
+            suffix="Utilization"
+            :items=proc_wt_options
+            variant="solo"
+            :bg-color=color_lightgrey />
+
+            <Tooltip
+            :tooltip_class="'tooltip select_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
+
+        <div class="tooltip_container">
+            <v-select
+            v-if="!moi_disabled"
+            v-model=proc_moi
+            v-on:update:model-value="[saveNewInputs()]"
+            class="select processing_moi_select"
+            label="Method of insertion"
+            single-line
+            suffix="Method of insertion"
+            :items=moi_options
+            variant="solo"
+            :bg-color=color_lightgrey />
+            <v-select
+            v-if="moi_disabled"
+            disabled
+            v-model=proc_moi
+            class="select processing_moi_select processing_moi_select_disabled"
+            label="Method of insertion"
+            single-line
+            suffix="Method of insertion"
+            :items=moi_options
+            variant="solo"
+            :bg-color=color_lightgrey />
+
+            <Tooltip
+            :tooltip_class="'tooltip select_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
 
         <div class="processing_buttoncontainer">
             <div class="processing_clear_buttoncontainer">
@@ -156,7 +209,6 @@
 </template>
 
 <script>
-    import Expert_mode from "./Expert_mode.vue"
     export default {
         props: ["app_input_prop", "proc_moi_prop", "matrix_insertion_prop", "buttonCalculateEnabled", "color_green", "color_lightgrey", "color_darkgreen"],
         emits: ["saveNewInputs", "calculateButton"],
@@ -215,28 +267,55 @@
                 this.moi_options = ["Thermoplast powder", "Thermoplast foil"]
                 this.moi_disabled = false
             } else if(this.matrix_type === "Thermoset") {
-                this.proc_1_type_options = ["Wet Compression Moulding", "Resin Transfer Moulding"]
-                this.proc_2_type_options = [""]
-                this.proc_2_type = undefined
-                this.proc_2_type_disabled = true
-                this.proc_2_ml_disabled = true
-                this.proc_2_ml = undefined
-                this.proc_wt_options = [0.5, 1, 2]
-                this.proc_2_wt = undefined
-                this.proc_2_expmode_disabled = true
+                this.proc_1_type_options = ["Wet Compression Moulding", "Resin Transfer Moulding", "Prepreg Production"]
+                this.proc_2_type_options = ["Autoclave"]
+                if(
+                this.proc_1_type === "Wet Compression Moulding" ||
+                this.proc_1_type === "Resin Transfer Moulding" ||
+                this.proc_1_type === undefined) {
+                    this.proc_2_type = undefined
+                    this.proc_2_type_disabled = true
+                    this.proc_2_ml_disabled = true
+                    this.proc_2_ml = undefined
+                    this.proc_wt_options = [0.5, 1, 2]
+                    this.proc_2_expmode_disabled = true
+                }
+                if(this.proc_1_type === "Prepreg Production") {
+                    this.proc_2_type = this.app_input_prop.processing_2.type
+                    this.proc_2_type_disabled = false
+                    this.proc_2_ml_disabled = false
+                    this.proc_2_ml = this.app_input_prop.processing_2.mass_loss_percent
+                    this.proc_wt_options = ["0.34 kg/m³", "1.25 kg/m³", "2.25 kg/m³"]
+                    this.proc_2_expmode_disabled = false
+                }
                 this.moi_options = ["Thermoset (liquid)"]
                 this.proc_moi = "Thermoset (liquid)"
                 this.moi_disabled = true
             }
             this.saveNewInputs()
-            //reposition processing-2-mass-loss-percent if Process-step-1-expmode "open"
-            if(this.proc_1_cost !== undefined || this.proc_1_gwp !== undefined) {
-                document.getElementById("proc_2_ml").classList.add("processing_2_ml_percentage_2")
-            }
         },
         methods: {
             toggleStepTwo() {
-                if(this.proc_1_type === "Doublebeltpress (Organosheet Production)") {
+                //thermoset
+                if(this.proc_1_type === "Prepreg Production") {
+                    this.proc_2_type_disabled = false
+                    this.proc_2_ml_disabled = false
+                    this.proc_2_ml = 10
+                    this.proc_2_expmode_disabled = false
+                    this.proc_wt_options = ["0.34 kg/m³", "1.25 kg/m³", "2.25 kg/m³"]
+                    this.proc_wt = undefined
+                } else if(this.proc_1_type === "Wet Compression Moulding" || this.proc_1_type === "Resin Transfer Moulding") {
+                    this.proc_2_type_disabled = true
+                    this.proc_2_type = undefined
+                    this.proc_2_ml_disabled = true
+                    this.proc_2_ml = undefined
+                    this.proc_2_expmode_disabled = true
+                    this.proc_2_cost = undefined
+                    this.proc_2_gwp = undefined
+                    this.proc_wt_options = [0.5, 1, 2]
+                    this.proc_wt = undefined
+                //thermoplast
+                } else if(this.proc_1_type === "Doublebeltpress (Organosheet Production)") {
                     this.proc_2_type_disabled = false
                     this.proc_2_ml_disabled = false
                     this.proc_2_ml = 10
@@ -285,24 +364,21 @@
                     })
                 }, 20);
             },
-            updateWasteUI() {
-                document.getElementById("proc_2_ml").classList.toggle("processing_2_ml_percentage_2")
-            },
             calculateButton() {
                 this.$emit("calculateButton", undefined)
             },
             log() {
                 console.log("proc_1_type:" + this.proc_1_type)
                 console.log("proc_1_ml:" + this.proc_1_ml)
-                console.log("proc_1_wt:" + this.proc_1_wt)
                 console.log("proc_1_cost:" + this.proc_1_cost)
                 console.log("proc_1_gwp:" + this.proc_1_gwp)
                 console.log("proc_2_type:" + this.proc_2_type)
                 console.log("proc_2_ml:" + this.proc_2_ml)
-                console.log("proc_2_wt:" + this.proc_2_wt)
+                console.log("proc_wt:" + this.proc_wt)
                 console.log("proc_2_cost:" + this.proc_2_cost)
                 console.log("proc_2_gwp:" + this.proc_2_gwp)
                 console.log("proc_moi:" + this.proc_moi)
+                console.log()
             }
         }
     }

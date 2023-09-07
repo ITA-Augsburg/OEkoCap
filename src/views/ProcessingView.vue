@@ -6,7 +6,8 @@
 
 <template>
     <Input_subheader
-    :text_3="subheader_processing" />
+    :text_3="subheader_processing"
+    :tooltip_enabled=true />
     <Input_processing
     :app_input_prop=app_input_prop
     :proc_moi_prop=proc_moi_prop

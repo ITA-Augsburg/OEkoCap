@@ -6,7 +6,8 @@
 
 <template>
     <Input_subheader
-    :text_3="subheader_textile" />
+    :text_3="subheader_textile"
+    :tooltip_enabled=true />
     <Input_textile
     :app_input_prop=app_input_prop
     :matrix_insertion_prop=matrix_insertion_prop

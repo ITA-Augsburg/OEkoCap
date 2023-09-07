@@ -20,23 +20,23 @@
     margin-top: 5px;
     margin-bottom: 10px;
 }
-.results_gwp_buttoncontainer {
+.results_left_buttoncontainer {
     margin: 20px 5px 10px 10px;
 }
-.results_cost_buttoncontainer {
+.results_right_buttoncontainer {
     margin: 20px 10px 10px 5px;
 }
 @media (max-width: 500px) {
     .results_buttoncontainer {
         display: block;
     }
-    .results_gwp_buttoncontainer {
+    .results_left_buttoncontainer {
         width: fit-content;
         margin: 0px calc((100vw - 225px)/2);
         margin-bottom: 40px;
         padding-top: 20px;
     }
-    .results_cost_buttoncontainer {
+    .results_right_buttoncontainer {
         width: fit-content;
         margin: 0px calc((100vw - 225px)/2);
         padding-bottom: 20px;
@@ -61,7 +61,7 @@
     margin-bottom: 60px;
 }
 @media (max-width: 500px) {
-    #bar_chart {
+    .bar_chart {
         padding: 0px 10px;
     }
 }

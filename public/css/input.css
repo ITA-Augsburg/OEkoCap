@@ -32,6 +32,14 @@
     color: var(--color-grey);
     opacity: 1;
 }
+.checkbox_container {
+    width: fit-content;
+}
+@media (max-width: 500px) {
+    .checkbox_container {
+        width: calc(100vw - 40px);
+    }
+}
 
 .text {
     width: calc(var(--content-width) - 20px);
@@ -44,9 +52,13 @@
     height: 35px;
     padding: 0px 10px 0px 10px;
 }
+.slider_container {
+    position: relative;
+}
 .percentage {
     position: absolute;
     right: 15px;
+    top: 0px;
     font-size: 20px;
     color: var(--color-grey);
 }
@@ -59,11 +71,21 @@
 .switch {
     margin: 0px 0px 0px 10px;
     height: 30px;
+    width: fit-content;
 }
 .switch .v-label {
     font-size: 20px;
     color: var(--color-grey);
     opacity: 1;
+}
+
+.switch_container {
+    width: fit-content;
+}
+@media (max-width: 500px) {
+    .switch_container {
+        width: calc(100vw - 40px);
+    }
 }
 
 .textfield {

@@ -8,6 +8,11 @@
     align-self: center;
 }
 
+.v-tooltip > .v-overlay__content {
+    background-color: rgba(var(--v-theme-surface-variant), 0.9) !important;
+    font-size:18px !important;
+}
+
 .subheader_tooltip {
     position: absolute;
     right: -30px;
@@ -19,20 +24,34 @@
     margin: 15px 10px 0px 0px;
 }
 
+.exp_mode_tooltip {
+    margin: 18px 10px 0px 10px;
+}
+
 .waste_size_tooltip {
-    position: absolute;
-    left: 215px;
-    top: 18px;
+    margin: 5px 10px 0px 10px;
 }
 
 .waste_coarse_text_tooltip {
-    position: absolute;
-    left: 284px;
-    top: 15px;
+    margin: 10px 10px 0px 10px;
 }
 
-.waste_coarse_exp_tooltip {
-    position: absolute;
-    left: 356px;
-    top: 18px;
+.waste_fine_text_tooltip {
+    margin: 30px 10px 0px 10px;
+}
+
+.matrix_fiber_text_tooltip {
+    margin: 20px 10px 0px 10px;
+}
+
+.matrix_insert_text_tooltip {
+    margin: 10px 10px 0px 10px;
+}
+
+.textile_ml_tooltip {
+    margin: 30px 10px 0px 10px;
+}
+
+.processing_ml_tooltip {
+    margin: 30px 10px 0px 10px;
 }

@@ -1,75 +1,102 @@
+<script setup>
+    import Expert_mode from "./Expert_mode.vue"
+    import Tooltip from "./Tooltip.vue"
+    import Tooltip_texts from "../tooltip_texts.json"
+</script>
+
 <template>
 
     <div class="input_area">
 
-        <v-select
-        v-model="matrix_type"
-        v-on:update:model-value="[updateMatrixRoute(), saveNewInputs()]"
-        class="select matrix_type_select"
-        label="Type"
-        single-line
-        suffix="Type"
-        :items=type_options
-        variant="solo"
-        :bg-color=color_green
-        ></v-select>
+        <div class="tooltip_container">
+            <v-select
+            v-model="matrix_type"
+            v-on:update:model-value="[updateMatrixRoute(), saveNewInputs()]"
+            class="select matrix_type_select"
+            label="Type"
+            single-line
+            suffix="Type"
+            :items=type_options
+            variant="solo"
+            :bg-color=color_green />
 
-        <v-select
-        v-model="matrix_polymer"
-        v-on:update:model-value="saveNewInputs()"
-        class="select matrix_polymer_select"
-        label="Polymer"
-        single-line
-        suffix="Polymer"
-        :items=polymer_options
-        variant="solo"
-        :bg-color=color_green
-        ></v-select>
+            <Tooltip
+            :tooltip_class="'tooltip select_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
 
-        <p class="text matrix_fmc_text">Fiber Volume Content</p>
-        <v-slider
-        v-model="matrix_fmc"
-        v-on:update:model-value="saveNewInputs()"
-        class="slider"
-        :color=color_green
-        :thumb-color=color_green
-        thumb-size="20"
-        :min="10"
-        :max="30"
-        :step="10"
-        ></v-slider>
-        <p class="percentage matrix_fmc_percentage">{{ matrix_fmc }}%</p>
+        <div class="tooltip_container">
+            <v-select
+            v-model="matrix_polymer"
+            v-on:update:model-value="saveNewInputs()"
+            class="select matrix_polymer_select"
+            label="Polymer"
+            single-line
+            suffix="Polymer"
+            :items=polymer_options
+            variant="solo"
+            :bg-color=color_green />
 
-        <v-checkbox
-        v-if="matrix_type !== 'Thermoset'"
-        v-model="matrix_insertion"
-        v-on:update:model-value="saveNewInputs()"
-        class="checkbox matrix_iip_checkbox"
-        label="Insert matrix as fibers in textile process"
-        :color=color_green
-        ></v-checkbox>
-        <v-checkbox
-        v-if="matrix_type === 'Thermoset'"
-        disabled
-        class="checkbox matrix_iip_checkbox"
-        label="Insert matrix as fibers in textile process"
-        :color=color_green
-        ></v-checkbox>
+            <Tooltip
+            :tooltip_class="'tooltip select_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
+
+        <div class="tooltip_container">
+            <p class="text matrix_fmc_text">Fiber Volume Content</p>
+            <Tooltip
+            :tooltip_class="'tooltip matrix_fiber_text_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
+        <div class="slider_container">
+            <v-slider
+            v-model="matrix_fmc"
+            v-on:update:model-value="saveNewInputs()"
+            class="slider"
+            :color=color_green
+            :thumb-color=color_green
+            thumb-size="20"
+            :min="10"
+            :max="30"
+            :step="10" />
+            <p class="percentage">{{ matrix_fmc }}%</p>
+        </div>
+
+        <div class="tooltip_container">
+            <div class="checkbox_container">
+                <v-checkbox
+                v-if="matrix_type !== 'Thermoset'"
+                v-model="matrix_insertion"
+                v-on:update:model-value="saveNewInputs()"
+                class="checkbox matrix_iip_checkbox"
+                label="Insert matrix as fibers in textile process"
+                :color=color_green />
+                <v-checkbox
+                v-if="matrix_type === 'Thermoset'"
+                disabled
+                class="checkbox matrix_iip_checkbox"
+                label="Insert matrix as fibers in textile process"
+                :color=color_green />
+            </div>
+            <Tooltip
+            :tooltip_class="'tooltip matrix_insert_text_tooltip'"
+            :tooltip_text=Tooltip_texts.test />
+        </div>
 
         <Expert_mode
         @newExpertModeValues="newExpertModeValues($event)"
         :label=label
+        :tooltip_text_prop=Tooltip_texts.test
         :disabled=false
         :color_green="color_green"
         :expert_mode_cost_prop=expert_mode_cost
-        :expert_mode_gwp_prop=expert_mode_gwp></Expert_mode>
+        :expert_mode_gwp_prop=expert_mode_gwp />
 
     </div>
 
 </template>
 
 <script>
-    import Expert_mode from "./Expert_mode.vue"
     export default {
         props: ["app_input_prop", "matrix_insertion_prop", "color_green"],
         emits: ["saveNewInputs"],
@@ -78,7 +105,7 @@
         },
         mounted() {
             if(this.matrix_type === "Thermoplast") {
-                this.polymer_options = ["PP", "PA6", "PET", "PLA"]
+                this.polymer_options = ["PP", "PA6"]
             } else if(this.matrix_type === "Thermoset") {
                 this.polymer_options = ["EP"]
             }
@@ -102,7 +129,7 @@
         methods: {
             updateMatrixRoute() {
                 if(this.matrix_type === "Thermoplast") {
-                    this.polymer_options = ["PP", "PA6", "PET", "PLA"]
+                    this.polymer_options = ["PP", "PA6"]
                     this.matrix_polymer = undefined
                 } else if(this.matrix_type === "Thermoset") {
                     this.polymer_options = ["EP"]
