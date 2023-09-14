@@ -243,47 +243,25 @@
             saveNewInputs() {
                 //setTimeout needed to properly update slider values
                 setTimeout(() => {
-                    // this.log() // 
-                    // if there is only one shredding process then save it in shredding_1 instead of shredding_2
-                    if(this.waste_type === "End of Life" && this.size1dot5 === false || this.waste_type === "Cut-Off") {
-                        this.$emit(
-                            "saveNewInputs",
-                        {
-                            waste_type: this.waste_type,
-                            waste_size: this.size1dot5,
-    
-                            shred_1_type: this.shred_2_type,
-                            shred_1_ml: this.shred_2_ml,
-                            shred_1_gwp: this.shred_2_gwp,
-                            shred_1_cost: this.shred_2_cost,
-                            shred_2_type: this.shred_1_type,
-                            shred_2_ml: this.shred_1_ml,
-                            shred_2_gwp: this.shred_1_gwp,
-                            shred_2_cost: this.shred_1_cost,
-    
-                            transport_cost: this.transport_cost,
-                            transport_gwp: this.transport_gwp
-                        })
-                    } else {
-                        this.$emit(
-                            "saveNewInputs",
-                        {
-                            waste_type: this.waste_type,
-                            waste_size: this.size1dot5,
-    
-                            shred_1_type: this.shred_1_type,
-                            shred_1_ml: this.shred_1_ml,
-                            shred_1_gwp: this.shred_1_gwp,
-                            shred_1_cost: this.shred_1_cost,
-                            shred_2_type: this.shred_2_type,
-                            shred_2_ml: this.shred_2_ml,
-                            shred_2_gwp: this.shred_2_gwp,
-                            shred_2_cost: this.shred_2_cost,
-    
-                            transport_cost: this.transport_cost,
-                            transport_gwp: this.transport_gwp
-                        })
-                    }
+                    // this.log()
+                    this.$emit(
+                        "saveNewInputs",
+                    {
+                        waste_type: this.waste_type,
+                        waste_size: this.size1dot5,
+
+                        shred_1_type: this.shred_1_type,
+                        shred_1_ml: this.shred_1_ml,
+                        shred_1_gwp: this.shred_1_gwp,
+                        shred_1_cost: this.shred_1_cost,
+                        shred_2_type: this.shred_2_type,
+                        shred_2_ml: this.shred_2_ml,
+                        shred_2_gwp: this.shred_2_gwp,
+                        shred_2_cost: this.shred_2_cost,
+
+                        transport_cost: this.transport_cost,
+                        transport_gwp: this.transport_gwp
+                    })
                 }, 20);
             },
             log() {

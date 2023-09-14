@@ -137,7 +137,7 @@ export default {
         if(this.app_input.waste.type !== undefined) {
           this.button2enabled = true
         }
-        // this.logWaste()
+        this.logWaste()
 
       } else if(Object.prototype.hasOwnProperty.call(new_values, "sep_type")) {
         this.app_input.separation.type = new_values.sep_type
@@ -216,7 +216,7 @@ export default {
         this.app_input.textile_process.areal_weight_g_per_sqm === undefined) {
           this.button5enabled = false
         }
-        // this.logTextile()
+        this.logTextile()
 
       } else if(Object.prototype.hasOwnProperty.call(new_values, "proc_1_type")) {
         this.app_input.processing_1.type = new_values.proc_1_type
@@ -360,13 +360,24 @@ export default {
       // this.log()
     },
     formatAppInputKeys() {
-      //undefined -> ""; End of Life -> EoL; 
-      //waste
+      // undefined -> ""; End of Life -> EoL; 
+      // waste
       if(this.app_input.waste.type === "End of Life") this.app_input.waste.type = "EoL"
-      //transport
+      // transport
       if(this.app_input.transport.euro_per_kg === undefined) this.app_input.transport.euro_per_kg = ""
       if(this.app_input.transport.co2_equv_per_kg === undefined) this.app_input.transport.co2_equv_per_kg = ""
-      //shredding 1 and 2
+      // shredding 1 and 2
+      // in some cases processing_1 is undefined and processing_2 is defined. In these cases switch their values.
+      if(this.app_input.shredding_1.type === undefined) {
+        this.app_input.shredding_1.type = this.app_input.shredding_2.type
+        this.app_input.shredding_2.type = undefined
+        this.app_input.shredding_1.mass_loss_percent = this.app_input.shredding_2.mass_loss_percent
+        this.app_input.shredding_2.mass_loss_percent = undefined
+        this.app_input.shredding_1.co2_equv_per_kg = this.app_input.shredding_2.co2_equv_per_kg
+        this.app_input.shredding_2.co2_equv_per_kg = undefined
+        this.app_input.shredding_1.euro_per_kg = this.app_input.shredding_2.euro_per_kg
+        this.app_input.shredding_2.euro_per_kg = undefined
+      }
       if(this.app_input.shredding_1.type === undefined) this.app_input.shredding_1.type = ""
       if(this.app_input.shredding_1.mass_loss_percent === undefined) this.app_input.shredding_1.mass_loss_percent = ""
       if(this.app_input.shredding_1.euro_per_kg === undefined) this.app_input.shredding_1.euro_per_kg = ""
@@ -375,13 +386,13 @@ export default {
       if(this.app_input.shredding_2.mass_loss_percent === undefined) this.app_input.shredding_2.mass_loss_percent = ""
       if(this.app_input.shredding_2.euro_per_kg === undefined) this.app_input.shredding_2.euro_per_kg = ""
       if(this.app_input.shredding_2.co2_equv_per_kg === undefined) this.app_input.shredding_2.co2_equv_per_kg = ""
-      //separation
+      // separation
       if(this.app_input.separation.euro_per_kg === undefined) this.app_input.separation.euro_per_kg = ""
       if(this.app_input.separation.co2_equv_per_kg === undefined) this.app_input.separation.co2_equv_per_kg = ""
-      //matrix
+      // matrix
       if(this.app_input.polymer.euro_per_kg === undefined) this.app_input.polymer.euro_per_kg = ""
       if(this.app_input.polymer.co2_equv_per_kg === undefined) this.app_input.polymer.co2_equv_per_kg = ""
-      //textile
+      // textile
       if(this.app_input.textile_process.type === "Dry-laid") this.app_input.textile_process.type = "Carding"
       if(this.app_input.textile_process.type === "Air-laid") this.app_input.textile_process.type = "AirLaying"
       if(this.app_input.textile_process.type === "Wet-laid") this.app_input.textile_process.type = "WetLaying"
@@ -390,7 +401,7 @@ export default {
       if(this.app_input.textile_process.type === "Wet-laid with Thermoplastfiber") this.app_input.textile_process.type = "WetLaying"
       if(this.app_input.textile_process.euro_per_kg === undefined) this.app_input.textile_process.euro_per_kg = ""
       if(this.app_input.textile_process.co2_equv_per_kg === undefined) this.app_input.textile_process.co2_equv_per_kg = ""
-      //processing
+      // processing
       if(this.app_input.processing_1.euro_per_kg === undefined) this.app_input.processing_1.euro_per_kg = ""
       if(this.app_input.processing_1.co2_equv_per_kg === undefined) this.app_input.processing_1.co2_equv_per_kg = ""
       if(this.app_input.processing_1.type === "Compression Moulding") {
