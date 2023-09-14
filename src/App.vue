@@ -115,9 +115,21 @@ export default {
   }),
   methods: {
     saveNewInputs(new_values) {
-      // console.log("hi from App")
       // console.log(new_values)
       if(Object.prototype.hasOwnProperty.call(new_values, "waste_type")) {
+        //reset textile values if shred_1 or _2 changed. Also lock button-5 (textile type values depend on shred values)
+        if(
+        this.app_input.shredding_1.type !== new_values.shred_1_type ||
+        this.app_input.shredding_2.type !== new_values.shred_2_type) {
+          this.app_input.textile_process.type = undefined
+          this.app_input.textile_process.mass_loss_percent = undefined
+          this.app_input.textile_process.throughput_kg_per_h = undefined
+          this.app_input.textile_process.areal_weight_g_per_sqm = undefined
+          this.app_input.textile_process.co2_equv_per_kg = undefined
+          this.app_input.textile_process.euro_per_kg = undefined
+          this.button5enabled = false
+        }
+
         this.app_input.waste.type = new_values.waste_type
         this.app_input.waste.size_bigger_1dot5_m = new_values.waste_size
 
@@ -137,7 +149,7 @@ export default {
         if(this.app_input.waste.type !== undefined) {
           this.button2enabled = true
         }
-        this.logWaste()
+        // this.logWaste()
 
       } else if(Object.prototype.hasOwnProperty.call(new_values, "sep_type")) {
         this.app_input.separation.type = new_values.sep_type
@@ -216,7 +228,7 @@ export default {
         this.app_input.textile_process.areal_weight_g_per_sqm === undefined) {
           this.button5enabled = false
         }
-        this.logTextile()
+        // this.logTextile()
 
       } else if(Object.prototype.hasOwnProperty.call(new_values, "proc_1_type")) {
         this.app_input.processing_1.type = new_values.proc_1_type
@@ -393,12 +405,9 @@ export default {
       if(this.app_input.polymer.euro_per_kg === undefined) this.app_input.polymer.euro_per_kg = ""
       if(this.app_input.polymer.co2_equv_per_kg === undefined) this.app_input.polymer.co2_equv_per_kg = ""
       // textile
-      if(this.app_input.textile_process.type === "Dry-laid") this.app_input.textile_process.type = "Carding"
-      if(this.app_input.textile_process.type === "Air-laid") this.app_input.textile_process.type = "AirLaying"
-      if(this.app_input.textile_process.type === "Wet-laid") this.app_input.textile_process.type = "WetLaying"
-      if(this.app_input.textile_process.type === "Dry-laid with Thermoplastfiber") this.app_input.textile_process.type = "Carding"
-      if(this.app_input.textile_process.type === "Air-laid with Thermoplastfiber") this.app_input.textile_process.type = "AirLaying"
-      if(this.app_input.textile_process.type === "Wet-laid with Thermoplastfiber") this.app_input.textile_process.type = "WetLaying"
+      if(["Dry-laid", "Dry-laid with Thermoplastfiber"].includes(this.app_input.textile_process.type)) this.app_input.textile_process.type = "Carding"
+      if(["Air-laid", "Air-laid with Thermoplastfiber"].includes(this.app_input.textile_process.type)) this.app_input.textile_process.type = "AirLaying"
+      if(["Wet-laid", "Wet-laid with Thermoplastfiber"].includes(this.app_input.textile_process.type))this.app_input.textile_process.type = "WetLaying"
       if(this.app_input.textile_process.euro_per_kg === undefined) this.app_input.textile_process.euro_per_kg = ""
       if(this.app_input.textile_process.co2_equv_per_kg === undefined) this.app_input.textile_process.co2_equv_per_kg = ""
       // processing

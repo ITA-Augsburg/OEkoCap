@@ -161,12 +161,8 @@
             //reposition fine-shredding-mass-loss-percent if Coarse-exp-mode "open"
             if(this.waste_type === "End of Life" && this.size1dot5 === true) {
                 this.coarse_expmode_disabled = false
-                if(this.shred_1_cost !== undefined || this.shred_1_gwp !== undefined) {
-                    document.getElementById("fine_percentage").classList.add("waste_fine_percentage_2")
-                }
             }
             if(this.waste_type === "Cut-Off") {
-                document.getElementById("fine_percentage").classList.add("waste_fine_percentage_3")
                 this.coarse_expmode_disabled = undefined
             }
             if(this.shred_2_ml === undefined) {
