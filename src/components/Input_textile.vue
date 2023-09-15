@@ -126,10 +126,10 @@
             }
         },
         mounted() {
-            // (undef fine) && insert || (coarse fine) && insert ? -> nur "Wet-laid with Thermoplastfiber"
-            // (undef fine) && !insert || (coarse fine) && !insert ? -> nur "Wet-laid"
-            // (coarse undef) && insert ? -> "Dry-laid with Thermoplastfiber", "Air-laid with Thermoplastfiber"
-            // (coarse undef) && !insert ? -> "Dry-laid", "Air-laid"
+            // (undef fine) && insert || (coarse fine) && insert -> nur "Wet-laid with Thermoplastfiber"
+            // (undef fine) && !insert || (coarse fine) && !insert -> nur "Wet-laid"
+            // (coarse undef) && insert || (undef cutting) && insert -> "Dry-laid with Thermoplastfiber", "Air-laid with Thermoplastfiber"
+            // (coarse undef) && !insert || (undef cutting) && !insert -> "Dry-laid", "Air-laid"
             let shred_1_type = this.app_input_prop.shredding_1.type
             let shred_2_type = this.app_input_prop.shredding_2.type
             if(
@@ -143,20 +143,17 @@
             ) {
                 this.type_options = ["Wet-laid"]
             } else if(
-                shred_1_type === "Coarse" && shred_2_type === undefined && this.matrix_insertion_prop
+                shred_1_type === "Coarse" && shred_2_type === undefined && this.matrix_insertion_prop ||
+                shred_1_type === undefined && shred_2_type === "Cutting" && this.matrix_insertion_prop
             ) {
                 this.type_options = ["Dry-laid with Thermoplastfiber", "Air-laid with Thermoplastfiber"]
             } else if(
-                shred_1_type === "Coarse" && shred_2_type === undefined && !this.matrix_insertion_prop
+                shred_1_type === "Coarse" && shred_2_type === undefined && !this.matrix_insertion_prop ||
+                shred_1_type === undefined && shred_2_type === "Cutting" && !this.matrix_insertion_prop
             ) {
                 this.type_options = ["Dry-laid", "Air-laid"]
             }
 
-            // if(this.matrix_insertion_prop) {
-            //     this.type_options = ["Dry-laid with Thermoplastfiber", "Air-laid with Thermoplastfiber", "Wet-laid with Thermoplastfiber"]
-            // } else {
-            //     this.type_options = ["Dry-laid", "Air-laid", "Wet-laid"]
-            // }
             if(this.textile_type === "Dry-laid" || this.textile_type === "Dry-laid with Thermoplastfiber") {
                     this.ml_options = [5, 15, 5]
                     this.throughput_options = [20, 40, 60]

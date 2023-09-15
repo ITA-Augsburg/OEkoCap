@@ -110,7 +110,8 @@
         :color_green=color_green />
 
         <div class="tooltip_container">
-            <p class="text waste_fine_text">Fine Shredding - Mass loss</p>
+            <p v-if="shred_2_type !== 'Cutting'" class="text waste_fine_text">Fine Shredding - Mass loss</p>
+            <p v-if="shred_2_type === 'Cutting'" class="text waste_fine_text">Cutting - Mass loss</p>
             <Tooltip
             :tooltip_class="'tooltip waste_fine_text_tooltip'"
             :tooltip_text=Tooltip_texts.test />
@@ -158,7 +159,6 @@
         props: ["app_input_prop", "color_green"],
         emits: ["saveNewInputs"],
         mounted() {
-            //reposition fine-shredding-mass-loss-percent if Coarse-exp-mode "open"
             if(this.waste_type === "End of Life" && this.size1dot5 === true) {
                 this.coarse_expmode_disabled = false
             }
@@ -204,7 +204,7 @@
                     this.shred_1_gwp = undefined
                     this.shred_1_cost = undefined
                     if(this.waste_type === "Cut-Off") {
-                        this.shred_2_type = "Fine"
+                        this.shred_2_type = "Cutting"
                         this.shred_2_ml = 5.0
                         this.coarse_expmode_disabled = undefined
                     }
