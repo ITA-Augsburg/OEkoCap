@@ -66,10 +66,26 @@
     }
 }
 
+.ashby_chart {
+    max-width: 480px;
+    margin-bottom: 10px;
+}
+@media (max-width: 500px) {
+    .ashby_chart {
+        padding: 0px 10px;
+    }
+}
+
 #pie_chart {
     margin-bottom: 60px;
 }
 
 .results_process_select {
     margin: 20px 10px 40px 10px;
+}
+
+.custom_legend_container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }

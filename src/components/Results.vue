@@ -69,7 +69,9 @@ import annotationPlugin from "chartjs-plugin-annotation"
         <canvas
         v-if="this.pieChartData[0] !== undefined"
         id="pie_chart" />
-        <!-- <div id="pie_chart_legend"></div> -->
+        <div class="custom_legend_container">
+            <div id="pie_chart_legend" style="width: fit-content;"></div>
+        </div>
 
         <div class="results_buttoncontainer">
             <div class="results_left_buttoncontainer">
@@ -153,7 +155,10 @@ import annotationPlugin from "chartjs-plugin-annotation"
 
         <canvas
         v-if="this.ashbyChartData !== undefined"
-        id="ashby_chart" class="bar_chart" />
+        id="ashby_chart" class="ashby_chart" />
+        <div class="custom_legend_container">
+            <div id="ashby_chart_legend" style="width: fit-content;"></div>
+        </div>
 
         <v-select
         class="select results_process_select"
@@ -209,6 +214,13 @@ import annotationPlugin from "chartjs-plugin-annotation"
                 this.calculated_process_options[i] = this.test_output.processes[i].name
             }
 
+            // get data for pie-chart from output; create colors and extract labels
+            for(let i=0; i<this.test_output.processes.length; i++) {
+                    this.pieChartColors[i] = this.randomColor(i, 1)
+                    this.pieChartLabels[i] = this.test_output.processes[i].name
+                }
+                // console.log(this.pieChartColors)
+
             //if window-width passes through the value 500px, redraw charts (with different legend font size)
             window.addEventListener("resize", () => {
                 if(this.wideWindow === false && window.innerWidth >= 500) {
@@ -243,6 +255,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
                 pieChart: undefined,
                 pieChartData: [],
                 pieChartTitle: "Calculated Processes",
+                pieChartLabels: [],
                 pieChartColors: [],
 
                 ashbyChart: undefined,
@@ -448,6 +461,257 @@ import annotationPlugin from "chartjs-plugin-annotation"
                         "total_cost_max": 2800
                     },
                 ],
+                test_benchmarks_ashby: {
+                    benchmark_1: {
+                        "flexuralStrength_MPa": [
+                            {
+                                "flexuralStrength0_MPa": [
+                                    {
+                                        "value": "45.0"
+                                    },
+                                    {
+                                        "value": "97.0"
+                                    }
+                                ]
+                            },
+                            {
+                                "flexuralStrength90_MPa": [
+                                    {
+                                        "value": "69.0"
+                                    }
+                                ]
+                            }
+                        ],
+                        "tensileModulus_GPa": [
+                            {
+                                "tensileModulus0_GPa": [
+                                    {
+                                        "value": "24.0"
+                                    },
+                                    {
+                                        "value": "88.0"
+                                    }
+                                ]
+                            },
+                            {
+                                "tensileModulus90_GPa": [
+                                    {
+                                        "value": "82.0"
+                                    },
+                                    {
+                                        "value": "110.0"
+                                    }
+                                ]
+                            }
+                        ],
+                        "flexuralModulus_GPa": [
+                            {
+                                "flexuralModulus0_GPa": [
+                                    {
+                                        "value": "15.0"
+                                    },
+                                    {
+                                        "value": "25.0"
+                                    },
+                                    {
+                                        "value": "44.0"
+                                    }
+                                ]
+                            },
+                            {
+                                "flexuralModulus90_GPa": [
+                                    {
+                                        "value": "72.0"
+                                    }
+                                ]
+                            }
+                        ],
+                        "tensileStrength_MPa": [
+                            {
+                                "tensileStrength0_MPa": [
+                                    {
+                                        "value": "79.0"
+                                    },
+                                    {
+                                        "value": "95.0"
+                                    }
+                                ]
+                            },
+                            {
+                                "tensileStrength90_MPa": [
+                                    {
+                                        "value": "89.0"
+                                    },
+                                    {
+                                        "value": "99.0"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    benchmark_2: {
+                        "flexuralStrength_MPa": [
+                            {
+                                "flexuralStrength0_MPa": [
+                                    {
+                                        "value": "20.0"
+                                    },
+                                    {
+                                        "value": "40.0"
+                                    }
+                                ]
+                            },
+                            {
+                                "flexuralStrength90_MPa": [
+                                    {
+                                        "value": "24.0"
+                                    },
+                                    {
+                                        "value": "53.0"
+                                    }
+                                ]
+                            }
+                        ],
+                        "tensileModulus_GPa": [
+                            {
+                                "tensileModulus0_GPa": [
+                                    {
+                                        "value": "52.0"
+                                    },
+                                    {
+                                        "value": "58.0"
+                                    }
+                                ]
+                            },
+                            {
+                                "tensileModulus90_GPa": [
+                                    {
+                                        "value": "51.0"
+                                    },
+                                    {
+                                        "value": "60.0"
+                                    }
+                                ]
+                            }
+                        ],
+                        "flexuralModulus_GPa": [
+                            {
+                                "flexuralModulus0_GPa": [
+                                    {
+                                        "value": "7.0"
+                                    },
+                                    {
+                                        "value": "15.0"
+                                    }
+                                ]
+                            },
+                            {
+                                "flexuralModulus90_GPa": [
+                                    {
+                                        "value": "48.0"
+                                    },
+                                    {
+                                        "value": "60.0"
+                                    }
+                                ]
+                            }
+                        ],
+                        "tensileStrength_MPa": [
+                            {
+                                "tensileStrength0_MPa": [
+                                    {
+                                        "value": "17.0"
+                                    },
+                                    {
+                                        "value": "64.0"
+                                    }
+                                ]
+                            },
+                            {
+                                "tensileStrength90_MPa": [
+                                    {
+                                        "value": "3.0"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    benchmark_3: {
+                        "flexuralStrength_MPa": [
+                            {
+                                "flexuralStrength0_MPa": [
+                                    {
+                                        "value": "13.0"
+                                    }
+                                ]
+                            },
+                            {
+                                "flexuralStrength90_MPa": [
+                                    {
+                                        "value": "67.0"
+                                    },
+                                    {
+                                        "value": "95.0"
+                                    }
+                                ]
+                            }
+                        ],
+                        "tensileModulus_GPa": [
+                            {
+                                "tensileModulus0_GPa": [
+                                    {
+                                        "value": "1.0"
+                                    },
+                                    {
+                                        "value": "36.0"
+                                    }
+                                ]
+                            },
+                            {
+                                "tensileModulus90_GPa": [
+                                    {
+                                        "value": "19.0"
+                                    }
+                                ]
+                            }
+                        ],
+                        "flexuralModulus_GPa": [
+                            {
+                                "flexuralModulus0_GPa": [
+                                    {
+                                        "value": "45.0"
+                                    }
+                                ]
+                            },
+                            {
+                                "flexuralModulus90_GPa": [
+                                    {
+                                        "value": "90.0"
+                                    }
+                                ]
+                            }
+                        ],
+                        "tensileStrength_MPa": [
+                            {
+                                "tensileStrength0_MPa": [
+                                    {
+                                        "value": "45.0"
+                                    },
+                                    {
+                                        "value": "60.0"
+                                    }
+                                ]
+                            },
+                            {
+                                "tensileStrength90_MPa": [
+                                    {
+                                        "value": "42.0"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
             }
         },
         methods: {
@@ -457,7 +721,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
                     case "gwp":
                         this.gwp_button_active = true
                         this.cost_button_active = false
-                        this.leftBarLabel = "Calculated"
+                        this.leftBarLabel = "Result"
                         this.barChartData[0][0] = Math.round(this.test_output.gwp.minValue * 100) / 100
                         this.barChartData[0][1] = Math.round(this.test_output.gwp.maxValue * 100) / 100
 
@@ -469,7 +733,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
                     case "cost":
                         this.gwp_button_active = false
                         this.cost_button_active = true
-                        this.leftBarLabel = "Calculated"
+                        this.leftBarLabel = "Result"
                         this.barChartData[0][0] = Math.round(this.test_output.cost.minValue_eur_per_kg * 100) / 100
                         this.barChartData[0][1] = Math.round(this.test_output.cost.maxValue_eur_per_kg * 100) / 100
 
@@ -499,15 +763,6 @@ import annotationPlugin from "chartjs-plugin-annotation"
                         this.setAshbyChartData()
                         break
                 }
-
-                let h = 56, s = 55, l = 57
-                for(let i=0; i<this.pieChartData.length; i++) {
-                    h += 90
-                    h>360 ? h-=361 : ""
-                    // console.log("rgb(" + r +", " + g + ", " + b + ")")
-                    this.pieChartColors[i] = "hsl(" + h +", " + s + "%, " + l + "%)"
-                }
-                // console.log(this.pieChartColors)
 
                 //benchmark needs to change from gwp to cost (and vice versa) if output switches
                 //Initially canvas-elements are missing, in order for a chart to render for the first time,
@@ -684,20 +939,20 @@ import annotationPlugin from "chartjs-plugin-annotation"
                                             let unit = this.gwp_button_active ? " kg CO²" : " €"
                                             if(this.barChartData[0][0] === undefined) {
                                                 return [{
-                                                    text: "Min: " + this.barChartData[1][0] + unit + ", Max: " + this.barChartData[1][1] + unit,
+                                                    text: this.rightBarLabel + " range: [" + this.barChartData[1][0] + ", " + this.barChartData[1][1] + "] " + unit,
                                                     strokeStyle: chart.data.datasets[0].borderColor[1],
                                                     fillStyle: chart.data.datasets[0].backgroundColor[1]
                                                 }]
                                             } else if(this.barChartData[1][0] === undefined) {
                                                 return [{
-                                                    text: "Min: " + this.barChartData[0][0] + unit + ", Max: " + this.barChartData[0][1] + unit,
+                                                    text: this.leftBarLabel + " range: [" + this.barChartData[0][0] + ", " + this.barChartData[0][1] + "] " + unit,
                                                     strokeStyle: chart.data.datasets[0].borderColor[0],
                                                     fillStyle: chart.data.datasets[0].backgroundColor[0]
                                                 }]
                                             }
                                             return chart.data.labels.map((label, index) => {
                                                 return {
-                                                    text: "Min: " + this.barChartData[index][0] + unit + ", Max: " + this.barChartData[index][1] + unit,
+                                                    text: label + " range: [" + this.barChartData[index][0] + ", " + this.barChartData[index][1] + "] " + unit,
                                                     strokeStyle: chart.data.datasets[0].borderColor[index],
                                                     fillStyle: chart.data.datasets[0].backgroundColor[index]
                                                 }
@@ -721,7 +976,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
                     this.pieChart = new Chart("pie_chart", {
                         type: "pie",
                         data: {
-                            labels: ["ResinTransferMoulding", "Carding", "Oxidation", "Pyrolysis"],
+                            labels: this.pieChartLabels,
                             datasets: [{
                                 data: this.pieChartData,
                                 backgroundColor: this.pieChartColors,
@@ -734,7 +989,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
                         options: {
                             animation: false,
                             hover: false,
-                            aspectRatio: 1,
+                            aspectRatio: 1.3,
                             plugins: {
                                 title: {
                                     display: true,
@@ -744,54 +999,62 @@ import annotationPlugin from "chartjs-plugin-annotation"
                                     }
                                 },
                                 legend: {
-                                    // display: false,
-                                    position: "bottom",
-                                    display: (this.pieChartData[0]!==undefined) ? true : false,
-                                    labels: {
-                                        font: {
-                                            size: window.innerWidth >= 500 ? this.legendFont : this.legendFontS
-                                        },
-                                        boxWidth: 25,
-                                        boxHeight: 25,
-                                        generateLabels: (chart) => {
-                                            let unit = this.gwp_button_active ? " kg CO²" : " €"
-                                            return chart.data.labels.map((label, index) => {
-                                                return {
-                                                    text: label + ": " + this.pieChartData[index] + unit + " (" + this.calculatePieChartPercent(index) + "%)",
-                                                    strokeStyle: chart.data.datasets[0].borderColor[index],
-                                                    fillStyle: chart.data.datasets[0].backgroundColor[index]
-                                                }
-                                            })
-                                        }
-                                    }
+                                    display: false,
+                                //     position: "bottom",
+                                //     // display: (this.pieChartData[0]!==undefined) ? true : false,
+                                //     labels: {
+                                //         font: {
+                                //             size: window.innerWidth >= 500 ? this.legendFont : this.legendFontS
+                                //         },
+                                //         boxWidth: 25,
+                                //         boxHeight: 25,
+                                //         generateLabels: (chart) => {
+                                //             let unit = this.gwp_button_active ? " kg CO²" : " €"
+                                //             return chart.data.labels.map((label, index) => {
+                                //                 return {
+                                //                     text: label + ": " + this.pieChartData[index] + unit + " (" + this.calculatePieChartPercent(index) + "%)",
+                                //                     strokeStyle: chart.data.datasets[0].borderColor[index],
+                                //                     fillStyle: chart.data.datasets[0].backgroundColor[index]
+                                //                 }
+                                //             })
+                                //         }
+                                //     }
                                 },
                                 tooltip: {
                                     enabled: false
                                 }
                             },
                         },
-                        // If legend-items need to be underneath each other, this is the way
-                        // plugins: [{
-                        //     beforeInit: function(chart) {
-                        //     if (chart.canvas.id === "pie_chart") {
-                        //         const ul = document.createElement('ul');
-                        //         chart.data.labels.forEach((label, i) => {
-                        //         ul.innerHTML += `
-                        //             <li>
-                        //             <span style="background-color: ${ chart.data.datasets[0].backgroundColor[i] }">
-                        //                 ${ chart.data.datasets[0].data[i] }
-                        //             </span>
-                        //             ${ label }
-                        //             </li>
-                        //         `;
-                        //         });
-
-                        //         return document.getElementById("pie_chart_legend").appendChild(ul);
-                        //     }
-
-                        //     return;
-                        //     }
-                        // }]
+                        // Creating legend here to separate it from the chart itself. If not decoupled then chart size depends on the size of the legend (more legend items = smaller chart)
+                        plugins: [{
+                            beforeInit: function(chart) {
+                                if (chart.canvas.id === "pie_chart") {
+                                    const customLegend = document.getElementById("pie_chart_legend")
+                                    customLegend.innerHTML = ``
+                                    let unit = this.gwp_button_active ? " kg CO²" : " €"
+                                    let fontSize = window.innerWidth >= 500 ? 20 : 15
+                                    chart.data.labels.forEach((label, i) => {
+                                        // calculate percentage-value of a process
+                                        let sum = 0
+                                        chart.data.datasets[0].data.forEach((element) => {
+                                            sum += element
+                                        })
+                                        let element = (chart.data.datasets[0].data[i] / (sum / 100))
+                                        let percent = Math.round(element * 100) / 100
+                                        let text = label + ": " + chart.data.datasets[0].data[i] + unit + " (" + percent + "%)"
+                                        customLegend.innerHTML += 
+                                        `
+                                            <div style="display: flex; width: fit-content">
+                                                <div style="width: 30px; height: 30px; background-color: ${chart.data.datasets[0].backgroundColor[i]}; border: 1px solid black;"></div>
+                                                <div style="font-size: ${fontSize}px; margin-left: 10px;">
+                                                    ${text}
+                                                </div>
+                                            </div>
+                                        `
+                                    })
+                                }
+                            }
+                        }]
                     })
                 }
             },
@@ -811,7 +1074,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
                     this.barChartProcessGwpRange = new Chart("bar_chart_process_gwp_range", {
                         type: "bar",
                         data: {
-                            labels: ["Calculated", "Benchmark"],
+                            labels: ["Result", "Benchmark"],
                             datasets: [
                                 {
                                     data: this.checkBarChartData(this.barChartProcessGwpRangeData),
@@ -870,14 +1133,14 @@ import annotationPlugin from "chartjs-plugin-annotation"
                                             let unit = " kg CO²"
                                             if(this.barChartProcessGwpRangeData[1][0] === undefined) {
                                                 return [{
-                                                    text: "Min: " + this.barChartProcessGwpRangeData[0][0] + unit + ", Max: " + this.barChartProcessGwpRangeData[0][1] + unit,
+                                                    text: "Result range: [" + this.barChartProcessGwpRangeData[0][0] + ", " + this.barChartProcessGwpRangeData[0][1] + "] " + unit,
                                                     strokeStyle: chart.data.datasets[0].borderColor[0],
                                                     fillStyle: chart.data.datasets[0].backgroundColor[0]
                                                 }]
                                             }
                                             return chart.data.labels.map((label, index) => {
                                                 return {
-                                                    text: "Min: " + this.barChartProcessGwpRangeData[index][0] + unit + ", Max: " + this.barChartProcessGwpRangeData[index][1] + unit,
+                                                    text: label + " range: [" + this.barChartProcessGwpRangeData[index][0] + ", " + this.barChartProcessGwpRangeData[index][1] + "] " + unit,
                                                     strokeStyle: chart.data.datasets[0].borderColor[index],
                                                     fillStyle: chart.data.datasets[0].backgroundColor[index]
                                                 }
@@ -901,7 +1164,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
                     this.barChartProcessCostPerKgRange = new Chart("bar_chart_process_cost_per_kg_range", {
                         type: "bar",
                         data: {
-                            labels: ["Calculated", "Benchmark"],
+                            labels: ["Result", "Benchmark"],
                             datasets: [
                                 {
                                     data: this.checkBarChartData(this.barChartProcessCostPerKgRangeData),
@@ -960,14 +1223,14 @@ import annotationPlugin from "chartjs-plugin-annotation"
                                             let unit = " € / kg"
                                             if(this.barChartProcessCostPerKgRangeData[1][0] === undefined) {
                                                 return [{
-                                                    text: "Min: " + this.barChartProcessCostPerKgRangeData[0][0] + unit + ", Max: " + this.barChartProcessCostPerKgRangeData[0][1] + unit,
+                                                    text: "Result range: [" + this.barChartProcessCostPerKgRangeData[0][0] + ", " + this.barChartProcessCostPerKgRangeData[0][1] + "] " + unit,
                                                     strokeStyle: chart.data.datasets[0].borderColor[0],
                                                     fillStyle: chart.data.datasets[0].backgroundColor[0]
                                                 }]
                                             }
                                             return chart.data.labels.map((label, index) => {
                                                 return {
-                                                    text: "Min: " + this.barChartProcessCostPerKgRangeData[index][0] + unit + ", Max: " + this.barChartProcessCostPerKgRangeData[index][1] + unit,
+                                                    text: label + " range: [" + this.barChartProcessCostPerKgRangeData[index][0] + ", " + this.barChartProcessCostPerKgRangeData[index][1] + "] " + unit,
                                                     strokeStyle: chart.data.datasets[0].borderColor[index],
                                                     fillStyle: chart.data.datasets[0].backgroundColor[index]
                                                 }
@@ -991,7 +1254,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
                     this.barChartProcessTotalCostRange = new Chart("bar_chart_process_total_cost_range", {
                         type: "bar",
                         data: {
-                            labels: ["Calculated", "Benchmark"],
+                            labels: ["Result", "Benchmark"],
                             datasets: [
                                 {
                                     data: this.checkBarChartData(this.barChartProcessTotalCostRangeData),
@@ -1050,14 +1313,14 @@ import annotationPlugin from "chartjs-plugin-annotation"
                                             let unit = " €"
                                             if(this.barChartProcessTotalCostRangeData[1][0] === undefined) {
                                                 return [{
-                                                    text: "Min: " + this.barChartProcessTotalCostRangeData[0][0] + unit + ", Max: " + this.barChartProcessTotalCostRangeData[0][1] + unit,
+                                                    text: "Result range: [" + this.barChartProcessTotalCostRangeData[0][0] + ", " + this.barChartProcessTotalCostRangeData[0][1] + "] " + unit,
                                                     strokeStyle: chart.data.datasets[0].borderColor[0],
                                                     fillStyle: chart.data.datasets[0].backgroundColor[0]
                                                 }]
                                             }
                                             return chart.data.labels.map((label, index) => {
                                                 return {
-                                                    text: "Min: " + this.barChartProcessTotalCostRangeData[index][0] + unit + ", Max: " + this.barChartProcessTotalCostRangeData[index][1] + unit,
+                                                    text: label + " range: [" + this.barChartProcessTotalCostRangeData[index][0] + ", " + this.barChartProcessTotalCostRangeData[index][1] + "] " + unit,
                                                     strokeStyle: chart.data.datasets[0].borderColor[index],
                                                     fillStyle: chart.data.datasets[0].backgroundColor[index]
                                                 }
@@ -1107,6 +1370,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
                     this.ashbyChart.destroy()
                 }
                 if(this.ashbyChartData !== undefined) {
+                    this.updateAshbyChartLegend()
                     this.ashbyChart = new Chart("ashby_chart", {
                         type: "bubble",
                         data: {},
@@ -1122,7 +1386,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
                                         display: true,
                                         text: "Modulus",
                                         font: {
-                                            size: 16
+                                            size: 20
                                         }
                                     },
                                     ticks: {
@@ -1138,7 +1402,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
                                         display: true,
                                         text: "Strength",
                                         font: {
-                                            size: 16
+                                            size: 20
                                         }
                                     },
                                     ticks: {
@@ -1157,29 +1421,31 @@ import annotationPlugin from "chartjs-plugin-annotation"
                                     }
                                 },
                                 legend: {
-                                    display: true,
-                                    position: 'bottom',
-                                    labels: {
-                                        font: {
-                                            size: window.innerWidth >= 500 ? this.legendFont : this.legendFontS
-                                        },
-                                        boxWidth: 25,
-                                        boxHeight: 25,
-                                        generateLabels: () => {
-                                            return [
-                                                {
-                                                    text: "Strength Min: " + this.ashbyChartData.ellipses[0].yMin + " MPa, Strength Max: " + this.ashbyChartData.ellipses[0].yMax + " MPa",
-                                                    strokeStyle: "#000000",
-                                                    fillStyle: this.ashbyChartData.ellipses[0].backgroundColor
-                                                },
-                                                {
-                                                    text: "Modulus Min: " + this.ashbyChartData.ellipses[0].xMin + " GPa, Modulus Max: " + this.ashbyChartData.ellipses[0].xMax + " GPa",
-                                                    strokeStyle: "#000000",
-                                                    fillStyle: this.ashbyChartData.ellipses[0].backgroundColor
-                                                }
-                                            ]
-                                        }
-                                    },
+                                    display: false,
+                                    // position: 'bottom',
+                                    // labels: {
+                                    //     font: {
+                                    //         size: window.innerWidth >= 500 ? this.legendFont : this.legendFontS
+                                    //     },
+                                    //     boxWidth: 25,
+                                    //     boxHeight: 25,
+                                    //     generateLabels: () => {
+                                    //         let labels = []
+                                    //         for(let i=0; i<this.ashbyChartData.ellipses.length; i++) {
+                                    //             labels.push({
+                                    //                 text: "Strength Min: " + this.ashbyChartData.ellipses[i].yMin + " MPa, Strength Max: " + this.ashbyChartData.ellipses[i].yMax + " MPa",
+                                    //                 strokeStyle: "#000000",
+                                    //                 fillStyle: this.ashbyChartData.ellipses[i].backgroundColor
+                                    //             })
+                                    //             labels.push({
+                                    //                 text: "Modulus Min: " + this.ashbyChartData.ellipses[i].xMin + " GPa, Modulus Max: " + this.ashbyChartData.ellipses[i].xMax + " GPa",
+                                    //                 strokeStyle: "#000000",
+                                    //                 fillStyle: this.ashbyChartData.ellipses[i].backgroundColor
+                                    //             })
+                                    //         }
+                                    //         return labels
+                                    //     }
+                                    // },
                                 },
                                 tooltip: {
                                     enabled: false
@@ -1188,9 +1454,43 @@ import annotationPlugin from "chartjs-plugin-annotation"
                                     annotations: this.checkAshbyChartData(this.ashbyChartData)
                                 }
                             }
-                        }
+                        },
                     })
                 }
+            },
+            updateAshbyChartLegend() {
+                // Creating legend here to separate it from the chart itself. If not decoupled then chart size depends on the size of the legend (more legend items = smaller chart)
+                const customLegend = document.getElementById("ashby_chart_legend")
+                customLegend.innerHTML = ``
+                let fontSize = window.innerWidth >= 500 ? 20 : 15
+                this.ashbyChartData.ellipses.forEach((ellipse, i) => {
+                    let roundedStrengthMin = Math.round(ellipse.yMin * 100) / 100
+                    let roundedStrengthMax = Math.round(ellipse.yMax * 100) / 100
+                    let roundedModulusMin = Math.round(ellipse.xMin * 100) / 100
+                    let roundedModulusMax = Math.round(ellipse.xMax * 100) / 100
+                    // console.log(roundedStrengthMin + " " + roundedStrengthMax + " " + roundedModulusMin + " " + roundedModulusMax)
+                    // console.log(ellipse.yMin + " " + ellipse.yMax + " " + ellipse.xMin + " " + ellipse.xMax)
+                    let strengthText = "Strength range: [" + roundedStrengthMin + ", " + roundedStrengthMax + "] MPa"
+                    let modulusText = "Modulus range: [" + roundedModulusMin + ", " + roundedModulusMax + "] GPa"
+                    customLegend.innerHTML += 
+                    `
+                        <div style="font-size: 18px;">
+                            ${this.ashbyChartData.names[i]}    
+                        </div>
+                        <div style="display: flex; width: fit-content">
+                            <div style="width: 30px; height: 30px; background-color: ${ellipse.backgroundColor}; border: 1px solid black;"></div>
+                            <div style="font-size: ${fontSize}px; margin-left: 10px;">
+                                ${strengthText}
+                            </div>
+                        </div>
+                        <div style="display: flex; width: fit-content">
+                            <div style="width: 30px; height: 30px; background-color: ${ellipse.backgroundColor}; border: 1px solid black;"></div>
+                            <div style="font-size: ${fontSize}px; margin-left: 10px;">
+                                ${modulusText}
+                            </div>
+                        </div>
+                    `
+                })
             },
             setAshbyChartData() {
                 if(
@@ -1200,80 +1500,89 @@ import annotationPlugin from "chartjs-plugin-annotation"
                     this.ashbyChartData = undefined
                 } else {
                     // calculate minValue and maxValue of output-fields
-                    let values = this.getOutputMinMaxValues()
+                    let outputMinMax = this.getMechanicalMinMaxValues(this.test_output)
+                    // calculate minValues and maxValues of benchmarks
+                    let benchmarksMinMax = {}
+                    for(let key in this.test_benchmarks_ashby) {
+                        benchmarksMinMax[key] = this.getMechanicalMinMaxValues(this.test_benchmarks_ashby[key])
+                    }
                     // fill ashbyChartData based on button-states
+                    let selection_x = undefined
+                    let selection_y = undefined
+                    let chartTitle = undefined
                     if(this.tensile_button_active && this.zero_button_active) {
                         //tensStren0 tensMod0
-
-                        this.ashbyChartData = {
-                            ellipses: [{
-                                type: 'ellipse',
-                                xMin: values.tensMod0.min,
-                                xMax: values.tensMod0.max,
-                                yMin: values.tensStren0.min,
-                                yMax: values.tensStren0.max,
-                                backgroundColor: 'rgba(255, 99, 132, 0.25)'
-                            }],
-                            xAxisRange: values.tensMod0.max + values.tensMod0.max * 0.1,
-                            yAxisRange: values.tensStren0.max + values.tensStren0.max * 0.1,
-                            chartTitle: "Tensileness range at 0°"
-                        }
+                        selection_x = "tensMod0"
+                        selection_y = "tensStren0"
+                        chartTitle = "Tensileness range at 0°"
 
                     } else if(this.tensile_button_active && this.ninety_button_active) {
                         //tensStren90 tensMod90
-
-                        this.ashbyChartData = {
-                            ellipses: [{
-                                type: 'ellipse',
-                                xMin: values.tensMod90.min,
-                                xMax: values.tensMod90.max,
-                                yMin: values.tensStren90.min,
-                                yMax: values.tensStren90.max,
-                                backgroundColor: 'rgba(255, 99, 132, 0.25)'
-                            }],
-                            xAxisRange: values.tensMod90.max + values.tensMod90.max * 0.1,
-                            yAxisRange: values.tensStren90.max + values.tensStren90.max * 0.1,
-                            chartTitle: "Tensileness range at 90°"
-                        }
+                        selection_x = "tensMod90"
+                        selection_y = "tensStren90"
+                        chartTitle = "Tensileness range at 90°"
 
                     } else if(this.flexural_button_active && this.zero_button_active) {
                         //flexStren0 flexMod0
-
-                        this.ashbyChartData = {
-                            ellipses: [{
-                                type: 'ellipse',
-                                xMin: values.flexMod0.min,
-                                xMax: values.flexMod0.max,
-                                yMin: values.flexStren0.min,
-                                yMax: values.flexStren0.max,
-                                backgroundColor: 'rgba(255, 99, 132, 0.25)'
-                            }],
-                            xAxisRange: values.flexMod0.max + values.flexMod0.max * 0.1,
-                            yAxisRange: values.flexStren0.max + values.flexStren0.max * 0.1,
-                            chartTitle: "Flexuralness range at 0°"
-                        }
+                        selection_x = "flexMod0"
+                        selection_y = "flexStren0"
+                        chartTitle = "Flexuralness range at 0°"
 
                     } else if(this.flexural_button_active && this.ninety_button_active) {
                         //flexStren90 flexMod90
+                        selection_x = "flexMod90"
+                        selection_y = "flexStren90"
+                        chartTitle = "Flexuralness range at 90°"
+
+                    }
+
+                    // determine x-axis maximum from output-modulus and benchmark-moduluses
+                    let maxModulus = outputMinMax[selection_x].max
+                        for(let key in benchmarksMinMax) {
+                            if(benchmarksMinMax[key][selection_x].max > maxModulus) {
+                                maxModulus = benchmarksMinMax[key][selection_x].max
+                            }
+                        }
+                        // determine y-axis maximum from output-strength and benchmark-strengths
+                        let maxStrength = outputMinMax[selection_y].max
+                        for(let key in benchmarksMinMax) {
+                            if(benchmarksMinMax[key][selection_y].max > maxStrength) {
+                                maxStrength = benchmarksMinMax[key][selection_y].max
+                            }
+                        }
 
                         this.ashbyChartData = {
                             ellipses: [{
                                 type: 'ellipse',
-                                xMin: values.flexMod90.min,
-                                xMax: values.flexMod90.max,
-                                yMin: values.flexStren90.min,
-                                yMax: values.flexStren90.max,
-                                backgroundColor: 'rgba(255, 99, 132, 0.25)'
+                                xMin: outputMinMax[selection_x].min,
+                                xMax: outputMinMax[selection_x].max,
+                                yMin: outputMinMax[selection_y].min,
+                                yMax: outputMinMax[selection_y].max,
+                                backgroundColor: 'hsla(146, 55%, 57%, 0.4)'
                             }],
-                            xAxisRange: values.flexMod90.max + values.flexMod90.max * 0.1,
-                            yAxisRange: values.flexStren90.max + values.flexStren90.max * 0.1,
-                            chartTitle: "Flexuralness range at 90°"
+                            names: ["Result"],
+                            xAxisRange: maxModulus + maxModulus * 0.1,
+                            yAxisRange: maxStrength + maxStrength * 0.1,
+                            chartTitle: chartTitle
                         }
 
-                    }
+                        let colorIndex = 1 // the color corresponding to 0 is alredy in use (output-ellipse)
+                        for(let key in benchmarksMinMax) {
+                            let newEllipse = {
+                                type: 'ellipse',
+                                xMin: benchmarksMinMax[key][selection_x].min,
+                                xMax: benchmarksMinMax[key][selection_x].max,
+                                yMin: benchmarksMinMax[key][selection_y].min,
+                                yMax: benchmarksMinMax[key][selection_y].max,
+                                backgroundColor: this.randomColor(colorIndex, 0.4),
+                            }
+                            this.ashbyChartData.ellipses.push(newEllipse)
+                            this.ashbyChartData.names.push(key)
+                            colorIndex++
+                        }
                 }
             },
-            getOutputMinMaxValues() {
+            getMechanicalMinMaxValues(data) {
                 /* returns min- and max-values of output for the fields
                 tensileStrength0_MPa, tensileStrength90_MPa
                 tensileModulus0_GPa, tensileModulus90_GPa
@@ -1282,14 +1591,14 @@ import annotationPlugin from "chartjs-plugin-annotation"
                 let values = {}
                 let tempMin = undefined
                 let tempMax = undefined
-                let tensStren0 = this.test_output.tensileStrength_MPa[0].tensileStrength0_MPa
-                let tensStren90 = this.test_output.tensileStrength_MPa[1].tensileStrength90_MPa
-                let tensMod0 = this.test_output.tensileModulus_GPa[0].tensileModulus0_GPa
-                let tensMod90 = this.test_output.tensileModulus_GPa[1].tensileModulus90_GPa
-                let flexStren0 = this.test_output.flexuralStrength_MPa[0].flexuralStrength0_MPa
-                let flexStren90 = this.test_output.flexuralStrength_MPa[1].flexuralStrength90_MPa
-                let flexMod0 = this.test_output.flexuralModulus_GPa[0].flexuralModulus0_GPa
-                let flexMod90 = this.test_output.flexuralModulus_GPa[1].flexuralModulus90_GPa
+                let tensStren0 = data.tensileStrength_MPa[0].tensileStrength0_MPa
+                let tensStren90 = data.tensileStrength_MPa[1].tensileStrength90_MPa
+                let tensMod0 = data.tensileModulus_GPa[0].tensileModulus0_GPa
+                let tensMod90 = data.tensileModulus_GPa[1].tensileModulus90_GPa
+                let flexStren0 = data.flexuralStrength_MPa[0].flexuralStrength0_MPa
+                let flexStren90 = data.flexuralStrength_MPa[1].flexuralStrength90_MPa
+                let flexMod0 = data.flexuralModulus_GPa[0].flexuralModulus0_GPa
+                let flexMod90 = data.flexuralModulus_GPa[1].flexuralModulus90_GPa
                 let items = [tensStren0, tensStren90, tensMod0, tensMod90, flexStren0, flexStren90, flexMod0, flexMod90]
                 let keyNames = ["tensStren0", "tensStren90", "tensMod0", "tensMod90", "flexStren0", "flexStren90", "flexMod0", "flexMod90"]
                 for(let j=0; j<items.length; j++) {
@@ -1314,7 +1623,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
                 return values
             },
             checkAshbyChartData(data) {
-                // for every ellipse check min and max values on each axis. If min-max range < 1% of the axis-range then ellipse won't show well. If min==max then ellipse won't show. Therefor modify values. Values in the legend won't be affected.
+                // for every ellipse check min and max values on each axis. If min-max range < 3% of the axis-range then ellipse won't show well. If min==max then ellipse won't show. Therefor modify values. Values in the legend won't be affected.
                 let modifiedData = {
                     ellipses: [],
                     xAxisRange: data.xAxisRange,
@@ -1332,17 +1641,17 @@ import annotationPlugin from "chartjs-plugin-annotation"
                     }
                     // compare xMin and xMax, modify them if needed
                     let currentWidth = Math.abs(newEllipse.xMax - newEllipse.xMin)
-                    let twoPercentWidth = modifiedData.xAxisRange * 0.02
-                    if(currentWidth < twoPercentWidth) {
-                        let sidePadding = (twoPercentWidth - currentWidth) / 2 // to be added left and right
+                    let threePercentWidth = modifiedData.xAxisRange * 0.03
+                    if(currentWidth < threePercentWidth) {
+                        let sidePadding = (threePercentWidth - currentWidth) / 2 // to be added left and right
                         newEllipse.xMin = newEllipse.xMin - sidePadding
                         newEllipse.xMax = newEllipse.xMax + sidePadding
                     }
                     // compare yMin and yMax, modify them if needed
                     let currentHeight = Math.abs(newEllipse.yMax - newEllipse.yMin)
-                    let twoPercentHeight = modifiedData.yAxisRange * 0.02
-                    if(currentHeight < twoPercentHeight) {
-                        let sidePadding = (twoPercentHeight - currentHeight) / 2 // to be added above and below
+                    let threePercentHeight = modifiedData.yAxisRange * 0.03
+                    if(currentHeight < threePercentHeight) {
+                        let sidePadding = (threePercentHeight - currentHeight) / 2 // to be added above and below
                         newEllipse.yMin = newEllipse.yMin - sidePadding
                         newEllipse.yMax = newEllipse.yMax + sidePadding
                     }
@@ -1351,6 +1660,15 @@ import annotationPlugin from "chartjs-plugin-annotation"
                 // console.log(JSON.stringify(data, null, 2))
                 // console.log(JSON.stringify(modifiedData, null, 2))
                 return modifiedData.ellipses
+            },
+            randomColor(i, a) {
+                /**
+                 * Generates a randomised color, that has the same saturation and lightness as the main green color.
+                 * Parameter i is needed for iterating in the wrapper function.
+                */
+                let h = (146 + i * 260) % 356, s = 55, l = 57
+                // console.log("rgb(" + r +", " + g + ", " + b + ")")
+                return "hsla(" + h + ", " + s + "%, " + l + "%, " + a + ")"
             },
             // minimum(numbers) {
             //     // returns the smallest number from the numbers array
