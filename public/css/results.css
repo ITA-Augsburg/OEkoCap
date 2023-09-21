@@ -56,6 +56,10 @@
     margin: 20px 10px 40px 10px;
 }
 
+.hidden_chart {
+    display: none !important;
+}
+
 .bar_chart {
     max-width: 480px;
     margin-bottom: 60px;
@@ -77,6 +81,9 @@
 }
 
 #pie_chart {
+    margin-bottom: 60px;
+}
+.pie_chart {
     margin-bottom: 60px;
 }
 
