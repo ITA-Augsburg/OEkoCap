@@ -63,10 +63,12 @@
 .bar_chart {
     max-width: 480px;
     margin-bottom: 60px;
+    min-height: 369px;
 }
 @media (max-width: 500px) {
     .bar_chart {
         padding: 0px 10px;
+        min-height: fit-content;
     }
 }
 
@@ -80,9 +82,6 @@
     }
 }
 
-#pie_chart {
-    margin-bottom: 60px;
-}
 .pie_chart {
     margin-bottom: 60px;
 }
