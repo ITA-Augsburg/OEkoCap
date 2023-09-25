@@ -38,7 +38,7 @@ export default {
     "buttonCalculateEnabled", "button2enabled", "button3enabled", "button4enabled", "button5enabled",
     "progressValue", "subheader_processing", "color_green", "color_lightgrey", "color_darkgreen"
     ],
-    emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "startedCorrectlyF", "setErrorMessage"],
+    emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "setStartedCorrectly", "setErrorMessage"],
     mounted() {
         //if user enters app on *url*/processing then redirect to *url*/, otherwise app_input could have missing mandatory values
         if(!this.startedCorrectly) {

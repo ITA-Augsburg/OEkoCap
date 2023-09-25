@@ -25,7 +25,7 @@
     @updateInputFooter="updateInputFooter()"
     @saveNewInputs="saveNewInputs($event)"
     @calculateButton="calculateButton()"
-    @startedCorrectlyF="startedCorrectlyF()"
+    @setStartedCorrectly="setStartedCorrectly()"
     @setErrorMessage="setErrorMessage($event)" />
     
     <VMain />
@@ -513,7 +513,7 @@ export default {
             router.push({name: "ErrorView"})
         });
     },
-    startedCorrectlyF() {
+    setStartedCorrectly() {
       // User must start on the first page of the app. If for example user tries to start on url http://localhost:8080/processing then variable startedCorrectly is false and they're taken to the start-page
       this.startedCorrectly = true
     },

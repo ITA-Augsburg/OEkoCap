@@ -40,22 +40,17 @@
         }),
         methods: {
             handlePdfButton() {
-                // let images = []
-                // if(this.data_urls_prop !== undefined) {
-                //     for(let i=0; i<this.data_urls_prop.length; i++) {
-                //         let img = new Image()
-                //         img.src = this.data_urls_prop[i].image
-                //         images.push(img)
-                //     }
-                // }
+                // console.log(this.data_urls_prop)
                 let docDefinition = {
                     content: [
                         "hello world",
-                        this.data_urls_prop ? {
-                            image: this.data_urls_prop[0].image,
-                            width: 250
-                        } : ""
                     ]
+                }
+                for(let i=0; i<this.data_urls_prop.length; i++) {
+                    docDefinition.content.push({
+                            image: this.data_urls_prop[i].image,
+                            width: 250
+                        })
                 }
                 // console.log(this.images_prop)
                 pdfMake.createPdf(docDefinition).open()

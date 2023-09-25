@@ -25,7 +25,7 @@ export default {
     "buttonCalculateEnabled", "button2enabled", "button3enabled", "button4enabled", "button5enabled",
     "progressValue", "subheader_error", "color_green", "color_lightgrey"
     ],
-    emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "startedCorrectlyF", "setErrorMessage"],
+    emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "setStartedCorrectly", "setErrorMessage"],
     data: () => ({
         id: "err",
     }),

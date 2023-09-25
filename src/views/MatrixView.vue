@@ -33,7 +33,7 @@ export default {
     "buttonCalculateEnabled", "button2enabled", "button3enabled", "button4enabled", "button5enabled",
     "progressValue", "subheader_matrix", "color_green", "color_lightgrey"
     ],
-    emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "startedCorrectlyF", "setErrorMessage"],
+    emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "setStartedCorrectly", "setErrorMessage"],
     mounted() {
         //if user enters app on *url*/matrix then redirect to *url*/, otherwise app_input could have missing mandatory values
         if(!this.startedCorrectly) {

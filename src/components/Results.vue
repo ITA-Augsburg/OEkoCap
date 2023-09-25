@@ -1,6 +1,7 @@
 <script setup>
 import router from "@/router";
 import { createCharts } from "../results_charts_functions.js"
+import html2canvas from "html2canvas"
 </script>
 
 <template>
@@ -202,8 +203,7 @@ import { createCharts } from "../results_charts_functions.js"
 
             this.charts = createCharts(this.test_output, this.test_benchmarks, this.test_benchmarks_2, this.test_benchmarks_ashby)
             console.log(JSON.stringify(this.charts, null, 4))
-            // document.getElementById("gwp_range_output_only_chart_small_font").classList.remove("hidden_chart")
-            // this.charts.gwp_charts.gwp_range_output_only_chart.small_font.canvas.classList.remove("hidden_chart")
+            this.sendChartsAsImages()
         },
         data() {
             return {
@@ -671,9 +671,6 @@ import { createCharts } from "../results_charts_functions.js"
             }
         },
         methods: {
-            // updateVisibleCharts(parentIds) {
-
-            // },
             handleUI(id) {
                 // depending on button- and select-states and viewport-width, show corresponding charts (and custom-legends)
                 switch(id) {
@@ -719,7 +716,12 @@ import { createCharts } from "../results_charts_functions.js"
                         this.updateProcessBarCharts(this.selected_process)
                         break
                     case "resize":
-                        // only legends must be switched
+                        // charts resize themselves, custom legends must be switched manually
+                        // max_gwp_per_process_charts and mechanical_values_charts have custom-legends
+                        this.gwp_button_active ?
+                            this.updateMaxGwpMaxCostPieChart("max_gwp_per_process_charts", "max_gwp_of_each_output_process_chart") :
+                            this.updateMaxGwpMaxCostPieChart("max_cost_per_process_charts", "max_cost_of_each_output_process_chart")
+                        this.updateMechanicalValuesAshbyChart()
                         break
                 }
             },
@@ -827,17 +829,81 @@ import { createCharts } from "../results_charts_functions.js"
                 }
             },
             sendChartsAsImages() {
-                // send currently displayed charts as images to results_footer component for pdf
+                // sends charts as images to results_footer component for use in pdf.
                 let images = []
-                let charts = [this.barChart, this.pieChart, this.barChartProcessGwpRange, this.barChartProcessCostPerKgRange, this.barChartProcessTotalCostRange]
-                // check which charts exist
-                for(let i=0; i<charts.length; i++) {
-                    if(charts[i] !== undefined) {
-                        images.push({index: i, image: charts[i].toBase64Image()})
-                    }
+                // hand-pick charts
+                let selectedId = undefined
+                let selectedChart = undefined
+                let selectedLegend = undefined
+
+                // gwp_charts gwp_range_output_benchmark_1_chart ... gwp_range_output_benchmark_n_chart
+                for(let key in this.charts.gwp_charts) {
+                    if(key === "gwp_range_output_only_chart") continue
+                    // canvas to image -> .toDataURL(), chart.js chart to image -> .toBase64Image()
+                    selectedChart = document.getElementById(this.charts.gwp_charts[key].normal_font)
+                    images.push({name: key, image: selectedChart.toDataURL()})
                 }
-                // send existing charts as images
+
+                // cost_charts cost_range_output_benchmark_1_chart ... cost_range_output_benchmark_n_chart
+                for(let key in this.charts.cost_charts) {
+                    if(key === "cost_range_output_only_chart") continue
+                    selectedChart = document.getElementById(this.charts.cost_charts[key].normal_font)
+                    images.push({name: key, image: selectedChart.toDataURL()})
+                }
+                
+                // max_gwp_per_process_charts max_gwp_of_each_output_process_chart + custom-legend
+                selectedId = this.charts.max_gwp_per_process_charts.max_gwp_of_each_output_process_chart.normal_font
+                selectedChart = document.getElementById(selectedId)
+                images.push({name: "max_gwp_of_each_output_process_chart", image: selectedChart.toDataURL()})
+
+                selectedLegend = document.getElementById(selectedId + "_legend_container")
+                this.htmlElementToCanvas(selectedLegend, "max_gwp_of_each_output_process_chart_legend", images)
+
+                // max_cost_per_process_charts max_cost_of_each_output_process_chart + custom-legend
+                selectedId = this.charts.max_cost_per_process_charts.max_cost_of_each_output_process_chart.normal_font
+                selectedChart = document.getElementById(selectedId)
+                images.push({name: "max_cost_of_each_output_process_chart", image: selectedChart.toDataURL()})
+
+                selectedLegend = document.getElementById(selectedId + "_legend_container")
+                this.htmlElementToCanvas(selectedLegend, "max_cost_of_each_output_process_chart_legend", images)
+
+                // mechanical_values_charts tensile_0_chart tensile_90_chart flexural_0_chart flexural_90_chart + custom-legend
+                for(let key in this.charts.mechanical_values_charts) {
+                    selectedId = this.charts.mechanical_values_charts[key].normal_font
+                    selectedChart = document.getElementById(selectedId)
+                    images.push({name: key, image: selectedChart.toDataURL()})
+
+                    selectedLegend = document.getElementById(selectedId + "_legend_container")
+                    this.htmlElementToCanvas(selectedLegend, key, images)
+                }
+
+                // process_gwp_charts process1_process_gwp_range_chart ... processn_process_gwp_range_chart
+                for(let key in this.charts.process_gwp_charts) {
+                    selectedChart = document.getElementById(this.charts.process_gwp_charts[key].normal_font)
+                    images.push({name: key, image: selectedChart.toDataURL()})
+                }
+                // process_cost_per_kg_charts process1_process_cost_per_kg_range_chart ... processn_process_cost_per_kg_range_chart
+                for(let key in this.charts.process_cost_per_kg_charts) {
+                    selectedChart = document.getElementById(this.charts.process_cost_per_kg_charts[key].normal_font)
+                    images.push({name: key, image: selectedChart.toDataURL()})
+                }
+                // process_total_cost_charts process1_process_total_cost_range_chart ... processn_process_total_cost_range_chart
+                for(let key in this.charts.process_total_cost_charts) {
+                    selectedChart = document.getElementById(this.charts.process_total_cost_charts[key].normal_font)
+                    images.push({name: key, image: selectedChart.toDataURL()})
+                }
+                
                 this.$emit("chartsAsImages", images)
+            },
+            htmlElementToCanvas(element, name, container) {
+                // converts html-elements to canvas-elements. Canvas-elements can then be converted to images.
+                // html2canvas needs the element to be visible.
+                element.classList.remove("hidden_chart")
+                html2canvas(element, {logging: false}).then(function(canvas) {
+                    container.push({name: name, image: canvas.toDataURL()})
+                        // document.body.appendChild(canvas)
+                })
+                element.classList.add("hidden_chart")
             }
         }
     }
