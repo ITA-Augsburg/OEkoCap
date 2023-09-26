@@ -158,7 +158,7 @@ export default {
         if(waste.type !== undefined) {
           this.button2enabled = true
         }
-        this.logWaste()
+        // this.logWaste()
 
       } else if(Object.prototype.hasOwnProperty.call(new_values, "sep_type")) {
         separation.type = new_values.sep_type

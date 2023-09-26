@@ -1,4 +1,4 @@
-# vue_vuetify_basics
+# oekocap_calculator
 
 ## Project setup
 ```
