@@ -30,7 +30,7 @@
             <div class="checkbox_container">
                 <v-checkbox
                 v-if="waste_type === 'End of Life'"
-                @click="[updateWasteRoute(), saveNewInputs()]"
+                @click="[toggleSizeCheckbox(), updateWasteRoute(), saveNewInputs()]"
                 class="checkbox waste_size_checkbox"
                 label="Waste Size > 1.5m"
                 :color=color_green
@@ -57,7 +57,7 @@
             <p v-if="waste_type === 'End of Life' && size1dot5 === true"
             class="text waste_coarse_text">Coarse Shredding - Mass loss</p>
             <p v-if="waste_type === undefined || waste_type === 'End of Life' && size1dot5 === false"
-            class="text waste_coarse_text waste_coarse_text_disabled">Coarse Shredding - Mass loss</p>
+            class="text waste_coarse_text text_disabled">Coarse Shredding - Mass loss</p>
             <Tooltip
             :tooltip_class="'tooltip waste_coarse_text_tooltip'"
             :tooltip_text=Tooltip_texts.test />
@@ -110,6 +110,21 @@
         :color_green=color_green />
 
         <div class="tooltip_container">
+            <div class="checkbox_container">
+                <v-checkbox
+                v-if="waste_type === 'End of Life' && size1dot5"
+                @click="[toggleFineCheckbox(), updateWasteRoute(), saveNewInputs()]"
+                class="checkbox waste_fine_checkbox"
+                :color=color_green
+                v-model="fine_checkbox" />
+                <v-checkbox
+                v-if="waste_type === 'End of Life' && !size1dot5"
+                disabled
+                class="checkbox waste_fine_checkbox"
+                :color=color_green
+                v-model="fine_checkbox" />
+
+            </div>
             <p v-if="shred_2_type !== 'Cutting'" class="text waste_fine_text">Fine Shredding - Mass loss</p>
             <p v-if="shred_2_type === 'Cutting'" class="text waste_fine_text">Cutting - Mass loss</p>
             <Tooltip
@@ -118,6 +133,7 @@
         </div>
         <div class="slider_container">
             <v-slider
+            v-if="fine_checkbox"
             v-on:update:model-value="saveNewInputs()"
             class="slider"
             :color=color_green
@@ -127,14 +143,36 @@
             :max="15"
             :step="0.1"
             v-model="shred_2_ml" />
-            <p class="percentage">{{ Math.round(shred_2_ml * 10) / 10 }}%</p>
+            <v-slider
+            v-if="!fine_checkbox"
+            class="slider"
+            disabled
+            :color=color_green
+            :thumb-color=color_green
+            thumb-size="20"
+            :min="0.5"
+            :max="15"
+            :step="0.1"
+            v-model="shred_2_ml" />
+            <p
+            v-if="fine_checkbox"
+            class="percentage">{{ Math.round(shred_2_ml * 10) / 10 }}%</p>
         </div>
 
         <Expert_mode
+        v-if="waste_type === 'Cut-Off' || waste_type === 'End of Life' && fine_checkbox"
         @newExpertModeValues="newExpertModeValues($event)"
         :label=fine_expmode_label
         :tooltip_text_prop=Tooltip_texts.test
         :disabled=false
+        :expert_mode_cost_prop=shred_2_cost
+        :expert_mode_gwp_prop=shred_2_gwp
+        :color_green=color_green />
+        <Expert_mode
+        v-if="waste_type === 'End of Life' && !fine_checkbox"
+        :label=fine_expmode_label
+        :tooltip_text_prop=Tooltip_texts.test
+        :disabled=true
         :expert_mode_cost_prop=shred_2_cost
         :expert_mode_gwp_prop=shred_2_gwp
         :color_green=color_green />
@@ -174,6 +212,7 @@
                 type_options: ['Cut-Off', 'End of Life'],
                 waste_type: this.app_input_prop.waste.type,
                 size1dot5: this.app_input_prop.waste.size_bigger_1dot5_m,
+                fine_checkbox: true,
 
                 shred_1_type: this.app_input_prop.shredding_1.type,
                 shred_1_ml: this.app_input_prop.shredding_1.mass_loss_percent,
@@ -195,30 +234,59 @@
             }
         },
         methods: {
-            updateWasteRoute() {
+            toggleSizeCheckbox() {
                 this.size1dot5 = !this.size1dot5
-                if(this.waste_type === "Cut-Off" || this.waste_type === "End of Life" && this.size1dot5 === false) {
+            },
+            toggleFineCheckbox() {
+                this.fine_checkbox = !this.fine_checkbox
+            },
+            updateWasteRoute() {
+                if(this.waste_type === "End of Life") {
+                    this.shred_2_type = "Fine"
+                    // this.shred_2_ml = 5.0
+                    this.fine_expmode_label = "Fine shredding expert mode"
+
+                    if(this.size1dot5) {
+                        this.shred_1_type = "Coarse"
+                        this.coarse_expmode_disabled = false
+                        if(this.shred_1_ml === undefined) {
+                            this.shred_1_ml = 5.0
+                        }
+                        if(this.fine_checkbox) {
+                            if(this.shred_2_ml === undefined) {
+                                this.shred_2_ml = 5.0
+                            }
+                        } else {
+                            this.shred_2_type = undefined
+                            this.shred_2_ml = undefined
+                            this.shred_2_gwp = undefined
+                            this.shred_2_cost = undefined
+                        }
+                    } else {
+                        this.shred_1_type = undefined
+                        this.shred_1_ml = undefined
+                        this.coarse_expmode_disabled = true
+                        this.shred_1_gwp = undefined
+                        this.shred_1_cost = undefined
+
+                        this.fine_checkbox = true
+                        if(this.shred_2_ml === undefined) {
+                            this.shred_2_ml = 5.0
+                        }
+                    }
+                    
+                } else if(this.waste_type === "Cut-Off") {
                     this.shred_1_type = undefined
                     this.shred_1_ml = undefined
-                    this.coarse_expmode_disabled = true
                     this.shred_1_gwp = undefined
                     this.shred_1_cost = undefined
-                    if(this.waste_type === "Cut-Off") {
-                        this.shred_2_type = "Cutting"
-                        this.shred_2_ml = 5.0
-                        this.coarse_expmode_disabled = undefined
-                    }
-                    if(this.waste_type === "End of Life") {
-                        this.shred_2_type = "Fine"
-                        // this.shred_2_ml = 5.0
-                    }
-                } else if(this.waste_type === "End of Life" && this.size1dot5 === true) {
-                    this.shred_1_type = "Coarse"
-                    this.shred_2_type = "Fine"
-                    this.coarse_expmode_disabled = false
-                    if(this.shred_1_ml === undefined) {
-                        this.shred_1_ml = 5.0
-                    }
+
+                    this.shred_2_type = "Cutting"
+                    this.shred_2_ml = 5.0
+                    this.coarse_expmode_disabled = undefined
+                    this.fine_expmode_label = "Cutting expert mode"
+
+                    this.fine_checkbox = true
                 }
                 // this.log()
             },

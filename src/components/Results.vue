@@ -172,6 +172,7 @@ import html2canvas from "html2canvas"
         emits: ["setErrorMessage", "chartsAsImages"],
         mounted() {
 
+            // this.test_output = this.app_output_prop
             // check output validity
             if(!(Object.prototype.hasOwnProperty.call(this.test_output, "processes"))) {
                     this.$emit("setErrorMessage", "Invalid Input. No output could be generated based from the given input.")

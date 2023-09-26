@@ -21,7 +21,7 @@ export function createCharts(output, test_benchmarks, test_benchmarks_2, test_be
 
     let category = "gwp_charts"
     let parentId = "gwp_or_cost_charts"
-    let title = "GWP Range"
+    let title = "GWP range"
     let unit = "kg CO²"
     
     let pieChartLabels = undefined
@@ -56,7 +56,7 @@ export function createCharts(output, test_benchmarks, test_benchmarks_2, test_be
 
     category = "cost_charts"
     parentId = "gwp_or_cost_charts"
-    title = "Cost Range"
+    title = "Cost range"
     unit = "€"
 
     // output only
@@ -88,7 +88,7 @@ export function createCharts(output, test_benchmarks, test_benchmarks_2, test_be
 
     category = "max_gwp_per_process_charts"
     parentId = "gwp_or_cost_per_process_charts"
-    title = "Maximal GWP of each Process"
+    title = "Maximal GWP of each process"
     unit = "kg CO²"
 
     // output
@@ -111,7 +111,7 @@ export function createCharts(output, test_benchmarks, test_benchmarks_2, test_be
 
     category = "max_cost_per_process_charts"
     parentId = "gwp_or_cost_per_process_charts"
-    title = "Maximal Cost of each Process"
+    title = "Maximal cost of each process"
     unit = "€"
     
     // output

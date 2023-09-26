@@ -1,3 +1,7 @@
+<script setup>
+    import router from "../router"
+</script>
+
 <template>
 
     <div class="start_area">
@@ -20,26 +24,23 @@
             Multi-criteria calculation tool for carbon fiber recycling
         </p>
 
-        <router-link :to='{name:"WasteView"}'>
-            <v-btn
-            @click="clearAppInput()"
-            class="start_button"
-            v-bind:color=color_green
-            elevation="5"
-            width="160px"
-            height="47px"
-            ><p class="start_button_text">Start</p></v-btn>
-        </router-link>
+        <v-btn
+        @click="startButton()"
+        class="start_button"
+        v-bind:color=color_green
+        elevation="5"
+        width="160px"
+        height="47px"
+        ><p class="start_button_text">Start</p></v-btn>
 
-        <router-link :to='{name:"ResultsView"}'>
-            <v-btn
-            class="start_button"
-            v-bind:color=color_green
-            elevation="5"
-            width="160px"
-            height="47px"
-            ><p class="start_button_text">shortcut</p></v-btn>
-        </router-link>
+        <v-btn
+        class="start_button"
+        v-bind:color=color_green
+        @click="shortcut()"
+        elevation="5"
+        width="160px"
+        height="47px"
+        ><p class="start_button_text">shortcut</p></v-btn>
 
     </div>
 
@@ -58,6 +59,13 @@ export default {
         clearAppInput() {
             // console.log("clearAppInput emitted from Start.vue")
             this.$emit("clearAppInput", undefined)
+        },
+        startButton() {
+            this.clearAppInput()
+            router.push({name: "WasteView"})
+        },
+        shortcut() {
+            router.push({name: "ResultsView"})
         }
     }
 };
