@@ -6,7 +6,8 @@
 
 <template>
     <Input_subheader
-    :text_3="subheader_textile"
+    :text_2='"Step 2: Part production"'
+    :text_3='"TEXTILE"'
     :tooltip_enabled=true />
     <Input_textile
     :app_input_prop=app_input_prop
@@ -32,7 +33,7 @@ export default {
     "app_input_prop", "matrix_insertion_prop", "proc_moi_prop",
     "app_output_prop", "startedCorrectly", "error_message_prop",
     "buttonCalculateEnabled", "button2enabled", "button3enabled", "button4enabled", "button5enabled",
-    "progressValue", "subheader_textile", "color_green", "color_lightgrey"
+    "progressValue", "color_green", "color_lightgrey"
     ],
     emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "setStartedCorrectly", "setErrorMessage"],
     mounted() {

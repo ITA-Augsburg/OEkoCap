@@ -56,8 +56,8 @@
             :color=color_green
             :thumb-color=color_green
             thumb-size="20"
-            :min="10"
-            :max="30"
+            :min="20"
+            :max="40"
             :step="10" />
             <p class="percentage">{{ matrix_fmc }}%</p>
         </div>

@@ -6,7 +6,8 @@
 
 <template>
     <Input_subheader
-    :text_3=subheader_results />
+    :text_2='"CALCULATOR"'
+    :text_3='"RESULTS"' />
     <Results
     :app_output_prop=app_output_prop
     :color_green=color_green
@@ -24,7 +25,7 @@ export default {
     "app_input_prop", "matrix_insertion_prop", "proc_moi_prop",
     "app_output_prop", "startedCorrectly", "error_message_prop",
     "buttonCalculateEnabled", "button2enabled", "button3enabled", "button4enabled", "button5enabled",
-    "progressValue", "subheader_results", "color_green", "color_lightgrey"
+    "progressValue", "color_green", "color_lightgrey"
     ],
     emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "setStartedCorrectly", "setErrorMessage"],
     data: () => ({

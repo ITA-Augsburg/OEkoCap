@@ -16,15 +16,6 @@ const props = {
     color_grey: "#4A4A4A",
     color_green: "#55CD89",
     color_darkgreen: "#7fc79f",
-
-    subheader_waste: "WASTE",
-    subheader_separation: "SEPARATION",
-    subheader_matrix: "MATRIX",
-    subheader_textile: "TEXTILE",
-    subheader_processing: "PROCESSING",
-    subheader_empty: "⠀",
-    subheader_results: "RESULTS",
-    subheader_error: "ERROR"
 }
 
 const routes = [
@@ -41,7 +32,6 @@ const routes = [
         name: "WasteView",
         component: WasteView,
         props: {
-            subheader_waste: props.subheader_waste,
             color_green: props.color_green,
             color_lightgrey: props.color_lightgrey
         }
@@ -51,7 +41,6 @@ const routes = [
         name: "SeparationView",
         component: SeparationView,
         props: {
-            subheader_separation: props.subheader_separation,
             color_green: props.color_green,
             color_lightgrey: props.color_lightgrey
         }
@@ -61,7 +50,6 @@ const routes = [
         name: "MatrixView",
         component: MatrixView,
         props: {
-            subheader_matrix: props.subheader_matrix,
             color_green: props.color_green,
             color_lightgrey: props.color_lightgrey
         }
@@ -71,7 +59,6 @@ const routes = [
         name: "TextileView",
         component: TextileView,
         props: {
-            subheader_textile: props.subheader_textile,
             color_green: props.color_green,
             color_lightgrey: props.color_lightgrey
         }
@@ -81,7 +68,6 @@ const routes = [
         name: "ProcessingView",
         component: ProcessingView,
         props: {
-            subheader_processing: props.subheader_processing,
             color_green: props.color_green,
             color_lightgrey: props.color_lightgrey,
             color_darkgreen: props.color_darkgreen
@@ -92,7 +78,6 @@ const routes = [
         name: "WaitingView",
         component: WaitingView,
         props: {
-            subheader_empty: props.subheader_empty,
             color_green: props.color_green,
             color_lightgrey: props.color_lightgrey
         }
@@ -102,7 +87,6 @@ const routes = [
         name: "ResultsView",
         component: ResultsView,
         props: {
-            subheader_results: props.subheader_results,
             color_green: props.color_green,
             color_lightgrey: props.color_lightgrey
         }
@@ -112,7 +96,6 @@ const routes = [
         name: "ErrorView",
         component: ErrorView,
         props: {
-            subheader_error: props.subheader_error,
             color_green: props.color_green,
             color_lightgrey: props.color_lightgrey
         }

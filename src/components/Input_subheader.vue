@@ -7,12 +7,12 @@
 
 <div class="subheader">
     <p class="subheader_text_1">ÖkoCaP</p>
-    <p class="subheader_text_2">Calculator</p>
+    <p class="subheader_text_2">{{ text_2 }}</p>
     <div class="subheader_text_3_container">
-      <p class="subheader_text_3">{{text_3}}</p>
+      <p class="subheader_text_3">{{ text_3 }}</p>
       <Tooltip
       v-if="tooltip_enabled === true"
-      :tooltip_class=subheader_tooltip_class
+      :tooltip_class='"tooltip subheader_tooltip"'
       :tooltip_text=Tooltip_texts.test />
     </div>
 
@@ -21,10 +21,9 @@
 </template>
 <script>
 export default {
-  props: ["text_3", "tooltip_enabled"],
+  props: ["text_2", "text_3", "tooltip_enabled"],
   data() {
     return {
-      subheader_tooltip_class: "tooltip subheader_tooltip"
     }
   }
 }

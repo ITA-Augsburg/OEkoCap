@@ -70,7 +70,8 @@
             :tooltip_text=Tooltip_texts.test />
         </div>
 
-        <div class="tooltip_container">
+        <div class="tooltip_container"
+        v-if="false">
             <v-select
             v-model=textile_aw
             v-on:update:model-value="saveNewInputs()"
@@ -107,24 +108,6 @@
         components: {
             Expert_mode: Expert_mode
         },
-        data() {
-            return {
-                type_options: ["Dry-laid", "Air-laid", "Wet-laid"],
-                ml_options: [0, 0, 0],
-                throughput_options: [""],
-                aw_options: [""],
-
-                textile_type: this.app_input_prop.textile_process.type,
-                textile_ml: this.app_input_prop.textile_process.mass_loss_percent,
-                textile_tp: this.app_input_prop.textile_process.throughput_kg_per_h,
-                textile_aw: this.app_input_prop.textile_process.areal_weight_g_per_sqm,
-
-                expert_mode_cost: this.app_input_prop.textile_process.euro_per_kg,
-                expert_mode_gwp: this.app_input_prop.textile_process.co2_equv_per_kg,
-
-                label: "Expert mode"
-            }
-        },
         mounted() {
             // (undef fine) && insert || (coarse fine) && insert -> nur "Wet-laid with Thermoplastfiber"
             // (undef fine) && !insert || (coarse fine) && !insert -> nur "Wet-laid"
@@ -157,40 +140,58 @@
             if(this.textile_type === "Dry-laid" || this.textile_type === "Dry-laid with Thermoplastfiber") {
                     this.ml_options = [5, 15, 5]
                     this.throughput_options = [20, 40, 60]
-                    this.aw_options = [100, 250, 500, 1000]
+                    // this.aw_options = [100, 250, 500, 1000]
                 } else if(this.textile_type === "Air-laid" || this.textile_type === "Air-laid with Thermoplastfiber") {
                     this.ml_options = [5, 15, 5]
-                    this.throughput_options = [120]
-                    this.aw_options = [300, 500, 800]
+                    this.throughput_options = [50, 100, 200]
+                    // this.aw_options = [300, 500, 800]
                 } else if(this.textile_type === "Wet-laid" || this.textile_type === "Wet-laid with Thermoplastfiber") {
                     this.ml_options = [2, 5, 3]
-                    this.throughput_options = [30, 59, 119]
-                    this.aw_options = [50, 100, 200]
+                    this.throughput_options = [5, 15, 25]
+                    // this.aw_options = [50, 100, 200]
                 }
+        },
+        data() {
+            return {
+                type_options: [""],
+                ml_options: [0, 0, 0],
+                throughput_options: [""],
+                aw_options: [""],
+
+                textile_type: this.app_input_prop.textile_process.type,
+                textile_ml: this.app_input_prop.textile_process.mass_loss_percent,
+                textile_tp: this.app_input_prop.textile_process.throughput_kg_per_h,
+                textile_aw: this.app_input_prop.textile_process.areal_weight_g_per_sqm,
+
+                expert_mode_cost: this.app_input_prop.textile_process.euro_per_kg,
+                expert_mode_gwp: this.app_input_prop.textile_process.co2_equv_per_kg,
+
+                label: "Expert mode"
+            }
         },
         methods: {
             updateTextileRoute() {
                 if(this.textile_type === "Dry-laid" || this.textile_type === "Dry-laid with Thermoplastfiber") {
                     this.ml_options = [5, 15, 5]
                     this.throughput_options = [20, 40, 60]
-                    this.aw_options = [100, 250, 500, 1000]
+                    // this.aw_options = [100, 250, 500, 1000]
                     this.textile_ml = 5
                     this.textile_tp = undefined
-                    this.textile_aw = undefined
+                    this.textile_aw = 250
                 } else if(this.textile_type === "Air-laid" || this.textile_type === "Air-laid with Thermoplastfiber") {
                     this.ml_options = [5, 15, 5]
-                    this.throughput_options = [120]
-                    this.aw_options = [300, 500, 800]
+                    this.throughput_options = [50, 100, 200]
+                    // this.aw_options = [300, 500, 800]
                     this.textile_ml = 5
                     this.textile_tp = undefined
-                    this.textile_aw = undefined
+                    this.textile_aw = 250
                 } else if(this.textile_type === "Wet-laid" || this.textile_type === "Wet-laid with Thermoplastfiber") {
                     this.ml_options = [2, 5, 3]
-                    this.throughput_options = [30, 59, 119]
-                    this.aw_options = [50, 100, 200]
+                    this.throughput_options = [5, 15,25]
+                    // this.aw_options = [50, 100, 200]
                     this.textile_ml = 5
                     this.textile_tp = undefined
-                    this.textile_aw = undefined
+                    this.textile_aw = 100
                 }
             },
             newExpertModeValues(new_values) {

@@ -83,7 +83,7 @@ export default {
       "polymer": {
         "thermo_type": undefined,
         "matrix_type": undefined,
-        "fvc_percent": 20,
+        "fvc_percent": 30,
         "feedstock_type": "biodegredable",
         "state_of_origin": "virgin",
         "euro_per_kg": undefined,
@@ -340,7 +340,7 @@ export default {
         "polymer": {
           "thermo_type": undefined,
           "matrix_type": undefined,
-          "fvc_percent": 20,
+          "fvc_percent": 30,
           "feedstock_type": "biodegredable",
           "state_of_origin": "virgin",
           "euro_per_kg": undefined,
