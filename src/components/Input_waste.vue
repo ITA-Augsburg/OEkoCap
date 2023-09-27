@@ -194,7 +194,7 @@
 
 <script>
     export default {
-        props: ["app_input_prop", "color_green"],
+        props: ["app_input_prop", "color_green", "waste_fine_checkbox_prop"],
         emits: ["saveNewInputs"],
         mounted() {
             if(this.waste_type === "End of Life" && this.size1dot5 === true) {
@@ -203,16 +203,13 @@
             if(this.waste_type === "Cut-Off") {
                 this.coarse_expmode_disabled = undefined
             }
-            if(this.shred_2_ml === undefined) {
-                this.shred_2_ml = 5.0
-            }
         },
         data() {
             return {
                 type_options: ['Cut-Off', 'End of Life'],
                 waste_type: this.app_input_prop.waste.type,
                 size1dot5: this.app_input_prop.waste.size_bigger_1dot5_m,
-                fine_checkbox: true,
+                fine_checkbox: this.waste_fine_checkbox_prop,
 
                 shred_1_type: this.app_input_prop.shredding_1.type,
                 shred_1_ml: this.app_input_prop.shredding_1.mass_loss_percent,
@@ -324,7 +321,9 @@
                         shred_2_cost: this.shred_2_cost,
 
                         transport_cost: this.transport_cost,
-                        transport_gwp: this.transport_gwp
+                        transport_gwp: this.transport_gwp,
+
+                        waste_fine_checkbox: this.fine_checkbox
                     })
                 }, 20);
             },

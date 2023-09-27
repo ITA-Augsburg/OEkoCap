@@ -97,7 +97,7 @@ export function createCharts(output, test_benchmarks, test_benchmarks_2, test_be
         pieChartLabels.push(process.name)
         let dataPoint = (process.maxGWPValue + process.minGWPValue) / 2
         data.push(Math.round(dataPoint * 100) / 100)
-        pieChartColors.push(randomColor(i, 1))
+        pieChartColors.push(randomColor(i, 1, output.processes.length))
     })
     addPieCharts(charts, category, name, title, pieChartLabels, data, pieChartColors, unit, parentId)
     name = undefined
@@ -121,22 +121,8 @@ export function createCharts(output, test_benchmarks, test_benchmarks_2, test_be
         pieChartLabels.push(process.name)
         let dataPoint = (process.minCostPerKg + process.maxCostPerKg) / 2
         data.push(Math.round(dataPoint * 100) / 100)
-        pieChartColors.push(randomColor(i, 1))
+        pieChartColors.push(randomColor(i, 1, output.processes.length))
     })
-    // data.push(100)
-    // pieChartColors.push(randomColor(4, 1))
-    // data.push(100)
-    // pieChartColors.push(randomColor(5, 1))
-    // data.push(100)
-    // pieChartColors.push(randomColor(6, 1))
-    // data.push(100)
-    // pieChartColors.push(randomColor(7, 1))
-    // data.push(100)
-    // pieChartColors.push(randomColor(8, 1))
-    // data.push(100)
-    // pieChartColors.push(randomColor(9, 1))
-    // data.push(100)
-    // pieChartColors.push(randomColor(10, 1))
     addPieCharts(charts, category, name, title, pieChartLabels, data, pieChartColors, unit, parentId)
     name = undefined
     data = undefined
@@ -713,7 +699,7 @@ function setAshbyChartData(output, benchmarks, mechArg1, mechArg2) { // this.tes
             xMax: benchmarksMinMax[key][selection_x].max,
             yMin: benchmarksMinMax[key][selection_y].min,
             yMax: benchmarksMinMax[key][selection_y].max,
-            backgroundColor: randomColor(colorIndex, 0.45),
+            backgroundColor: randomColor(colorIndex, 0.45, 4),
         }
         data.ellipses.push(newEllipse)
         data.names.push(key)
@@ -763,31 +749,20 @@ function getMechanicalMinMaxValues(data) {
     return values
 }
 
-function randomColor(i, alpha) {
+function randomColor(i, alpha, numberOfElements) {
     /**
-     * Generates a randomised color, that has the same saturation and lightness as the main green color.
-     * Parameter i is needed for iterating in the wrapper function.
+     * Generates a randomised color, that has the same saturation and lightness as the main green color of the app.
+     * Parameters:
+     *     i: for iterating in the parent function.
+     *     alpha: transparency-value.
+     *     numberOfElements: number of elements of the parent function.
     */
-   //ver1
-    // let h = (146 - i * 33) % 356, s = 60, l = 70
+   
+    // set interval depending on numberOfElements and start from 146
+    let interval = 356 / numberOfElements
+    let h = (146 - i * interval) % 356, s = 55, l = 57 
 
-    // ashby chart
-    let h = (146 - i * 80) % 356, s = 60, l = 70
-
-    //ver2
-    // let h = 146, s = 60, l = 60
-    // for(let j=0; j<i; j++) {
-    //     l += 10
-    //     if(l>90) {
-    //         l = 60
-    //         h = h - 80
-    //         if(h<0) {
-    //             h = 356 + h
-    //         }
-    //     }
-    // }
-
-    //ver3
+    //greens only
     // let h = 146, s = 60, l = 30 + i * 5
 
     // console.log("hsla(" + h +"°, " + s + "%, " + l + "%, " + alpha + ")")

@@ -17,6 +17,7 @@
     :buttonCalculateEnabled=buttonCalculateEnabled
 
     :app_input_prop=this.app_input
+    :waste_fine_checkbox_prop=this.waste_fine_checkbox
     :matrix_insertion_prop=this.matrixInsertionCheckbox
     :proc_moi_prop=this.processingMethodOfInsertion
     :app_output_prop=this.appOutput
@@ -44,6 +45,8 @@ export default {
     footerProgressBar: 0,
 
     startedCorrectly: false,
+
+    waste_fine_checkbox: true,
 
     matrixInsertionCheckbox: false,
     processingMethodOfInsertion: undefined,
@@ -154,11 +157,13 @@ export default {
         transport.euro_per_kg = new_values.transport_cost
         transport.co2_equv_per_kg = new_values.transport_gwp
 
+        this.waste_fine_checkbox = new_values.waste_fine_checkbox
+
         //unlock footer-button-2 if mandatory inputs for WasteView given
         if(waste.type !== undefined) {
           this.button2enabled = true
         }
-        // this.logWaste()
+        this.logWaste()
 
       } else if(Object.prototype.hasOwnProperty.call(new_values, "sep_type")) {
         separation.type = new_values.sep_type
@@ -475,9 +480,9 @@ export default {
     calculateButton() {
       this.footerProgressBar = 99
       this.formatAppInputKeys()
-      this.log()
+      // this.log()
 
-      let url1 = "https://localhost/meine_dateien/ita_webapp_back/submit_input.php";
+      let url1 = "https://localhost/meine_dateien/ita_webapp_back/call_server.php";
         fetch(url1, {
             method: "POST",
             mode: "cors", // no-cors, *cors, same-origin
@@ -487,21 +492,22 @@ export default {
         }).then(res => {
             return res.text();
         }).then(data => {
-            // console.log("in then block");
-            // console.log(data);
-            let url2 = "https://localhost/meine_dateien/ita_webapp_back/get_output.php"
-            return fetch(url2, {
-              method: "POST",
-              mode: "cors",
-              headers: {"Content-Type": "application/text"},
-              body: data
-            })
-        }).then(res => {
-          return res.text()
-        }).then(data => {
-          // console.log(data)
-          this.appOutput = data;
-          router.push({name: "ResultsView"})
+            console.log(data)
+            try {
+              this.appOutput = JSON.parse(data)
+            } catch (error) {
+              this.errorMessage = "Internal error. No output could be generated based on the given input."
+              router.push({name: "ErrorView"})
+              // todo: save such inputs in the backend for debugging
+              return
+            }
+            // check output validity
+            if(!(Object.prototype.hasOwnProperty.call(this.appOutput, "processes"))) {
+                    this.$emit("setErrorMessage", "Internal error. No output could be generated based on the given input.")
+                    router.push({name: "ErrorView"})
+                    // todo: save such inputs in the backend for debugging
+            }
+            router.push({name: "ResultsView"})
         })
         //if server not responding notify user
         .catch(rej => {

@@ -1,5 +1,4 @@
 <script setup>
-import router from "@/router";
 import { createCharts } from "../results_charts_functions.js"
 import html2canvas from "html2canvas"
 </script>
@@ -155,12 +154,8 @@ import html2canvas from "html2canvas"
         emits: ["setErrorMessage", "chartsAsImages"],
         mounted() {
 
-            // this.test_output = this.app_output_prop
-            // check output validity
-            if(!(Object.prototype.hasOwnProperty.call(this.test_output, "processes"))) {
-                    this.$emit("setErrorMessage", "Invalid Input. No output could be generated based from the given input.")
-                    router.push({name: "ErrorView"})
-            }
+            this.exe_output = this.app_output_prop
+            // this.exe_output = this.test_output // for testing
 
             // fill benchmark-select element
             this.benchmark_options = []
@@ -179,8 +174,8 @@ import html2canvas from "html2canvas"
                 }
             })
 
-            this.charts = createCharts(this.test_output, this.test_benchmarks, this.test_benchmarks_2, this.test_benchmarks_ashby)
-            console.log(JSON.stringify(this.charts, null, 4))
+            this.charts = createCharts(this.exe_output, this.test_benchmarks, this.test_benchmarks_2, this.test_benchmarks_ashby)
+            // console.log(JSON.stringify(this.charts, null, 4))
             this.sendChartsAsImages()
         },
         data() {
@@ -200,6 +195,9 @@ import html2canvas from "html2canvas"
 
                 charts: undefined,
 
+                exe_output: undefined,
+
+                // when testing, set exe_output to test_output in mounted()
                 test_output: {
                     "gwp": {
                         "minValue": 714.3512406919333,
@@ -245,7 +243,7 @@ import html2canvas from "html2canvas"
                             "minCostPerKg": 96.0,
                             "position": 1,
                             "minCostTotalInEur": 91200.0
-                        }
+                        },
                     ],
                     "flexuralStrength_MPa": [
                         {
@@ -642,6 +640,8 @@ import html2canvas from "html2canvas"
                         ]
                     }
                 },
+
+                
 
             }
         },
