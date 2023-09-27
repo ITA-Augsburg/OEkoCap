@@ -1,7 +1,7 @@
 .results_area {
     width: var(--content-width);
     margin: 0px calc((100vw - var(--content-width)) / 2) 30px calc((100vw - var(--content-width)) / 2);
-    min-height: calc(100vh - 80px - 205px - 135px - 30px); /*total height - header h - subheader h - footer h - margin-bottom*/;
+    min-height: calc(100vh - 80px - 175px - 135px - 30px); /*total height - header h - subheader h - footer h - margin-bottom*/;
     /* overflow-y: visible;
     overflow-x: hidden; */
     position: relative;
@@ -84,10 +84,6 @@
 
 .pie_chart {
     margin-bottom: 60px;
-}
-
-.results_process_select {
-    margin: 20px 10px 40px 10px;
 }
 
 .custom_legend_container {

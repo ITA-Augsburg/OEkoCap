@@ -144,23 +144,6 @@ import html2canvas from "html2canvas"
         </div>
 
         <div id="mechanical_values_charts" />
-        
-        <v-select
-        class="select results_process_select"
-        label="Calculated Processes"
-        single-line
-        suffix="Process"
-        :items=calculated_processes
-        variant="solo"
-        :bg-color=color_green
-        v-model=this.selected_process
-        v-on:update:model-value='handleUI("benchmark_select_2")' />
-
-        <div id="process_gwp_charts" />
-
-        <div id="process_cost_per_kg_charts" />
-
-        <div id="process_total_cost_charts" />
 
     </div>
 
@@ -183,12 +166,6 @@ import html2canvas from "html2canvas"
             this.benchmark_options = []
             for(let i=0; i<this.test_benchmarks.length; i++) {
                 this.benchmark_options[i] = this.test_benchmarks[i].name
-            }
-
-            // fill calculated-processes-select element
-            this.calculated_processes = []
-            for(let i=0; i<this.test_output.processes.length; i++) {
-                this.calculated_processes[i] = this.test_output.processes[i].name
             }
 
             //if window-width passes through the value 500px, redraw charts (with different legend font size)
@@ -220,9 +197,6 @@ import html2canvas from "html2canvas"
                 flexural_button_active: false,
                 zero_button_active: false,
                 ninety_button_active: false,
-                
-                calculated_processes: [],
-                selected_process: undefined,
 
                 charts: undefined,
 
@@ -713,15 +687,11 @@ import html2canvas from "html2canvas"
                         this.ninety_button_active = true
                         this.updateMechanicalValuesAshbyChart()
                         break
-                    case "benchmark_select_2":
-                        this.updateProcessBarCharts(this.selected_process)
-                        break
                     case "resize":
                         // charts resize themselves, custom legends must be switched manually
                         // max_gwp_per_process_charts and mechanical_values_charts have custom-legends
-                        this.gwp_button_active ?
-                            this.updateMaxGwpMaxCostPieChart("max_gwp_per_process_charts", "max_gwp_of_each_output_process_chart") :
-                            this.updateMaxGwpMaxCostPieChart("max_cost_per_process_charts", "max_cost_of_each_output_process_chart")
+                        if(this.gwp_button_active) this.updateMaxGwpMaxCostPieChart("max_gwp_per_process_charts", "max_gwp_of_each_output_process_chart")
+                        if(this.cost_button_active) this.updateMaxGwpMaxCostPieChart("max_cost_per_process_charts", "max_cost_of_each_output_process_chart")
                         this.updateMechanicalValuesAshbyChart()
                         break
                 }
@@ -809,26 +779,6 @@ import html2canvas from "html2canvas"
                     }
                 }
             },
-            updateProcessBarCharts(selected_process) {
-                // make sure every chart of these section are hidden
-                this.hideElementChildren("process_gwp_charts")
-                this.hideElementChildren("process_cost_per_kg_charts")
-                this.hideElementChildren("process_total_cost_charts")
-
-                let gwpChartName = selected_process + "_process_gwp_range_chart"
-                let costPerKgChartName = selected_process + "_process_cost_per_kg_range_chart"
-                let totalCostChartName = selected_process + "_process_total_cost_range_chart"
-
-                if(this.wideWindow) {
-                    this.unhideElement(this.charts.process_gwp_charts[gwpChartName].normal_font)
-                    this.unhideElement(this.charts.process_cost_per_kg_charts[costPerKgChartName].normal_font)
-                    this.unhideElement(this.charts.process_total_cost_charts[totalCostChartName].normal_font)
-                } else {
-                    this.unhideElement(this.charts.process_gwp_charts[gwpChartName].small_font)
-                    this.unhideElement(this.charts.process_cost_per_kg_charts[costPerKgChartName].small_font)
-                    this.unhideElement(this.charts.process_total_cost_charts[totalCostChartName].small_font)
-                }
-            },
             sendChartsAsImages() {
                 // sends charts as images to results_footer component for use in pdf.
                 let images = []
@@ -876,22 +826,6 @@ import html2canvas from "html2canvas"
 
                     selectedLegend = document.getElementById(selectedId + "_legend_container")
                     this.htmlElementToCanvas(selectedLegend, key, images)
-                }
-
-                // process_gwp_charts process1_process_gwp_range_chart ... processn_process_gwp_range_chart
-                for(let key in this.charts.process_gwp_charts) {
-                    selectedChart = document.getElementById(this.charts.process_gwp_charts[key].normal_font)
-                    images.push({name: key, image: selectedChart.toDataURL()})
-                }
-                // process_cost_per_kg_charts process1_process_cost_per_kg_range_chart ... processn_process_cost_per_kg_range_chart
-                for(let key in this.charts.process_cost_per_kg_charts) {
-                    selectedChart = document.getElementById(this.charts.process_cost_per_kg_charts[key].normal_font)
-                    images.push({name: key, image: selectedChart.toDataURL()})
-                }
-                // process_total_cost_charts process1_process_total_cost_range_chart ... processn_process_total_cost_range_chart
-                for(let key in this.charts.process_total_cost_charts) {
-                    selectedChart = document.getElementById(this.charts.process_total_cost_charts[key].normal_font)
-                    images.push({name: key, image: selectedChart.toDataURL()})
                 }
                 
                 this.$emit("chartsAsImages", images)

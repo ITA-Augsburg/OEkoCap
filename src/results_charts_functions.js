@@ -11,10 +11,7 @@ export function createCharts(output, test_benchmarks, test_benchmarks_2, test_be
         cost_charts: {},
         max_gwp_per_process_charts: {},
         max_cost_per_process_charts: {},
-        mechanical_values_charts: {},
-        process_gwp_charts: {},
-        process_cost_per_kg_charts: {},
-        process_total_cost_charts: {}
+        mechanical_values_charts: {}
     }
     
     // gwp range bar-charts (output only, output-benchmark_1, ..., output-benchmark_n)
@@ -84,11 +81,11 @@ export function createCharts(output, test_benchmarks, test_benchmarks_2, test_be
         barChartBenchmarkLabel = undefined
     }
 
-    // max gwp of each process pie-chart + custom legend (output)
+    // avarage gwp of each process pie-chart + custom legend (output)
 
     category = "max_gwp_per_process_charts"
     parentId = "gwp_or_cost_per_process_charts"
-    title = "Maximal GWP of each process"
+    title = "Avarage GWP of each process"
     unit = "kg CO²"
 
     // output
@@ -98,8 +95,9 @@ export function createCharts(output, test_benchmarks, test_benchmarks_2, test_be
     pieChartColors = []
     output.processes.forEach((process, i) => {
         pieChartLabels.push(process.name)
-        data.push(Math.round(process.maxGWPValue * 100) / 100)
-        pieChartColors.push(randomColor(i+1, 1))
+        let dataPoint = (process.maxGWPValue + process.minGWPValue) / 2
+        data.push(Math.round(dataPoint * 100) / 100)
+        pieChartColors.push(randomColor(i, 1))
     })
     addPieCharts(charts, category, name, title, pieChartLabels, data, pieChartColors, unit, parentId)
     name = undefined
@@ -107,11 +105,11 @@ export function createCharts(output, test_benchmarks, test_benchmarks_2, test_be
     pieChartLabels = undefined
     pieChartColors = undefined
 
-    // max total cost of each process pie-chart + custom legend (output)
+    // avarage cost/kg of each process pie-chart + custom legend (output)
 
     category = "max_cost_per_process_charts"
     parentId = "gwp_or_cost_per_process_charts"
-    title = "Maximal cost of each process"
+    title = "Avarage cost of each process"
     unit = "€"
     
     // output
@@ -121,9 +119,24 @@ export function createCharts(output, test_benchmarks, test_benchmarks_2, test_be
     pieChartColors = []
     output.processes.forEach((process, i) => {
         pieChartLabels.push(process.name)
-        data.push(Math.round(process.maxCostTotalInEur * 100) / 100)
-        pieChartColors.push(randomColor(i+1, 1))
+        let dataPoint = (process.minCostPerKg + process.maxCostPerKg) / 2
+        data.push(Math.round(dataPoint * 100) / 100)
+        pieChartColors.push(randomColor(i, 1))
     })
+    // data.push(100)
+    // pieChartColors.push(randomColor(4, 1))
+    // data.push(100)
+    // pieChartColors.push(randomColor(5, 1))
+    // data.push(100)
+    // pieChartColors.push(randomColor(6, 1))
+    // data.push(100)
+    // pieChartColors.push(randomColor(7, 1))
+    // data.push(100)
+    // pieChartColors.push(randomColor(8, 1))
+    // data.push(100)
+    // pieChartColors.push(randomColor(9, 1))
+    // data.push(100)
+    // pieChartColors.push(randomColor(10, 1))
     addPieCharts(charts, category, name, title, pieChartLabels, data, pieChartColors, unit, parentId)
     name = undefined
     data = undefined
@@ -155,70 +168,6 @@ export function createCharts(output, test_benchmarks, test_benchmarks_2, test_be
     addAshbyCharts(charts, category, name, data, parentId)
     name = undefined
     data = undefined
-
-    // process gwp range (output_process_1-corresponding_benchmark, ..., output_process_n-corresponding_benchmark)
-    // process cost/kg range (output_process_1-corresponding_benchmark, ..., output_process_n-corresponding_benchmark)
-    // process total cost range (output_process_1-corresponding_benchmark, ..., output_process_n-corresponding_benchmark)
-    for(let i=0; i< output.processes.length; i++) {
-        let processGwpRangeData = []
-        let processCostPerKgRangeData = []
-        let processTotalCostRangeData = []
-        let minGwp = Math.round(output.processes[i].minGWPValue * 100)/100
-        let maxGwp = Math.round(output.processes[i].maxGWPValue * 100)/100
-        let minCostKg = Math.round(output.processes[i].minCostPerKg * 100)/100
-        let maxCostKg = Math.round(output.processes[i].maxCostPerKg * 100)/100
-        let minCostTotal = Math.round(output.processes[i].minCostTotalInEur * 100)/100
-        let maxCostTotal = Math.round(output.processes[i].maxCostTotalInEur * 100)/100
-
-        processGwpRangeData[0] = [minGwp, maxGwp]
-        processCostPerKgRangeData[0] = [minCostKg, maxCostKg]
-        processTotalCostRangeData[0] = [minCostTotal, maxCostTotal]
-
-        // look for a corresponding process in the benchmarks
-        for(let j=0; j<test_benchmarks_2.length; j++) {
-            if(test_benchmarks_2[j].name === output.processes[i].name) {
-                let minGwp = Math.round(test_benchmarks_2[j].gwp_min * 100)/100
-                let maxGwp = Math.round(test_benchmarks_2[j].gwp_max * 100)/100
-                let minCostKg = Math.round(test_benchmarks_2[j].cost_per_kg_min * 100)/100
-                let maxCostKg = Math.round(test_benchmarks_2[j].cost_per_kg_max * 100)/100
-                let minCostTotal = Math.round(test_benchmarks_2[j].total_cost_min * 100)/100
-                let maxCostTotal = Math.round(test_benchmarks_2[j].total_cost_max * 100)/100
-                processGwpRangeData[1] = [minGwp, maxGwp]
-                processCostPerKgRangeData[1] = [minCostKg, maxCostKg]
-                processTotalCostRangeData[1] = [minCostTotal, maxCostTotal]
-                break
-            }
-        }
-
-        category = "process_gwp_charts"
-        parentId = "process_gwp_charts"
-        barChartBenchmarkLabel = "Benchmark"
-
-        name = output.processes[i].name + "_process_gwp_range_chart"
-        title = output.processes[i].name + " Process GWP Range"
-        unit = "kg CO²"
-        addBarCharts(charts, category, name, title, barChartBenchmarkLabel, processGwpRangeData, unit, parentId)
-
-        category = "process_cost_per_kg_charts"
-        parentId = "process_cost_per_kg_charts"
-        name = output.processes[i].name + "_process_cost_per_kg_range_chart"
-        title = output.processes[i].name + " Process Cost per Kg Range"
-        unit = "€ / kg"
-        addBarCharts(charts, category, name, title, barChartBenchmarkLabel, processCostPerKgRangeData, unit, parentId)
-
-        category = "process_total_cost_charts"
-        parentId = "process_total_cost_charts"
-        name = output.processes[i].name + "_process_total_cost_range_chart"
-        title = output.processes[i].name + " Process Total Cost Range"
-        unit = "€"
-        addBarCharts(charts, category, name, title, barChartBenchmarkLabel, processTotalCostRangeData, unit, parentId)
-    }
-    category = undefined
-    parentId = undefined
-    barChartBenchmarkLabel = undefined
-    name = undefined
-    title = undefined
-    unit = undefined
 
     return charts
 }
@@ -748,7 +697,7 @@ function setAshbyChartData(output, benchmarks, mechArg1, mechArg2) { // this.tes
             xMax: outputMinMax[selection_x].max,
             yMin: outputMinMax[selection_y].min,
             yMax: outputMinMax[selection_y].max,
-            backgroundColor: 'hsla(146, 55%, 57%, 0.4)'
+            backgroundColor: 'hsla(146, 55%, 57%, 0.45)'
         }],
         names: ["Result"],
         xAxisRange: maxModulus + maxModulus * 0.1,
@@ -764,7 +713,7 @@ function setAshbyChartData(output, benchmarks, mechArg1, mechArg2) { // this.tes
             xMax: benchmarksMinMax[key][selection_x].max,
             yMin: benchmarksMinMax[key][selection_y].min,
             yMax: benchmarksMinMax[key][selection_y].max,
-            backgroundColor: randomColor(colorIndex, 0.4),
+            backgroundColor: randomColor(colorIndex, 0.45),
         }
         data.ellipses.push(newEllipse)
         data.names.push(key)
@@ -819,7 +768,28 @@ function randomColor(i, alpha) {
      * Generates a randomised color, that has the same saturation and lightness as the main green color.
      * Parameter i is needed for iterating in the wrapper function.
     */
-    let h = (146 + i * 260) % 356, s = 55, l = 57
-    // console.log("rgb(" + r +", " + g + ", " + b + ")")
+   //ver1
+    // let h = (146 - i * 33) % 356, s = 60, l = 70
+
+    // ashby chart
+    let h = (146 - i * 80) % 356, s = 60, l = 70
+
+    //ver2
+    // let h = 146, s = 60, l = 60
+    // for(let j=0; j<i; j++) {
+    //     l += 10
+    //     if(l>90) {
+    //         l = 60
+    //         h = h - 80
+    //         if(h<0) {
+    //             h = 356 + h
+    //         }
+    //     }
+    // }
+
+    //ver3
+    // let h = 146, s = 60, l = 30 + i * 5
+
+    // console.log("hsla(" + h +"°, " + s + "%, " + l + "%, " + alpha + ")")
     return "hsla(" + h + ", " + s + "%, " + l + "%, " + alpha + ")"
 }
