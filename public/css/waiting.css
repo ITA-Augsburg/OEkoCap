@@ -1,5 +1,62 @@
 .waiting_text {
+    width: auto;
+    /* display: flex;
+    flex-wrap: wrap; */
     font-size: 25px;
     text-align: center;
-    padding: 170px 0px 0px 0px;
+    padding: 10px 0px 30px 0px;
 }
+
+.loading_logo_entry_point {
+    position: relative;
+    width: fit-content;
+    height: 215px;
+    margin: 100px auto 0px auto;
+}
+
+.loading_img {
+    width: 120px;
+    height: 215px;
+    position: absolute;
+    top: 0px;
+    left: -60px;
+}
+
+.loading_cogs {
+    
+}
+
+.loading_trunk {
+    opacity: 0;
+    animation-name: trunk_fade;
+    animation-duration: 6.5s;
+    /* animation-delay: 2s, 3.5s; */
+    animation-iteration-count: infinite;
+}
+@keyframes trunk_fade {
+    0% { opacity: 0; } /* wait */
+    23.29% { opacity: 0; } /* fade in trunk */
+    29.17% { opacity: 1; } /* wait */
+    52.7% { opacity: 1; } /* fade in leaves */
+    58.58% { opacity: 1; } /* wait */
+    93.87% { opacity: 1; } /* fade out trunk and leaves */
+    100% { opacity: 0; } /* repeat */
+}
+
+.loading_leaves {
+    opacity: 0;
+    animation-name: leaves_fade;
+    animation-duration: 6.5s;
+    /* animation-delay: 3.5s, 2s; */
+    animation-iteration-count: infinite;
+}
+@keyframes leaves_fade {
+    0% { opacity: 0; } /* wait */
+    23.29% { opacity: 0; } /* fade in trunk */
+    29.17% { opacity: 0; } /* wait */
+    52.7% { opacity: 0; } /* fade in leaves */
+    58.58% { opacity: 1; } /* wait */
+    93.87% { opacity: 1; } /* fade out trunk and leaves */
+    100% { opacity: 0; } /* repeat */
+}
+

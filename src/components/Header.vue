@@ -5,8 +5,7 @@
     class="header_logo">
       <v-img
       v-bind:src='require("../assets/logo_oekocap_weiss.png")'
-      alt="oekoCap_logo"
-      ></v-img>
+      alt="oekoCap_logo" />
     </router-link>
     <p class="header_textcontainer">
       <router-link

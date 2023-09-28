@@ -110,7 +110,7 @@
         :color_green=color_green />
 
         <div class="tooltip_container">
-            <div class="checkbox_container">
+            <div class="checkbox_container waste_fine_checkbox_container">
                 <v-checkbox
                 v-if="waste_type === 'End of Life' && size1dot5"
                 @click="[toggleFineCheckbox(), updateWasteRoute(), saveNewInputs()]"

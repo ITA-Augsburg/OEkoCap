@@ -4,7 +4,7 @@
       class="subheader_logo"
       v-bind:src='require("../assets/logo_oekocap_schwarz.png")'
       alt="oekoCap_logo"
-      resize="false"></v-img>
+      resize="false" />
   </div>
     
 </template>
