@@ -37,3 +37,19 @@
         width: calc(100vw - 40px - 10px);
     }
 }
+
+.pointer {
+    cursor: pointer;
+}
+
+.waste_cutting_text {
+    margin: 0px 0px 0px 10px;
+    padding-top: 20px;
+    width: fit-content;
+    align-self: center;
+}
+@media (max-width: 500px) {
+    .waste_cutting_text {
+        width: calc(100vw - 40px - 10px);
+    }
+}

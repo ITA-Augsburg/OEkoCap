@@ -2,6 +2,7 @@
     import Expert_mode from "./Expert_mode.vue"
     import Tooltip from "./Tooltip.vue"
     import Tooltip_texts from "../tooltip_texts.json"
+    import router from "../router"
 </script>
 <template>
 
@@ -170,29 +171,24 @@
 
         <div class="processing_buttoncontainer">
             <div class="processing_clear_buttoncontainer">
-                <RouterLink
-                :to='{name:"StartView"}'>
-                    <v-btn
-                    :color=color_lightgrey
-                    elevation="5"
-                    width="225px"
-                    height="55px"
-                    ><p class="processing_clear_button_text">Clear all</p></v-btn>
-                </RouterLink>
+                <v-btn
+                @click="clearButton()"
+                :color=color_lightgrey
+                elevation="5"
+                width="225px"
+                height="55px"
+                ><p class="processing_clear_button_text">Clear all</p></v-btn>
             </div>
 
             <div class="processing_calc_buttoncontainer">
-                <RouterLink
-                :to='{name:"WaitingView"}'
-                v-if="buttonCalculateEnabled">
-                    <v-btn
-                    @click="calculateButton()"
-                    :color=color_green
-                    elevation="5"
-                    width="225px"
-                    height="55px"
-                    ><p class="processing_calc_button_text">Calculate</p></v-btn>
-                </RouterLink>
+                <v-btn
+                v-if="buttonCalculateEnabled"
+                @click="calculateButton()"
+                :color=color_green
+                elevation="5"
+                width="225px"
+                height="55px"
+                ><p class="processing_calc_button_text">Calculate</p></v-btn>
                 <v-btn
                 v-if="!buttonCalculateEnabled"
                 disabled
@@ -366,6 +362,10 @@
             },
             calculateButton() {
                 this.$emit("calculateButton", undefined)
+                router.push({name:"WaitingView"})
+            },
+            clearButton() {
+                router.push({name:"StartView"})
             },
             log() {
                 console.log("proc_1_type:" + this.proc_1_type)

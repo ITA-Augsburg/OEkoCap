@@ -623,6 +623,7 @@ function setAshbyChartData(output, benchmarks, mechArg1, mechArg2) { // this.tes
     // picks data from output and benchmarks corresponding to the function-parameters
     // calculate minValue and maxValue of output-fields
     let outputMinMax = getMechanicalMinMaxValues(output)
+    // console.log(outputMinMax)
     // calculate minValues and maxValues of benchmarks
     let benchmarksMinMax = {}
     for(let key in benchmarks) {
@@ -662,34 +663,45 @@ function setAshbyChartData(output, benchmarks, mechArg1, mechArg2) { // this.tes
     }
 
     // determine x-axis maximum from output-modulus and benchmark-moduluses
-    let maxModulus = outputMinMax[selection_x].max
+    let maxModulus = outputMinMax[selection_x].max === undefined || outputMinMax[selection_y].max === undefined ? 0 : outputMinMax[selection_x].max
     for(let key in benchmarksMinMax) {
         if(benchmarksMinMax[key][selection_x].max > maxModulus) {
             maxModulus = benchmarksMinMax[key][selection_x].max
         }
     }
     // determine y-axis maximum from output-strength and benchmark-strengths
-    let maxStrength = outputMinMax[selection_y].max
+    let maxStrength = outputMinMax[selection_y].max === undefined || outputMinMax[selection_x].max === undefined ? 0 : outputMinMax[selection_y].max
     for(let key in benchmarksMinMax) {
         if(benchmarksMinMax[key][selection_y].max > maxStrength) {
             maxStrength = benchmarksMinMax[key][selection_y].max
         }
     }
 
+    let outputEllipse = {
+        type: 'ellipse',
+        xMin: outputMinMax[selection_x].min,
+        xMax: outputMinMax[selection_x].max,
+        yMin: outputMinMax[selection_y].min,
+        yMax: outputMinMax[selection_y].max,
+        backgroundColor: 'hsla(146, 55%, 57%, 0.45)'
+    }
     let data = {
-        ellipses: [{
-            type: 'ellipse',
-            xMin: outputMinMax[selection_x].min,
-            xMax: outputMinMax[selection_x].max,
-            yMin: outputMinMax[selection_y].min,
-            yMax: outputMinMax[selection_y].max,
-            backgroundColor: 'hsla(146, 55%, 57%, 0.45)'
-        }],
-        names: ["Result"],
+        ellipses: [],
+        names: [],
         xAxisRange: maxModulus + maxModulus * 0.1,
         yAxisRange: maxStrength + maxStrength * 0.1,
         chartTitle: chartTitle
     }
+    // if any undefined then exclude from data
+    if(
+        outputEllipse.xMin !== undefined &&
+        outputEllipse.xMax !== undefined &&
+        outputEllipse.yMin !== undefined &&
+        outputEllipse.yMax !== undefined) {
+            data.ellipses.push(outputEllipse)
+            data.names.push("Result")
+        }
+
 
     let colorIndex = 1 // the color corresponding to 0 is alredy in use (output-ellipse)
     for(let key in benchmarksMinMax) {

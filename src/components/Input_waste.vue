@@ -125,8 +125,9 @@
                 v-model="fine_checkbox" />
 
             </div>
-            <p v-if="shred_2_type !== 'Cutting'" class="text waste_fine_text">Fine Shredding - Mass loss</p>
-            <p v-if="shred_2_type === 'Cutting'" class="text waste_fine_text">Cutting - Mass loss</p>
+            <p v-if="shred_2_type !== 'Cutting'" id="waste_fine_text" class="text waste_fine_text"
+            @click="handleFineMassLossText()">Fine Shredding - Mass loss</p>
+            <p v-if="shred_2_type === 'Cutting'" class="text waste_cutting_text">Cutting - Mass loss</p>
             <Tooltip
             :tooltip_class="'tooltip waste_fine_text_tooltip'"
             :tooltip_text=Tooltip_texts.test />
@@ -203,6 +204,7 @@
             if(this.waste_type === "Cut-Off") {
                 this.coarse_expmode_disabled = undefined
             }
+            if(this.size1dot5) document.getElementById("waste_fine_text").classList.add("pointer")
         },
         data() {
             return {
@@ -233,9 +235,19 @@
         methods: {
             toggleSizeCheckbox() {
                 this.size1dot5 = !this.size1dot5
+                this.size1dot5 ? 
+                    document.getElementById("waste_fine_text").classList.add("pointer") :
+                    document.getElementById("waste_fine_text").classList.remove("pointer")
             },
             toggleFineCheckbox() {
                 this.fine_checkbox = !this.fine_checkbox
+            },
+            handleFineMassLossText() {
+                if(this.size1dot5) {
+                    this.toggleFineCheckbox()
+                    this.updateWasteRoute()
+                    this.saveNewInputs()
+                }
             },
             updateWasteRoute() {
                 if(this.waste_type === "End of Life") {
