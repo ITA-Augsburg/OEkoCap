@@ -56,6 +56,17 @@
     :bg-color=color_green
     ></v-text-field>
 
+    <v-dialog v-model=dialogOpen width="auto" close-on-content-click>
+        <v-card>
+            <v-card-text>
+                {{ dialogText }}
+            </v-card-text>
+            <v-card-actions>
+                <v-btn block @click="dialogOpen = false">Close</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+
 </template>
 
 <script>
@@ -74,7 +85,10 @@
                 expert_mode_cost: this.expert_mode_cost_prop,
                 expert_mode_gwp: this.expert_mode_gwp_prop,
 
-                exp_tooltip_class: "tooltip exp_mode_tooltip"
+                exp_tooltip_class: "tooltip exp_mode_tooltip",
+
+                dialogOpen: false,
+                dialogText: ""
             }
         },
         methods: {
@@ -97,7 +111,8 @@
                 } else if(this.expert_mode_cost === undefined && this.expert_mode_gwp !== undefined) {
                     if(isNaN(parseFloat(String(this.expert_mode_gwp).replaceAll(",", ".")))) {
                         if(this.expert_mode_gwp !== "") {
-                            alert("Please enter a number for 'kg CO2-eq./kg'.")
+                            this.dialogText = "Please enter a number for 'kg CO2-eq./kg'."
+                            this.dialogOpen = true
                         }
                         this.expert_mode_gwp = undefined
                         this.propagateNewValues()
@@ -107,7 +122,8 @@
                 } else if(this.expert_mode_cost !== undefined && this.expert_mode_gwp === undefined) {
                     if(isNaN(parseFloat(String(this.expert_mode_cost).replaceAll(",", ".")))) {
                         if(this.expert_mode_cost !== "") {
-                            alert("Please enter a number for '€/kg'.")
+                            this.dialogText = "Please enter a number for '€/kg'."
+                            this.dialogOpen = true
                         }
                         this.expert_mode_cost = undefined
                         this.propagateNewValues()
@@ -117,20 +133,23 @@
                 } else {
                     if(isNaN(parseFloat(String(this.expert_mode_cost).replaceAll(",", "."))) && isNaN(parseFloat(String(this.expert_mode_gwp).replaceAll(",", ".")))) {
                         if(this.expert_mode_cost !== "" && this.expert_mode_gwp !== "") {
-                            alert("Please enter a number for 'kg CO2-eq./kg' and '€/kg'.")
+                            this.dialogText = "Please enter a number for 'kg CO2-eq./kg' and '€/kg'."
+                            this.dialogOpen = true
                         }
                         this.expert_mode_cost = undefined
                         this.expert_mode_gwp = undefined
                         this.propagateNewValues()
                     } else if(isNaN(parseFloat(String(this.expert_mode_cost).replaceAll(",", "."))) && !isNaN(parseFloat(String(this.expert_mode_gwp).replaceAll(",", ".")))) {
                         if(this.expert_mode_cost !== "") {
-                            alert("Please enter a number for '€/kg'.")
+                            this.dialogText = "Please enter a number for '€/kg'."
+                            this.dialogOpen = true
                         }
                         this.expert_mode_cost = undefined
                         this.propagateNewValues()
                     } else if(!isNaN(parseFloat(String(this.expert_mode_cost).replaceAll(",", "."))) && isNaN(parseFloat(String(this.expert_mode_gwp).replaceAll(",", ".")))) {
                         if(this.expert_mode_gwp !== "") {
-                            alert("Please enter a number for 'kg CO2-eq./kg'.")
+                            this.dialogText = "Please enter a number for 'kg CO2-eq./kg'."
+                            this.dialogOpen = true
                         }
                         this.expert_mode_gwp = undefined
                         this.propagateNewValues()

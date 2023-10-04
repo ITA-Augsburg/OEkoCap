@@ -214,6 +214,17 @@
         </div>
     </div>
 
+    <v-dialog v-model=dialogOpen width="auto" close-on-content-click>
+        <v-card>
+            <v-card-text>
+                {{ dialogText }}
+            </v-card-text>
+            <v-card-actions>
+                <v-btn block @click="dialogOpen = false">Close</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+
 </template>
 
 <script>
@@ -222,6 +233,8 @@ export default {
     "progressValue", "id", "color_green", "color_lightgrey"],
     emits: ["updateInputFooter"],
     data: () => ({
+        dialogOpen: false,
+        dialogText: ""
     }),
     methods: {
         backButton() {
@@ -262,7 +275,8 @@ export default {
                     if(this.button2enabled) {
                         router.push({name:"SeparationView"})
                     } else {
-                        alert("Please choose a type before continuing.")
+                        this.dialogText = "Please choose a type before continuing."
+                        this.dialogOpen = true
                     }
                     break
                 case "separation":
@@ -270,21 +284,24 @@ export default {
                         router.push({name:"MatrixView"})
 
                     } else {
-                        alert("Please choose a type before continuing.")
+                        this.dialogText = "Please choose a type before continuing."
+                        this.dialogOpen = true
                     }
                     break
                 case "matrix":
                     if(this.button4enabled) {
                         router.push({name:"TextileView"})
                     } else {
-                        alert("Please choose a type and a polymer before continuing.")
+                        this.dialogText = "Please choose a type and a polymer before continuing."
+                        this.dialogOpen = true
                     }
                     break
                 case "textile":
                     if(this.button5enabled) {
                         router.push({name:"ProcessingView"})
                     } else {
-                        alert("Please choose a type, throughput and areal weight before continuing.")
+                        this.dialogText = "Please choose a type and throughput before continuing."
+                        this.dialogOpen = true
                     }
                     break
                 case "processing":
