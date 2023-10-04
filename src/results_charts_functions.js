@@ -4,7 +4,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
 // annotationPlugin for drawing ellipses in charts
 Chart.register(annotationPlugin)
 
-export function createCharts(output, test_benchmarks, test_benchmarks_2, test_benchmarks_ashby) {
+export function createCharts(output, test_benchmarks, test_benchmarks_ashby) {
     // creates every single chart that can possibly be selected. A chart consists of a <canvas> element and a Chart variable.
     let charts = {
         gwp_charts: {},

@@ -452,7 +452,6 @@ export default {
           processing_2.type = "IRCompressionMoulding"
         }
       }
-      if(processing_1.type === "Prepreg Production") processing_1.type = "PrepregProduction"
       if(processing_2.type === undefined) processing_2.type = ""
       if(processing_2.mass_loss_percent === undefined) processing_2.mass_loss_percent = ""
       if(

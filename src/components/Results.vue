@@ -155,7 +155,7 @@ import html2canvas from "html2canvas"
         mounted() {
 
             this.exe_output = this.app_output_prop
-            // this.exe_output = this.test_output // for testing
+            this.exe_output = this.test_output // for testing
 
             // fill benchmark-select element
             this.benchmark_options = []
@@ -174,7 +174,7 @@ import html2canvas from "html2canvas"
                 }
             })
 
-            this.charts = createCharts(this.exe_output, this.test_benchmarks, this.test_benchmarks_2, this.test_benchmarks_ashby)
+            this.charts = createCharts(this.exe_output, this.test_benchmarks, this.test_benchmarks_ashby)
             // console.log(JSON.stringify(this.charts, null, 4))
             this.sendChartsAsImages()
         },
@@ -348,45 +348,6 @@ import html2canvas from "html2canvas"
                         "gwp_max": 1200,
                         "cost_min": 1700,
                         "cost_max": 2200
-                    },
-                ],
-                // benchmark used in the second bar chart
-                test_benchmarks_2: [
-                    {
-                        "name": "ResinTransferMoulding",
-                        "gwp_min": 500,
-                        "gwp_max": 1000,
-                        "cost_per_kg_min": 300,
-                        "cost_per_kg_max": 600,
-                        "total_cost_min": 1500,
-                        "total_cost_max": 2000
-                    },
-                    {
-                        "name": "Carding",
-                        "gwp_min": 600,
-                        "gwp_max": 1100,
-                        "cost_per_kg_min": 200,
-                        "cost_per_kg_max": 500,
-                        "total_cost_min": 1600,
-                        "total_cost_max": 2100
-                    },
-                    {
-                        "name": "Oxidation",
-                        "gwp_min": 700,
-                        "gwp_max": 1200,
-                        "cost_per_kg_min": 500,
-                        "cost_per_kg_max": 700,
-                        "total_cost_min": 1700,
-                        "total_cost_max": 2200
-                    },
-                    {
-                        "name": "Pyrolysis",
-                        "gwp_min": 500,
-                        "gwp_max": 1500,
-                        "cost_per_kg_min": 400,
-                        "cost_per_kg_max": 800,
-                        "total_cost_min": 1300,
-                        "total_cost_max": 2800
                     },
                 ],
                 test_benchmarks_ashby: {
@@ -792,53 +753,63 @@ import html2canvas from "html2canvas"
                     if(key === "gwp_range_output_only_chart") continue
                     // canvas to image -> .toDataURL(), chart.js chart to image -> .toBase64Image()
                     selectedChart = document.getElementById(this.charts.gwp_charts[key].normal_font)
-                    images.push({name: key, image: selectedChart.toDataURL()})
+                    images.push({type: "bar", name: key, image: selectedChart.toDataURL()})
                 }
 
                 // cost_charts cost_range_output_benchmark_1_chart ... cost_range_output_benchmark_n_chart
                 for(let key in this.charts.cost_charts) {
                     if(key === "cost_range_output_only_chart") continue
                     selectedChart = document.getElementById(this.charts.cost_charts[key].normal_font)
-                    images.push({name: key, image: selectedChart.toDataURL()})
+                    images.push({type: "bar", name: key, image: selectedChart.toDataURL()})
                 }
                 
                 // max_gwp_per_process_charts max_gwp_of_each_output_process_chart + custom-legend
                 selectedId = this.charts.max_gwp_per_process_charts.max_gwp_of_each_output_process_chart.normal_font
                 selectedChart = document.getElementById(selectedId)
-                images.push({name: "max_gwp_of_each_output_process_chart", image: selectedChart.toDataURL()})
-
                 selectedLegend = document.getElementById(selectedId + "_legend_container")
-                this.htmlElementToCanvas(selectedLegend, "max_gwp_of_each_output_process_chart_legend", images)
+                this.htmlElementToCanvas(selectedChart, selectedLegend, "max_gwp_of_each_output_process_chart", "pie", images)
 
                 // max_cost_per_process_charts max_cost_of_each_output_process_chart + custom-legend
                 selectedId = this.charts.max_cost_per_process_charts.max_cost_of_each_output_process_chart.normal_font
                 selectedChart = document.getElementById(selectedId)
-                images.push({name: "max_cost_of_each_output_process_chart", image: selectedChart.toDataURL()})
-
                 selectedLegend = document.getElementById(selectedId + "_legend_container")
-                this.htmlElementToCanvas(selectedLegend, "max_cost_of_each_output_process_chart_legend", images)
+                this.htmlElementToCanvas(selectedChart, selectedLegend, "max_cost_of_each_output_process_chart", "pie", images)
 
                 // mechanical_values_charts tensile_0_chart tensile_90_chart flexural_0_chart flexural_90_chart + custom-legend
                 for(let key in this.charts.mechanical_values_charts) {
                     selectedId = this.charts.mechanical_values_charts[key].normal_font
                     selectedChart = document.getElementById(selectedId)
-                    images.push({name: key, image: selectedChart.toDataURL()})
-
                     selectedLegend = document.getElementById(selectedId + "_legend_container")
-                    this.htmlElementToCanvas(selectedLegend, key, images)
+                    this.htmlElementToCanvas(selectedChart, selectedLegend, key, "ashby", images)
                 }
                 
+                // console.log(images)
                 this.$emit("chartsAsImages", images)
             },
-            htmlElementToCanvas(element, name, container) {
+            htmlElementToCanvas(selectedChart, selectedLegend, name, type, container) {
                 // converts html-elements to canvas-elements. Canvas-elements can then be converted to images.
                 // html2canvas needs the element to be visible.
-                element.classList.remove("hidden_chart")
-                html2canvas(element, {logging: false}).then(function(canvas) {
-                    container.push({name: name, image: canvas.toDataURL()})
+
+                selectedChart.classList.remove("hidden_chart")
+                selectedLegend.classList.remove("hidden_chart")
+                let chartContainerId = undefined
+                switch(type) {
+                    case "pie":
+                        chartContainerId = "gwp_or_cost_per_process_charts"
+                        break
+                    case "ashby":
+                        chartContainerId = "mechanical_values_charts"
+                        break
+                    default:
+                        console.error("Invalid type in Results.vue htmlElementToCanvas(...) function")
+                        return
+                }
+                html2canvas(document.getElementById(chartContainerId), {logging: false}).then(function(canvas) {
+                    container.push({type: type, name: name, image: canvas.toDataURL()})
                         // document.body.appendChild(canvas)
                 })
-                element.classList.add("hidden_chart")
+                selectedChart.classList.add("hidden_chart")
+                selectedLegend.classList.add("hidden_chart")
             }
         }
     }
