@@ -12,13 +12,15 @@
                 
             </div>
 
-            <p class="footer_copyright_text">© 2023 
+            <p class="footer_copyright_text">
+                {{ copyrightTextFragment }}
                 <a
                 class="footer_copyright_link"
                 href="https://ita-augsburg.com/"
                 target="_blank">
                     ITA Augsburg
                 </a>
+                • (v1.0.0)
             </p>
 
         </div>
@@ -29,8 +31,12 @@
 <script>
 export default {
     props: [],
-  data: () => ({
-    
-  }),
+    mounted() {
+        let date = new Date()
+        this.copyrightTextFragment = "© " + date.getFullYear().toString() + " "
+    },
+    data: () => ({
+        copyrightTextFragment: ""
+    }),
 };
 </script>
