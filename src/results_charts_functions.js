@@ -4,7 +4,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
 // annotationPlugin for drawing ellipses in charts
 Chart.register(annotationPlugin)
 
-export function createCharts(output, test_benchmarks, test_benchmarks_ashby) {
+export function createCharts(output, benchmarks) {
     // creates every single chart that can possibly be selected. A chart consists of a <canvas> element and a Chart variable.
     let charts = {
         gwp_charts: {},
@@ -35,14 +35,15 @@ export function createCharts(output, test_benchmarks, test_benchmarks_ashby) {
     name = undefined
     data = undefined
 
-    for(let i=0; i<test_benchmarks.length; i++) {
+    for(let key in benchmarks) {
         // output-benchmark_1, ..., output-benchmark_n
-        name = "gwp_range_output_" + test_benchmarks[i].name.replaceAll(" ", "_") + "_chart"
-        barChartBenchmarkLabel = test_benchmarks[i].name
+        name = "gwp_range_output_" + key.replaceAll(" ", "_") + "_chart"
+        barChartBenchmarkLabel = benchmarks[key].name
         data = [
             [Math.round(output.gwp.minValue * 100) / 100, Math.round(output.gwp.maxValue * 100) / 100],
-            [Math.round(test_benchmarks[i].gwp_min * 100)/100, Math.round(test_benchmarks[i].gwp_max * 100)/100]
+            [Math.round(benchmarks[key].gwp_min * 100)/100, Math.round(benchmarks[key].gwp_max * 100)/100]
         ]
+        // console.log(data)
         addBarCharts(charts, category, name, title, barChartBenchmarkLabel, data, unit, parentId)
         name = undefined
         data = undefined
@@ -67,13 +68,13 @@ export function createCharts(output, test_benchmarks, test_benchmarks_ashby) {
     name = undefined
     data = undefined
 
-    for(let i=0; i<test_benchmarks.length; i++) {
+    for(let key in benchmarks) {
         // output-benchmark_1, ..., output-benchmark_n
-        name = "cost_range_output_" + test_benchmarks[i].name.replaceAll(" ", "_") + "_chart"
-        barChartBenchmarkLabel = test_benchmarks[i].name
+        name = "cost_range_output_" + key.replaceAll(" ", "_") + "_chart"
+        barChartBenchmarkLabel = benchmarks[key].name
         data = [
             [Math.round(output.cost.minValue_eur_per_kg * 100) / 100, Math.round(output.cost.maxValue_eur_per_kg * 100) / 100],
-            [Math.round(test_benchmarks[i].cost_min * 100)/100, Math.round(test_benchmarks[i].cost_max * 100)/100]
+            [Math.round(benchmarks[key].cost_per_kg_min * 100)/100, Math.round(benchmarks[key].cost_per_kg_max * 100)/100]
         ]
         addBarCharts(charts, category, name, title, barChartBenchmarkLabel, data, unit, parentId)
         name = undefined
@@ -135,26 +136,27 @@ export function createCharts(output, test_benchmarks, test_benchmarks_ashby) {
 
     // tensile-0
     name = "tensile_0_chart"
-    data = setAshbyChartData(output, test_benchmarks_ashby, "tensile", "0")
+    data = setAshbyChartData(output, benchmarks, "tensile", "0")
     addAshbyCharts(charts, category, name, data, parentId)
 
     // tensile-90
     name = "tensile_90_chart"
-    data = setAshbyChartData(output, test_benchmarks_ashby, "tensile", "90")
+    data = setAshbyChartData(output, benchmarks, "tensile", "90")
     addAshbyCharts(charts, category, name, data, parentId)
 
     // flexural-0
     name = "flexural_0_chart"
-    data = setAshbyChartData(output, test_benchmarks_ashby, "flexural", "0")
+    data = setAshbyChartData(output, benchmarks, "flexural", "0")
     addAshbyCharts(charts, category, name, data, parentId)
 
     // flexural-90
     name = "flexural_90_chart"
-    data = setAshbyChartData(output, test_benchmarks_ashby, "flexural", "90")
+    data = setAshbyChartData(output, benchmarks, "flexural", "90")
     addAshbyCharts(charts, category, name, data, parentId)
     name = undefined
     data = undefined
 
+    // console.log(JSON.stringify(charts, null, 4))
     return charts
 }
 
@@ -198,19 +200,20 @@ function createBarChart(id, title, benchmarkLabel, data, unit, legendFontSize) {
             aspectRatio: 1.3,
             scales: {
                 x: {
-                ticks: {
-                    font: {
-                        size: 20
+                    display: false,
+                    ticks: {
+                        font: {
+                            size: 20
+                        }
                     }
-                }
                 },
                 y: {
                 min: 0,
-                ticks: {
-                    font: {
-                        size: 18
+                    ticks: {
+                        font: {
+                            size: 18
+                        }
                     }
-                }
                 }
             },
             plugins: {
@@ -235,7 +238,7 @@ function createBarChart(id, title, benchmarkLabel, data, unit, legendFontSize) {
                         generateLabels: (chart) => {
                                 if(data[0][0] === undefined) {
                                     return [{
-                                        text: chart.data.labels[1] + " range: [" + data[1][0] + ", " + data[1][1] + "] " + unit,
+                                        text: chart.data.labels[1] + "range: [" + data[1][0] + ", " + data[1][1] + "] " + unit,
                                         strokeStyle: chart.data.datasets[0].borderColor[1],
                                         fillStyle: chart.data.datasets[0].backgroundColor[1]
                                     }]
@@ -247,8 +250,14 @@ function createBarChart(id, title, benchmarkLabel, data, unit, legendFontSize) {
                                     }]
                                 }
                                 return chart.data.labels.map((label, index) => {
+                                    let localLabel = label
+                                    if(label === "Glasfiber-Fabric + Epoxy (Resin Transfer Molding)") {
+                                        localLabel = "Glasfiber-Fabric + Epoxy (RTM)"
+                                    } else if(label === "Glasfiber-Fabric + Epoxy (Wet Compression Molding)") {
+                                        localLabel = "Glasfiber-Fabric + Epoxy (WCM)"
+                                    }
                                     return {
-                                        text: label + " range: [" + data[index][0] + ", " + data[index][1] + "] " + unit,
+                                        text: localLabel + " range: [" + data[index][0] + ", " + data[index][1] + "] " + unit,
                                         strokeStyle: chart.data.datasets[0].borderColor[index],
                                         fillStyle: chart.data.datasets[0].backgroundColor[index]
                                     }
@@ -271,11 +280,11 @@ function addBarCharts(chartsObj, category, name, title, benchmarkLabel, data, un
     chartsObj[category][name]["normal_font"] = {}
     // create canvases and charts, save their id
     createCanvasElement((name + "_small_font"), "bar_chart", parentId)
-    createBarChart((name + "_small_font"), title, benchmarkLabel, data, unit, 15)
+    createBarChart((name + "_small_font"), title, benchmarkLabel, data, unit, 12)
     chartsObj[category][name]["small_font"] = name + "_small_font"
 
     createCanvasElement((name + "_normal_font"), "bar_chart", parentId)
-    createBarChart((name + "_normal_font"), title, benchmarkLabel, data, unit, 20)
+    createBarChart((name + "_normal_font"), title, benchmarkLabel, data, unit, 15)
     chartsObj[category][name]["normal_font"] = name + "_normal_font"
 }
 
@@ -619,15 +628,15 @@ function checkAshbyChartData(data) {
     return modifiedData.ellipses
 }
 
-function setAshbyChartData(output, benchmarks, mechArg1, mechArg2) { // this.test_output, this.test_benchmarks_ashby
+function setAshbyChartData(output, benchmarks, mechArg1, mechArg2) {
     // picks data from output and benchmarks corresponding to the function-parameters
     // calculate minValue and maxValue of output-fields
-    let outputMinMax = getMechanicalMinMaxValues(output)
+    let outputMinMax = getMechanicalMinMaxValues(output, "output")
     // console.log(outputMinMax)
     // calculate minValues and maxValues of benchmarks
     let benchmarksMinMax = {}
     for(let key in benchmarks) {
-        benchmarksMinMax[key] = getMechanicalMinMaxValues(benchmarks[key])
+        benchmarksMinMax[key] = getMechanicalMinMaxValues(benchmarks[key], "benchmark")
     }
     // create data based on function-parameters
     let selection_x = undefined
@@ -711,16 +720,16 @@ function setAshbyChartData(output, benchmarks, mechArg1, mechArg2) { // this.tes
             xMax: benchmarksMinMax[key][selection_x].max,
             yMin: benchmarksMinMax[key][selection_y].min,
             yMax: benchmarksMinMax[key][selection_y].max,
-            backgroundColor: randomColor(colorIndex, 0.45, 4),
+            backgroundColor: randomColor(colorIndex, 0.45, 5),
         }
         data.ellipses.push(newEllipse)
-        data.names.push(key)
+        data.names.push(benchmarks[key].name)
         colorIndex++
     }
     return data
 }
 
-function getMechanicalMinMaxValues(data) {
+function getMechanicalMinMaxValues(data, source) {
     /* returns min- and max-values of output for the fields
     tensileStrength0_MPa, tensileStrength90_MPa
     tensileModulus0_GPa, tensileModulus90_GPa
@@ -729,25 +738,55 @@ function getMechanicalMinMaxValues(data) {
     let values = {}
     let tempMin = undefined
     let tempMax = undefined
-    let tensStren0 = data.tensileStrength_MPa[0].tensileStrength0_MPa
-    let tensStren90 = data.tensileStrength_MPa[1].tensileStrength90_MPa
-    let tensMod0 = data.tensileModulus_GPa[0].tensileModulus0_GPa
-    let tensMod90 = data.tensileModulus_GPa[1].tensileModulus90_GPa
-    let flexStren0 = data.flexuralStrength_MPa[0].flexuralStrength0_MPa
-    let flexStren90 = data.flexuralStrength_MPa[1].flexuralStrength90_MPa
-    let flexMod0 = data.flexuralModulus_GPa[0].flexuralModulus0_GPa
-    let flexMod90 = data.flexuralModulus_GPa[1].flexuralModulus90_GPa
+
+    let tensStren0 = undefined
+    let tensStren90 = undefined
+    let tensMod0 = undefined
+    let tensMod90 = undefined
+    let flexStren0 = undefined
+    let flexStren90 = undefined
+    let flexMod0 = undefined
+    let flexMod90 = undefined
+    switch(source) {
+        case "output":
+            tensStren0 = data.tensileStrength_MPa[0].tensileStrength0_MPa
+            tensStren90 = data.tensileStrength_MPa[1].tensileStrength90_MPa
+            tensMod0 = data.tensileModulus_GPa[0].tensileModulus0_GPa
+            tensMod90 = data.tensileModulus_GPa[1].tensileModulus90_GPa
+            flexStren0 = data.flexuralStrength_MPa[0].flexuralStrength0_MPa
+            flexStren90 = data.flexuralStrength_MPa[1].flexuralStrength90_MPa
+            flexMod0 = data.flexuralModulus_GPa[0].flexuralModulus0_GPa
+            flexMod90 = data.flexuralModulus_GPa[1].flexuralModulus90_GPa
+            break
+        case "benchmark":
+            tensStren0 = [data.tensile_strength_min, data.tensile_strength_max]
+            tensStren90 = [data.tensile_strength_min, data.tensile_strength_max]
+            tensMod0 = [data.tensile_modulus_min, data.tensile_modulus_max]
+            tensMod90 = [data.tensile_modulus_min, data.tensile_modulus_max]
+            flexStren0 = [data.flexural_strength_min, data.flexural_strength_max]
+            flexStren90 = [data.flexural_strength_min, data.flexural_strength_max]
+            flexMod0 = [data.flexural_modulus_min, data.flexural_modulus_max]
+            flexMod90 = [data.flexural_modulus_min, data.flexural_modulus_max]
+            break
+        default:
+            console.error("Invalid value for parameter 'source' in results_charts_functions.js getMechanicalMinMaxValues(...)")
+            return undefined
+    }
     let items = [tensStren0, tensStren90, tensMod0, tensMod90, flexStren0, flexStren90, flexMod0, flexMod90]
     let keyNames = ["tensStren0", "tensStren90", "tensMod0", "tensMod90", "flexStren0", "flexStren90", "flexMod0", "flexMod90"]
     for(let j=0; j<items.length; j++) {
         for(let i=0; i<items[j].length; i++) {
-            // determine min
-            if(tempMin === undefined || parseFloat(items[j][i].value) < tempMin) {
-                tempMin = parseFloat(items[j][i].value)
-            }
-            // determine max
-            if(tempMax === undefined || parseFloat(items[j][i].value) > tempMax) {
-                tempMax = parseFloat(items[j][i].value)
+            
+            if(source === "output") {
+                // determine min
+                if(tempMin === undefined || parseFloat(items[j][i].value) < tempMin) tempMin = parseFloat(items[j][i].value)
+                // determine max
+                if(tempMax === undefined || parseFloat(items[j][i].value) > tempMax) tempMax = parseFloat(items[j][i].value)
+            } else if(source === "benchmark") {
+                // determine min
+                if(tempMin === undefined || parseFloat(items[j][i]) < tempMin) tempMin = parseFloat(items[j][i])
+                // determine max
+                if(tempMax === undefined || parseFloat(items[j][i]) > tempMax) tempMax = parseFloat(items[j][i])
             }
         }
         // save in values
@@ -769,10 +808,10 @@ function randomColor(i, alpha, numberOfElements) {
      *     alpha: transparency-value.
      *     numberOfElements: number of elements of the parent function.
     */
-   
+    
     // set interval depending on numberOfElements and start from 146
     let interval = 356 / numberOfElements
-    let h = (146 - i * interval) % 356, s = 55, l = 57 
+    let h = (146 + i * interval) % 356, s = 55, l = 57 
 
     //greens only
     // let h = 146, s = 60, l = 30 + i * 5

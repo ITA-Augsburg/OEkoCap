@@ -1,0 +1,196 @@
+{
+    "test_output": {
+        "gwp": {
+            "minValue": 714.3512406919333,
+            "maxValue": 7400.289657831437
+        },
+        "processes": [
+            {
+                "maxCostPerKg": 293.0,
+                "maxGWPValue": 2292.0,
+                "maxCostTotalInEur": 2489312.5500000003,
+                "minGWPValue": 293.0,
+                "name": "ResinTransferMoulding",
+                "minCostPerKg": 293.0,
+                "position": 4,
+                "minCostTotalInEur": 318223.6375
+            },
+            {
+                "maxCostPerKg": 109.0,
+                "maxGWPValue": 2108.0,
+                "maxCostTotalInEur": 1081404.0,
+                "minGWPValue": 109.0,
+                "name": "Carding",
+                "minCostPerKg": 109.0,
+                "position": 3,
+                "minCostTotalInEur": 55917.0
+            },
+            {
+                "maxCostPerKg": 0.0,
+                "maxGWPValue": 10.0,
+                "maxCostTotalInEur": 0.0,
+                "minGWPValue": 10.0,
+                "name": "Oxidation",
+                "minCostPerKg": 0.0,
+                "position": 2,
+                "minCostTotalInEur": 0.0
+            },
+            {
+                "maxCostPerKg": 96.0,
+                "maxGWPValue": 10.0,
+                "maxCostTotalInEur": 1990250.0,
+                "minGWPValue": 10.0,
+                "name": "Pyrolysis",
+                "minCostPerKg": 96.0,
+                "position": 1,
+                "minCostTotalInEur": 91200.0
+            }
+        ],
+        "flexuralStrength_MPa": [
+            {
+                "flexuralStrength0_MPa": [
+                    {
+                        "value": "96.0"
+                    }
+                ]
+            },
+            {
+                "flexuralStrength90_MPa": [
+                    {
+                        "value": "24.0"
+                    },
+                    {
+                        "value": "100.0"
+                    }
+                ]
+            }
+        ],
+        "cost": {
+            "minValue_eur_per_kg": "595.4203592021821",
+            "maxValue_eur_per_kg": "6569.307577658338"
+        },
+        "materials": {
+            "matrix": "EP"
+        },
+        "tensileModulus_GPa": [
+            {
+                "tensileModulus0_GPa": [
+                    {
+                        "value": "17.0"
+                    },
+                    {
+                        "value": "93.0"
+                    }
+                ]
+            },
+            {
+                "tensileModulus90_GPa": [
+                    {
+                        "value": "97.0"
+                    }
+                ]
+            }
+        ],
+        "flexuralModulus_GPa": [
+            {
+                "flexuralModulus0_GPa": [
+                    {
+                        "value": "95.0"
+                    }
+                ]
+            },
+            {
+                "flexuralModulus90_GPa": [
+                    {
+                        "value": "99.0"
+                    }
+                ]
+            }
+        ],
+        "tensileStrength_MPa": [
+            {
+                "tensileStrength0_MPa": [
+                    {
+                        "value": "18.0"
+                    },
+                    {
+                        "value": "94.0"
+                    }
+                ]
+            },
+            {
+                "tensileStrength90_MPa": [
+                    {
+                        "value": "98.0"
+                    }
+                ]
+            }
+        ]
+    },
+    "benchmarks": {
+        "glasfiber_fabric_plus_epoxy_resin_transfer_moulding": {
+            "name": "Glasfiber-Fabric + Epoxy (Resin Transfer Molding)",
+            "material": "GFK",
+            "gwp_min": 5.19,
+            "gwp_max": 7.19,
+            "cost_per_kg_min": 27.50,
+            "cost_per_kg_max": 42.50,
+            "tensile_strength_min": 206,
+            "tensile_strength_max": 303,
+            "tensile_modulus_min": 21,
+            "tensile_modulus_max": 21,
+            "flexural_strength_min": 206,
+            "flexural_strength_max": 303,
+            "flexural_modulus_min": 26,
+            "flexural_modulus_max": 26
+        },
+        "glasfiber_fabric_plus_epoxy_wet_compression_moulding": {
+            "name": "Glasfiber-Fabric + Epoxy (Wet Compression Molding)",
+            "material": "GFK",
+            "gwp_min": 4.64,
+            "gwp_max": 5.58,
+            "cost_per_kg_min": 18.34,
+            "cost_per_kg_max": 28.35,
+            "tensile_strength_min": 206,
+            "tensile_strength_max": 303,
+            "tensile_modulus_min": 21,
+            "tensile_modulus_max": 21,
+            "flexural_strength_min": 206,
+            "flexural_strength_max": 303,
+            "flexural_modulus_min": 26,
+            "flexural_modulus_max": 26
+        },
+        "aluminium_deep_drawing": {
+            "name": "Aluminium (Deep-Drawing)",
+            "material": "Aluminium",
+            "gwp_min": 12,
+            "gwp_max": 14.13,
+            "cost_per_kg_min": 24,
+            "cost_per_kg_max": 30,
+            "tensile_strength_min": 290,
+            "tensile_strength_max": 338,
+            "tensile_modulus_min": 66,
+            "tensile_modulus_max": 79,
+            "flexural_strength_min": 240,
+            "flexural_strength_max": 280,
+            "flexural_modulus_min": 66,
+            "flexural_modulus_max": 70
+        },
+        "steel_deep_drawing": {
+            "name": "Steel (Deep-Drawing)",
+            "material": "Steel",
+            "gwp_min": 3.21,
+            "gwp_max": 4.68,
+            "cost_per_kg_min": 13.50,
+            "cost_per_kg_max": 18,
+            "tensile_strength_min": 430,
+            "tensile_strength_max": 600,
+            "tensile_modulus_min": 195,
+            "tensile_modulus_max": 205,
+            "flexural_strength_min": 205,
+            "flexural_strength_max": 370,
+            "flexural_modulus_min": 195,
+            "flexural_modulus_max": 205
+        }
+    }
+}

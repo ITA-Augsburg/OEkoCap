@@ -10,6 +10,7 @@
 
             <div class="results_pdf_buttoncontainer">
                 <v-btn
+                v-if="false"
                 @click=handlePdfButton()
                 :color=color_lightgrey
                 elevation="5"

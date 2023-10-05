@@ -1,6 +1,7 @@
 <script setup>
 import { createCharts } from "../results_charts_functions.js"
 import html2canvas from "html2canvas"
+import benchmarks from "../process_benchmarks.json"
 </script>
 
 <template>
@@ -49,9 +50,8 @@ import html2canvas from "html2canvas"
 
         <v-select
         class="select results_benchmark_process_select"
-        label="Benchmark Calculations"
+        label="Benchmarks"
         single-line
-        suffix="Benchmark"
         :items=benchmark_options
         variant="solo"
         :bg-color=color_green
@@ -159,8 +159,8 @@ import html2canvas from "html2canvas"
 
             // fill benchmark-select element
             this.benchmark_options = []
-            for(let i=0; i<this.test_benchmarks.length; i++) {
-                this.benchmark_options[i] = this.test_benchmarks[i].name
+            for(let key in this.benchmarks) {
+                this.benchmark_options.push(this.benchmarks[key].name)
             }
 
             //if window-width passes through the value 500px, redraw charts (with different legend font size)
@@ -174,9 +174,9 @@ import html2canvas from "html2canvas"
                 }
             })
 
-            this.charts = createCharts(this.exe_output, this.test_benchmarks, this.test_benchmarks_ashby)
+            this.charts = createCharts(this.exe_output, this.benchmarks)
             // console.log(JSON.stringify(this.charts, null, 4))
-            this.sendChartsAsImages()
+            // this.sendChartsAsImages()
         },
         data() {
             return {
@@ -198,412 +198,8 @@ import html2canvas from "html2canvas"
                 exe_output: undefined,
 
                 // when testing, set exe_output to test_output in mounted()
-                test_output: {
-                    "gwp": {
-                        "minValue": 714.3512406919333,
-                        "maxValue": 7400.289657831437
-                    },
-                    "processes": [
-                        {
-                            "maxCostPerKg": 293.0,
-                            "maxGWPValue": 2292.0,
-                            "maxCostTotalInEur": 2489312.5500000003,
-                            "minGWPValue": 293.0,
-                            "name": "ResinTransferMoulding",
-                            "minCostPerKg": 293.0,
-                            "position": 4,
-                            "minCostTotalInEur": 318223.6375
-                        },
-                        {
-                            "maxCostPerKg": 109.0,
-                            "maxGWPValue": 2108.0,
-                            "maxCostTotalInEur": 1081404.0,
-                            "minGWPValue": 109.0,
-                            "name": "Carding",
-                            "minCostPerKg": 109.0,
-                            "position": 3,
-                            "minCostTotalInEur": 55917.0
-                        },
-                        {
-                            "maxCostPerKg": 0.0,
-                            "maxGWPValue": 10.0,
-                            "maxCostTotalInEur": 0.0,
-                            "minGWPValue": 10.0,
-                            "name": "Oxidation",
-                            "minCostPerKg": 0.0,
-                            "position": 2,
-                            "minCostTotalInEur": 0.0
-                        },
-                        {
-                            "maxCostPerKg": 96.0,
-                            "maxGWPValue": 10.0,
-                            "maxCostTotalInEur": 1990250.0,
-                            "minGWPValue": 10.0,
-                            "name": "Pyrolysis",
-                            "minCostPerKg": 96.0,
-                            "position": 1,
-                            "minCostTotalInEur": 91200.0
-                        },
-                    ],
-                    "flexuralStrength_MPa": [
-                        {
-                            "flexuralStrength0_MPa": [
-                                {
-                                    "value": "96.0"
-                                }
-                            ]
-                        },
-                        {
-                            "flexuralStrength90_MPa": [
-                                {
-                                    "value": "24.0"
-                                },
-                                {
-                                    "value": "100.0"
-                                }
-                            ]
-                        }
-                    ],
-                    "cost": {
-                        "minValue_eur_per_kg": "595.4203592021821",
-                        "maxValue_eur_per_kg": "6569.307577658338"
-                    },
-                    "materials": {
-                        "matrix": "EP"
-                    },
-                    "tensileModulus_GPa": [
-                        {
-                            "tensileModulus0_GPa": [
-                                {
-                                    "value": "17.0"
-                                },
-                                {
-                                    "value": "93.0"
-                                }
-                            ]
-                        },
-                        {
-                            "tensileModulus90_GPa": [
-                                {
-                                    "value": "97.0"
-                                }
-                            ]
-                        }
-                    ],
-                    "flexuralModulus_GPa": [
-                        {
-                            "flexuralModulus0_GPa": [
-                                {
-                                    "value": "95.0"
-                                }
-                            ]
-                        },
-                        {
-                            "flexuralModulus90_GPa": [
-                                {
-                                    "value": "99.0"
-                                }
-                            ]
-                        }
-                    ],
-                    "tensileStrength_MPa": [
-                        {
-                            "tensileStrength0_MPa": [
-                                {
-                                    "value": "18.0"
-                                },
-                                {
-                                    "value": "94.0"
-                                }
-                            ]
-                        },
-                        {
-                            "tensileStrength90_MPa": [
-                                {
-                                    "value": "98.0"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                // benchmark used in the first bar chart
-                test_benchmarks: [
-                    {
-                        "name": "benchmark 1",
-                        "gwp_min": 500,
-                        "gwp_max": 1000,
-                        "cost_min": 1500,
-                        "cost_max": 2000
-                    },
-                    {
-                        "name": "benchmark 2",
-                        "gwp_min": 600,
-                        "gwp_max": 1100,
-                        "cost_min": 1600,
-                        "cost_max": 2100
-                    },
-                    {
-                        "name": "benchmark 3",
-                        "gwp_min": 700,
-                        "gwp_max": 1200,
-                        "cost_min": 1700,
-                        "cost_max": 2200
-                    },
-                ],
-                test_benchmarks_ashby: {
-                    benchmark_1: {
-                        "flexuralStrength_MPa": [
-                            {
-                                "flexuralStrength0_MPa": [
-                                    {
-                                        "value": "45.0"
-                                    },
-                                    {
-                                        "value": "97.0"
-                                    }
-                                ]
-                            },
-                            {
-                                "flexuralStrength90_MPa": [
-                                    {
-                                        "value": "69.0"
-                                    }
-                                ]
-                            }
-                        ],
-                        "tensileModulus_GPa": [
-                            {
-                                "tensileModulus0_GPa": [
-                                    {
-                                        "value": "24.0"
-                                    },
-                                    {
-                                        "value": "88.0"
-                                    }
-                                ]
-                            },
-                            {
-                                "tensileModulus90_GPa": [
-                                    {
-                                        "value": "82.0"
-                                    },
-                                    {
-                                        "value": "110.0"
-                                    }
-                                ]
-                            }
-                        ],
-                        "flexuralModulus_GPa": [
-                            {
-                                "flexuralModulus0_GPa": [
-                                    {
-                                        "value": "15.0"
-                                    },
-                                    {
-                                        "value": "25.0"
-                                    },
-                                    {
-                                        "value": "44.0"
-                                    }
-                                ]
-                            },
-                            {
-                                "flexuralModulus90_GPa": [
-                                    {
-                                        "value": "72.0"
-                                    }
-                                ]
-                            }
-                        ],
-                        "tensileStrength_MPa": [
-                            {
-                                "tensileStrength0_MPa": [
-                                    {
-                                        "value": "79.0"
-                                    },
-                                    {
-                                        "value": "95.0"
-                                    }
-                                ]
-                            },
-                            {
-                                "tensileStrength90_MPa": [
-                                    {
-                                        "value": "89.0"
-                                    },
-                                    {
-                                        "value": "99.0"
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    benchmark_2: {
-                        "flexuralStrength_MPa": [
-                            {
-                                "flexuralStrength0_MPa": [
-                                    {
-                                        "value": "20.0"
-                                    },
-                                    {
-                                        "value": "40.0"
-                                    }
-                                ]
-                            },
-                            {
-                                "flexuralStrength90_MPa": [
-                                    {
-                                        "value": "24.0"
-                                    },
-                                    {
-                                        "value": "53.0"
-                                    }
-                                ]
-                            }
-                        ],
-                        "tensileModulus_GPa": [
-                            {
-                                "tensileModulus0_GPa": [
-                                    {
-                                        "value": "52.0"
-                                    },
-                                    {
-                                        "value": "58.0"
-                                    }
-                                ]
-                            },
-                            {
-                                "tensileModulus90_GPa": [
-                                    {
-                                        "value": "51.0"
-                                    },
-                                    {
-                                        "value": "60.0"
-                                    }
-                                ]
-                            }
-                        ],
-                        "flexuralModulus_GPa": [
-                            {
-                                "flexuralModulus0_GPa": [
-                                    {
-                                        "value": "7.0"
-                                    },
-                                    {
-                                        "value": "15.0"
-                                    }
-                                ]
-                            },
-                            {
-                                "flexuralModulus90_GPa": [
-                                    {
-                                        "value": "48.0"
-                                    },
-                                    {
-                                        "value": "60.0"
-                                    }
-                                ]
-                            }
-                        ],
-                        "tensileStrength_MPa": [
-                            {
-                                "tensileStrength0_MPa": [
-                                    {
-                                        "value": "17.0"
-                                    },
-                                    {
-                                        "value": "64.0"
-                                    }
-                                ]
-                            },
-                            {
-                                "tensileStrength90_MPa": [
-                                    {
-                                        "value": "3.0"
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    benchmark_3: {
-                        "flexuralStrength_MPa": [
-                            {
-                                "flexuralStrength0_MPa": [
-                                    {
-                                        "value": "13.0"
-                                    }
-                                ]
-                            },
-                            {
-                                "flexuralStrength90_MPa": [
-                                    {
-                                        "value": "67.0"
-                                    },
-                                    {
-                                        "value": "95.0"
-                                    }
-                                ]
-                            }
-                        ],
-                        "tensileModulus_GPa": [
-                            {
-                                "tensileModulus0_GPa": [
-                                    {
-                                        "value": "1.0"
-                                    },
-                                    {
-                                        "value": "36.0"
-                                    }
-                                ]
-                            },
-                            {
-                                "tensileModulus90_GPa": [
-                                    {
-                                        "value": "19.0"
-                                    }
-                                ]
-                            }
-                        ],
-                        "flexuralModulus_GPa": [
-                            {
-                                "flexuralModulus0_GPa": [
-                                    {
-                                        "value": "45.0"
-                                    }
-                                ]
-                            },
-                            {
-                                "flexuralModulus90_GPa": [
-                                    {
-                                        "value": "90.0"
-                                    }
-                                ]
-                            }
-                        ],
-                        "tensileStrength_MPa": [
-                            {
-                                "tensileStrength0_MPa": [
-                                    {
-                                        "value": "45.0"
-                                    },
-                                    {
-                                        "value": "60.0"
-                                    }
-                                ]
-                            },
-                            {
-                                "tensileStrength90_MPa": [
-                                    {
-                                        "value": "42.0"
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                },
-
-                
-
+                test_output: benchmarks.test_output,
+                benchmarks: benchmarks.benchmarks
             }
         },
         methods: {
@@ -651,8 +247,14 @@ import html2canvas from "html2canvas"
                     case "resize":
                         // charts resize themselves, custom legends must be switched manually
                         // max_gwp_per_process_charts and mechanical_values_charts have custom-legends
-                        if(this.gwp_button_active) this.updateMaxGwpMaxCostPieChart("max_gwp_per_process_charts", "max_gwp_of_each_output_process_chart")
-                        if(this.cost_button_active) this.updateMaxGwpMaxCostPieChart("max_cost_per_process_charts", "max_cost_of_each_output_process_chart")
+                        if(this.gwp_button_active) {
+                            this.updateGwpCostBarChart("gwp_charts", "gwp_range_output_only_chart", "gwp_range_output_")
+                            this.updateMaxGwpMaxCostPieChart("max_gwp_per_process_charts", "max_gwp_of_each_output_process_chart")
+                        }
+                        if(this.cost_button_active) {
+                            this.updateGwpCostBarChart("cost_charts", "cost_range_output_only_chart", "cost_range_output_")
+                            this.updateMaxGwpMaxCostPieChart("max_cost_per_process_charts", "max_cost_of_each_output_process_chart")
+                        }
                         this.updateMechanicalValuesAshbyChart()
                         break
                 }
@@ -678,9 +280,9 @@ import html2canvas from "html2canvas"
                         this.unhideElement(this.charts[chartCategory][chartName].normal_font) :
                         this.unhideElement(this.charts[chartCategory][chartName].small_font)
                 } else {
-                    for(let i=0; i<this.test_benchmarks.length; i++) {
-                        if(this.selected_benchmark === this.test_benchmarks[i].name) {
-                            let benchmarkName = this.test_benchmarks[i].name.replaceAll(" ", "_")
+                    for(let key in this.benchmarks) {
+                        if(this.selected_benchmark === this.benchmarks[key].name) {
+                            let benchmarkName = key.replaceAll(" ", "_")
                             this.wideWindow ?
                                 this.unhideElement(this.charts[chartCategory][chartNamefragment + benchmarkName + "_chart"].normal_font) :
                                 this.unhideElement(this.charts[chartCategory][chartNamefragment + benchmarkName + "_chart"].small_font)

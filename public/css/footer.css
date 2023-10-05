@@ -133,6 +133,7 @@
 .results_pdf_buttoncontainer {
     margin: 20px 10px 20px 5px;
     display: flex;
+    height: 95px;
     flex-direction: row-reverse;
 }
 
