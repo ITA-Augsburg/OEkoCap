@@ -7,7 +7,8 @@
 <template>
     <Input_subheader
     :text_2='"CALCULATOR"'
-    :text_3='"ERROR"' />
+    :text_3='"ERROR"'
+    :tooltip_enabled=false />
     <Error
     :error_message_prop=error_message_prop />
     <Input_footer

@@ -7,7 +7,8 @@
 <template>
     <Input_subheader
     :text_2='"CALCULATOR"'
-    :text_3='"RESULTS"' />
+    :text_3='"RESULTS"'
+    :tooltip_enabled=false />
     <Results
     :app_output_prop=app_output_prop
     :color_green=color_green

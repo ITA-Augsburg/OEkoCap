@@ -1,30 +1,21 @@
+<script setup>
+  import router from "../router"
+</script>
+
 <template>
   <div class="header">
-    <router-link
-    :to='{name: "StartView"}'
-    class="header_logo">
-      <v-img
-      v-bind:src='require("../assets/logo_oekocap_weiss.png")'
-      alt="oekoCap_logo" />
-    </router-link>
+    <v-img
+    :src='require("../assets/logo_oekocap_weiss.png")'
+    alt="oekoCap_logo"
+    :class="'header_logo'"
+    @click="()=>{router.push({name: 'StartView'})}" />
+
     <p class="header_textcontainer">
-      <router-link
-      :to='{name: "StartView"}'
-      class="header_text">
-        <p>Calculator</p>
-      </router-link>
-      <router-link
-      :to='{name: "StartView"}'
-      class="header_text">
-        <p>Guideline</p>
-      </router-link>
-      <router-link
-      :to='{name: "StartView"}'
-      class="header_text">
-        <p>Project</p>
-      </router-link>
+      <span class="header_text" @click="()=>{router.push({name: 'CalculatorView'})}">Calculator</span>
+      <span class="header_text" @click="()=>{router.push({name: 'GuidelinesView'})}">Guidelines</span>
+      <span class="header_text" @click="()=>{router.push({name: 'ProjectView'})}">Project</span>
     </p>
-    <svg 
+    <svg
     xmlns="http://www.w3.org/2000/svg"
     width="80"
     height="80"
@@ -44,29 +35,17 @@
     width="325"
   >
     <v-list-item>
-      <router-link
-      :to='{name: "StartView"}'
-      class="header_text">
-        <p>Calculator</p>
-      </router-link>
+      <div class="header_text" @click="()=>{router.push({name: 'CalculatorView'})}">Calculator</div>
     </v-list-item>
-    <v-divider thickness="2" class="border-opacity-100"></v-divider>
+    <v-divider thickness="2" class="border-opacity-100" />
     <v-list-item>
-      <router-link
-      :to='{name: "StartView"}'
-      class="header_text">
-        <p>Guideline</p>
-      </router-link>
+      <p class="header_text" @click="()=>{router.push({name: 'GuidelinesView'})}">Guidelines</p>
     </v-list-item>
-    <v-divider thickness="2" class="border-opacity-100"></v-divider>
+    <v-divider thickness="2" class="border-opacity-100" />
     <v-list-item>
-      <router-link
-      :to='{name: "StartView"}'
-      class="header_text">
-        <p>Project</p>
-      </router-link>
+      <p class="header_text" @click="()=>{router.push({name: 'ProjectView'})}">Project</p>
     </v-list-item>
-    <v-divider thickness="2" class="border-opacity-100"></v-divider>
+    <!-- <v-divider thickness="2" class="border-opacity-100" /> -->
   </v-navigation-drawer>
 </template>
 
@@ -87,7 +66,7 @@ export default {
   data() {
     return {
       wideWindow: window.innerWidth >= 500 ? true : false,
-      headerTextRight: ["Calculator", "Guideline", "Project"],
+      headerTextRight: ["Calculator", "Guidelines", "Project"],
       drawer: false
     }
   }

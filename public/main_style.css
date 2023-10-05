@@ -16,6 +16,7 @@ by lower imports */
 @import "./css/error.css";
 @import "./css/footer.css";
 @import "./css/tooltip.css";
+@import "./css/info.css";
 
 /* [v-cloak] {
     display: none;

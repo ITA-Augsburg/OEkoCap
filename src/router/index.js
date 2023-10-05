@@ -8,6 +8,9 @@ import ProcessingView from '../views/ProcessingView.vue'
 import WaitingView from '../views/WaitingView.vue'
 import ResultsView from '../views/ResultsView.vue'
 import ErrorView from '../views/ErrorView.vue'
+import CalculatorView from '../views/CalculatorView.vue'
+import GuidelinesView from '../views/GuidelinesView.vue'
+import ProjectView from '../views/ProjectView.vue'
 
 const props = {
     color_white: "#FFFFFF",
@@ -99,7 +102,34 @@ const routes = [
             color_green: props.color_green,
             color_lightgrey: props.color_lightgrey
         }
-    }
+    },
+    {
+        path: "/calculator",
+        name: "CalculatorView",
+        component: CalculatorView,
+        props: {
+            color_green: props.color_green,
+            color_lightgrey: props.color_lightgrey
+        }
+    },
+    {
+        path: "/guidelines",
+        name: "GuidelinesView",
+        component: GuidelinesView,
+        props: {
+            color_green: props.color_green,
+            color_lightgrey: props.color_lightgrey
+        }
+    },
+    {
+        path: "/project",
+        name: "ProjectView",
+        component: ProjectView,
+        props: {
+            color_green: props.color_green,
+            color_lightgrey: props.color_lightgrey
+        }
+    },
 ]
 
 const router = createRouter({

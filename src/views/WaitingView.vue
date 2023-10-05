@@ -7,7 +7,8 @@
 <template>
     <Input_subheader
     :text_2='"CALCULATOR"'
-    :text_3='"⠀"' />
+    :text_3='"⠀"'
+    :tooltip_enabled=false />
     <Waiting></Waiting>
     <Input_footer
     :id=id

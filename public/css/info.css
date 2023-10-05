@@ -1,0 +1,13 @@
+.info_area {
+    width: var(--content-width);
+    margin: 0px calc((100vw - var(--content-width)) / 2) 0px calc((100vw - var(--content-width)) / 2);
+    height: calc(100vh - 80px - 175px - 150px); /*total height - header h - subheader h - footer h*/
+    min-height: 492px;
+    align-content: center;
+}
+/* @media (max-width: 500px) {
+    .info_area {
+        height: calc(100vh - 80px - 175px - 150px);
+        total height - header h - subheader h - footer h
+    }
+} */

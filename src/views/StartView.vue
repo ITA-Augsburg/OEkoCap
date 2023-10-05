@@ -1,7 +1,7 @@
 <script setup>
     import Start_subheader from "../components/Start_subheader.vue"
     import Start from "../components/Start.vue"
-    import Start_footer from "../components/Start_footer.vue"
+    import Sponsor_footer from "../components/Sponsor_footer.vue"
 </script>
 
 <template>
@@ -9,7 +9,7 @@
     <Start
     :color_green=color_green
     @clearAppInput="clearAppInput()" />
-    <Start_footer />
+    <Sponsor_footer />
 </template>
 
 <script>
