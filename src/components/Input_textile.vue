@@ -102,6 +102,10 @@
 </template>
 
 <script>
+/**
+ * This component holds input-elements related to App.vue->app_input.textile_process.
+ * Every time an input is made, every input of this component is emitted to App.vue->app_input.
+ */
     export default {
         props: ["app_input_prop", "matrix_insertion_prop", "color_green", "color_lightgrey"],
         emits: ["saveNewInputs"],
@@ -109,6 +113,11 @@
             Expert_mode: Expert_mode
         },
         mounted() {
+            /**
+             * If user made inputs previously and comes back to this site, then previous inputs are displayed in the input-elements.
+             * Some variables are set, to recreate the state of the site that the user previously left.
+             * This components input-element-options also depend on shred_1_type, shred_2_type from Input_waste.vue and matrix_insertion from Input_matrix.vue.
+             */
             // (undef fine) && insert || (coarse fine) && insert -> nur "Wet-laid with Thermoplastfiber"
             // (undef fine) && !insert || (coarse fine) && !insert -> nur "Wet-laid"
             // (coarse undef) && insert || (undef cutting) && insert -> "Dry-laid with Thermoplastfiber", "Air-laid with Thermoplastfiber"
@@ -171,6 +180,10 @@
         },
         methods: {
             updateTextileRoute() {
+                /**
+                 * Triggers when user interacts with an input-element.
+                 * Some elements change when others are interacted with, some elements depend on others.
+                 */
                 if(this.textile_type === "Dry-laid" || this.textile_type === "Dry-laid with Thermoplastfiber") {
                     this.ml_options = [5, 15, 5]
                     this.throughput_options = [20, 40, 60]
@@ -195,13 +208,20 @@
                 }
             },
             newExpertModeValues(new_values) {
+                /**
+                 * Handles the ExpertMode.vue emits, saves the values that come from there.
+                 */
                 this.expert_mode_cost = new_values[0]
                 this.expert_mode_gwp = new_values[1]
                 this.saveNewInputs()
                 // this.log()
             },
             saveNewInputs() {
-                //setTimeout needed to properly update slider values
+                /**
+                 * Triggers when user interacts with an input-element.
+                 * Emits every input-value of this component to App.vue->app_input.
+                 * setTimeout() needed to properly update slider values.
+                 */
                 setTimeout(() => {
                     // this.log()
                     this.$emit(
@@ -217,6 +237,9 @@
                 }, 20);
             },
             log() {
+                /**
+                 * Logs every input-value of this component.
+                 */
                 console.log("textile_type:" + this.textile_type)
                 console.log("textile_ml:" + this.textile_ml)
                 console.log("textile_tp:" + this.textile_tp)

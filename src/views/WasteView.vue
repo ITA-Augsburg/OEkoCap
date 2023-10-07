@@ -30,6 +30,9 @@
 </template>
 
 <script>
+/**
+ * Holds components that together represent the input-page that corresponds to App.vue->app_input.waste, .shredding_1, .shredding_2, .transportation.
+ */
 export default {
     props: [
         "app_input_prop", "waste_fine_checkbox_prop", "matrix_insertion_prop", "proc_moi_prop", "app_output_prop", "startedCorrectly", "error_message_prop",
@@ -41,20 +44,28 @@ export default {
         id: "waste",
     }),
     mounted() {
-        //if user enters app on *url*/textile then redirect to *url*/, otherwise app_input could have missing mandatory values
+        /**
+         * If user enters app via url (oekocap.com/matrix for example) then user gets redirected to the start.
+         * User must start on the first input-page because later input-pages are dependent on earlier inputs.
+         */
         if(!this.startedCorrectly) {
             this.$router.push({name: "StartView"})
         }
     },
     methods: {
         updateInputFooter() {
+            /**
+             * Updates the progress-bar in the input-footer.
+             */
             this.$emit("updateInputFooter", undefined)
         },
         saveNewInputs(new_values) {
-            // console.log("hi from wasteView")
+            /**
+             * transmits the emit from child-component to App.vue->app_input.
+             */
             // console.log(new_values)
             this.$emit("saveNewInputs", new_values)
         },
     }
-};
+}
 </script>

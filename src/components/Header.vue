@@ -3,6 +3,7 @@
 </script>
 
 <template>
+  <!-- App-header component with App-logo and some hyperlinks. On small screens there is a hamburger(button). -->
   <div class="header">
     <v-img
     :src='require("../assets/logo_oekocap_weiss.png")'
@@ -28,6 +29,7 @@
     </svg>
   </div>
 
+  <!-- This drawer can be toggled by clicking the hamburger-button. -->
   <v-navigation-drawer
     v-model="drawer"
     temporary
@@ -50,10 +52,15 @@
 </template>
 
 <script>
+/**
+ * This is the app-header-component, it is present at the top of the page all the time. It contains elements for navigating to important pages.
+ */
 export default {
   props: [],
   mounted() {
-    //if window-width passes through the value 500px, close drawer
+    /** 
+     * Hamburger-button and -drawer should only be visible if the browser-viewport-width is less then 500px wide. If drawer open and window gets resized to width >= 500px then close the drawer.
+     */
     window.addEventListener("resize", () => {
               if(this.wideWindow === false && window.innerWidth >= 500) {
                 this.drawer = false

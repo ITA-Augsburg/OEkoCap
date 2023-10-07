@@ -17,6 +17,9 @@
 </template>
 
 <script>
+/**
+ * Placeholder page. To be added.
+ */
     export default {
         props: [
             "app_input_prop", "waste_fine_checkbox_prop", "matrix_insertion_prop", "proc_moi_prop",

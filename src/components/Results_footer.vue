@@ -37,9 +37,16 @@
 </template>
 
 <script>
+/**
+ * Holds a button for creating a pdf from the contents of Results.vue.
+ * The button is disabled for the time being and this feature is put on the backlog.
+ */
     export default {
         props: ["color_lightgrey", "data_urls_prop"],
         mounted() {
+            /**
+             * Determines the current year and builds the copyright-text.
+             */
             let date = new Date()
             this.copyrightTextFragment = "© " + date.getFullYear().toString() + " "
         },
@@ -48,6 +55,9 @@
         }),
         methods: {
             handlePdfButton() {
+                /**
+                 * Creates a pdf from the contents of Results.vue.
+                 */
                 // console.log(this.data_urls_prop)
                 // for(let i=0; i<this.data_urls_prop.length; i++) {
                 //     console.log(this.data_urls_prop[i].name)
@@ -114,6 +124,10 @@
                 pdfMake.createPdf(docDefinition).open()
             },
             imageToDataUrl(id) {
+                /**
+                 * Converts an image to an html-canvas-element, that can then be converted to a data-url.
+                 * Data-url format is required for inserting images into the pdf.
+                 */
                 let image = document.getElementById(id)
                 let canvas = document.createElement("canvas")
                 let context = canvas.getContext("2d")
@@ -124,6 +138,9 @@
                 return canvas.toDataURL("img/png")
             },
             addChartsToPdf(pdfContent) {
+                /**
+                 * Creates sections for diagram-images in the pdf.
+                 */
                 let chartTextsPlaceholder = "name" + '\n' + "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat"
                 // first page can hold three charts
                 pdfContent.push({

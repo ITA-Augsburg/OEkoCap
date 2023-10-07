@@ -15,6 +15,9 @@
 </template>
 
 <script>
+/**
+ * A loading-animation to make the time on this Earth a little bit more bearable.
+ */
     export default {
         data() {
             return {

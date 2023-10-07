@@ -4,6 +4,7 @@
 
 <template>
 
+    <!-- App-footer that has buttons and a progress-bar on it for navigating the input-pages. -->
     <div class="input_footer">
         <div class="footer_content">
 
@@ -21,7 +22,7 @@
 
             <div class="footer_buttoncontainer">
 
-<!-- BUTTON BACK -->
+                <!-- BUTTON BACK -->
                 <v-btn
                 v-if="this.id !== 'waiting' && this.id !== 'err' && this.id !== 'results'"
                 icon=""
@@ -41,7 +42,7 @@
                 height="45px"
                 ><p class="footer_disabled_button_text">‹</p></v-btn>
 
-<!-- BUTTON 1 -->
+                <!-- BUTTON 1 -->
                 <v-btn
                 v-if="this.id === 'waste'"
                 icon=""
@@ -69,7 +70,7 @@
                 height="45px"
                 ><p class="footer_disabled_button_text">1</p></v-btn>
 
-<!-- BUTTON 2 -->
+                <!-- BUTTON 2 -->
                 <v-btn
                 v-if="this.id === 'separation'"
                 icon=""
@@ -97,7 +98,7 @@
                 height="45px"
                 ><p class="footer_disabled_button_text">2</p></v-btn>
 
-<!-- BUTTON 3 -->
+                <!-- BUTTON 3 -->
                 <v-btn
                 v-if="this.id === 'matrix'"
                 icon=""
@@ -125,7 +126,7 @@
                 height="45px"
                 ><p class="footer_disabled_button_text">3</p></v-btn>
 
-<!-- BUTTON 4 -->
+                <!-- BUTTON 4 -->
                 <v-btn
                 v-if="this.id === 'textile'"
                 icon=""
@@ -153,7 +154,7 @@
                 height="45px"
                 ><p class="footer_disabled_button_text">4</p></v-btn>
 
-<!-- BUTTON 5 -->
+                <!-- BUTTON 5 -->
                 <v-btn
                 v-if="this.id === 'processing'"
                 icon=""
@@ -181,7 +182,7 @@
                 height="45px"
                 ><p class="footer_disabled_button_text">5</p></v-btn>
                 
-<!-- BUTTON NEXT -->
+                <!-- BUTTON NEXT -->
                 <v-btn
                 v-if="this.id !== 'waiting' && this.id !== 'err' && this.id !== 'results'"
                 icon=""
@@ -230,11 +231,17 @@
 </template>
 
 <script>
+/**
+ * App-footer that has buttons and a progress-bar on it for navigating the input-pages.
+ */
 export default {
     props: ["button2enabled", "button3enabled", "button4enabled", "button5enabled",
     "progressValue", "id", "color_green", "color_lightgrey"],
     emits: ["updateInputFooter"],
     mounted() {
+        /**
+         * Determines the current year and builds the copyright-text.
+         */
         let date = new Date()
         this.copyrightTextFragment = "© " + date.getFullYear().toString() + " "
     },
@@ -245,6 +252,9 @@ export default {
     }),
     methods: {
         backButton() {
+            /**
+             * Navigates to previous input-page.
+             */
             switch(this.id) {
                 case "waste":
                     router.push({name:"WasteView"})
@@ -270,9 +280,15 @@ export default {
             }
         },
         updateInputFooter() {
+            /**
+             * Sets progress-bar value.
+             */
             this.$emit("updateInputFooter", undefined)
         },
         nextButton() {
+            /**
+             * Navigates to next input-page if user has selected every mandatory input. Else a popup pops up.
+             */
             this.updateInputFooter()
             // console.log(this.button2enabled)
             switch(this.id) {
@@ -323,6 +339,9 @@ export default {
             }
         },
         handleButton(id) {
+            /**
+             * Navigates to a specific input-page.
+             */
             switch(id) {
                 case '1':
                     router.push({name:"WasteView"})

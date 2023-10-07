@@ -21,6 +21,9 @@
 </template>
 
 <script>
+/**
+ * Holds components that together represent the results-page. Output from the server is visualised here.
+ */
 export default {
     props: [
     "app_input_prop", "waste_fine_checkbox_prop", "matrix_insertion_prop", "proc_moi_prop",
@@ -35,14 +38,23 @@ export default {
     }),
     methods: {
         updateInputFooter() {
+            /**
+             * Updates the progress-bar in the input-footer.
+             */
             this.$emit("updateInputFooter", undefined)
         },
         setErrorMessage(message) {
+            /**
+             * transmits the emit from child-component to App.vue.
+             */
             this.$emit("setErrorMessage", message)
         },
         chartsAsImages(images) {
+            /**
+             * Image data-urls are emitted from Results-component, these are saved here and passed to Results-footer-component for pdf-creation.
+             */
             this.images = images
         }
     }
-};
+}
 </script>

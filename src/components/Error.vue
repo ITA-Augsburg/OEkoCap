@@ -9,6 +9,9 @@
 </template>
 
 <script>
+/**
+ * An error-message can be displayed in this component by passing error_message_prop.
+ */
     export default {
         props: ["error_message_prop"],
         data() {

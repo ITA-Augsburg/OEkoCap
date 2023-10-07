@@ -20,6 +20,9 @@
 
 </template>
 <script>
+/**
+ * Displays information about the current input-page.
+ */
 export default {
   props: ["text_2", "text_3", "tooltip_enabled"],
   data() {

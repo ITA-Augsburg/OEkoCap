@@ -5,7 +5,11 @@ import annotationPlugin from "chartjs-plugin-annotation"
 Chart.register(annotationPlugin)
 
 export function createCharts(output, benchmarks) {
-    // creates every single chart that can possibly be selected. A chart consists of a <canvas> element and a Chart variable.
+    /**
+     * Creates every single chart that can possibly be selected.
+     * Saves chart-ids in the charts-object.
+     * Charts-elements can be manipulated by accessing these ids.
+     */
     let charts = {
         gwp_charts: {},
         cost_charts: {},
@@ -161,7 +165,10 @@ export function createCharts(output, benchmarks) {
 }
 
 function createCanvasElement(id, className, parentId) {
-    // creates a hidden <canvas> element and inserts it into the parent element.
+    /**
+     * Creates a hidden <canvas> element and inserts it into the parent element.
+     * Canvas elements are required for creating charts.
+     */
     let newCanvas = document.createElement("canvas")
     newCanvas.id = id
     newCanvas.classList.add(className)
@@ -172,7 +179,10 @@ function createCanvasElement(id, className, parentId) {
 }
 
 function createBarChart(id, title, benchmarkLabel, data, unit, legendFontSize) {
-    // format of data always [[a, b], [c, d]]
+    /**
+     * Creates a Chart.js bar-chart with a legend.
+     * Format of bar-chart-data is always [[a, b], [c, d]].
+    */
     return new Chart(id, {
         type: "bar",
         data: {
@@ -274,7 +284,10 @@ function createBarChart(id, title, benchmarkLabel, data, unit, legendFontSize) {
 }
 
 function addBarCharts(chartsObj, category, name, title, benchmarkLabel, data, unit, parentId) {
-    // Prevents code duplication when creating charts.
+    /**
+     * Function used in export function createCharts(...), to add bar-charts to the charts-object.
+     * This function prevents code-duplication.
+     */
     chartsObj[category][name] = {}
     chartsObj[category][name]["small_font"] = {}
     chartsObj[category][name]["normal_font"] = {}
@@ -289,7 +302,11 @@ function addBarCharts(chartsObj, category, name, title, benchmarkLabel, data, un
 }
 
 function checkBarChartData(data) {
-    //bars dont show if their min and max values are the same. In this case the values for drawing the bar will be modified. The legend will still show the accurate values.
+    /**
+     * Bar-chart bars don't show if their min and max values are the same.
+     * If min equals max, the bar-height is set to two percent of the y-axis length and positioned to center on the min (equals max) value.
+     * Only the chart will be modified, the chart-legend will still show the original values.
+     */
     let modifiedData = []
     let chartHeight = data[0][0]
     let minBarHeight = undefined
@@ -319,6 +336,9 @@ function checkBarChartData(data) {
 }
 
 function createPieChart(id, title, labels, data, colors, unit, legendFontSize, parentId) {
+    /**
+     * Creates a Chart.js pie-chart with a custom legend, that is in its own div-element.
+     */
     return new Chart(id, {
         type: "pie",
         data: {
@@ -419,7 +439,10 @@ function createPieChart(id, title, labels, data, colors, unit, legendFontSize, p
 }
 
 function addPieCharts(chartsObj, category, name, title, labels, data, colors, unit, parentId) {
-    // Prevents code duplication when creating charts.
+    /**
+     * Function used in export function createCharts(...), to add pie-charts to the charts-object.
+     * This function prevents code-duplication.
+     */
     chartsObj[category][name] = {}
     chartsObj[category][name]["small_font"] = {}
     chartsObj[category][name]["normal_font"] = {}
@@ -434,6 +457,10 @@ function addPieCharts(chartsObj, category, name, title, labels, data, colors, un
 }
 
 function createAshbyChart(id, data, legendFontSize, parentId) {
+    /**
+     * Creates a Chart.js bubble-chart with a custom legend, that is in its own div-element.
+     * Instead of passing data, ellipses are drawn through the annotationPlugin.
+     */
     return new Chart(id, {
         type: "bubble",
         data: {},
@@ -574,7 +601,10 @@ function createAshbyChart(id, data, legendFontSize, parentId) {
 }
 
 function addAshbyCharts(chartsObj, category, name, data, parentId) {
-    // Prevents code duplication when creating charts.
+    /**
+     * Function used in export function createCharts(...), to add ashby-charts to the charts-object.
+     * This function prevents code-duplication.
+     */
     chartsObj[category][name] = {}
     chartsObj[category][name]["small_font"] = {}
     chartsObj[category][name]["normal_font"] = {}
@@ -589,7 +619,13 @@ function addAshbyCharts(chartsObj, category, name, data, parentId) {
 }
 
 function checkAshbyChartData(data) {
-    // for every ellipse check min and max values on each axis. If min-max range < 3% of the axis-range then ellipse won't show well. If min==max then ellipse won't show. Therefor modify values. Values in the legend won't be affected.
+    /**
+     * For every ellipse, checks min and max values on each axis.
+     * If min-max range < 3% of the axis-length then ellipse won't show well.
+     * If min equals max then ellipse won't show.
+     * Therefor the values for displaying the ellipse are modified, ellipse diameter will be three percent of axis-length.
+     * Values in the legend won't be affected.
+     */
     let modifiedData = {
         ellipses: [],
         xAxisRange: data.xAxisRange,
@@ -629,7 +665,9 @@ function checkAshbyChartData(data) {
 }
 
 function setAshbyChartData(output, benchmarks, mechArg1, mechArg2) {
-    // picks data from output and benchmarks corresponding to the function-parameters
+    /**
+     * picks data from output and benchmarks corresponding to tensile or flexural (mechArg1) and 0 or 90 (mechArg2).
+     */
     // calculate minValue and maxValue of output-fields
     let outputMinMax = getMechanicalMinMaxValues(output, "output")
     // console.log(outputMinMax)
@@ -730,11 +768,13 @@ function setAshbyChartData(output, benchmarks, mechArg1, mechArg2) {
 }
 
 function getMechanicalMinMaxValues(data, source) {
-    /* returns min- and max-values of output for the fields
-    tensileStrength0_MPa, tensileStrength90_MPa
-    tensileModulus0_GPa, tensileModulus90_GPa
-    flexuralStrength0_MPa, flexuralStrength90_MPa
-    flexuralModulus0_GPa, flexuralModulus90_GPa */
+    /**
+     * Returns min- and max-values of output or benchmarks for the fields
+     * tensileStrength0_MPa, tensileStrength90_MPa
+     * tensileModulus0_GPa, tensileModulus90_GPa
+     * flexuralStrength0_MPa, flexuralStrength90_MPa
+     * flexuralModulus0_GPa, flexuralModulus90_GPa 
+     */
     let values = {}
     let tempMin = undefined
     let tempMax = undefined

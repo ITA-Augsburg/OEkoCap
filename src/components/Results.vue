@@ -149,13 +149,19 @@ import benchmarks from "../process_benchmarks.json"
 </template>
 
 <script>
+/**
+ * After the output is delivered from the server, charts are created from it, information is visualised in this component.
+ */
     export default {
         props: ["app_output_prop", "color_green", "color_lightgrey"],
         emits: ["setErrorMessage", "chartsAsImages"],
         mounted() {
-
+            /**
+             * Creates charts from output and benchmarks.
+             * Also creates data-urls of the charts for use when creating the pdf in Results_footer.vue.
+             */
             this.exe_output = this.app_output_prop
-            this.exe_output = this.test_output // for testing
+            this.exe_output = this.test_output // for testing enable this line (real output will be ignored)
 
             // fill benchmark-select element
             this.benchmark_options = []
@@ -204,7 +210,9 @@ import benchmarks from "../process_benchmarks.json"
         },
         methods: {
             handleUI(id) {
-                // depending on button- and select-states and viewport-width, show corresponding charts (and custom-legends)
+                /**
+                 * Depending on button- and select-states and viewport-width, shows the corresponding charts (and custom-legends)
+                 */
                 switch(id) {
                     case "gwp":
                         this.gwp_button_active = true
@@ -260,17 +268,24 @@ import benchmarks from "../process_benchmarks.json"
                 }
             },
             hideElementChildren(id) {
-                // adds "hidden_chart" css-class to every child of the element.
+                /**
+                 * Adds "hidden_chart" css-class to every child of the passed element.
+                 */
                 for(let i=0; i<document.getElementById(id).children.length; i++) {
                             // console.log(document.getElementById("gwp_or_cost_charts").children[i])
                             document.getElementById(id).children[i].classList.add("hidden_chart")
                         }
             },
             unhideElement(id) {
-                // removes "hidden_chart" from element
+                /**
+                 * Removes "hidden_chart" css-class from the passed element.
+                 */
                 document.getElementById(id).classList.remove("hidden_chart")
             },
             updateGwpCostBarChart(chartCategory, chartName, chartNamefragment) {
+                /**
+                 * Updates only the gwp/cost bar-chart. Hides every element first, then unhides the one thats information has been passed.
+                 */
                 // make sure every chart of this section is hidden
                 this.hideElementChildren("gwp_or_cost_charts")
                 // unhide chart according to button- and select-states, viewport-width
@@ -291,6 +306,10 @@ import benchmarks from "../process_benchmarks.json"
                 }
             },
             updateMaxGwpMaxCostPieChart(chartCategory, chartName) {
+                /**
+                 * Updates only the gwp-per-process/cost-per-process pie-chart. Hides every element first, then unhides the one thats information has been passed.
+                 * The legend of this pie-chart is separated from the chart and must be handled on its own here.
+                 */
                 // make sure every chart (and custom-legend) of this section is hidden
                 this.hideElementChildren("gwp_or_cost_per_process_charts")
                 // unhide charts (and custom-legends) according to viewport-width
@@ -304,6 +323,10 @@ import benchmarks from "../process_benchmarks.json"
                 }
             },
             updateMechanicalValuesAshbyChart() {
+                /**
+                 * Updates only the mechanical-values ashby-chart. Hides every element first, then unhides the one thats information has been passed.
+                 * The legend of this ashby-chart is separated from the chart and must be handled on its own here.
+                 */
                 // Checks if a selection has been made for (tensile or flexural) and (0 or 90)
                 if(!this.tensile_button_active && !this.flexural_button_active || !this.zero_button_active && !this.ninety_button_active) return
                 // make sure every chart of this section is hidden
@@ -343,7 +366,9 @@ import benchmarks from "../process_benchmarks.json"
                 }
             },
             sendChartsAsImages() {
-                // sends charts as images to results_footer component for use in pdf.
+                /**
+                 * Creates and sends data-urls of the charts for use when creating the pdf in Results_footer.vue.
+                 */
                 let images = []
                 // hand-pick charts
                 let selectedId = undefined
@@ -389,9 +414,10 @@ import benchmarks from "../process_benchmarks.json"
                 this.$emit("chartsAsImages", images)
             },
             htmlElementToCanvas(selectedChart, selectedLegend, name, type, container) {
-                // converts html-elements to canvas-elements. Canvas-elements can then be converted to images.
-                // html2canvas needs the element to be visible.
-
+                /**
+                 * Converts html-elements to canvas-elements. Canvas-elements can then be converted to data-urls.
+                 * html2canvas needs the element to be visible in the DOM, so the element corresponding to the passed information must be temporarily made visible. After html2canvas is done, elements are hidden again.
+                 */
                 selectedChart.classList.remove("hidden_chart")
                 selectedLegend.classList.remove("hidden_chart")
                 let chartContainerId = undefined

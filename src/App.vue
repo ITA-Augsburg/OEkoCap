@@ -35,6 +35,10 @@
 </template>
 
 <script>
+/**
+ * The ancestor to every vue-component.
+ * app_input is defined here.
+ */
 export default {
   data: () => ({
     button2enabled: true,
@@ -54,7 +58,7 @@ export default {
     appOutput: undefined,
     errorMessage: undefined,
 
-    //default values are set here, these are passed to and visualized in child-components
+    //default values are set here, these are passed to and shown in child-components
     app_input: {
       "waste": {
         "type": "End of Life",
@@ -118,6 +122,12 @@ export default {
   }),
   methods: {
     saveNewInputs(new_values) {
+      /**
+       * When user interacts with input-elements of input-pages, the new values are emitted to App.vue.
+       * New values are saved in app_input.
+       * Other app_input fields might need to be reset, since their values are dependent on earlier inputs. This is the case when the user goes back to earlier input-pages and makes changes to their inputs.
+       * The input-footer is changed, buttons can get enabled or disabled.
+       */
       // console.log(new_values)
       let waste = this.app_input.waste
       let transport = this.app_input.transport
@@ -300,6 +310,9 @@ export default {
       }
     },
     updateInputFooter() {
+      /**
+       * Updates the input-footer progress-bar.
+       */
       if(this.footerProgressBar === 99) return
       else if(this.app_input.textile_process.throughput_kg_per_h !== undefined &&
       this.app_input.textile_process.areal_weight_g_per_sqm !== undefined ) {
@@ -313,7 +326,9 @@ export default {
       }
     },
     clearAppInput() {
-      // this.calculateButton()
+      /**
+       * Resets app_input fields to their default values.
+       */
       this.app_input = {
         "waste": {
           "type": "End of Life",
@@ -386,6 +401,10 @@ export default {
       // this.log()
     },
     formatAppInputKeys() {
+      /**
+       * When user is done manipulating the app_input and clicks on the calculate-button, then some app_input fields need changing, to be valid in the recycling.exe.
+       * undefined values need to be changed to empty-strings; If there is only one shredding process, and it is saved in shredding_2, then it needs to be replaced to shredding_1; Some field-values may need renaming.
+       */
       let waste = this.app_input.waste
       let transport = this.app_input.transport
       let shredding_1 = this.app_input.shredding_1
@@ -478,6 +497,11 @@ export default {
       if(processing_2.co2_equv_per_kg === undefined) processing_2.co2_equv_per_kg = ""
     },
     calculateButton() {
+      /**
+       * Formats app_input for recycling.exe and sends it to the backend. When the backend is done processing, the output from recycling.exe is sent back here.
+       * If a valid output is generated, then continues to ResultsView.
+       * If the server is not responding or the recycling.exe throws an error or the generated output is invalid, then continues to ErrorView.
+       */
       this.footerProgressBar = 99
       this.formatAppInputKeys()
       this.log()
@@ -520,16 +544,33 @@ export default {
         });
     },
     setStartedCorrectly() {
-      // User must start on the first page of the app. If for example user tries to start on url http://localhost:8080/processing then variable startedCorrectly is false and they're taken to the start-page
+      /**
+       * This function is emitted from StartView.
+       * To prevent user from entering on an input-page via url, the variable startedCorrectly is checked.
+       * When false, user is redirected to StartView. When true, user can continue to the input-page.
+       * When StartView is loaded, startedCorrectly is set to true.
+       * Example: user tries to start on url http://oekocap.com/processing then variable startedCorrectly is false and they're taken to the start-page.
+       */
       this.startedCorrectly = true
     },
     setErrorMessage(message) {
+      /**
+       * Sets the error-messsage that is displayed on ErrorView.
+       * This function is usually emitted form child-elements.
+       */
       this.errorMessage = message
     },
     log() {
+      /**
+       * Logs app_input.
+       */
       console.log(JSON.stringify(this.app_input, null, 2))
     },
     logWaste() {
+      /**
+       * Logs elements related to the WasteView.
+       * Logs app_input.waste, .shredding_1, .shredding_2, .transportation.
+       */
       console.log(
         this.app_input.waste.type,
         this.app_input.waste.size_bigger_1dot5_m,
@@ -547,6 +588,10 @@ export default {
       )
     },
     logSep() {
+      /**
+       * Logs elements related to the SeparationView.
+       * Logs app_input.separation.
+       */
       console.log(
         this.app_input.separation.type,
         this.app_input.separation.euro_per_kg,
@@ -554,6 +599,10 @@ export default {
       )
     },
     logMatrix() {
+      /**
+       * Logs elements related to the MatrixView.
+       * Logs app_input.polymer.
+       */
       console.log(
         this.app_input.polymer.thermo_type,
         this.app_input.polymer.matrix_type,
@@ -564,6 +613,10 @@ export default {
       )
     },
     logTextile() {
+      /**
+       * Logs elements related to the TextileView.
+       * Logs app_input.textile_process.
+       */
       console.log(
         this.app_input.textile_process.type,
         this.app_input.textile_process.mass_loss_percent,
@@ -574,6 +627,10 @@ export default {
       )
     },
     logProcessing() {
+      /**
+       * Logs elements related to the ProcessingView.
+       * Logs app_input.processing_1, .processing_2.
+       */
       console.log(
         this.app_input.processing_1.type,
         this.app_input.processing_1.mass_loss_percent,

@@ -10,6 +10,9 @@
 </template>
 
 <script>
+/**
+ * Header with big logo.
+ */
   export default {
     data() {
       return {

@@ -47,24 +47,39 @@
 </template>
 
 <script>
+/**
+ * Logos of companies and button to start inputting.
+ */
 export default {
     props: ["color_green"],
     emits: ["clearAppInput"],
     mounted() {
+        /**
+         * Resets App.vue->app_input, since the user can start choosing values and then go back to the start-page.
+         */
         this.$emit("clearAppInput", undefined)
     },
     data: () => ({
     }),
     methods: {
         clearAppInput() {
+        /**
+         * Resets App.vue->app_input, since the user can start choosing values and then go back to the start-page.
+         */
             // console.log("clearAppInput emitted from Start.vue")
             this.$emit("clearAppInput", undefined)
         },
         startButton() {
+            /**
+             * Directs user to the first input-page.
+             */
             this.clearAppInput()
             router.push({name: "WasteView"})
         },
         shortcut() {
+            /**
+             * Temporary button that takes user to the results.
+             */
             router.push({name: "ResultsView"})
         }
     }

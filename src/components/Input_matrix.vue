@@ -97,6 +97,10 @@
 </template>
 
 <script>
+/**
+ * This component holds input-elements related to App.vue->app_input.polymer.
+ * Every time an input is made, every input of this component is emitted to App.vue->app_input.
+ */
     export default {
         props: ["app_input_prop", "matrix_insertion_prop", "color_green"],
         emits: ["saveNewInputs"],
@@ -104,6 +108,10 @@
             Expert_mode: Expert_mode
         },
         mounted() {
+            /**
+             * If user made inputs previously and comes back to this site, then previous inputs are displayed in the input-elements.
+             * Some variables are set, to recreate the state of the site that the user previously left.
+             */
             if(this.matrix_type === "Thermoplast") {
                 this.polymer_options = ["PP", "PA6"]
             } else if(this.matrix_type === "Thermoset") {
@@ -128,6 +136,9 @@
         },
         methods: {
             updateMatrixRoute() {
+                /**
+                 * Some variables are dependent of the selected matrix-type, when user makes a selection, these variables must be changed or reset.
+                 */
                 if(this.matrix_type === "Thermoplast") {
                     this.polymer_options = ["PP", "PA6"]
                     this.matrix_polymer = undefined
@@ -138,13 +149,20 @@
                 }
             },
             newExpertModeValues(new_values) {
+                /**
+                 * Handles the ExpertMode.vue emits, saves the values that come from there.
+                 */
                 this.expert_mode_cost = new_values[0]
                 this.expert_mode_gwp = new_values[1]
                 this.saveNewInputs()
                 // this.log()
             },
             saveNewInputs() {
-                //setTimeout needed to properly update slider values
+                /**
+                 * Triggers when user interacts with an input-element.
+                 * Emits every input-value of this component to App.vue->app_input.
+                 * setTimeout() needed to properly update slider values.
+                 */
                 setTimeout(() => {
                     // this.log()
                     this.$emit(
@@ -160,6 +178,9 @@
                 }, 20);
             },
             log() {
+                /**
+                 * Logs every input-value of this component.
+                 */
                 console.log("matrix_type:" + this.matrix_type)
                 console.log("matrix_polymer:" + this.matrix_polymer)
                 console.log("matrix_fmc:" + this.matrix_fmc)

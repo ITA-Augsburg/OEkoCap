@@ -13,6 +13,9 @@
 </template>
 
 <script>
+/**
+ * Holds components that together represent the starting-page of the app.
+ */
 export default {
     props: [
         "app_input_prop", "waste_fine_checkbox_prop", "matrix_insertion_prop", "proc_moi_prop",
@@ -24,11 +27,18 @@ export default {
     data: () => ({
     }),
     mounted() {
+        /**
+         * To prevent user from entering on an input-page via url, the variable startedCorrectly is checked.
+         * When false, user is redirected to StartView. When true, user can continue to the input-page.
+         * When StartView is loaded, startedCorrectly is set to true.
+         */
         this.$emit("setStartedCorrectly", undefined)
     },
     methods: {
         clearAppInput() {
-            // console.log("StartView.vue clearAppInput emitted")
+            /**
+             * transmits the emit from child-component to App.vue.
+             */
             this.$emit("clearAppInput", undefined)
         }
     }

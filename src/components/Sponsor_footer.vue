@@ -29,9 +29,15 @@
 </template>
 
 <script>
+/**
+ * Footer component with the sponsor displayed.
+ */
 export default {
     props: [],
     mounted() {
+        /**
+         * Determines the current year and builds the copyright-text.
+         */
         let date = new Date()
         this.copyrightTextFragment = "© " + date.getFullYear().toString() + " "
     },

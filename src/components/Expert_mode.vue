@@ -4,6 +4,7 @@
 
 <template>
 
+    <!-- Checkbox that can open two text-fields. A tooltip next to it. -->
     <div class="tooltip_container">
         <div class="switch_container">
             <v-switch
@@ -31,7 +32,7 @@
         :tooltip_text=tooltip_text_prop />
     </div>
     
-
+    <!-- A text-field that corresponds to cost. -->
     <v-text-field
     v-if="switchState && !disabled"
     v-model=expert_mode_cost
@@ -44,6 +45,7 @@
     :bg-color=color_green
     ></v-text-field>
 
+    <!-- A text-field that corresponds to the global warming potential. -->
     <v-text-field
     v-if="switchState && !disabled"
     v-model=expert_mode_gwp
@@ -56,6 +58,7 @@
     :bg-color=color_green
     ></v-text-field>
 
+    <!-- A popup that pops up when an invalid character has been typed into the textfields -->
     <v-dialog v-model=dialogOpen width="auto" close-on-content-click>
         <v-card>
             <v-card-text>
@@ -70,11 +73,16 @@
 </template>
 
 <script>
-
+/**
+ * In this component the user can specify the cost and global warming potential of something.
+ */
     export default {
         props: ["disabled", "expert_mode_cost_prop", "expert_mode_gwp_prop", "label", "color_green", "tooltip_text_prop"],
         emits: ["newExpertModeValues"],
         mounted() {
+            /**
+             * If values have been set by the user earlier and the user returns to the page that contains this expert-mode-component, then those previous inputs will be set and displayed.
+             */
             if(this.expert_mode_cost_prop !== undefined || this.expert_mode_gwp_prop !== undefined) {
                 this.switchState = true
             }
@@ -93,6 +101,9 @@
         },
         methods: {
             showHideExpertMode() {
+                /**
+                 * Toggles the existence of the two text-fields. When text-fields cease to exist, their values are reset.
+                 */
                 this.switchState = !this.switchState
                 // console.log(this.switchState)
                 if(this.switchState === false) {
@@ -102,9 +113,11 @@
                 }
             },
             propagateNewValues() {
+                /**
+                 * Checks contents of text-fields. Pops up a message if contents are invalid. Sends them to the parent-component if contents are numbers.
+                 * Contents are then saved in App.vue->app_input
+                 */
                 //Das Monster
-                //expmode-cost and -gwp values are only propagated (and saved in App.vue->app_input) if they're numbers.
-                // console.log("propagated")
                 // console.log(this.expert_mode_cost + " " + this.expert_mode_gwp)
                 if(this.expert_mode_cost === undefined && this.expert_mode_gwp === undefined) {
                     this.$emit("newExpertModeValues", [this.expert_mode_cost, this.expert_mode_gwp, this.label])

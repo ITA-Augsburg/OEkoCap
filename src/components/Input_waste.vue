@@ -194,10 +194,18 @@
 </template>
 
 <script>
+/**
+ * This component holds input-elements related to App.vue->app_input.waste, .shredding_1, .shredding_2 and .transportation.
+ * Every time an input is made, every input of this component is emitted to App.vue->app_input.
+ */
     export default {
         props: ["app_input_prop", "color_green", "waste_fine_checkbox_prop"],
         emits: ["saveNewInputs"],
         mounted() {
+            /**
+             * If user made inputs previously and comes back to this site, then previous inputs are displayed in the input-elements.
+             * Some variables are set, to recreate the state of the site that the user previously left.
+             */
             if(this.waste_type === "End of Life" && this.size1dot5 === true) {
                 this.coarse_expmode_disabled = false
             }
@@ -234,15 +242,25 @@
         },
         methods: {
             toggleSizeCheckbox() {
+                /**
+                 * waste-size-checkbox toggles the fine-shredding-checkbox.
+                 * When the fine-shredding checkbox is enabled, then its text is clickable to toggle the checkbox, the cursor is set to pointer.
+                 */
                 this.size1dot5 = !this.size1dot5
                 this.size1dot5 ? 
                     document.getElementById("waste_fine_text").classList.add("pointer") :
                     document.getElementById("waste_fine_text").classList.remove("pointer")
             },
             toggleFineCheckbox() {
+                /**
+                 * Toggles the fine-shredding-slider.
+                 */
                 this.fine_checkbox = !this.fine_checkbox
             },
             handleFineMassLossText() {
+                /**
+                 * Handles click on fine-shredding-checkbox-text.
+                 */
                 if(this.size1dot5) {
                     this.toggleFineCheckbox()
                     this.updateWasteRoute()
@@ -250,6 +268,10 @@
                 }
             },
             updateWasteRoute() {
+                /**
+                 * Triggers when user interacts with an input-element.
+                 * Some elements change when others are interacted with, some elements depend on others.
+                 */
                 if(this.waste_type === "End of Life") {
                     this.shred_2_type = "Fine"
                     // this.shred_2_ml = 5.0
@@ -300,6 +322,9 @@
                 // this.log()
             },
             newExpertModeValues(new_values) {
+                /**
+                 * Handles the ExpertMode.vue emits, saves the values that come from there.
+                 */
                 if(new_values[2] === this.transport_label) {
                     this.transport_cost = new_values[0]
                     this.transport_gwp = new_values[1]
@@ -314,7 +339,11 @@
                 // this.log()
             },
             saveNewInputs() {
-                //setTimeout needed to properly update slider values
+                /**
+                 * Triggers when user interacts with an input-element.
+                 * Emits every input-value of this component to App.vue->app_input.
+                 * setTimeout() needed to properly update slider values.
+                 */
                 setTimeout(() => {
                     // this.log()
                     this.$emit(
@@ -340,6 +369,9 @@
                 }, 20);
             },
             log() {
+                /**
+                 * Logs every input-value of this component.
+                 */
                 console.log("waste_type:"+this.waste_type)
                 console.log("waste_size:"+this.size1dot5)
                 console.log("shred_1_type:"+this.shred_1_type)

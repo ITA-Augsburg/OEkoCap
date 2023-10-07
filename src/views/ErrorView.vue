@@ -20,6 +20,10 @@
 </template>
 
 <script>
+/**
+ * User gets redirected here when something goes wrong, like the created input is invalid in the recycling.exe or the server is not responding.
+ * Error message can be passed as a prop.
+ */
 export default {
     props: [
     "app_input_prop", "waste_fine_checkbox_prop", "matrix_insertion_prop", "proc_moi_prop",
@@ -33,6 +37,9 @@ export default {
     }),
     methods: {
         updateInputFooter() {
+            /**
+             * Updates the progress-bar in the input-footer.
+             */
             this.$emit("updateInputFooter", undefined)
         }
     }

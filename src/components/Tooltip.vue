@@ -22,6 +22,9 @@
 </template>
 
 <script>
+/**
+ * A tooltip that can be hovered to display text.
+ */
     export default {
         props: ["tooltip_class", "tooltip_text"],
         data: () => ({

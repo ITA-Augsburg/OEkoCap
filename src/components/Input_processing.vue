@@ -205,41 +205,22 @@
 </template>
 
 <script>
+/**
+ * This component holds input-elements related to App.vue->app_input.processing_1 and .processing_2.
+ * Every time an input is made, every input of this component is emitted to App.vue->app_input.
+ * The calculate-button emits a signal to App.vue where the inputs are sent to the server.
+ */
     export default {
         props: ["app_input_prop", "proc_moi_prop", "matrix_insertion_prop", "buttonCalculateEnabled", "color_green", "color_lightgrey", "color_darkgreen"],
         emits: ["saveNewInputs", "calculateButton"],
         components: {
             Expert_mode: Expert_mode
         },
-        data() {
-            return {
-                proc_1_type_options: [""],
-                proc_wt_options: [""],
-                proc_2_type_options: [""],
-                moi_options: [""],
-
-                proc_1_type: this.app_input_prop.processing_1.type,
-                proc_1_ml: this.app_input_prop.processing_1.mass_loss_percent,
-                proc_wt: this.app_input_prop.processing_1.wandstärke_mm,
-                proc_1_cost: this.app_input_prop.processing_1.euro_per_kg,
-                proc_1_gwp: this.app_input_prop.processing_1.co2_equv_per_kg,
-                proc_2_type: this.app_input_prop.processing_2.type,
-                proc_2_ml: this.app_input_prop.processing_2.mass_loss_percent,
-                proc_2_cost: this.app_input_prop.processing_2.euro_per_kg,
-                proc_2_gwp: this.app_input_prop.processing_2.co2_equv_per_kg,
-                proc_moi: this.proc_moi_prop,
-                matrix_type: this.app_input_prop.polymer.thermo_type,
-
-                step1expmodelabel: "Process step 1 expert mode",
-                step2expmodelabel: "Process step 2 expert mode",
-
-                moi_disabled: false,
-                proc_2_type_disabled: false,
-                proc_2_ml_disabled: false,
-                proc_2_expmode_disabled: false
-            }
-        },
         mounted() {
+            /**
+             * If user made inputs previously and comes back to this site, then previous inputs are displayed in the input-elements.
+             * Some variables are set, to recreate the state of the site that the user previously left.
+             */
             //set select-options based on matrix-thermotype and matrix-insertion
             if(this.matrix_type === "Thermoplast" && this.matrix_insertion_prop === true) {
                 this.proc_1_type_options = ["Doublebeltpress (Organosheet Production)", "Compression Moulding"]
@@ -290,8 +271,39 @@
             }
             this.saveNewInputs()
         },
+        data() {
+            return {
+                proc_1_type_options: [""],
+                proc_wt_options: [""],
+                proc_2_type_options: [""],
+                moi_options: [""],
+
+                proc_1_type: this.app_input_prop.processing_1.type,
+                proc_1_ml: this.app_input_prop.processing_1.mass_loss_percent,
+                proc_wt: this.app_input_prop.processing_1.wandstärke_mm,
+                proc_1_cost: this.app_input_prop.processing_1.euro_per_kg,
+                proc_1_gwp: this.app_input_prop.processing_1.co2_equv_per_kg,
+                proc_2_type: this.app_input_prop.processing_2.type,
+                proc_2_ml: this.app_input_prop.processing_2.mass_loss_percent,
+                proc_2_cost: this.app_input_prop.processing_2.euro_per_kg,
+                proc_2_gwp: this.app_input_prop.processing_2.co2_equv_per_kg,
+                proc_moi: this.proc_moi_prop,
+                matrix_type: this.app_input_prop.polymer.thermo_type,
+
+                step1expmodelabel: "Process step 1 expert mode",
+                step2expmodelabel: "Process step 2 expert mode",
+
+                moi_disabled: false,
+                proc_2_type_disabled: false,
+                proc_2_ml_disabled: false,
+                proc_2_expmode_disabled: false
+            }
+        },
         methods: {
             toggleStepTwo() {
+                /**
+                 * Based on the selection in the process-step-1 dropdown, other elements might change.
+                 */
                 //thermoset
                 if(this.proc_1_type === "Prepreg Production") {
                     this.proc_2_type_disabled = false
@@ -327,6 +339,9 @@
                 }
             },
             newExpertModeValues(new_values) {
+                /**
+                 * Handles the ExpertMode.vue emits, saves the values that come from there.
+                 */
                 if(new_values[2] === this.step1expmodelabel) {
                     this.proc_1_cost = new_values[0]
                     this.proc_1_gwp = new_values[1]
@@ -338,6 +353,11 @@
                 // this.log()
             },
             saveNewInputs() {
+                /**
+                 * Triggers when user interacts with an input-element.
+                 * Emits every input-value of this component to App.vue->app_input.
+                 * setTimeout() needed to properly update slider values.
+                 */
                 if(this.proc_moi === "") {
                     this.proc_moi = undefined
                 }
@@ -361,13 +381,22 @@
                 }, 20);
             },
             calculateButton() {
+                /**
+                 * Triggers a function in App.vue that sends inputs to the server.
+                 */
                 this.$emit("calculateButton", undefined)
                 router.push({name:"WaitingView"})
             },
             clearButton() {
+                /**
+                 * Sends user back to the start. Resets App.vue->app_input and other variables when Start.vue is mounted in StartView.
+                 */
                 router.push({name:"StartView"})
             },
             log() {
+                /**
+                 * Logs every input-value of this component.
+                 */
                 console.log("proc_1_type:" + this.proc_1_type)
                 console.log("proc_1_ml:" + this.proc_1_ml)
                 console.log("proc_1_cost:" + this.proc_1_cost)

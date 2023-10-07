@@ -19,6 +19,9 @@
 </template>
 
 <script>
+/**
+ * Holds components that together represent the loading-screen.
+ */
 export default {
     props: [
     "app_input_prop", "waste_fine_checkbox_prop", "matrix_insertion_prop", "proc_moi_prop",
@@ -32,8 +35,11 @@ export default {
     }),
     methods: {
         updateInputFooter() {
+            /**
+             * Updates the progress-bar in the input-footer.
+             */
             this.$emit("updateInputFooter", undefined)
         }
     }
-};
+}
 </script>

@@ -28,6 +28,9 @@
 </template>
 
 <script>
+/**
+ * Holds components that together represent the input-page that corresponds to App.vue->app_input.textile_process.
+ */
 export default {
     props: [
     "app_input_prop", "waste_fine_checkbox_prop", "matrix_insertion_prop", "proc_moi_prop",
@@ -37,7 +40,10 @@ export default {
     ],
     emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "setStartedCorrectly", "setErrorMessage"],
     mounted() {
-        //if user enters app on *url*/textile then redirect to *url*/, otherwise app_input could have missing mandatory values
+        /**
+         * If user enters app via url (oekocap.com/matrix for example) then user gets redirected to the start.
+         * User must start on the first input-page because later input-pages are dependent on earlier inputs.
+         */
         if(!this.startedCorrectly) {
             this.$router.push({name: "StartView"})
         }
@@ -47,9 +53,15 @@ export default {
     }),
     methods: {
         updateInputFooter() {
+            /**
+             * Updates the progress-bar in the input-footer.
+             */
             this.$emit("updateInputFooter", undefined)
         },
         saveNewInputs(new_values) {
+            /**
+             * transmits the emit from child-component to App.vue->app_input.
+             */
             this.$emit("saveNewInputs", new_values)
         }
     }
