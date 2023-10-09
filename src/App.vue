@@ -516,7 +516,7 @@ export default {
         }).then(res => {
             return res.text();
         }).then(data => {
-            console.log(data)
+            // console.log(data)
             try {
               this.appOutput = data.replaceAll("INFINITY", "null")
               this.appOutput = JSON.parse(this.appOutput)

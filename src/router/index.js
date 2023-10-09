@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import StartView from '../views/StartView.vue'
 import WasteView from '../views/WasteView.vue'
 import SeparationView from '../views/SeparationView.vue'
@@ -133,7 +133,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes
 })
 
