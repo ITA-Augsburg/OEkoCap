@@ -21,6 +21,7 @@
             :bg-color=color_green />
 
             <Tooltip
+            :tooltip_enabled=false
             :tooltip_class="'tooltip select_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>
@@ -38,6 +39,7 @@
             :bg-color=color_green />
 
             <Tooltip
+            :tooltip_enabled=false
             :tooltip_class="'tooltip select_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>
@@ -45,6 +47,7 @@
         <div class="tooltip_container">
             <p class="text matrix_fmc_text">Fiber Volume Content</p>
             <Tooltip
+            :tooltip_enabled=false
             :tooltip_class="'tooltip matrix_fiber_text_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>
@@ -79,6 +82,7 @@
                 :color=color_green />
             </div>
             <Tooltip
+            :tooltip_enabled=false
             :tooltip_class="'tooltip matrix_insert_text_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>

@@ -2,13 +2,15 @@
     import Input_subheader from "../components/Input_subheader.vue"
     import Input_separation from "../components/Input_separation.vue"
     import Input_footer from "../components/Input_footer.vue"
+    import Tooltip_texts from "../tooltip_texts.json"
 </script>
 
 <template>
     <Input_subheader
     :text_2='"Step 1: Recycling"'
     :text_3='"SEPARATION"'
-    :tooltip_enabled=true />
+    :tooltip_enabled=true
+    :tooltip_text=Tooltip_texts.separation_subheader_tooltip />
     <Input_separation
     :color_green=color_green
     :app_input_prop=app_input_prop

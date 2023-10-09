@@ -2,13 +2,15 @@
     import Input_subheader from "../components/Input_subheader.vue"
     import Results from "../components/Results.vue"
     import Results_footer from "../components/Results_footer.vue"
+    import Tooltip_texts from "../tooltip_texts.json"
 </script>
 
 <template>
     <Input_subheader
     :text_2='"CALCULATOR"'
     :text_3='"RESULTS"'
-    :tooltip_enabled=false />
+    :tooltip_enabled=true
+    :tooltip_text=Tooltip_texts.results_subheader_tooltip />
     <Results
     :app_output_prop=app_output_prop
     :color_green=color_green

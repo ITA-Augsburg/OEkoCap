@@ -518,18 +518,19 @@ export default {
         }).then(data => {
             console.log(data)
             try {
-              this.appOutput = JSON.parse(data)
+              this.appOutput = data.replaceAll("INFINITY", "null")
+              this.appOutput = JSON.parse(this.appOutput)
+              console.log(this.appOutput)
             } catch (error) {
               this.errorMessage = "Internal error. No output could be generated based on the given input."
               router.push({name: "ErrorView"})
               // todo: save such inputs in the backend for debugging
               return
             }
-            // check output validity
-            if(!(Object.prototype.hasOwnProperty.call(this.appOutput, "processes"))) {
-                    this.$emit("setErrorMessage", "Internal error. No output could be generated based on the given input.")
-                    router.push({name: "ErrorView"})
-                    // todo: save such inputs in the backend for debugging
+            if(!(Object.prototype.hasOwnProperty.call(this.app_output, "processes"))) {
+              this.$emit("setErrorMessage", "Internal error. No output could be generated based on the given input.")
+              router.push({name: "ErrorView"})
+              // todo: save such inputs in the backend for debugging
             }
             router.push({name: "ResultsView"})
         })
@@ -539,10 +540,32 @@ export default {
 
             // console.log("Fehler beim Serveraufruf");
             console.log(rej);
-            this.errorMessage = "Server not responding"
+            this.errorMessage = "Server not responding."
             router.push({name: "ErrorView"})
         });
     },
+    // checkOutputValidity(output) {
+    //   /**
+    //    * Checks wether the output is the expected json-string or an error-message. If error-message, redirects user to ErrorView. Else redirects to ResultsView.
+    //    * Checks generated output for invalid values like INFINITY. Converts those into null, otherwise string can't be parsed into a json-object.
+    //    * In ResultsView charts cannot be generated from null values, output-fields are checked again in results_charts_functions.js.
+    //    */
+    //   console.log(output)
+    //   try {
+    //     output = JSON.parse(output.replaceAll("INFINITY", "null"))
+    //     console.log(output)
+    //   } catch (error) {
+    //     this.errorMessage = "Internal error. No output could be generated based on the given input."
+    //     router.push({name: "ErrorView"})
+    //     // todo: save such inputs in the backend for debugging
+    //     return
+    //   }
+    //   if(!(Object.prototype.hasOwnProperty.call(output, "processes"))) {
+    //     this.$emit("setErrorMessage", "Internal error. No output could be generated based on the given input.")
+    //     router.push({name: "ErrorView"})
+    //     // todo: save such inputs in the backend for debugging
+    //   }
+    // },
     setStartedCorrectly() {
       /**
        * This function is emitted from StartView.

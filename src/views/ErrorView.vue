@@ -8,7 +8,8 @@
     <Input_subheader
     :text_2='"CALCULATOR"'
     :text_3='"ERROR"'
-    :tooltip_enabled=false />
+    :tooltip_enabled=false
+    :tooltip_text="''" />
     <Error
     :error_message_prop=error_message_prop />
     <Input_footer

@@ -24,17 +24,23 @@ export function createCharts(output, benchmarks) {
     let parentId = "gwp_or_cost_charts"
     let title = "GWP range"
     let unit = "kg CO²"
-    
+
     let pieChartLabels = undefined
     let pieChartColors = undefined
+
+    let data = undefined
     
     // output only
     let name = "gwp_range_output_only_chart"
     let barChartBenchmarkLabel = ""
-    let data = [
-        [Math.round(output.gwp.minValue * 100) / 100, Math.round(output.gwp.maxValue * 100) / 100],
-        [undefined, undefined]
-    ]
+    if(output.gwp.minValue === null || output.gwp.maxValue === null) {
+        data = [[undefined, undefined],[undefined, undefined]]
+    } else {
+        data = [
+            [Math.round(output.gwp.minValue * 100) / 100, Math.round(output.gwp.maxValue * 100) / 100],
+            [undefined, undefined]
+        ]
+    }
     addBarCharts(charts, category, name, title, barChartBenchmarkLabel, data, unit, parentId)
     name = undefined
     data = undefined
@@ -43,10 +49,14 @@ export function createCharts(output, benchmarks) {
         // output-benchmark_1, ..., output-benchmark_n
         name = "gwp_range_output_" + key.replaceAll(" ", "_") + "_chart"
         barChartBenchmarkLabel = benchmarks[key].name
-        data = [
-            [Math.round(output.gwp.minValue * 100) / 100, Math.round(output.gwp.maxValue * 100) / 100],
-            [Math.round(benchmarks[key].gwp_min * 100)/100, Math.round(benchmarks[key].gwp_max * 100)/100]
-        ]
+        if(output.gwp.minValue === null || output.gwp.maxValue === null) {
+            data = [[undefined, undefined],[Math.round(benchmarks[key].gwp_min * 100)/100, Math.round(benchmarks[key].gwp_max * 100)/100]]
+        } else {
+            data = [
+                [Math.round(output.gwp.minValue * 100) / 100, Math.round(output.gwp.maxValue * 100) / 100],
+                [Math.round(benchmarks[key].gwp_min * 100)/100, Math.round(benchmarks[key].gwp_max * 100)/100]
+            ]
+        }
         // console.log(data)
         addBarCharts(charts, category, name, title, barChartBenchmarkLabel, data, unit, parentId)
         name = undefined
@@ -64,10 +74,14 @@ export function createCharts(output, benchmarks) {
     // output only
     name = "cost_range_output_only_chart"
     barChartBenchmarkLabel = ""
-    data = [
-        [Math.round(output.cost.minValue_eur_per_kg * 100) / 100, Math.round(output.cost.maxValue_eur_per_kg * 100) / 100],
-        [undefined, undefined]
-    ]
+    if(output.cost.minValue_eur_per_kg === null || output.cost.maxValue_eur_per_kg === null) {
+        data = [[undefined, undefined],[undefined, undefined]]
+    } else {
+        data = [
+            [Math.round(output.cost.minValue_eur_per_kg * 100) / 100, Math.round(output.cost.maxValue_eur_per_kg * 100) / 100],
+            [undefined, undefined]
+        ]
+    }
     addBarCharts(charts, category, name, title, barChartBenchmarkLabel, data, unit, parentId)
     name = undefined
     data = undefined
@@ -76,10 +90,17 @@ export function createCharts(output, benchmarks) {
         // output-benchmark_1, ..., output-benchmark_n
         name = "cost_range_output_" + key.replaceAll(" ", "_") + "_chart"
         barChartBenchmarkLabel = benchmarks[key].name
-        data = [
-            [Math.round(output.cost.minValue_eur_per_kg * 100) / 100, Math.round(output.cost.maxValue_eur_per_kg * 100) / 100],
-            [Math.round(benchmarks[key].cost_per_kg_min * 100)/100, Math.round(benchmarks[key].cost_per_kg_max * 100)/100]
-        ]
+        if(output.cost.minValue_eur_per_kg === null || output.cost.maxValue_eur_per_kg === null) {
+            data = [
+                [undefined, undefined],
+                [Math.round(benchmarks[key].cost_per_kg_min * 100)/100, Math.round(benchmarks[key].cost_per_kg_max * 100)/100]
+            ]   
+        } else {
+            data = [
+                [Math.round(output.cost.minValue_eur_per_kg * 100) / 100, Math.round(output.cost.maxValue_eur_per_kg * 100) / 100],
+                [Math.round(benchmarks[key].cost_per_kg_min * 100)/100, Math.round(benchmarks[key].cost_per_kg_max * 100)/100]
+            ]
+        }
         addBarCharts(charts, category, name, title, barChartBenchmarkLabel, data, unit, parentId)
         name = undefined
         data = undefined
@@ -98,13 +119,21 @@ export function createCharts(output, benchmarks) {
     pieChartLabels = []
     data = []
     pieChartColors = []
-    output.processes.forEach((process, i) => {
-        pieChartLabels.push(process.name)
-        let dataPoint = (process.maxGWPValue + process.minGWPValue) / 2
-        data.push(Math.round(dataPoint * 100) / 100)
-        pieChartColors.push(randomColor(i, 1, output.processes.length))
+    let processesGwpOk = true
+    let processesCostOk = true
+    output.processes.forEach((process) => {
+        if(process.minGWPValue === null || process.maxGWPValue === null) processesGwpOk = false
+        if(process.minCostPerKg === null || process.maxCostPerKg === null) processesCostOk = false
     })
-    addPieCharts(charts, category, name, title, pieChartLabels, data, pieChartColors, unit, parentId)
+    if(processesGwpOk) {
+        output.processes.forEach((process, i) => {
+            pieChartLabels.push(process.name)
+            let dataPoint = (process.maxGWPValue + process.minGWPValue) / 2
+            data.push(Math.round(dataPoint * 100) / 100)
+            pieChartColors.push(randomColor(i, 1, output.processes.length))
+        })
+        addPieCharts(charts, category, name, title, pieChartLabels, data, pieChartColors, unit, parentId)
+    }
     name = undefined
     data = undefined
     pieChartLabels = undefined
@@ -122,13 +151,15 @@ export function createCharts(output, benchmarks) {
     pieChartLabels = []
     data = []
     pieChartColors = []
-    output.processes.forEach((process, i) => {
-        pieChartLabels.push(process.name)
-        let dataPoint = (process.minCostPerKg + process.maxCostPerKg) / 2
-        data.push(Math.round(dataPoint * 100) / 100)
-        pieChartColors.push(randomColor(i, 1, output.processes.length))
-    })
-    addPieCharts(charts, category, name, title, pieChartLabels, data, pieChartColors, unit, parentId)
+    if(processesCostOk) {
+        output.processes.forEach((process, i) => {
+            pieChartLabels.push(process.name)
+            let dataPoint = (process.minCostPerKg + process.maxCostPerKg) / 2
+            data.push(Math.round(dataPoint * 100) / 100)
+            pieChartColors.push(randomColor(i, 1, output.processes.length))
+        })
+        addPieCharts(charts, category, name, title, pieChartLabels, data, pieChartColors, unit, parentId)
+    }
     name = undefined
     data = undefined
     pieChartLabels = undefined
@@ -247,8 +278,14 @@ function createBarChart(id, title, benchmarkLabel, data, unit, legendFontSize) {
                         boxHeight: 25,
                         generateLabels: (chart) => {
                                 if(data[0][0] === undefined) {
+                                    let localLabel = chart.data.labels[1]
+                                    if(chart.data.labels[1] === "Glasfiber-Fabric + Epoxy (Resin Transfer Molding)") {
+                                        localLabel = "Glasfiber-Fabric + Epoxy (RTM)"
+                                    } else if(chart.data.labels[1] === "Glasfiber-Fabric + Epoxy (Wet Compression Molding)") {
+                                        localLabel = "Glasfiber-Fabric + Epoxy (WCM)"
+                                    }
                                     return [{
-                                        text: chart.data.labels[1] + "range: [" + data[1][0] + ", " + data[1][1] + "] " + unit,
+                                        text: localLabel + " range: [" + data[1][0] + ", " + data[1][1] + "] " + unit,
                                         strokeStyle: chart.data.datasets[0].borderColor[1],
                                         fillStyle: chart.data.datasets[0].backgroundColor[1]
                                     }]

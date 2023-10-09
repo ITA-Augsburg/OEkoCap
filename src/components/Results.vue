@@ -314,13 +314,18 @@ import benchmarks from "../process_benchmarks.json"
                 this.hideElementChildren("gwp_or_cost_per_process_charts")
                 // unhide charts (and custom-legends) according to viewport-width
                 // pie-chart + legend
-                if(this.wideWindow) {
-                    this.unhideElement(this.charts[chartCategory][chartName].normal_font)
-                    this.unhideElement(this.charts[chartCategory][chartName].normal_font + "_legend_container")
-                } else {
-                    this.unhideElement(this.charts[chartCategory][chartName].small_font)
-                    this.unhideElement(this.charts[chartCategory][chartName].small_font + "_legend_container")
-                }
+                    try {
+                        if(this.wideWindow) {
+                            this.unhideElement(this.charts[chartCategory][chartName].normal_font)
+                            this.unhideElement(this.charts[chartCategory][chartName].normal_font + "_legend_container")
+                        } else {
+                            this.unhideElement(this.charts[chartCategory][chartName].small_font)
+                            this.unhideElement(this.charts[chartCategory][chartName].small_font + "_legend_container")
+                        }
+                    } catch(error) {
+                        // a process in output.processes has a null value forminGWPValue ormaxGWPValue or minCostPerKg or maxCostPerKg
+                        return
+                    }
             },
             updateMechanicalValuesAshbyChart() {
                 /**

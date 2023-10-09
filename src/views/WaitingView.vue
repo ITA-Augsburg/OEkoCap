@@ -8,7 +8,8 @@
     <Input_subheader
     :text_2='"CALCULATOR"'
     :text_3='"⠀"'
-    :tooltip_enabled=false />
+    :tooltip_enabled=false
+    :tooltip_text="''" />
     <Waiting></Waiting>
     <Input_footer
     :id=id

@@ -4,7 +4,7 @@
 }
 
 .tooltip {
-    display: none;
+    /* display: none; */
     height: 20px;
     align-self: center;
 }

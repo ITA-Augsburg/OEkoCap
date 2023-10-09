@@ -1,6 +1,5 @@
 <script setup>
   import Tooltip from "../components/Tooltip.vue"
-  import Tooltip_texts from "../tooltip_texts.json"
 </script>
 
 <template>
@@ -11,9 +10,9 @@
     <div class="subheader_text_3_container">
       <p class="subheader_text_3">{{ text_3 }}</p>
       <Tooltip
-      v-if="tooltip_enabled === true"
+      :tooltip_enabled=tooltip_enabled
       :tooltip_class='"tooltip subheader_tooltip"'
-      :tooltip_text=Tooltip_texts.test />
+      :tooltip_text=tooltip_text />
     </div>
 
 </div>
@@ -24,7 +23,7 @@
  * Displays information about the current input-page.
  */
 export default {
-  props: ["text_2", "text_3", "tooltip_enabled"],
+  props: ["text_2", "text_3", "tooltip_enabled", "tooltip_text"],
   data() {
     return {
     }

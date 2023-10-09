@@ -7,7 +7,8 @@
     <Input_subheader
     :text_2='"Project"'
     :text_3='"⠀"'
-    :tooltip_enabled=false />
+    :tooltip_enabled=false
+    :tooltip_text="''" />
 
     <div class="info_area">
         <p style="font-size: 20px; text-align: center; padding-top: 50px;">Coming soon</p>

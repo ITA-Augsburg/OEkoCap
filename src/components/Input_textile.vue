@@ -21,6 +21,7 @@
             :bg-color=color_green />
 
             <Tooltip
+            :tooltip_enabled=false
             :tooltip_class="'tooltip select_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>
@@ -28,6 +29,7 @@
         <div class="tooltip_container">
             <p class="text textile_ml_text">Mass loss</p>
             <Tooltip
+            :tooltip_enabled=false
             :tooltip_class="'tooltip textile_ml_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>
@@ -66,6 +68,7 @@
             :bg-color=color_lightgrey />
 
             <Tooltip
+            :tooltip_enabled=false
             :tooltip_class="'tooltip select_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>
@@ -84,6 +87,7 @@
             :bg-color=color_lightgrey />
 
             <Tooltip
+            :tooltip_enabled=false
             :tooltip_class="'tooltip select_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>

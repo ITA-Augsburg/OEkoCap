@@ -21,6 +21,7 @@
             :bg-color=color_green />
 
             <Tooltip
+            :tooltip_enabled=false
             :tooltip_class="'tooltip select_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>

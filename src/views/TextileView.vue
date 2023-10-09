@@ -2,13 +2,15 @@
     import Input_subheader from "../components/Input_subheader.vue"
     import Input_textile from "../components/Input_textile.vue"
     import Input_footer from "../components/Input_footer.vue"
+    import Tooltip_texts from "../tooltip_texts.json"
 </script>
 
 <template>
     <Input_subheader
     :text_2='"Step 2: Part production"'
     :text_3='"TEXTILE"'
-    :tooltip_enabled=true />
+    :tooltip_enabled=true
+    :tooltip_text=Tooltip_texts.textile_subheader_tooltip />
     <Input_textile
     :app_input_prop=app_input_prop
     :matrix_insertion_prop=matrix_insertion_prop

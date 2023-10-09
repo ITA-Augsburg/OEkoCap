@@ -1,5 +1,7 @@
 <template>
-    <div :class=tooltip_class >
+    <div
+    v-if="tooltip_enabled"
+    :class=tooltip_class >
         <svg
         xmlns="http://www.w3.org/2000/svg"
         width="20"
@@ -26,7 +28,7 @@
  * A tooltip that can be hovered to display text.
  */
     export default {
-        props: ["tooltip_class", "tooltip_text"],
+        props: ["tooltip_class", "tooltip_text", "tooltip_enabled"],
         data: () => ({
             tooltip_open: false,
         })
