@@ -24,7 +24,7 @@
 
                 <!-- BUTTON BACK -->
                 <v-btn
-                v-if="this.id !== 'waiting' && this.id !== 'err' && this.id !== 'results'"
+                v-if="id !== 'waiting' && id !== 'err' && id !== 'results'"
                 icon=""
                 @click="backButton()"
                 :color=color_lightgrey
@@ -33,7 +33,7 @@
                 height="45px"
                 ><p class="footer_button_text">‹</p></v-btn>
                 <v-btn
-                v-if="this.id === 'waiting' || this.id === 'err' || this.id === 'results'"
+                v-if="id === 'waiting' || id === 'err' || id === 'results'"
                 disabled
                 icon=""
                 :color=color_lightgrey
@@ -44,7 +44,7 @@
 
                 <!-- BUTTON 1 -->
                 <v-btn
-                v-if="this.id === 'waste'"
+                v-if="id === 'waste'"
                 icon=""
                 :color=color_green
                 elevation="12"
@@ -52,7 +52,7 @@
                 height="45px"
                 ><p class="footer_button_text">1</p></v-btn>
                 <v-btn
-                v-if="this.id !== 'waste' && this.id !== 'waiting' && this.id !== 'err' && this.id !== 'results'"
+                v-if="id !== 'waste' && id !== 'waiting' && id !== 'err' && id !== 'results'"
                 icon=""
                 @click="handleButton('1')"
                 :color=color_lightgrey
@@ -61,7 +61,7 @@
                 height="45px"
                 ><p class="footer_button_text">1</p></v-btn>
                 <v-btn
-                v-if="this.id === 'waiting' || this.id === 'err' || this.id === 'results'"
+                v-if="id === 'waiting' || id === 'err' || id === 'results'"
                 disabled
                 icon=""
                 :color=color_lightgrey
@@ -72,7 +72,7 @@
 
                 <!-- BUTTON 2 -->
                 <v-btn
-                v-if="this.id === 'separation'"
+                v-if="id === 'separation'"
                 icon=""
                 :color=color_green
                 elevation="12"
@@ -80,7 +80,7 @@
                 height="45px"
                 ><p class="footer_button_text">2</p></v-btn>
                 <v-btn
-                v-if="this.id !== 'separation' && button2enabled"
+                v-if="id !== 'separation' && button2enabled"
                 icon=""
                 @click="handleButton('2')"
                 :color=color_lightgrey
@@ -89,7 +89,7 @@
                 height="45px"
                 ><p class="footer_button_text">2</p></v-btn>
                 <v-btn
-                v-if="this.id !== 'separation' && !button2enabled"
+                v-if="id !== 'separation' && !button2enabled"
                 disabled
                 icon=""
                 :color=color_lightgrey
@@ -100,7 +100,7 @@
 
                 <!-- BUTTON 3 -->
                 <v-btn
-                v-if="this.id === 'matrix'"
+                v-if="id === 'matrix'"
                 icon=""
                 :color=color_green
                 elevation="12"
@@ -108,7 +108,7 @@
                 height="45px"
                 ><p class="footer_button_text">3</p></v-btn>
                 <v-btn
-                v-if="this.id !== 'matrix' && button3enabled"
+                v-if="id !== 'matrix' && button3enabled"
                 icon=""
                 @click="handleButton('3')"
                 :color=color_lightgrey
@@ -117,7 +117,7 @@
                 height="45px"
                 ><p class="footer_button_text">3</p></v-btn>
                 <v-btn
-                v-if="this.id !== 'matrix' && !button3enabled"
+                v-if="id !== 'matrix' && !button3enabled"
                 disabled
                 icon=""
                 :color=color_lightgrey
@@ -128,7 +128,7 @@
 
                 <!-- BUTTON 4 -->
                 <v-btn
-                v-if="this.id === 'textile'"
+                v-if="id === 'textile'"
                 icon=""
                 :color=color_green
                 elevation="12"
@@ -136,7 +136,7 @@
                 height="45px"
                 ><p class="footer_button_text">4</p></v-btn>
                 <v-btn
-                v-if="this.id !== 'textile' && button4enabled"
+                v-if="id !== 'textile' && button4enabled"
                 icon=""
                 @click="handleButton('4')"
                 :color=color_lightgrey
@@ -145,7 +145,7 @@
                 height="45px"
                 ><p class="footer_button_text">4</p></v-btn>
                 <v-btn
-                v-if="this.id !== 'textile' && !button4enabled"
+                v-if="id !== 'textile' && !button4enabled"
                 disabled
                 icon=""
                 :color=color_lightgrey
@@ -156,7 +156,7 @@
 
                 <!-- BUTTON 5 -->
                 <v-btn
-                v-if="this.id === 'processing'"
+                v-if="id === 'processing'"
                 icon=""
                 :color=color_green
                 elevation="12"
@@ -164,7 +164,7 @@
                 height="45px"
                 ><p class="footer_button_text">5</p></v-btn>
                 <v-btn
-                v-if="this.id !== 'processing' && button5enabled"
+                v-if="id !== 'processing' && button5enabled"
                 icon=""
                 @click="handleButton('5')"
                 :color=color_lightgrey
@@ -173,7 +173,7 @@
                 height="45px"
                 ><p class="footer_button_text">5</p></v-btn>
                 <v-btn
-                v-if="this.id !== 'processing' && !button5enabled"
+                v-if="id !== 'processing' && !button5enabled"
                 disabled
                 icon=""
                 :color=color_lightgrey
@@ -184,7 +184,7 @@
                 
                 <!-- BUTTON NEXT -->
                 <v-btn
-                v-if="this.id !== 'waiting' && this.id !== 'err' && this.id !== 'results'"
+                v-if="id !== 'waiting' && id !== 'err' && id !== 'results'"
                 icon=""
                 @click="nextButton()"
                 :color=color_lightgrey
@@ -193,7 +193,7 @@
                 height="45px"
                 ><p class="footer_button_text">›</p></v-btn>
                 <v-btn
-                v-if="this.id === 'waiting' || this.id === 'err' || this.id === 'results'"
+                v-if="id === 'waiting' || id === 'err' || id === 'results'"
                 disabled
                 icon=""
                 :color=color_lightgrey
