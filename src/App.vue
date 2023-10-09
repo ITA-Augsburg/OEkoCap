@@ -173,7 +173,7 @@ export default {
         if(waste.type !== undefined) {
           this.button2enabled = true
         }
-        this.logWaste()
+        // this.logWaste()
 
       } else if(Object.prototype.hasOwnProperty.call(new_values, "sep_type")) {
         separation.type = new_values.sep_type
@@ -520,14 +520,14 @@ export default {
             try {
               this.appOutput = data.replaceAll("INFINITY", "null")
               this.appOutput = JSON.parse(this.appOutput)
-              console.log(this.appOutput)
+              // console.log(this.appOutput)
             } catch (error) {
               this.errorMessage = "Internal error. No output could be generated based on the given input."
               router.push({name: "ErrorView"})
               // todo: save such inputs in the backend for debugging
               return
             }
-            if(!(Object.prototype.hasOwnProperty.call(this.app_output, "processes"))) {
+            if(!(Object.prototype.hasOwnProperty.call(this.appOutput, "processes"))) {
               this.$emit("setErrorMessage", "Internal error. No output could be generated based on the given input.")
               router.push({name: "ErrorView"})
               // todo: save such inputs in the backend for debugging
