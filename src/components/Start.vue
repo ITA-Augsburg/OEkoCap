@@ -33,14 +33,14 @@
         height="47px"
         ><p class="start_button_text">Start</p></v-btn>
 
-        <!-- <v-btn
+        <v-btn
         class="start_button"
         v-bind:color=color_green
         @click="shortcut()"
         elevation="5"
         width="160px"
         height="47px"
-        ><p class="start_button_text">shortcut</p></v-btn> -->
+        ><p class="start_button_text">shortcut</p></v-btn>
 
     </div>
 

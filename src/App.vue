@@ -504,45 +504,49 @@ export default {
        */
       this.footerProgressBar = 99
       this.formatAppInputKeys()
-      this.log()
+      // this.log()
 
-      let url1 = "https://localhost/meine_dateien/ita_webapp_back/call_server.php";
-        fetch(url1, {
-            method: "POST",
-            mode: "cors", // no-cors, *cors, same-origin
-            // origin: "12.34.56.78:80",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(this.app_input)
-        }).then(res => {
-            return res.text();
-        }).then(data => {
-            // console.log(data)
-            try {
-              this.appOutput = data.replaceAll("INFINITY", "null")
-              this.appOutput = JSON.parse(this.appOutput)
-              // console.log(this.appOutput)
-            } catch (error) {
-              this.errorMessage = "Internal error. No output could be generated based on the given input."
-              router.push({name: "ErrorView"})
-              // todo: save such inputs in the backend for debugging
-              return
-            }
-            if(!(Object.prototype.hasOwnProperty.call(this.appOutput, "processes"))) {
-              this.$emit("setErrorMessage", "Internal error. No output could be generated based on the given input.")
-              router.push({name: "ErrorView"})
-              // todo: save such inputs in the backend for debugging
-            }
-            router.push({name: "ResultsView"})
-        })
-        //if server not responding notify user
-        .catch(rej => {
-            // navigate to errorView, pass error as prop
+      setTimeout(() => {
+        router.push({name: "ResultsView"})
+      }, 8000);
 
-            // console.log("Fehler beim Serveraufruf");
-            console.log(rej);
-            this.errorMessage = "Server not responding."
-            router.push({name: "ErrorView"})
-        });
+      // let url1 = "https://localhost/meine_dateien/ita_webapp_back/call_server.php";
+      //   fetch(url1, {
+      //       method: "POST",
+      //       mode: "cors", // no-cors, *cors, same-origin
+      //       // origin: "12.34.56.78:80",
+      //       headers: {"Content-Type": "application/json"},
+      //       body: JSON.stringify(this.app_input)
+      //   }).then(res => {
+      //       return res.text();
+      //   }).then(data => {
+      //       // console.log(data)
+      //       try {
+      //         this.appOutput = data.replaceAll("INFINITY", "null")
+      //         this.appOutput = JSON.parse(this.appOutput)
+      //         // console.log(this.appOutput)
+      //       } catch (error) {
+      //         this.errorMessage = "Internal error. No output could be generated based on the given input."
+      //         router.push({name: "ErrorView"})
+      //         // todo: save such inputs in the backend for debugging
+      //         return
+      //       }
+      //       if(!(Object.prototype.hasOwnProperty.call(this.appOutput, "processes"))) {
+      //         this.$emit("setErrorMessage", "Internal error. No output could be generated based on the given input.")
+      //         router.push({name: "ErrorView"})
+      //         // todo: save such inputs in the backend for debugging
+      //       }
+      //       router.push({name: "ResultsView"})
+      //   })
+      //   //if server not responding notify user
+      //   .catch(rej => {
+      //       // navigate to errorView, pass error as prop
+
+      //       // console.log("Fehler beim Serveraufruf");
+      //       console.log(rej);
+      //       this.errorMessage = "Server not responding."
+      //       router.push({name: "ErrorView"})
+      //   });
     },
     // checkOutputValidity(output) {
     //   /**
