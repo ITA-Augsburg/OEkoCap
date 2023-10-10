@@ -207,7 +207,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
                 exe_output: undefined,
 
                 // when testing, set exe_output to test_output in mounted()
-                test_output: benchmarks.test_output,
+                test_output: benchmarks.test_output_3,
                 benchmarks: benchmarks.benchmarks
             }
         },
