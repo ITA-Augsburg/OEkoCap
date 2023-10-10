@@ -1,6 +1,6 @@
 <template>
 
-    <div class="sponsor_footer">
+    <div class="the_sponsor_footer">
         <div class="footer_content">
 
             <div class="sponsor_container">
