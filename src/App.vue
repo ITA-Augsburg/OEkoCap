@@ -16,12 +16,12 @@
     :button5enabled=button5enabled
     :buttonCalculateEnabled=buttonCalculateEnabled
 
-    :app_input_prop=this.app_input
-    :waste_fine_checkbox_prop=this.waste_fine_checkbox
-    :matrix_insertion_prop=this.matrixInsertionCheckbox
-    :proc_moi_prop=this.processingMethodOfInsertion
-    :app_output_prop=this.appOutput
-    :error_message_prop=this.errorMessage
+    :app_input_prop=app_input
+    :waste_fine_checkbox_prop=waste_fine_checkbox
+    :matrix_insertion_prop=matrixInsertionCheckbox
+    :proc_moi_prop=processingMethodOfInsertion
+    :app_output_prop=appOutput
+    :error_message_prop=errorMessage
     @clearAppInput="clearAppInput()"
     @updateInputFooter="updateInputFooter()"
     @saveNewInputs="saveNewInputs($event)"
@@ -506,7 +506,8 @@ export default {
       this.formatAppInputKeys()
       this.log()
 
-      let url1 = "https://localhost/meine_dateien/ita_webapp_back/call_server.php";
+      // let url1 = "https://localhost/meine_dateien/ita_webapp_back/call_server.php";
+      let url1 = "https://localhost:3000/";
         fetch(url1, {
             method: "POST",
             mode: "cors", // no-cors, *cors, same-origin
