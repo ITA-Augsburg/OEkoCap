@@ -506,7 +506,7 @@ export default {
       this.formatAppInputKeys()
       this.log()
 
-      let url1 = "https://localhost/meine_dateien/ita_webapp_back/call_server.php";
+      let url1 = "http://85.215.180.183/call_server.php";
         fetch(url1, {
             method: "POST",
             mode: "cors", // no-cors, *cors, same-origin
@@ -544,28 +544,6 @@ export default {
             router.push({name: "ErrorView"})
         });
     },
-    // checkOutputValidity(output) {
-    //   /**
-    //    * Checks wether the output is the expected json-string or an error-message. If error-message, redirects user to ErrorView. Else redirects to ResultsView.
-    //    * Checks generated output for invalid values like INFINITY. Converts those into null, otherwise string can't be parsed into a json-object.
-    //    * In ResultsView charts cannot be generated from null values, output-fields are checked again in results_charts_functions.js.
-    //    */
-    //   console.log(output)
-    //   try {
-    //     output = JSON.parse(output.replaceAll("INFINITY", "null"))
-    //     console.log(output)
-    //   } catch (error) {
-    //     this.errorMessage = "Internal error. No output could be generated based on the given input."
-    //     router.push({name: "ErrorView"})
-    //     // todo: save such inputs in the backend for debugging
-    //     return
-    //   }
-    //   if(!(Object.prototype.hasOwnProperty.call(output, "processes"))) {
-    //     this.$emit("setErrorMessage", "Internal error. No output could be generated based on the given input.")
-    //     router.push({name: "ErrorView"})
-    //     // todo: save such inputs in the backend for debugging
-    //   }
-    // },
     setStartedCorrectly() {
       /**
        * This function is emitted from StartView.
