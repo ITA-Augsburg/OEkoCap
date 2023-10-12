@@ -17,7 +17,7 @@
     :waste_fine_checkbox_prop=waste_fine_checkbox_prop
     @saveNewInputs="saveNewInputs($event)" />
     <Input_footer
-    :id=id
+    :id="id"
     :progressValue=progressValue
     :color_green=color_green
     :color_lightgrey=color_lightgrey

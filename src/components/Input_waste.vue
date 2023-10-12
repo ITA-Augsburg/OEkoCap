@@ -17,7 +17,7 @@
             :items=type_options
             variant="solo"
             :bg-color=color_green
-            v-model=this.waste_type
+            v-model=waste_type
             v-on:update:model-value="[updateWasteRoute(), saveNewInputs()]" />
 
             <Tooltip
