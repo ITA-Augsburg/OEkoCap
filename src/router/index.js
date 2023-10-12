@@ -11,6 +11,7 @@ import ErrorView from '../views/ErrorView.vue'
 import CalculatorView from '../views/CalculatorView.vue'
 import GuidelinesView from '../views/GuidelinesView.vue'
 import ProjectView from '../views/ProjectView.vue'
+import ImprintView from '../views/ImprintView.vue'
 import Redirect from '../components/Redirect.vue'
 
 const props = {
@@ -136,6 +137,15 @@ const routes = [
             color_lightgrey: props.color_lightgrey
         }
     },
+    {
+        path: "/imprint",
+        name: "ImprintView",
+        component: ImprintView,
+        props: {
+            color_green: props.color_green,
+            color_lightgrey: props.color_lightgrey
+        }
+    }
 ]
 
 const router = createRouter({
