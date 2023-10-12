@@ -505,26 +505,26 @@ export default {
        */
       this.footerProgressBar = 99
       this.formatAppInputKeys()
-      this.log()
+      // this.log()
 
       //setTimeout(() => {
       //  router.push({name: "ResultsView"})
       //}, 8000);
-      console.log(this.app_input);
+      // console.log(this.app_input);
       let url1 = "http://85.215.180.183/call_server.php";
       //const {result1}=axios.post(url1,this.app_input);
       axios.post(url1,this.app_input,setTimeout(20000)).then(res => {             
-          return res.data
+        return res.data
       }).then(data => {
-          console.log(data)
+          // console.log(data)
           try {        
-          let data1=JSON.stringify(data);      
+            let data1=JSON.stringify(data);      
             this.appOutput = data1.replaceAll("INFINITY", "null")
             this.appOutput = JSON.parse(this.appOutput)
-            console.log(this.appOutput)
+            // console.log(this.appOutput)
           } catch (error) {
             this.errorMessage = "Internal error. No output could be generated based on the given input.(1)"
-        router.push({name: "ErrorView"})
+            router.push({name: "ErrorView"})
             // todo: save such inputs in the backend for debugging
             return
           }
@@ -533,6 +533,9 @@ export default {
             router.push({name: "ErrorView"})
             // todo: save such inputs in the backend for debugging
           }
+          // if user left the loading screen (without reloading the website) then don't redirect to results
+          // console.log(this.$route.name)
+          if(this.$route.name !== "WaitingView") return
           router.push({name: "ResultsView"})
       })
       //if server not responding notify user
@@ -542,6 +545,9 @@ export default {
           // console.log("Fehler beim Serveraufruf");
           console.log(rej);
           this.errorMessage = "Server not responding."
+          // if user left the loading screen (without reloading the website) then don't redirect to results
+          // console.log(this.$route.name)
+          if(this.$route.name !== "WaitingView") return
           router.push({name: "ErrorView"})
       });         
     },
