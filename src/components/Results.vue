@@ -162,7 +162,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
              * Also creates data-urls of the charts for use when creating the pdf in Results_footer.vue.
              */
             this.exe_output = this.app_output_prop
-            this.exe_output = this.test_output // for testing enable this line (real output will be ignored)
+            // this.exe_output = this.test_output // for testing enable this line (real output will be ignored)
 
             // fill benchmark-select element
             this.benchmark_options = []

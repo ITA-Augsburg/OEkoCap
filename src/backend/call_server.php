@@ -1,14 +1,20 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
+header('Access-Control-Allow-Headers: X-Requested-With,Origin,Content-Type,Cookie,Accept');
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    header('HTTP/1.1 204 No Content');
+    die;
+}
 
-header('Content-Type: application/json');
 // header("Access-Control-Allow-Origin: 12.34.56.78:80");
 $request_payload = file_get_contents('php://input');
 $json_array = json_decode($request_payload, true);  # json as array
 $json_pretty = json_encode($json_array, JSON_PRETTY_PRINT);
 
 # arriving user input is saved in a folder-structure in the following directory
-$input_base_directory = "C:\\1_My_stuff\\XAMPP\\htdocs\\meine_dateien\\ita_webapp_back\\input_files\\";
-$output_base_directory = "C:\\1_My_stuff\\XAMPP\\htdocs\\meine_dateien\\ita_webapp_back\\output_files\\";
+$input_base_directory = "C:\\inetpub\\wwwroot\\recycling_v4_2\\input_files\\";
+$output_base_directory = "C:\\inetpub\\wwwroot\\recycling_v4_2\\output_files\\";
 $current_date = getdate()["year"] . "_" . getdate()["mon"] . "_" . getdate()["mday"];
 $current_time = getdate()["hours"] . "_" . getdate()["minutes"] . "_" . getdate()["seconds"];
 // $random = rand(1, 999);
@@ -58,7 +64,7 @@ if(filesize($input_file_path) == 4) {
 # run application, create output file
 $output_file_name = $current_date . "-" . $current_time . "_output.json";
 $output_file_path = $output_base_directory . $current_date . "\\" . $output_file_name;
-$exec_string = 'C:\\1_My_stuff\\1StudiumAugsburg\\OekoCaP\\oekocap_angaben\\recycling_v4_2\\recycling.exe --inputFile="' . $input_file_path . '" --outputFile="' . $output_file_path . '"';
+$exec_string = 'C:\\inetpub\\wwwroot\\recycling_v4_2\\recycling_v4_2\\recycling.exe --inputFile="' . $input_file_path . '" --outputFile="' . $output_file_path . '"';
 exec($exec_string);
 
 # return filename
@@ -67,5 +73,9 @@ exec($exec_string);
 // echo $output_array = json_decode(file_get_contents($output_file_path), true);
 // $output_pretty = json_encode($output_array, JSON_PRETTY_PRINT);
 // echo $output_pretty;
-echo file_get_contents($output_file_path);
+
+$postBody=json_decode(file_get_contents($output_file_path));
+header('Content-Type: application/json');
+echo json_encode($postBody);
+//echo json_encode(['status'=>'success','data'=>$output_file_path])
 ?>

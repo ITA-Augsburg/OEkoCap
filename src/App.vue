@@ -39,6 +39,7 @@
  * The ancestor to every vue-component.
  * app_input is defined here.
  */
+import axios from 'axios';
 export default {
   data: () => ({
     button2enabled: true,
@@ -506,70 +507,66 @@ export default {
       this.formatAppInputKeys()
       // this.log()
 
-      setTimeout(() => {
-        router.push({name: "ResultsView"})
-      }, 8000);
+      //setTimeout(() => {
+      //  router.push({name: "ResultsView"})
+      //}, 8000);
+          console.log(this.app_input);
+       let url1 = "http://85.215.180.183/call_server.php";
+       //const {result1}=axios.post(url1,this.app_input);
+       axios.post(url1,this.app_input,setTimeout(20000)).then(res => {             
+             return res.data
+         }).then(data => {
+             console.log(data)
+             try {        
+              let data1=JSON.stringify(data);      
+               this.appOutput = data1.replaceAll("INFINITY", "null")
+               this.appOutput = JSON.parse(this.appOutput)
+               console.log(this.appOutput)
+             } catch (error) {
+               this.errorMessage = "Internal error. No output could be generated based on the given input.(1)"
+            router.push({name: "ErrorView"})
+               // todo: save such inputs in the backend for debugging
+               return
+             }
+             if(!(Object.prototype.hasOwnProperty.call(this.appOutput, "processes"))) {
+               this.$emit("setErrorMessage", "Internal error. No output could be generated based on the given input.(2)")
+               router.push({name: "ErrorView"})
+               // todo: save such inputs in the backend for debugging
+             }
+             router.push({name: "ResultsView"})
+         })
+         //if server not responding notify user
+         .catch(rej => {
+             // navigate to errorView, pass error as prop
 
-      // let url1 = "https://localhost/meine_dateien/ita_webapp_back/call_server.php";
-      //   fetch(url1, {
-      //       method: "POST",
-      //       mode: "cors", // no-cors, *cors, same-origin
-      //       // origin: "12.34.56.78:80",
-      //       headers: {"Content-Type": "application/json"},
-      //       body: JSON.stringify(this.app_input)
-      //   }).then(res => {
-      //       return res.text();
-      //   }).then(data => {
-      //       // console.log(data)
-      //       try {
-      //         this.appOutput = data.replaceAll("INFINITY", "null")
-      //         this.appOutput = JSON.parse(this.appOutput)
-      //         // console.log(this.appOutput)
-      //       } catch (error) {
-      //         this.errorMessage = "Internal error. No output could be generated based on the given input."
-      //         router.push({name: "ErrorView"})
-      //         // todo: save such inputs in the backend for debugging
-      //         return
-      //       }
-      //       if(!(Object.prototype.hasOwnProperty.call(this.appOutput, "processes"))) {
-      //         this.$emit("setErrorMessage", "Internal error. No output could be generated based on the given input.")
-      //         router.push({name: "ErrorView"})
-      //         // todo: save such inputs in the backend for debugging
-      //       }
-      //       router.push({name: "ResultsView"})
-      //   })
-      //   //if server not responding notify user
-      //   .catch(rej => {
-      //       // navigate to errorView, pass error as prop
-
-      //       // console.log("Fehler beim Serveraufruf");
-      //       console.log(rej);
-      //       this.errorMessage = "Server not responding."
-      //       router.push({name: "ErrorView"})
-      //   });
+           // console.log("Fehler beim Serveraufruf");
+             console.log(rej);
+             this.errorMessage = "Server not responding."
+             router.push({name: "ErrorView"})
+         });         
     },
-    // checkOutputValidity(output) {
+     checkOutputValidity(output) {
     //   /**
     //    * Checks wether the output is the expected json-string or an error-message. If error-message, redirects user to ErrorView. Else redirects to ResultsView.
     //    * Checks generated output for invalid values like INFINITY. Converts those into null, otherwise string can't be parsed into a json-object.
     //    * In ResultsView charts cannot be generated from null values, output-fields are checked again in results_charts_functions.js.
     //    */
-    //   console.log(output)
-    //   try {
-    //     output = JSON.parse(output.replaceAll("INFINITY", "null"))
-    //     console.log(output)
-    //   } catch (error) {
-    //     this.errorMessage = "Internal error. No output could be generated based on the given input."
-    //     router.push({name: "ErrorView"})
-    //     // todo: save such inputs in the backend for debugging
-    //     return
-    //   }
-    //   if(!(Object.prototype.hasOwnProperty.call(output, "processes"))) {
-    //     this.$emit("setErrorMessage", "Internal error. No output could be generated based on the given input.")
-    //     router.push({name: "ErrorView"})
-    //     // todo: save such inputs in the backend for debugging
-    //   }
-    // },
+       console.log(output)
+       try {
+         output = JSON.parse(output.replaceAll("INFINITY", "null"))
+         console.log(output)
+       } catch (error) {
+         this.errorMessage = "Internal error. No output could be generated based on the given input."
+         router.push({name: "ErrorView"})
+         // todo: save such inputs in the backend for debugging
+         return
+       }
+       if(!(Object.prototype.hasOwnProperty.call(output, "processes"))) {
+         this.$emit("setErrorMessage", "Internal error. No output could be generated based on the given input.")
+         router.push({name: "ErrorView"})
+         // todo: save such inputs in the backend for debugging
+       }
+     },
     setStartedCorrectly() {
       /**
        * This function is emitted from StartView.
@@ -673,7 +670,7 @@ export default {
         this.app_input.processing_2.wandstärke_mm,
         this.processingMethodOfInsertion,
       )
-    }
+    },    
   },
 }
 </script>
