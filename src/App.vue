@@ -28,8 +28,19 @@
     @calculateButton="calculateButton()"
     @setStartedCorrectly="setStartedCorrectly()"
     @setErrorMessage="setErrorMessage($event)" />
-    
-    <VMain />
+
+    <v-dialog v-model=dialogOpen width="580px" persistent>
+        <v-card>
+            <v-card-text>
+              <p style="text-align: center; font-size: 19px;">This website requires cookies to function correctly.<br>
+              By clicking 'Accept' or 'here', you accept the use of cookies.<br>
+              Cookie details can be found <span @click="cookiePolicy()" style="color: #55CD89; cursor: pointer;">here</span>.</p>
+            </v-card-text>
+            <v-card-actions>
+                <v-btn block @click="dialogOpen = false">Accept</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
     
   </VApp>
 </template>
@@ -58,6 +69,8 @@ export default {
 
     appOutput: undefined,
     errorMessage: undefined,
+
+    dialogOpen: true,
 
     //default values are set here, these are passed to and shown in child-components
     app_input: {
@@ -122,6 +135,10 @@ export default {
   }
   }),
   methods: {
+    cookiePolicy() {
+      this.dialogOpen = false
+      router.push({name: "ImprintView"})
+    },
     saveNewInputs(new_values) {
       /**
        * When user interacts with input-elements of input-pages, the new values are emitted to App.vue.
