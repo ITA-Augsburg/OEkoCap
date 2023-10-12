@@ -11,6 +11,7 @@ import ErrorView from '../views/ErrorView.vue'
 import CalculatorView from '../views/CalculatorView.vue'
 import GuidelinesView from '../views/GuidelinesView.vue'
 import ProjectView from '../views/ProjectView.vue'
+import Redirect from '../components/Redirect.vue'
 
 const props = {
     color_white: "#FFFFFF",
@@ -22,6 +23,11 @@ const props = {
 }
 
 const routes = [
+    {
+        path: "/:pathMatch(.*)*",
+        name: "Redirect",
+        component: Redirect
+    },
     {
         path: "/",
         name: "StartView",

@@ -47,6 +47,7 @@ export default {
          */
         if(!this.startedCorrectly) {
             this.$router.push({name: "StartView"})
+            return
         }
     },
     data: () => ({
