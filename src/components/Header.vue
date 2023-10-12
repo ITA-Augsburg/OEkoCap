@@ -15,6 +15,7 @@
       <span class="header_text" @click="()=>{router.push({name: 'CalculatorView'})}">Calculator</span>
       <span class="header_text" @click="()=>{router.push({name: 'GuidelinesView'})}">Guidelines</span>
       <span class="header_text" @click="()=>{router.push({name: 'ProjectView'})}">Project</span>
+      <span class="header_text" @click="()=>{router.push({name: 'ImprintView'})}">Imprint</span>
     </p>
     <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +48,10 @@
     <v-list-item>
       <p class="header_text" @click="()=>{router.push({name: 'ProjectView'})}">Project</p>
     </v-list-item>
-    <!-- <v-divider thickness="2" class="border-opacity-100" /> -->
+    <v-divider thickness="2" class="border-opacity-100" />
+    <v-list-item>
+      <p class="header_text" @click="()=>{router.push({name: 'ImprintView'})}">Imprint</p>
+    </v-list-item>
   </v-navigation-drawer>
 </template>
 

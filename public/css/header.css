@@ -17,7 +17,7 @@
 .header_textcontainer {
     position: absolute;
     top: 28px;
-    left: calc(50vw + 250px);
+    left: calc(50vw + 165px);
     display: flex;
     flex-wrap: nowrap;
     color: var(--color-white);
@@ -53,7 +53,7 @@
     .header_textcontainer {
         position: absolute;
         top: 28px;
-        left: calc(100vw - 305px);
+        left: calc(100vw - 395px);
         display: flex;
         flex-wrap: nowrap;
     }
@@ -65,7 +65,7 @@
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 540px) {
 
     .header_textcontainer {
         display: none;
@@ -83,7 +83,7 @@
         color: #000000;
         font-size: 22px;
         text-align: center;
-        padding: 32.85px 0px;
+        padding: 19.3px 0px;
         width: auto;
         margin: 0px;
     }
