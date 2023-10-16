@@ -161,13 +161,7 @@ import annotationPlugin from "chartjs-plugin-annotation"
              * Creates charts from output and benchmarks.
              * Also creates data-urls of the charts for use when creating the pdf in Results_footer.vue.
              */
-
-            // If user enters app via url (oekocap.com/matrix for example) then user gets redirected to the start.
-            // User must start on the first input-page because later input-pages are dependent on earlier inputs.
-            if(!this.startedCorrectly) {
-                this.$router.push({name: "StartView"})
-                return
-            }
+            
             this.exe_output = this.app_output_prop
             // this.exe_output = this.test_output // for testing enable this line (real output will be ignored)
 

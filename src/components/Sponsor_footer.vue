@@ -1,3 +1,7 @@
+<script setup>
+    import Copyright_text from "./Copyright_text.vue"
+</script>
+
 <template>
 
     <div class="the_sponsor_footer">
@@ -12,16 +16,7 @@
                 
             </div>
 
-            <p class="footer_copyright_text">
-                {{ copyrightTextFragment }}
-                <a
-                class="footer_copyright_link"
-                href="https://ita-augsburg.com/"
-                target="_blank">
-                    ITA Augsburg
-                </a>
-                • (v1.0.0)
-            </p>
+            <Copyright_text />
 
         </div>
     </div>
@@ -33,16 +28,5 @@
  * Footer component with the sponsor displayed.
  */
 export default {
-    props: [],
-    mounted() {
-        /**
-         * Determines the current year and builds the copyright-text.
-         */
-        let date = new Date()
-        this.copyrightTextFragment = "© " + date.getFullYear().toString() + " "
-    },
-    data: () => ({
-        copyrightTextFragment: ""
-    }),
-};
+}
 </script>

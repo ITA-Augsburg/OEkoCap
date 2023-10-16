@@ -117,13 +117,17 @@
                  * Checks contents of text-fields. Pops up a message if contents are invalid. Sends them to the parent-component if contents are numbers.
                  * Contents are then saved in App.vue->app_input
                  */
-                //Das Monster
                 // console.log(this.expert_mode_cost + " " + this.expert_mode_gwp)
+
                 if(this.expert_mode_cost === undefined && this.expert_mode_gwp === undefined) {
+                    // both fields empty
                     this.$emit("newExpertModeValues", [this.expert_mode_cost, this.expert_mode_gwp, this.label])
                 } else if(this.expert_mode_cost === undefined && this.expert_mode_gwp !== undefined) {
+                    // gwp not empty
                     if(isNaN(parseFloat(String(this.expert_mode_gwp).replaceAll(",", ".")))) {
+                        // gwp not a number
                         if(this.expert_mode_gwp !== "") {
+                            // if user types a number and deletes it again, then the field will be set to "". In this case the error-dialog should'nt pop up.
                             this.dialogText = "Please enter a number for 'kg CO2-eq./kg'."
                             this.dialogOpen = true
                         }

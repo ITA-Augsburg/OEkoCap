@@ -1,5 +1,6 @@
 <script setup>
     import router from "../router"
+    import Copyright_text from "./Copyright_text.vue"
 </script>
 
 <template>
@@ -203,16 +204,7 @@
                 ><p class="footer_disabled_button_text">›</p></v-btn>
             </div>
 
-            <p class="footer_copyright_text">
-                {{ copyrightTextFragment }}
-                <a
-                class="footer_copyright_link"
-                href="https://ita-augsburg.com/"
-                target="_blank">
-                    ITA Augsburg
-                </a>
-                • (v1.0.0)
-            </p>
+            <Copyright_text />
 
         </div>
     </div>
@@ -238,17 +230,9 @@ export default {
     props: ["button2enabled", "button3enabled", "button4enabled", "button5enabled",
     "progressValue", "id", "color_green", "color_lightgrey"],
     emits: ["updateInputFooter"],
-    mounted() {
-        /**
-         * Determines the current year and builds the copyright-text.
-         */
-        let date = new Date()
-        this.copyrightTextFragment = "© " + date.getFullYear().toString() + " "
-    },
     data: () => ({
         dialogOpen: false,
         dialogText: "",
-        copyrightTextFragment: ""
     }),
     methods: {
         backButton() {
