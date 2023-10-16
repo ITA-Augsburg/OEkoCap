@@ -1,4 +1,5 @@
 <script setup>
+    import Copyright_text from "./Copyright_text.vue"
     import pdfMake from "pdfmake/build/pdfmake"
     import pdfFonts from "pdfmake/build/vfs_fonts"
     pdfMake.vfs = pdfFonts.pdfMake.vfs
@@ -19,16 +20,7 @@
                 ><p class="results_pdf_button_text">download results</p></v-btn>
             </div>
         
-            <p class="footer_copyright_text">
-                {{ copyrightTextFragment }}
-                <a
-                class="footer_copyright_link"
-                href="https://ita-augsburg.com/"
-                target="_blank">
-                    ITA Augsburg
-                </a>
-                • (v1.0.0)
-            </p>
+            <Copyright_text />
 
         </div>
     </div>
@@ -43,15 +35,7 @@
  */
     export default {
         props: ["color_lightgrey", "data_urls_prop"],
-        mounted() {
-            /**
-             * Determines the current year and builds the copyright-text.
-             */
-            let date = new Date()
-            this.copyrightTextFragment = "© " + date.getFullYear().toString() + " "
-        },
         data: () => ({
-            copyrightTextFragment: "",
         }),
         methods: {
             handlePdfButton() {

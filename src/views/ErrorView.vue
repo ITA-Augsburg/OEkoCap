@@ -1,7 +1,7 @@
 <script setup>
     import Input_subheader from "../components/Input_subheader.vue"
     import Error from "../components/Error.vue"
-    import Empty_footer from "../components/Footer_empty.vue"
+    import Button_footer from "../components/Footer_with_button.vue"
 </script>
 
 <template>
@@ -12,7 +12,7 @@
     :tooltip_text="''" />
     <Error
     :error_message_prop=error_message_prop />
-    <Empty_footer />
+    <Button_footer />
 </template>
 
 <script>
