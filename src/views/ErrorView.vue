@@ -1,7 +1,7 @@
 <script setup>
     import Input_subheader from "../components/Input_subheader.vue"
     import Error from "../components/Error.vue"
-    import Input_footer from "../components/Input_footer.vue"
+    import Empty_footer from "../components/Footer_empty.vue"
 </script>
 
 <template>
@@ -12,12 +12,7 @@
     :tooltip_text="''" />
     <Error
     :error_message_prop=error_message_prop />
-    <Input_footer
-    :id=id
-    :progressValue=progressValue
-    :color_green=color_green
-    :color_lightgrey=color_lightgrey
-    @updateInputFooter="updateInputFooter()" />
+    <Empty_footer />
 </template>
 
 <script>

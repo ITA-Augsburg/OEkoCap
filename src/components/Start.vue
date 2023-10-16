@@ -64,9 +64,9 @@ export default {
     }),
     methods: {
         clearAppInput() {
-        /**
-         * Resets App.vue->app_input, since the user can start choosing values and then go back to the start-page.
-         */
+            /**
+             * Resets App.vue->app_input, since the user can start choosing values and then go back to the start-page.
+             */
             // console.log("clearAppInput emitted from Start.vue")
             this.$emit("clearAppInput", undefined)
         },

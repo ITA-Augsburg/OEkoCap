@@ -117,3 +117,15 @@
     font-size: 20px;
     color: var(--color-grey);
 }
+
+.error_footer_buttoncontainer {
+    margin: 20px 10px 20px 5px;
+    display: flex;
+    height: 95px;
+    flex-direction: row-reverse;
+}
+
+.error_footer_button_text {
+    font-size: 20px;
+    color: var(--color-grey);
+}
