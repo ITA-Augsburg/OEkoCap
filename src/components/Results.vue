@@ -144,7 +144,10 @@ import { createCharts } from "../results_charts_functions.js"
 
         <div id="mechanical_values_charts" />
 
+        
     </div>
+    
+    <div id="charts_for_pdf" style="width: 1000px;" />
 
 </template>
 
@@ -382,19 +385,25 @@ import { createCharts } from "../results_charts_functions.js"
                 let selectedLegend = undefined
 
                 // gwp_charts gwp_range_output_benchmark_1_chart ... gwp_range_output_benchmark_n_chart
-                for(let key in this.charts.gwp_charts) {
-                    if(key === "gwp_range_output_only_chart") continue
-                    // canvas to image -> .toDataURL(), chart.js chart to image -> .toBase64Image()
-                    selectedChart = document.getElementById(this.charts.gwp_charts[key].normal_font)
-                    images.push({type: "bar", name: key, image: selectedChart.toDataURL()})
-                }
+                // for(let key in this.charts.gwp_charts) {
+                //     if(key === "gwp_range_output_only_chart") continue
+                //     // canvas to image -> .toDataURL(), chart.js chart to image -> .toBase64Image()
+                //     selectedChart = document.getElementById(this.charts.gwp_charts[key].normal_font)
+                //     images.push({type: "bar", name: key, image: selectedChart.toDataURL()})
+                // }
 
                 // cost_charts cost_range_output_benchmark_1_chart ... cost_range_output_benchmark_n_chart
-                for(let key in this.charts.cost_charts) {
-                    if(key === "cost_range_output_only_chart") continue
-                    selectedChart = document.getElementById(this.charts.cost_charts[key].normal_font)
-                    images.push({type: "bar", name: key, image: selectedChart.toDataURL()})
-                }
+                // for(let key in this.charts.cost_charts) {
+                //     if(key === "cost_range_output_only_chart") continue
+                //     selectedChart = document.getElementById(this.charts.cost_charts[key].normal_font)
+                //     images.push({type: "bar", name: key, image: selectedChart.toDataURL()})
+                // }
+
+                // gwp and cost bar-charts with output and every benchmark
+                let pdf_gwp_barchart = document.getElementById("pdf_gwp_chart_normal_font")
+                let pdf_cost_barchart = document.getElementById("pdf_cost_chart_normal_font")
+                images["pdf_gwp_chart_normal_font_chartImage"] = {type: "bar", image: pdf_gwp_barchart.toDataURL()}
+                images["pdf_cost_chart_normal_font_legendImage"] = {type: "bar", image: pdf_cost_barchart.toDataURL()}
                 
                 // max_gwp_per_process_charts max_gwp_of_each_output_process_chart + custom-legend
                 selectedId = this.charts.max_gwp_per_process_charts.max_gwp_of_each_output_process_chart.normal_font
@@ -426,21 +435,18 @@ import { createCharts } from "../results_charts_functions.js"
                  */
                 selectedChart.classList.remove("hidden_chart")
                 selectedLegend.classList.remove("hidden_chart")
-                let chartContainerId = undefined
-                switch(type) {
-                    case "pie":
-                        chartContainerId = "gwp_or_cost_per_process_charts"
-                        break
-                    case "ashby":
-                        chartContainerId = "mechanical_values_charts"
-                        break
-                    default:
-                        console.error("Invalid type in Results.vue htmlElementToCanvas(...) function")
-                        return
-                }
-                html2canvas(document.getElementById(chartContainerId), {logging: false}).then(function(canvas) {
-                    container.push({type: type, name: name, image: canvas.toDataURL()})
-                        // document.body.appendChild(canvas)
+
+                // Chart to DataUrl
+                // container.push({type: type, name: name + "_chartImage", image: selectedChart.toDataURL()})
+                container[name + "_chartImage"] = {type: type, image: selectedChart.toDataURL()}
+                // let image = new Image()
+                // image.src = selectedChart.toDataURL()
+                // document.body.appendChild(image)
+                // Legend to DataUrl
+                html2canvas(selectedLegend, {logging: false}).then(function(canvas) {
+                    // container.push({type: type, image: canvas.toDataURL()})
+                    container[name + "_legendImage"] = {type: type, image: canvas.toDataURL()}
+                    // document.body.appendChild(canvas)
                 })
                 selectedChart.classList.add("hidden_chart")
                 selectedLegend.classList.add("hidden_chart")

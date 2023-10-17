@@ -11,7 +11,6 @@
 
             <div class="results_pdf_buttoncontainer">
                 <v-btn
-                v-if="false"
                 @click=handlePdfButton()
                 :color=color_lightgrey
                 elevation="5"
@@ -25,7 +24,11 @@
         </div>
     </div>
 
-    <img :src='require("../assets/logo_oekocap_schwarz.png")' style="display: none;"  id="oekocap_logo_black">
+    <img :src='require("../assets/logo_oekocap_schwarz.png")' style="display: none;"  id="oekocap_logo_black_results">
+    <img :src='require("../assets/logos_together.png")' style="display: none;"  id="logos_together_results">
+    <!-- <img :src='require("../assets/frauenhofer_logo.png")' style="display: none;"  id="frauenhofer_logo_results">
+    <img :src='require("../assets/logo_bundesm_wirtschaft_klimaschutz.png")' style="display: none;"  id="bundesm_logo_results">
+    <img :src='require("../assets/ita_logo_bunt.png")' style="display: none;"  id="ita_logo_results"> -->
 </template>
 
 <script>
@@ -35,6 +38,11 @@
  */
     export default {
         props: ["color_lightgrey", "data_urls_prop"],
+        mounted() {
+            setTimeout(() => {
+                console.log(this.data_urls_prop)
+            }, 5000);
+        },
         data: () => ({
         }),
         methods: {
@@ -52,7 +60,11 @@
                 let month = date.getMonth()+1 < 10  ? "0" + (date.getMonth() + 1) : date.getMonth() + 1
                 let dateString = day + "." + month + "." + date.getFullYear()
 
-                let headerLogo = this.imageToDataUrl("oekocap_logo_black")
+                let headerLogo = this.imageToDataUrl("oekocap_logo_black_results")
+                let footer_logos = this.imageToDataUrl("logos_together_results")
+                // let frauenhofer_logo = this.imageToDataUrl("frauenhofer_logo_results")
+                // let bundesm_logo = this.imageToDataUrl("bundesm_logo_results")
+                // let ita_logo = this.imageToDataUrl("ita_logo_results")
                 let generalDescription = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
 
                 let content = [
@@ -63,19 +75,19 @@
 
                 let docDefinition = {
                     pageSize: 'A4',
-                    pageMargins: [ 40, 40, 40, 20 ], // left, top, right, bottom
-                    header: function() {
-                        return {
-                            layout: "noBorders",
-                            table: {
-                                headerRows: 0,
-                                widths: ["*"],
-                                body: [[
-                                    { text: "www.oekocap.com", fontSize: 10, alignment: "right", margin: [ 0, 7, 40, 0 ] }
-                                ]]
-                            }
-                        }
-                    },
+                    pageMargins: [ 40, 40, 40, 40], // left, top, right, bottom
+                    // header: function() {
+                    //     return {
+                    //         layout: "noBorders",
+                    //         table: {
+                    //             headerRows: 0,
+                    //             widths: ["*"],
+                    //             body: [[
+                    //                 { text: "www.oekocap.org", fontSize: 7, alignment: "right", margin: [ 0, 7, 40, 0 ] }
+                    //             ]]
+                    //         }
+                    //     }
+                    // },
                     footer: function(currentPage, pageCount) {
                         let footerObject = {
                             layout: "noBorders",
@@ -83,10 +95,13 @@
                                 headerRows: 0,
                                 widths: ["*", "*", "*"],
                                 body: [[
-                                    { text: dateString, margin: [40, 0, 0, 7], alignment: "left", fontSize: 10 },
-                                    { text: "Page " + currentPage.toString() + ' of ' + pageCount, alignment: 'center', fontSize: 10 },
-                                    { text: " © " + date.getFullYear() + " ITA Augsburg", margin: [0, 0, 40, 7], alignment: "right", fontSize: 10 }
-                                ]]
+                                    { text: dateString, margin: [40, 15, 0, 0], alignment: "left", fontSize: 7 },
+                                    // {image: frauenhofer_logo, fit: [50, 50], alignment: "right", margin: [0, 0, 0, 0]},
+                                    // {image: bundesm_logo, fit: [30, 50], alignment: "center", margin: [0, 0, 0, 0]},
+                                    // {image: ita_logo, fit: [40, 50], alignment: "left", margin: [0, 0, 0, 0]},
+                                    { image: footer_logos, fit: [190, 50], alignment: "center", margin: [0, 0, 0, 0] },
+                                    { text: "Page " + currentPage.toString() + ' of ' + pageCount, alignment: "right", fontSize: 7, margin: [0, 15, 40, 0] }
+                                ]],
                             }
                         }
                         // if(currentPage % 2) {
@@ -125,81 +140,25 @@
                 /**
                  * Creates sections for diagram-images in the pdf.
                  */
-                let chartTextsPlaceholder = "name" + '\n' + "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat"
-                // first page can hold three charts
-                pdfContent.push({
-                    layout: "noBorders",
-                    table: {
-                        headerRows: 0,
-                        widths: ["*", 200],
-                        heights: [180, 180],
-                        body: [
-                            [
-                                {text: chartTextsPlaceholder, alignment: "justify", margin: [0, 50, 10, 0]},
-                                {image: this.data_urls_prop[0].image, fit: [200, 180], alignment: "right", margin: [0, 15, 0, 0]}
-                            ],
-                            [
-                                {text: chartTextsPlaceholder, alignment: "justify", margin: [0, 50, 10, 0]},
-                                {image: this.data_urls_prop[1].image, fit: [200, 180], alignment: "right", margin: [0, 15, 0, 0]}
-                            ],
-                            [
-                                {text: chartTextsPlaceholder, alignment: "justify", margin: [0, 50, 10, 0]},
-                                {image: this.data_urls_prop[2].image, fit: [200, 180], alignment: "right", margin: [0, 15, 0, 0]}
-                            ],
-                        ]
-                    },
-                    pageBreak: "after"
-                })
+                let about = "About this chart"
+                let description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat"
+                
+                pdfContent.push({image: this.data_urls_prop["pdf_gwp_chart_normal_font_chartImage"].image, fit: [520, 400], alignment: "center", margin: [0, 30, 0, 20]})
+                pdfContent.push({text: about, alignment: "justify", margin: [0, 0, 0, 10]})
+                pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0], pageBreak: 'after'})
 
-                // other pages can hold four charts
-                let chartCount = 0
-                let currentBody = []
-                for(let i=3; i<this.data_urls_prop.length; i++) {
-                    if(chartCount >= 4) {
-                        pdfContent.push({
-                            // layout: "noBorders",
-                            table: {
-                                headerRows: 0,
-                                widths: ["*", 200],
-                                heights: [180, 180],
-                                body: currentBody
-                            },
-                            pageBreak: "after"
-                        })
-                        chartCount = 0
-                        currentBody = []
-                    }
+                pdfContent.push({image: this.data_urls_prop["pdf_cost_chart_normal_font_legendImage"].image, fit: [520, 400], alignment: "center", margin: [0, 30, 0, 20]})
+                pdfContent.push({text: about, alignment: "justify", margin: [0, 0, 0, 10]})
+                pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0], pageBreak: 'after'})
 
-                    switch(this.data_urls_prop[i].type) {
-                        case "bar":
-                            currentBody.push([
-                                {text: chartTextsPlaceholder, alignment: "justify", margin: [0, 50, 10, 0]},
-                                {image: this.data_urls_prop[i].image, fit: [200, 180], alignment: "right", margin: [0, 15, 0, 0]}
-                            ])
-                            chartCount++
-                            break
-                        case "pie":
-                            currentBody.push([
-                                {text: chartTextsPlaceholder, alignment: "justify", margin: [0, 50, 10, 0]},
-                                {image: this.data_urls_prop[i].image, width: 135, alignment: "center", margin: [0, 15, 0, 0]}
-                            ])
-                            chartCount++
-                            break
-                        case "ashby":
-                            currentBody.push([
-                                {text: chartTextsPlaceholder, alignment: "justify", margin: [0, 50, 10, 0]},
-                                {image: this.data_urls_prop[i].image, fit: [200, 180], alignment: "right", margin: [0, 15, 0, 0]}
-                            ])
-                            chartCount++
-                            break
-                        case "legend":
-                            break
-                        default:
-                            console.error("Invalid chart-type in Results_footer.vue fillTable(...) function!")
-                            break
-                    }
-                }
-            },
+                // put these in a table, put the other piechart next to it
+                // pdfContent.push({image: this.data_urls_prop["max_cost_of_each_output_process_chart_chartImage"].image, fit: [260, 400], alignment: "center", margin: [0, 30, 0, 10]})
+                // pdfContent.push({image: this.data_urls_prop["max_cost_of_each_output_process_chart_legendImage"].image, fit: [200, 400], alignment: "center", margin: [0, 0, 0, 20]})
+
+                pdfContent.push({text: about, alignment: "justify", margin: [0, 0, 0, 10]})
+                pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0], pageBreak: 'after'})
+
+            }
         }
     }
 </script>

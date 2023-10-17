@@ -16,9 +16,13 @@ export function createCharts(output, benchmarks) {
         cost_charts: {},
         max_gwp_per_process_charts: {},
         max_cost_per_process_charts: {},
-        mechanical_values_charts: {}
+        mechanical_values_charts: {},
+        pdf_gwp_cost_charts: {}
     }
     
+    let pieChartLabels = undefined
+    let pieChartColors = undefined
+
     // gwp range bar-charts (output only, output-benchmark_1, ..., output-benchmark_n)
 
     let category = "gwp_charts"
@@ -26,14 +30,11 @@ export function createCharts(output, benchmarks) {
     let title = "GWP range"
     let unit = "kg CO²"
 
-    let pieChartLabels = undefined
-    let pieChartColors = undefined
-
     let data = undefined
     
     // output only
     let name = "gwp_range_output_only_chart"
-    let barChartBenchmarkLabel = ""
+    let barChartBenchmarkLabels = ["Result", undefined]
     if(output.gwp.minValue === null || output.gwp.maxValue === null) {
         data = [[undefined, undefined],[undefined, undefined]]
     } else {
@@ -42,14 +43,14 @@ export function createCharts(output, benchmarks) {
             [undefined, undefined]
         ]
     }
-    addBarCharts(charts, category, name, title, barChartBenchmarkLabel, data, unit, parentId)
+    addBarCharts(charts, category, name, title, barChartBenchmarkLabels, data, unit, parentId)
     name = undefined
     data = undefined
 
     for(let key in benchmarks) {
         // output-benchmark_1, ..., output-benchmark_n
         name = "gwp_range_output_" + key.replaceAll(" ", "_") + "_chart"
-        barChartBenchmarkLabel = benchmarks[key].name
+        barChartBenchmarkLabels = ["Result", benchmarks[key].name]
         if(output.gwp.minValue === null || output.gwp.maxValue === null) {
             data = [[undefined, undefined],[Math.round(benchmarks[key].gwp_min * 100)/100, Math.round(benchmarks[key].gwp_max * 100)/100]]
         } else {
@@ -59,10 +60,10 @@ export function createCharts(output, benchmarks) {
             ]
         }
         // console.log(data)
-        addBarCharts(charts, category, name, title, barChartBenchmarkLabel, data, unit, parentId)
+        addBarCharts(charts, category, name, title, barChartBenchmarkLabels, data, unit, parentId)
         name = undefined
         data = undefined
-        barChartBenchmarkLabel = undefined
+        barChartBenchmarkLabels = undefined
     }
     
     // cost range bar-charts (output only, benchmark_1 only, ..., benchmark_n only, output-benchmark_1, ..., output-benchmark_n)
@@ -74,7 +75,7 @@ export function createCharts(output, benchmarks) {
 
     // output only
     name = "cost_range_output_only_chart"
-    barChartBenchmarkLabel = ""
+    barChartBenchmarkLabels = ["Result", undefined]
     if(output.cost.minValue_eur_per_kg === null || output.cost.maxValue_eur_per_kg === null) {
         data = [[undefined, undefined],[undefined, undefined]]
     } else {
@@ -83,14 +84,14 @@ export function createCharts(output, benchmarks) {
             [undefined, undefined]
         ]
     }
-    addBarCharts(charts, category, name, title, barChartBenchmarkLabel, data, unit, parentId)
+    addBarCharts(charts, category, name, title, barChartBenchmarkLabels, data, unit, parentId)
     name = undefined
     data = undefined
 
     for(let key in benchmarks) {
         // output-benchmark_1, ..., output-benchmark_n
         name = "cost_range_output_" + key.replaceAll(" ", "_") + "_chart"
-        barChartBenchmarkLabel = benchmarks[key].name
+        barChartBenchmarkLabels = ["Result", benchmarks[key].name]
         if(output.cost.minValue_eur_per_kg === null || output.cost.maxValue_eur_per_kg === null) {
             data = [
                 [undefined, undefined],
@@ -102,11 +103,63 @@ export function createCharts(output, benchmarks) {
                 [Math.round(benchmarks[key].cost_per_kg_min * 100)/100, Math.round(benchmarks[key].cost_per_kg_max * 100)/100]
             ]
         }
-        addBarCharts(charts, category, name, title, barChartBenchmarkLabel, data, unit, parentId)
+        addBarCharts(charts, category, name, title, barChartBenchmarkLabels, data, unit, parentId)
         name = undefined
         data = undefined
-        barChartBenchmarkLabel = undefined
+        barChartBenchmarkLabels = undefined
     }
+
+    // gwp and cost range barchart with output and every benchmark
+
+    category = "pdf_gwp_cost_charts"
+    parentId = "charts_for_pdf"
+    title = "GWP range"
+    unit = "kg CO²"
+
+    name = "pdf_gwp_chart"
+    barChartBenchmarkLabels = (output.gwp.minValue === null || output.gwp.maxValue === null)
+        ? []
+        : ["Result"]
+    data = (output.gwp.minValue === null || output.gwp.maxValue === null)
+        ? []
+        : [[Math.round(output.gwp.minValue * 100) / 100, Math.round(output.gwp.maxValue * 100) / 100]]
+    for(let key in benchmarks) {
+        barChartBenchmarkLabels.push(benchmarks[key].name)
+        data.push([Math.round(benchmarks[key].gwp_min * 100) / 100, Math.round(benchmarks[key].gwp_max * 100) / 100])
+    }
+    // addBarCharts(charts, category, name, title, barChartBenchmarkLabels, data, unit, parentId)
+    createCanvasElement(name + "_normal_font", "pdf_bar_chart", "charts_for_pdf")
+    createBarChart(name + "_normal_font", title, barChartBenchmarkLabels, data, unit, 15)
+    charts.pdf_gwp_cost_charts[name] = {}
+    charts.pdf_gwp_cost_charts[name]["normal_font"] = name + "_normal_font"
+    name = undefined
+    data = undefined
+    barChartBenchmarkLabels = undefined
+
+    category = "pdf_gwp_cost_charts"
+    parentId = "charts_for_pdf"
+    title = "Cost range"
+    unit = "€"
+
+    name = "pdf_cost_chart"
+    barChartBenchmarkLabels = (output.cost.minValue_eur_per_kg === null || output.cost.maxValue_eur_per_kg === null)
+        ? []
+        : ["Result"]
+    data = (output.cost.minValue_eur_per_kg === null || output.cost.maxValue_eur_per_kg === null)
+        ? []
+        : [[Math.round(output.cost.minValue_eur_per_kg * 100) / 100, Math.round(output.cost.maxValue_eur_per_kg * 100) / 100]]
+    for(let key in benchmarks) {
+        barChartBenchmarkLabels.push(benchmarks[key].name)
+        data.push([Math.round(benchmarks[key].cost_per_kg_min * 100) / 100, Math.round(benchmarks[key].cost_per_kg_max * 100) / 100])
+    }
+    // addBarCharts(charts, category, name, title, barChartBenchmarkLabels, data, unit, parentId)
+    createCanvasElement(name + "_normal_font", "pdf_bar_chart", "charts_for_pdf")
+    createBarChart(name + "_normal_font", title, barChartBenchmarkLabels, data, unit, 15)
+    charts.pdf_gwp_cost_charts[name] = {}
+    charts.pdf_gwp_cost_charts[name]["normal_font"] = name + "_normal_font"
+    name = undefined
+    data = undefined
+    barChartBenchmarkLabels = undefined
 
     // avarage gwp of each process pie-chart + custom legend (output)
 
@@ -209,22 +262,26 @@ function createCanvasElement(id, className, parentId) {
     // console.log(myCanvas)
     return newCanvas
 }
-function createBarChart(id, title, benchmarkLabel, data, unit, legendFontSize) {
+function createBarChart(id, title, benchmarkLabels, data, unit, legendFontSize) {
     /**
      * Creates a Chart.js bar-chart with a legend.
-     * Format of bar-chart-data is always [[a, b], [c, d]].
+     * Format of bar-chart-data is always [[a, b], [c, d], ...].
     */
+    let lotsOfColors = ["#55CD89"]
+    for(let i=1; i<benchmarkLabels.length; i++) {
+        lotsOfColors.push(randomColor(i, 1, benchmarkLabels.length))
+    }
+
     return new Chart(id, {
         type: "bar",
         data: {
-            labels: ["Result", benchmarkLabel],
+            labels: benchmarkLabels,
             datasets: [
                 {
                     data: checkBarChartData(data),
-                    backgroundColor: [
-                        "#55CD89",
-                        "#F2F2F2"
-                    ],
+                    backgroundColor: benchmarkLabels.length <= 2
+                        ? ["#55CD89", "#F2F2F2"]
+                        : lotsOfColors,
                     barThickness: 80,
                     borderWidth: 1,
                     borderColor: "#777",
@@ -238,18 +295,24 @@ function createBarChart(id, title, benchmarkLabel, data, unit, legendFontSize) {
         options: {
             animation: false,
             hover: false,
-            aspectRatio: 1.3,
+            aspectRatio: benchmarkLabels.length <= 2
+                ? 1.3
+                : 2.5,
             scales: {
                 x: {
+                    // grid: {
+                    //     tickWidth: 2
+                    // },
                     display: false,
                     ticks: {
+                        display: true,
                         font: {
                             size: 20
                         }
                     }
                 },
                 y: {
-                min: 0,
+                    min: 0,
                     ticks: {
                         font: {
                             size: 18
@@ -269,6 +332,7 @@ function createBarChart(id, title, benchmarkLabel, data, unit, legendFontSize) {
                     }
                 },
                 legend: {
+                    // maxWidth: 700,
                     position: "bottom",
                     labels: {
                         font: {
@@ -277,39 +341,41 @@ function createBarChart(id, title, benchmarkLabel, data, unit, legendFontSize) {
                         boxWidth: 25,
                         boxHeight: 25,
                         generateLabels: (chart) => {
-                                if(data[0][0] === undefined) {
-                                    let localLabel = chart.data.labels[1]
-                                    if(chart.data.labels[1] === "Glasfiber-Fabric + Epoxy (Resin Transfer Molding)") {
-                                        localLabel = "Glasfiber-Fabric + Epoxy (RTM)"
-                                    } else if(chart.data.labels[1] === "Glasfiber-Fabric + Epoxy (Wet Compression Molding)") {
-                                        localLabel = "Glasfiber-Fabric + Epoxy (WCM)"
-                                    }
-                                    return [{
-                                        text: localLabel + " range: [" + data[1][0] + ", " + data[1][1] + "] " + unit,
-                                        strokeStyle: chart.data.datasets[0].borderColor[1],
-                                        fillStyle: chart.data.datasets[0].backgroundColor[1]
-                                    }]
-                                } else if(data[1][0] === undefined) {
-                                    return [{
-                                        text: chart.data.labels[0] + " range: [" + data[0][0] + ", " + data[0][1] + "] " + unit,
-                                        strokeStyle: chart.data.datasets[0].borderColor[0],
-                                        fillStyle: chart.data.datasets[0].backgroundColor[0]
-                                    }]
+                            if(data[0][0] === undefined && data[1][0] === undefined) {
+                                return
+                            } else if(data[0][0] === undefined) {
+                                let localLabel = chart.data.labels[1]
+                                if(chart.data.labels[1] === "Glasfiber-Fabric + Epoxy (Resin Transfer Molding)") {
+                                    localLabel = "Glasfiber-Fabric + Epoxy (RTM)"
+                                } else if(chart.data.labels[1] === "Glasfiber-Fabric + Epoxy (Wet Compression Molding)") {
+                                    localLabel = "Glasfiber-Fabric + Epoxy (WCM)"
                                 }
-                                return chart.data.labels.map((label, index) => {
-                                    let localLabel = label
-                                    if(label === "Glasfiber-Fabric + Epoxy (Resin Transfer Molding)") {
-                                        localLabel = "Glasfiber-Fabric + Epoxy (RTM)"
-                                    } else if(label === "Glasfiber-Fabric + Epoxy (Wet Compression Molding)") {
-                                        localLabel = "Glasfiber-Fabric + Epoxy (WCM)"
-                                    }
-                                    return {
-                                        text: localLabel + " range: [" + data[index][0] + ", " + data[index][1] + "] " + unit,
-                                        strokeStyle: chart.data.datasets[0].borderColor[index],
-                                        fillStyle: chart.data.datasets[0].backgroundColor[index]
-                                    }
-                                })
+                                return [{
+                                    text: localLabel + " range: [" + data[1][0] + ", " + data[1][1] + "] " + unit,
+                                    strokeStyle: chart.data.datasets[0].borderColor[1],
+                                    fillStyle: chart.data.datasets[0].backgroundColor[1]
+                                }]
+                            } else if(data[1][0] === undefined) {
+                                return [{
+                                    text: chart.data.labels[0] + " range: [" + data[0][0] + ", " + data[0][1] + "] " + unit,
+                                    strokeStyle: chart.data.datasets[0].borderColor[0],
+                                    fillStyle: chart.data.datasets[0].backgroundColor[0]
+                                }]
                             }
+                            return chart.data.labels.map((label, index) => {
+                                let localLabel = label
+                                if(label === "Glasfiber-Fabric + Epoxy (Resin Transfer Molding)") {
+                                    localLabel = "Glasfiber-Fabric + Epoxy (RTM)"
+                                } else if(label === "Glasfiber-Fabric + Epoxy (Wet Compression Molding)") {
+                                    localLabel = "Glasfiber-Fabric + Epoxy (WCM)"
+                                }
+                                return {
+                                    text: localLabel + " range: [" + data[index][0] + ", " + data[index][1] + "] " + unit,
+                                    strokeStyle: chart.data.datasets[0].borderColor[index],
+                                    fillStyle: chart.data.datasets[0].backgroundColor[index]
+                                }
+                            })
+                        }
                     }
                 },
                 tooltip: {
@@ -319,7 +385,7 @@ function createBarChart(id, title, benchmarkLabel, data, unit, legendFontSize) {
         }
     })
 }
-function addBarCharts(chartsObj, category, name, title, benchmarkLabel, data, unit, parentId) {
+function addBarCharts(chartsObj, category, name, title, benchmarkLabels, data, unit, parentId) {
     /**
      * Function used in export function createCharts(...), to add bar-charts to the charts-object.
      * This function prevents code-duplication.
@@ -329,11 +395,11 @@ function addBarCharts(chartsObj, category, name, title, benchmarkLabel, data, un
     chartsObj[category][name]["normal_font"] = {}
     // create canvases and charts, save their id
     createCanvasElement((name + "_small_font"), "bar_chart", parentId)
-    createBarChart((name + "_small_font"), title, benchmarkLabel, data, unit, 12)
+    createBarChart((name + "_small_font"), title, benchmarkLabels, data, unit, 12)
     chartsObj[category][name]["small_font"] = name + "_small_font"
 
     createCanvasElement((name + "_normal_font"), "bar_chart", parentId)
-    createBarChart((name + "_normal_font"), title, benchmarkLabel, data, unit, 15)
+    createBarChart((name + "_normal_font"), title, benchmarkLabels, data, unit, 15)
     chartsObj[category][name]["normal_font"] = name + "_normal_font"
 }
 function checkBarChartData(data) {
