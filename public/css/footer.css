@@ -100,9 +100,13 @@
 @media (max-width: 500px) {
     .sponsor_container {
         margin-left: 0px;
+        display: grid;
     }
     .sponsor_text {
-        display: none;
+        /* display: none; */
+        position: relative;
+        text-align: center;
+        padding-left: 85px;
     }
 }
 
