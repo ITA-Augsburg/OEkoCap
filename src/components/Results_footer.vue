@@ -89,13 +89,13 @@
                             layout: "noBorders",
                             table: {
                                 headerRows: 0,
-                                widths: ["*", "*", "*"],
+                                widths: [100, "*", 100],
                                 body: [[
                                     { text: dateString, margin: [40, 15, 0, 0], alignment: "left", fontSize: 7 },
                                     // {image: frauenhofer_logo, fit: [50, 50], alignment: "right", margin: [0, 0, 0, 0]},
                                     // {image: bundesm_logo, fit: [30, 50], alignment: "center", margin: [0, 0, 0, 0]},
                                     // {image: ita_logo, fit: [40, 50], alignment: "left", margin: [0, 0, 0, 0]},
-                                    { image: footer_logos, fit: [190, 50], alignment: "center", margin: [0, 0, 0, 0] },
+                                    { image: footer_logos, fit: [300, 100], alignment: "center", margin: [0, 5, 0, 0] },
                                     { text: "Page " + currentPage.toString() + ' of ' + pageCount, alignment: "right", fontSize: 7, margin: [0, 15, 40, 0] }
                                 ]],
                             }
