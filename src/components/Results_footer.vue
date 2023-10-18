@@ -39,9 +39,9 @@
     export default {
         props: ["color_lightgrey", "data_urls_prop"],
         mounted() {
-            setTimeout(() => {
-                console.log(this.data_urls_prop)
-            }, 5000);
+            // setTimeout(() => {
+            //     console.log(this.data_urls_prop)
+            // }, 5000);
         },
         data: () => ({
         }),
@@ -50,10 +50,6 @@
                 /**
                  * Creates a pdf from the contents of Results.vue.
                  */
-                // console.log(this.data_urls_prop)
-                // for(let i=0; i<this.data_urls_prop.length; i++) {
-                //     console.log(this.data_urls_prop[i].name)
-                // }
 
                 let date = new Date()
                 let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate()
@@ -104,16 +100,6 @@
                                 ]],
                             }
                         }
-                        // if(currentPage % 2) {
-                        //     // page number left, copyright right
-                        //     footerObject.table.body[0].push({ text: "Page " + currentPage.toString() + ' of ' + pageCount, margin: [40, 0, 0, 7], alignment: "left", fontSize: 10 })
-                        //     footerObject.table.body[0].push({ text: " © " + date.getFullYear() + " ITA Augsburg", margin: [0, 0, 40, 7], alignment: "right" })
-                            
-                        // } else {
-                        //     // copyright left, page number right
-                        //     footerObject.table.body[0].push({ text: " © " + date.getFullYear() + " ITA Augsburg", margin: [40, 0, 0, 7], alignment: "left" })
-                        //     footerObject.table.body[0].push({ text: "Page " + currentPage.toString() + ' of ' + pageCount, margin: [0, 0, 40, 7], alignment: "right", fontSize: 10 })
-                        // }
                         return footerObject
                     },
                     content: content
@@ -143,21 +129,84 @@
                 let about = "About this chart"
                 let description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat"
                 
-                pdfContent.push({image: this.data_urls_prop["pdf_gwp_chart_normal_font_chartImage"].image, fit: [520, 400], alignment: "center", margin: [0, 30, 0, 20]})
+                // bar charts
+                pdfContent.push({
+                    layout: "noBorders",
+                    table: {
+                        headerRows: 0,
+                        widths: ["*", "*"],
+                        body: [
+                            [
+                                {image: this.data_urls_prop["pdf_gwp_chart_normal_font_chartImage"].image, fit: [220, 400], alignment: "center", margin: [0, 0, 0, 0]},
+                                {image: this.data_urls_prop["pdf_cost_chart_normal_font_legendImage"].image, fit: [220, 400], alignment: "center", margin: [0, 0, 0, 0]},
+                            ],
+                        ],
+                    }
+                })
+                pdfContent.push({text: about, alignment: "justify", margin: [0, 10, 0, 10]})
+                pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0], pageBreak: 'after'})
+
+                // pie charts next to each other
+                pdfContent.push({
+                    layout: "noBorders",
+                    table: {
+                        headerRows: 0,
+                        widths: ["*", "*"],
+                        body: [
+                            [
+                                {image: this.data_urls_prop["max_gwp_of_each_output_process_chart_chartImage"].image, fit: [180, 400], alignment: "center", margin: [0, 30, 0, 10]},
+                                {image: this.data_urls_prop["max_cost_of_each_output_process_chart_chartImage"].image, fit: [180, 400], alignment: "center", margin: [0, 30, 0, 10]}
+                            ],
+                            [
+                                {image: this.data_urls_prop["max_gwp_of_each_output_process_chart_legendImage"].image, fit: [180, 400], alignment: "center", margin: [0, 0, 0, 20]},
+                                {image: this.data_urls_prop["max_cost_of_each_output_process_chart_legendImage"].image, fit: [180, 400], alignment: "center", margin: [0, 0, 0, 20]}
+                            ]
+                        ],
+                    }
+                })
                 pdfContent.push({text: about, alignment: "justify", margin: [0, 0, 0, 10]})
                 pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0], pageBreak: 'after'})
 
-                pdfContent.push({image: this.data_urls_prop["pdf_cost_chart_normal_font_legendImage"].image, fit: [520, 400], alignment: "center", margin: [0, 30, 0, 20]})
+                // ashby charts
+                pdfContent.push({
+                    layout: "noBorders",
+                    table: {
+                        headerRows: 0,
+                        widths: ["*", "*"],
+                        body: [
+                            [
+                                {image: this.data_urls_prop["tensile_0_chart_chartImage"].image, fit: [220, 400], alignment: "center", margin: [0, 30, 0, 10]},
+                                {image: this.data_urls_prop["tensile_90_chart_chartImage"].image, fit: [220, 400], alignment: "center", margin: [0, 30, 0, 10]}
+                            ],
+                            [
+                                {image: this.data_urls_prop["tensile_0_chart_legendImage"].image, fit: [220, 400], alignment: "center", margin: [0, 0, 0, 20]},
+                                {image: this.data_urls_prop["tensile_90_chart_legendImage"].image, fit: [220, 400], alignment: "center", margin: [0, 0, 0, 20]}
+                            ]
+                        ],
+                    }
+                })
                 pdfContent.push({text: about, alignment: "justify", margin: [0, 0, 0, 10]})
                 pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0], pageBreak: 'after'})
 
-                // put these in a table, put the other piechart next to it
-                // pdfContent.push({image: this.data_urls_prop["max_cost_of_each_output_process_chart_chartImage"].image, fit: [260, 400], alignment: "center", margin: [0, 30, 0, 10]})
-                // pdfContent.push({image: this.data_urls_prop["max_cost_of_each_output_process_chart_legendImage"].image, fit: [200, 400], alignment: "center", margin: [0, 0, 0, 20]})
-
+                pdfContent.push({
+                    layout: "noBorders",
+                    table: {
+                        headerRows: 0,
+                        widths: ["*", "*"],
+                        body: [
+                            [
+                                {image: this.data_urls_prop["flexural_0_chart_chartImage"].image, fit: [220, 400], alignment: "center", margin: [0, 30, 0, 10]},
+                                {image: this.data_urls_prop["flexural_90_chart_chartImage"].image, fit: [220, 400], alignment: "center", margin: [0, 30, 0, 10]}
+                            ],
+                            [
+                                {image: this.data_urls_prop["flexural_0_chart_legendImage"].image, fit: [220, 400], alignment: "center", margin: [0, 0, 0, 20]},
+                                {image: this.data_urls_prop["flexural_90_chart_legendImage"].image, fit: [220, 400], alignment: "center", margin: [0, 0, 0, 20]}
+                            ]
+                        ],
+                    }
+                })
                 pdfContent.push({text: about, alignment: "justify", margin: [0, 0, 0, 10]})
-                pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0], pageBreak: 'after'})
-
+                pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0]})
             }
         }
     }

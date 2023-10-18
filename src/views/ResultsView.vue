@@ -39,10 +39,10 @@ export default {
          * If user enters app via url (oekocap.com/matrix for example) then user gets redirected to the start.
          * User must start on the first input-page because later input-pages are dependent on earlier inputs.
          */
-        // if(!this.startedCorrectly) {
-        //     this.$router.push({name: "StartView"})
-        //     return
-        // }
+        if(!this.startedCorrectly) {
+            this.$router.push({name: "StartView"})
+            return
+        }
     },
     data: () => ({
         id: "results",

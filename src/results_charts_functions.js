@@ -265,11 +265,21 @@ function createCanvasElement(id, className, parentId) {
 function createBarChart(id, title, benchmarkLabels, data, unit, legendFontSize) {
     /**
      * Creates a Chart.js bar-chart with a legend.
+     * The green column always represents the output data.
      * Format of bar-chart-data is always [[a, b], [c, d], ...].
     */
-    let lotsOfColors = ["#55CD89"]
-    for(let i=1; i<benchmarkLabels.length; i++) {
-        lotsOfColors.push(randomColor(i, 1, benchmarkLabels.length))
+    
+    // in the pdf there are only two bar-charts, one with the output-gwp and all benchmark-gwps; and one with the output-cost and all benchmark-costs.
+    // output-gwp and output-cost can be null, in this case exclude the green color.
+    let lotsOfColors = []
+    if(benchmarkLabels[0] === "Result") {
+        for(let i=0; i<benchmarkLabels.length; i++) {
+            lotsOfColors.push(randomColor(i, 1, benchmarkLabels.length))
+        }
+    } else {
+        for(let i=1; i<benchmarkLabels.length + 1; i++) {
+            lotsOfColors.push(randomColor(i, 1, benchmarkLabels.length + 1))
+        }
     }
 
     return new Chart(id, {
@@ -282,22 +292,28 @@ function createBarChart(id, title, benchmarkLabels, data, unit, legendFontSize) 
                     backgroundColor: benchmarkLabels.length <= 2
                         ? ["#55CD89", "#F2F2F2"]
                         : lotsOfColors,
-                    barThickness: 80,
+                    barThickness: benchmarkLabels.length <= 2
+                        ? 80
+                        : undefined,
                     borderWidth: 1,
                     borderColor: "#777",
                     // hoverBorderWidth: 2,
                     // hoverBorderColor: "#000",
                     borderSkipped: false,
-                    hoverBackgroundColor: "#55CD89"
+                    hoverBackgroundColor: "#55CD89",
+                    categoryPercentage: benchmarkLabels.length <= 2
+                        ? undefined
+                        : 0.8,
+                    barPercentage: benchmarkLabels.length <= 2
+                        ? undefined
+                        : 0.9
                 }
             ]
         },
         options: {
             animation: false,
             hover: false,
-            aspectRatio: benchmarkLabels.length <= 2
-                ? 1.3
-                : 2.5,
+            aspectRatio: 1.3,
             scales: {
                 x: {
                     // grid: {
@@ -315,7 +331,9 @@ function createBarChart(id, title, benchmarkLabels, data, unit, legendFontSize) 
                     min: 0,
                     ticks: {
                         font: {
-                            size: 18
+                            size: benchmarkLabels.length <= 2
+                                ? 18
+                                : 30
                         }
                     }
                 }
@@ -325,7 +343,9 @@ function createBarChart(id, title, benchmarkLabels, data, unit, legendFontSize) 
                     display: true,
                     text: title,
                     font: {
-                        size: 20
+                        size: benchmarkLabels.length <= 2
+                            ? 20
+                            : 40
                     },
                     padding: {
                         bottom: 30
@@ -336,10 +356,16 @@ function createBarChart(id, title, benchmarkLabels, data, unit, legendFontSize) 
                     position: "bottom",
                     labels: {
                         font: {
-                            size: legendFontSize
+                            size: benchmarkLabels.length <= 2
+                                ? legendFontSize
+                                : 35
                         },
-                        boxWidth: 25,
-                        boxHeight: 25,
+                        boxWidth: benchmarkLabels.length <= 2
+                            ? 25
+                            : 40,
+                        boxHeight: benchmarkLabels.length <= 2
+                            ? 25
+                            : 40,
                         generateLabels: (chart) => {
                             if(data[0][0] === undefined && data[1][0] === undefined) {
                                 return
