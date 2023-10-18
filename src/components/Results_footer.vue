@@ -144,7 +144,7 @@
                     }
                 })
                 pdfContent.push({text: about, alignment: "justify", margin: [0, 10, 0, 10]})
-                pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0], pageBreak: 'after'})
+                pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0]})
 
                 // pie charts next to each other
                 pdfContent.push({
