@@ -9,7 +9,7 @@
     <div class="results_footer">
         <div class="footer_content">
 
-            <div class="results_pdf_buttoncontainer">
+            <!-- <div class="results_pdf_buttoncontainer">
                 <v-btn
                 @click=handlePdfButton()
                 :color=color_lightgrey
@@ -17,7 +17,7 @@
                 width="225px"
                 height="55px"
                 ><p class="results_pdf_button_text">download results</p></v-btn>
-            </div>
+            </div> -->
         
             <Copyright_text />
 
