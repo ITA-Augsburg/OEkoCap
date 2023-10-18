@@ -8,7 +8,7 @@
         <div class="footer_content">
 
             <div class="sponsor_container">
-                <p class="sponsor_text">Gefördert durch:</p>
+                <p class="sponsor_text">Sponsored by:</p>
                 <v-img 
                 v-bind:src='require("../assets/logo_bundesm_wirtschaft_klimaschutz.png")'
                 alt="bundesministerium_logo"

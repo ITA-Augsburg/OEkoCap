@@ -24,6 +24,16 @@
             "app_output_prop", "startedCorrectly", "error_message_prop",
             "buttonCalculateEnabled", "button2enabled", "button3enabled", "button4enabled", "button5enabled",
             "progressValue", "color_green", "color_lightgrey"],
-            emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "setStartedCorrectly", "setErrorMessage"]
+            emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "setStartedCorrectly", "setErrorMessage"],
+            mounted() {
+                /**
+                 * If user enters app via url (oekocap.com/matrix for example) then user gets redirected to the start.
+                 * User must start on the first input-page because later input-pages are dependent on earlier inputs.
+                 */
+                if(!this.startedCorrectly) {
+                    this.$router.push({name: "StartView"})
+                    return
+                }
+    },
     }
 </script>

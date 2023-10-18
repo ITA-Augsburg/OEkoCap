@@ -7,17 +7,34 @@
     <div class="start_area">
 
         <div class="start_logocontainer">
-            <v-img
-            class="frauenhofer_logo_start"
-            v-bind:src='require("../assets/frauenhofer_logo.png")'
-            alt="frauenhoferIGCV_logo"
-            resize="false"></v-img>
+            <div class="start_sublogocontainer">
+                <v-img
+                class="frauenhofer_logo_start"
+                v-bind:src='require("../assets/frauenhofer_logo.png")'
+                alt="frauenhoferIGCV_logo"
+                resize="false"></v-img>
 
-            <v-img
-            class="ita_logo_start"
-            v-bind:src='require("../assets/ita_logo_bunt.png")'
-            alt="ITA_logo"
-            resize="false"></v-img>
+                <v-img
+                class="ita_logo_start"
+                v-bind:src='require("../assets/ita_logo_bunt.png")'
+                alt="ITA_logo"
+                resize="false"></v-img>
+            </div>
+
+            <div class="start_sublogocontainer">
+                <v-img
+                class="aif_logo_start"
+                v-bind:src='require("../assets/aif_logo.png")'
+                alt="AIF_logo"
+                resize="false"></v-img>
+
+                <v-img
+                class="igf_logo_start"
+                v-bind:src='require("../assets/igf_logo.png")'
+                alt="IGF_logo"
+                resize="false"></v-img>
+            </div>
+            
         </div>
 
         <p class="text start_text">
