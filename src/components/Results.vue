@@ -406,16 +406,28 @@ import { createCharts } from "../results_charts_functions.js"
                 images["pdf_cost_chart_normal_font_legendImage"] = {type: "bar", image: pdf_cost_barchart.toDataURL()}
                 
                 // max_gwp_per_process_charts max_gwp_of_each_output_process_chart + custom-legend
-                selectedId = this.charts.max_gwp_per_process_charts.max_gwp_of_each_output_process_chart.normal_font
-                selectedChart = document.getElementById(selectedId)
-                selectedLegend = document.getElementById(selectedId + "_legend_container")
-                this.htmlElementToCanvas(selectedChart, selectedLegend, "max_gwp_of_each_output_process_chart", "pie", images)
+                // pie-chart might not exist, depending on the recycling.exe output
+                if(this.charts.max_gwp_per_process_charts.max_gwp_of_each_output_process_chart === undefined) {
+                    images["max_gwp_of_each_output_process_chart_chartImage"] = {type: "pie", image: undefined}
+                    images["max_gwp_of_each_output_process_chart_legendImage"] = {type: "pie", image: undefined}
+                } else {
+                    selectedId = this.charts.max_gwp_per_process_charts.max_gwp_of_each_output_process_chart.normal_font
+                    selectedChart = document.getElementById(selectedId)
+                    selectedLegend = document.getElementById(selectedId + "_legend_container")
+                    this.htmlElementToCanvas(selectedChart, selectedLegend, "max_gwp_of_each_output_process_chart", "pie", images)
+                }
 
                 // max_cost_per_process_charts max_cost_of_each_output_process_chart + custom-legend
-                selectedId = this.charts.max_cost_per_process_charts.max_cost_of_each_output_process_chart.normal_font
-                selectedChart = document.getElementById(selectedId)
-                selectedLegend = document.getElementById(selectedId + "_legend_container")
-                this.htmlElementToCanvas(selectedChart, selectedLegend, "max_cost_of_each_output_process_chart", "pie", images)
+                // pie-chart might not exist, depending on the recycling.exe output
+                if(this.charts.max_cost_per_process_charts.max_cost_of_each_output_process_chart === undefined) {
+                    images["max_cost_of_each_output_process_chart_chartImage"] = {type: "pie", image: undefined}
+                    images["max_cost_of_each_output_process_chart_legendImage"] = {type: "pie", image: undefined}
+                } else  {
+                    selectedId = this.charts.max_cost_per_process_charts.max_cost_of_each_output_process_chart.normal_font
+                    selectedChart = document.getElementById(selectedId)
+                    selectedLegend = document.getElementById(selectedId + "_legend_container")
+                    this.htmlElementToCanvas(selectedChart, selectedLegend, "max_cost_of_each_output_process_chart", "pie", images)
+                }
 
                 // mechanical_values_charts tensile_0_chart tensile_90_chart flexural_0_chart flexural_90_chart + custom-legend
                 for(let key in this.charts.mechanical_values_charts) {
