@@ -22,41 +22,116 @@
     left: -60px;
 }
 
-.loading_cogs {
-    
-}
-
-.loading_trunk {
+.loading_trunk_left {
     opacity: 0;
-    animation-name: trunk_fade;
-    animation-duration: 6.5s;
-    /* animation-delay: 2s, 3.5s; */
+    animation-name: trunk_fade_left;
+    animation-duration: 4.38s;
     animation-iteration-count: infinite;
 }
-@keyframes trunk_fade {
+@keyframes trunk_fade_left {
     0% { opacity: 0; } /* wait */
-    23.29% { opacity: 0; } /* fade in trunk */
-    29.17% { opacity: 1; } /* wait */
-    52.7% { opacity: 1; } /* fade in leaves */
-    58.58% { opacity: 1; } /* wait */
-    93.87% { opacity: 1; } /* fade out trunk and leaves */
+    22.83% { opacity: 0; } /* trunk_left fade in */
+    30.59% { opacity: 1; } /* trunk_right fade in */
+    38.35% { opacity: 1; } /* trunk_middle fade in */
+    46.11% { opacity: 1; } /* leaves_left fade in */
+    53.87% { opacity: 1; } /* leaves_right fade in */
+    61.63% { opacity: 1; } /* leaves_middle fade in */
+    69.39% { opacity: 1; } /* wait */
+    92.22% { opacity: 1; } /* fade out */
     100% { opacity: 0; } /* repeat */
 }
 
-.loading_leaves {
+.loading_trunk_right {
     opacity: 0;
-    animation-name: leaves_fade;
-    animation-duration: 6.5s;
-    /* animation-delay: 3.5s, 2s; */
+    animation-name: trunk_fade_right;
+    animation-duration: 4.38s;
     animation-iteration-count: infinite;
 }
-@keyframes leaves_fade {
+@keyframes trunk_fade_right {
     0% { opacity: 0; } /* wait */
-    23.29% { opacity: 0; } /* fade in trunk */
-    29.17% { opacity: 0; } /* wait */
-    52.7% { opacity: 0; } /* fade in leaves */
-    58.58% { opacity: 1; } /* wait */
-    93.87% { opacity: 1; } /* fade out trunk and leaves */
+    22.83% { opacity: 0; } /* trunk_left fade in */
+    30.59% { opacity: 0; } /* trunk_right fade in */
+    38.35% { opacity: 1; } /* trunk_middle fade in */
+    46.11% { opacity: 1; } /* leaves_left fade in */
+    53.87% { opacity: 1; } /* leaves_right fade in */
+    61.63% { opacity: 1; } /* leaves_middle fade in */
+    69.39% { opacity: 1; } /* wait */
+    92.22% { opacity: 1; } /* fade out */
     100% { opacity: 0; } /* repeat */
 }
 
+.loading_trunk_middle {
+    opacity: 0;
+    animation-name: trunk_fade_middle;
+    animation-duration: 4.38s;
+    animation-iteration-count: infinite;
+}
+@keyframes trunk_fade_middle {
+    0% { opacity: 0; } /* wait */
+    22.83% { opacity: 0; } /* trunk_left fade in */
+    30.59% { opacity: 0; } /* trunk_right fade in */
+    38.35% { opacity: 0; } /* trunk_middle fade in */
+    46.11% { opacity: 1; } /* leaves_left fade in */
+    53.87% { opacity: 1; } /* leaves_right fade in */
+    61.63% { opacity: 1; } /* leaves_middle fade in */
+    69.39% { opacity: 1; } /* wait */
+    92.22% { opacity: 1; } /* fade out */
+    100% { opacity: 0; } /* repeat */
+}
+
+.loading_leaves_left {
+    opacity: 0;
+    animation-name: leaves_fade_left;
+    animation-duration: 4.38s;
+    animation-iteration-count: infinite;
+}
+@keyframes leaves_fade_left {
+    0% { opacity: 0; } /* wait */
+    22.83% { opacity: 0; } /* trunk_left fade in */
+    30.59% { opacity: 0; } /* trunk_right fade in */
+    38.35% { opacity: 0; } /* trunk_middle fade in */
+    46.11% { opacity: 0; } /* leaves_left fade in */
+    53.87% { opacity: 1; } /* leaves_right fade in */
+    61.63% { opacity: 1; } /* leaves_middle fade in */
+    69.39% { opacity: 1; } /* wait */
+    92.22% { opacity: 1; } /* fade out */
+    100% { opacity: 0; } /* repeat */
+}
+
+.loading_leaves_right {
+    opacity: 0;
+    animation-name: leaves_fade_right;
+    animation-duration: 4.38s;
+    animation-iteration-count: infinite;
+}
+@keyframes leaves_fade_right {
+    0% { opacity: 0; } /* wait */
+    22.83% { opacity: 0; } /* trunk_left fade in */
+    30.59% { opacity: 0; } /* trunk_right fade in */
+    38.35% { opacity: 0; } /* trunk_middle fade in */
+    46.11% { opacity: 0; } /* leaves_left fade in */
+    53.87% { opacity: 0; } /* leaves_right fade in */
+    61.63% { opacity: 1; } /* leaves_middle fade in */
+    69.39% { opacity: 1; } /* wait */
+    92.22% { opacity: 1; } /* fade out */
+    100% { opacity: 0; } /* repeat */
+}
+
+.loading_leaves_middle {
+    opacity: 0;
+    animation-name: leaves_fade_middle;
+    animation-duration: 4.38s;
+    animation-iteration-count: infinite;
+}
+@keyframes leaves_fade_middle {
+    0% { opacity: 0; } /* wait */
+    22.83% { opacity: 0; } /* trunk_left fade in */
+    30.59% { opacity: 0; } /* trunk_right fade in */
+    38.35% { opacity: 0; } /* trunk_middle fade in */
+    46.11% { opacity: 0; } /* leaves_left fade in */
+    53.87% { opacity: 0; } /* leaves_right fade in */
+    61.63% { opacity: 0; } /* leaves_middle fade in */
+    69.39% { opacity: 1; } /* wait */
+    92.22% { opacity: 1; } /* fade out */
+    100% { opacity: 0; } /* repeat */
+}
