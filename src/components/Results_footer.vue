@@ -9,7 +9,7 @@
     <div class="results_footer">
         <div class="footer_content">
 
-            <!-- <div class="results_pdf_buttoncontainer">
+            <div class="results_pdf_buttoncontainer">
                 <v-btn
                 @click=handlePdfButton()
                 :color=color_lightgrey
@@ -17,7 +17,7 @@
                 width="225px"
                 height="55px"
                 ><p class="results_pdf_button_text">download results</p></v-btn>
-            </div> -->
+            </div>
         
             <Copyright_text />
 
@@ -61,11 +61,12 @@
                 // let frauenhofer_logo = this.imageToDataUrl("frauenhofer_logo_results")
                 // let bundesm_logo = this.imageToDataUrl("bundesm_logo_results")
                 // let ita_logo = this.imageToDataUrl("ita_logo_results")
-                let generalDescription = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+
+                // let generalDescription = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
 
                 let content = [
-                    { image: headerLogo, width: 180, margin: [ 0, 0, 0, 0], alignment: "center" },
-                    { text: generalDescription, margin: [0, 25, 0, 20], alignment: "justify" },
+                    { image: headerLogo, width: 180, margin: [ 0, 0, 0, 50], alignment: "center" },
+                    // { text: generalDescription, margin: [0, 25, 0, 20], alignment: "justify" },
                 ]
                 this.addChartsToPdf(content)
 
@@ -126,8 +127,8 @@
                 /**
                  * Creates sections for diagram-images in the pdf.
                  */
-                let about = "About this chart"
-                let description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat"
+                // let about = "About this chart"
+                // let description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat"
                 
                 // bar charts
                 pdfContent.push({
@@ -137,14 +138,14 @@
                         widths: ["*", "*"],
                         body: [
                             [
-                                {image: this.data_urls_prop["pdf_gwp_chart_normal_font_chartImage"].image, fit: [220, 400], alignment: "center", margin: [0, 0, 0, 0]},
-                                {image: this.data_urls_prop["pdf_cost_chart_normal_font_legendImage"].image, fit: [220, 400], alignment: "center", margin: [0, 0, 0, 0]},
+                                {image: this.data_urls_prop["pdf_gwp_chart_normal_font_chartImage"].image, fit: [220, 400], alignment: "center", margin: [0, 0, 0, 50]},
+                                {image: this.data_urls_prop["pdf_cost_chart_normal_font_legendImage"].image, fit: [220, 400], alignment: "center", margin: [0, 0, 0, 50]},
                             ],
                         ],
                     }
                 })
-                pdfContent.push({text: about, alignment: "justify", margin: [0, 10, 0, 10]})
-                pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0]})
+                // pdfContent.push({text: about, alignment: "justify", margin: [0, 10, 0, 10]})
+                // pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0]})
 
                 // pie charts next to each other
                 // pie charts might not exist depending on the output from recycling.exe
@@ -169,8 +170,8 @@
                             ]
                         }
                     })
-                    pdfContent.push({text: about, alignment: "justify", margin: [0, 0, 0, 10]})
-                    pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0], pageBreak: 'after'})
+                    // pdfContent.push({text: about, alignment: "justify", margin: [0, 0, 0, 10]})
+                    // pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0], pageBreak: 'after'})
 
                 } else if(this.data_urls_prop["max_gwp_of_each_output_process_chart_chartImage"].image !== undefined) {
                     pdfContent.push({
@@ -188,8 +189,8 @@
                             ]
                         }
                     })
-                    pdfContent.push({text: about, alignment: "justify", margin: [0, 0, 0, 10]})
-                    pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0], pageBreak: 'after'})
+                    // pdfContent.push({text: about, alignment: "justify", margin: [0, 0, 0, 10]})
+                    // pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0], pageBreak: 'after'})
                 } else if(this.data_urls_prop["max_cost_of_each_output_process_chart_chartImage"].image !== undefined) {
                     pdfContent.push({
                         layout: "noBorders",
@@ -206,8 +207,8 @@
                             ]
                         }
                     })
-                    pdfContent.push({text: about, alignment: "justify", margin: [0, 0, 0, 10]})
-                    pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0], pageBreak: 'after'})
+                    // pdfContent.push({text: about, alignment: "justify", margin: [0, 0, 0, 10]})
+                    // pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0], pageBreak: 'after'})
                 } else {
                     pdfContent.push({text: "", pageBreak: "after"})
                 }
@@ -230,8 +231,9 @@
                         ],
                     }
                 })
-                pdfContent.push({text: about, alignment: "justify", margin: [0, 0, 0, 10]})
-                pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0], pageBreak: 'after'})
+                // pdfContent.push({text: about, alignment: "justify", margin: [0, 0, 0, 10]})
+                // pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0], pageBreak: 'after'})
+                pdfContent.push({text: "", pageBreak: "after"})
 
                 pdfContent.push({
                     layout: "noBorders",
@@ -250,8 +252,8 @@
                         ],
                     }
                 })
-                pdfContent.push({text: about, alignment: "justify", margin: [0, 0, 0, 10]})
-                pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0]})
+                // pdfContent.push({text: about, alignment: "justify", margin: [0, 0, 0, 10]})
+                // pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0]})
             }
         }
     }
