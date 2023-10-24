@@ -8,7 +8,6 @@ import ProcessingView from '../views/ProcessingView.vue'
 import WaitingView from '../views/WaitingView.vue'
 import ResultsView from '../views/ResultsView.vue'
 import ErrorView from '../views/ErrorView.vue'
-import CalculatorView from '../views/CalculatorView.vue'
 import GuidelinesView from '../views/GuidelinesView.vue'
 import ProjectView from '../views/ProjectView.vue'
 import ImprintView from '../views/ImprintView.vue'
@@ -105,15 +104,6 @@ const routes = [
         path: "/error",
         name: "ErrorView",
         component: ErrorView,
-        props: {
-            color_green: props.color_green,
-            color_lightgrey: props.color_lightgrey
-        }
-    },
-    {
-        path: "/calculator",
-        name: "CalculatorView",
-        component: CalculatorView,
         props: {
             color_green: props.color_green,
             color_lightgrey: props.color_lightgrey
