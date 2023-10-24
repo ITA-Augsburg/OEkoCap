@@ -184,7 +184,7 @@ export function createCharts(output, benchmarks) {
             pieChartLabels.push(process.name)
             let dataPoint = (process.maxGWPValue + process.minGWPValue) / 2
             data.push(Math.round(dataPoint * 100) / 100)
-            pieChartColors.push(randomColor(i, 1, output.processes.length))
+            pieChartColors.push(randomColor(i, 1, output.processes.length, "pie"))
         })
         addPieCharts(charts, category, name, title, pieChartLabels, data, pieChartColors, unit, parentId)
     }
@@ -210,7 +210,7 @@ export function createCharts(output, benchmarks) {
             pieChartLabels.push(process.name)
             let dataPoint = (process.minCostPerKg + process.maxCostPerKg) / 2
             data.push(Math.round(dataPoint * 100) / 100)
-            pieChartColors.push(randomColor(i, 1, output.processes.length))
+            pieChartColors.push(randomColor(i, 1, output.processes.length, "pie"))
         })
         addPieCharts(charts, category, name, title, pieChartLabels, data, pieChartColors, unit, parentId)
     }
@@ -274,11 +274,11 @@ function createBarChart(id, title, benchmarkLabels, data, unit, legendFontSize) 
     let lotsOfColors = []
     if(benchmarkLabels[0] === "Result") {
         for(let i=0; i<benchmarkLabels.length; i++) {
-            lotsOfColors.push(randomColor(i, 1, benchmarkLabels.length))
+            lotsOfColors.push(randomColor(i, 1, benchmarkLabels.length, "bar"))
         }
     } else {
         for(let i=1; i<benchmarkLabels.length + 1; i++) {
-            lotsOfColors.push(randomColor(i, 1, benchmarkLabels.length + 1))
+            lotsOfColors.push(randomColor(i, 1, benchmarkLabels.length + 1, "bar"))
         }
     }
 
@@ -879,7 +879,7 @@ function setAshbyChartData(output, benchmarks, mechArg1, mechArg2) {
             xMax: benchmarksMinMax[key][selection_x].max,
             yMin: benchmarksMinMax[key][selection_y].min,
             yMax: benchmarksMinMax[key][selection_y].max,
-            backgroundColor: randomColor(colorIndex, 0.45, 5),
+            backgroundColor: randomColor(colorIndex, 0.45, 5, "ashby"),
         }
         data.ellipses.push(newEllipse)
         data.names.push(benchmarks[key].name)
@@ -959,7 +959,7 @@ function getMechanicalMinMaxValues(data, source) {
     // console.log(JSON.stringify(values, null, 2))
     return values
 }
-function randomColor(i, alpha, numberOfElements) {
+function randomColor(i, alpha, numberOfElements, chart_type) {
     /**
      * Generates a randomised color, that has the same saturation and lightness as the main green color of the app.
      * Parameters:
@@ -967,14 +967,31 @@ function randomColor(i, alpha, numberOfElements) {
      *     alpha: transparency-value.
      *     numberOfElements: number of elements of the parent function.
     */
+
+    if(["bar", "pie", "ashby"].includes(chart_type) === false) {
+        console.error("Invalid 'chart_type' parameter in randomColor(..) function in results_charts_functions.js.")
+    }
     
-    // set interval depending on numberOfElements and start from 146
-    let interval = 356 / numberOfElements
-    let h = (146 + i * interval) % 356, s = 55, l = 57 
-
-    //greens only
-    // let h = 146, s = 60, l = 30 + i * 5
-
-    // console.log("hsla(" + h +"°, " + s + "%, " + l + "%, " + alpha + ")")
-    return "hsla(" + h + ", " + s + "%, " + l + "%, " + alpha + ")"
+    // if there aren't many processes, hand-pick a beautiful set of colors
+    // else assign processes colors that are as different as possible
+    if(numberOfElements <= 5 && ["bar", "pie"].includes(chart_type)) {
+        switch(i) {
+            case 0:
+                return "#69ffaa" // lightest green
+            case 1:
+                return "#54cc88" // light
+            case 2:
+                return "#3f9966" // middle
+            case 3:
+                return "#2a6644" // dark
+            case 4:
+                return "#153322" // darkest
+        }
+    } else {
+        // set interval depending on numberOfElements and start from 146
+        let interval = 356 / numberOfElements
+        let h = (146 + i * interval) % 356, s = 55, l = 57
+        // console.log("hsla(" + h +"°, " + s + "%, " + l + "%, " + alpha + ")")
+        return "hsla(" + h + ", " + s + "%, " + l + "%, " + alpha + ")"
+    }
 }
