@@ -528,9 +528,13 @@ export default {
       //  router.push({name: "ResultsView"})
       //}, 8000);
       // console.log(this.app_input);
-      let url1 = "http://85.215.180.183/call_server.php";
-      //const {result1}=axios.post(url1,this.app_input);
-      axios.post(url1,this.app_input,setTimeout(20000)).then(res => {             
+      //let url1 = "https://85.215.180.183/call_server.php";
+      const header=axios.create({
+        baseURL:'https://oekocap.org',
+        timeout:900000,
+        
+      });
+      header.post('/call_server.php',this.app_input).then(res => {             
         return res.data
       }).then(data => {
           // console.log(data)
