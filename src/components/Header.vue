@@ -12,7 +12,7 @@
     @click="()=>{router.push({name: 'StartView'})}" />
 
     <p class="header_textcontainer">
-      <span class="header_text" @click="()=>{router.push({name: 'CalculatorView'})}">Calculator</span>
+      <span class="header_text" @click="()=>{router.push({name: 'StartView'})}">Calculator</span>
       <span class="header_text" @click="()=>{router.push({name: 'GuidelinesView'})}">Guidelines</span>
       <span class="header_text" @click="()=>{router.push({name: 'ProjectView'})}">Project</span>
       <span class="header_text" @click="()=>{router.push({name: 'ImprintView'})}">Imprint</span>
@@ -38,7 +38,7 @@
     width="325"
   >
     <v-list-item>
-      <div class="header_text" @click="()=>{router.push({name: 'CalculatorView'})}">Calculator</div>
+      <div class="header_text" @click="()=>{router.push({name: 'StartView'})}">Calculator</div>
     </v-list-item>
     <v-divider thickness="2" class="border-opacity-100" />
     <v-list-item>

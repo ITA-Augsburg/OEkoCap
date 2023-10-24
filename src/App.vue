@@ -1,6 +1,7 @@
 <script setup>
   import Header from "./components/Header.vue"
   import router from "./router"
+  import axios from 'axios'
 </script>
 
 <template>
@@ -50,7 +51,6 @@
  * The ancestor to every vue-component.
  * app_input is defined here.
  */
-import axios from 'axios';
 export default {
   data: () => ({
     button2enabled: true,
@@ -489,7 +489,7 @@ export default {
           processing_2.type = "IRCompressionMoulding"
         }
       }
-      if(processing_1.type === "Prepreg Production") processing_1.type = "PrepregProduction"
+      // if(processing_1.type === "Prepreg Production") processing_1.type = "PrepregProduction"
       if(processing_2.type === undefined) processing_2.type = ""
       if(processing_2.mass_loss_percent === undefined) processing_2.mass_loss_percent = ""
       if(

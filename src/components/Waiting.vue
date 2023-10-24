@@ -12,7 +12,7 @@
             <img :src="require('../assets/loading_leaves_middle.png')" class="loading_img loading_leaves_middle" />
         </div>
 
-    <div class="text waiting_text">Your request is being processed...<br>Please wait.</div>
+    <div class="text waiting_text">Your request is being processed...<br>This could take up to a minute.</div>
 
     </div>
 
