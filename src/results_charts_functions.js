@@ -553,7 +553,8 @@ function createPieChart(id, title, labels, data, colors, unit, legendFontSize, p
                         })
                         let pieSlice = (chart.data.datasets[0].data[i] / (sum / 100))
                         let percent = Math.round(pieSlice * 100) / 100
-                        let text = label + ": " + percent + "% " + unit
+                        let localLabel = splitCamelCase(label)
+                        let text = localLabel + ": " + percent + "% " + unit
                         customLegend.innerHTML += 
                         `
                             <div style="display: flex; width: fit-content">
@@ -568,6 +569,25 @@ function createPieChart(id, title, labels, data, colors, unit, legendFontSize, p
             }
         }]
     })
+}
+function splitCamelCase(camelString) {
+    /**
+     * Takes a camel-case string and adds whitespaces before every uppercase character. An exception is the first character of the string.
+     */
+    let charArray = camelString.split("")
+    let upperCaseIndexes = []
+    let whitespaceString = camelString
+    for(let i=charArray.length-1; i>0; i--) { // index 0 (the first char in the string) should not be included
+        if(charArray[i] === charArray[i].toUpperCase()) {
+            upperCaseIndexes.push(i)
+        }
+    }
+    for(let i=0; i<upperCaseIndexes.length; i++) {
+        let leftSlice = whitespaceString.slice(0, upperCaseIndexes[i])
+        let rightSlice = whitespaceString.slice(upperCaseIndexes[i])
+        whitespaceString = leftSlice + " " + rightSlice
+    }
+    return whitespaceString
 }
 function addPieCharts(chartsObj, category, name, title, labels, data, colors, unit, parentId) {
     /**
