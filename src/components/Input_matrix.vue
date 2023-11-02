@@ -107,7 +107,7 @@
  */
     export default {
         props: ["app_input_prop", "matrix_insertion_prop", "color_green"],
-        emits: ["saveNewInputs"],
+        emits: ["saveNewInputs", "resetProcessingMasslosses"],
         components: {
             Expert_mode: Expert_mode
         },
@@ -143,6 +143,7 @@
                 /**
                  * Some variables are dependent of the selected matrix-type, when user makes a selection, these variables must be changed or reset.
                  */
+                this.$emit("resetProcessingMasslosses", undefined)
                 if(this.matrix_type === "Thermoplast") {
                     this.polymer_options = ["PP", "PA6"]
                     this.matrix_polymer = undefined

@@ -165,7 +165,10 @@ import { createCharts } from "../results_charts_functions.js"
              */
             
             this.exe_output = this.app_output_prop
+            
+            // for testing the results-page, modify the next two lines and the mounted() in ResultsView.vue.
             // this.exe_output = this.test_output // for testing enable this line (real output will be ignored)
+            if(!this.startedCorrectly) return // for testing disable this line
 
             // fill benchmark-select element
             this.benchmark_options = []
@@ -177,9 +180,9 @@ import { createCharts } from "../results_charts_functions.js"
             window.addEventListener("resize", () => {
                 if(this.wideWindow === false && window.innerWidth >= 500) {
                     this.wideWindow = true
-                    this.handleUI("resize")
+                 this.handleUI("resize")
                 } else if(this.wideWindow === true && window.innerWidth < 500) {
-                    this.wideWindow = false
+                       this.wideWindow = false
                     this.handleUI("resize")
                 }
             })
@@ -208,7 +211,7 @@ import { createCharts } from "../results_charts_functions.js"
                 exe_output: undefined,
 
                 // when testing, set exe_output to test_output in mounted()
-                test_output: benchmarks.test_output_4,
+                test_output: benchmarks.test_output_5,
                 benchmarks: benchmarks.benchmarks
             }
         },

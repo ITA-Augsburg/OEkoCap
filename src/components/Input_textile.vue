@@ -132,34 +132,34 @@
                 shred_1_type === undefined && shred_2_type === "Fine" && this.matrix_insertion_prop ||
                 shred_1_type === "Coarse" && shred_2_type === "Fine" && this.matrix_insertion_prop
             ) {
-                this.type_options = ["Wet-laid with Thermoplastfiber"]
+                this.type_options = ["Dry-laid with Thermoplastfiber", "Wet-laid with Thermoplastfiber", "Air-laid with Thermoplastfiber"]
             } else if(
                 shred_1_type === undefined && shred_2_type === "Fine" && !this.matrix_insertion_prop ||
                 shred_1_type === "Coarse" && shred_2_type === "Fine" && !this.matrix_insertion_prop
             ) {
-                this.type_options = ["Wet-laid"]
+                this.type_options = ["Dry-laid", "Wet-laid", "Air-laid"]
             } else if(
                 shred_1_type === "Coarse" && shred_2_type === undefined && this.matrix_insertion_prop ||
                 shred_1_type === undefined && shred_2_type === "Cutting" && this.matrix_insertion_prop
             ) {
-                this.type_options = ["Dry-laid with Thermoplastfiber", "Air-laid with Thermoplastfiber"]
+                this.type_options = ["Dry-laid with Thermoplastfiber", "Air-laid with Thermoplastfiber"] // "Wet-laid with Thermoplastfiber", in recycling.exe v4.3 ergibt error
             } else if(
                 shred_1_type === "Coarse" && shred_2_type === undefined && !this.matrix_insertion_prop ||
                 shred_1_type === undefined && shred_2_type === "Cutting" && !this.matrix_insertion_prop
             ) {
-                this.type_options = ["Dry-laid", "Air-laid"]
+                this.type_options = ["Dry-laid", "Air-laid"] // Wet-laid, in recycling.exe v4.3 ergibt error
             }
 
             if(this.textile_type === "Dry-laid" || this.textile_type === "Dry-laid with Thermoplastfiber") {
-                    this.ml_options = [5, 15, 5]
+                    this.ml_options = [10, 20, 1]
                     this.throughput_options = [20, 40, 60]
                     // this.aw_options = [100, 250, 500, 1000]
                 } else if(this.textile_type === "Air-laid" || this.textile_type === "Air-laid with Thermoplastfiber") {
-                    this.ml_options = [5, 15, 5]
+                    this.ml_options = [8, 15, 1]
                     this.throughput_options = [50, 100, 200]
                     // this.aw_options = [300, 500, 800]
                 } else if(this.textile_type === "Wet-laid" || this.textile_type === "Wet-laid with Thermoplastfiber") {
-                    this.ml_options = [2, 5, 3]
+                    this.ml_options = [5, 10, 1]
                     this.throughput_options = [5, 15, 25]
                     // this.aw_options = [50, 100, 200]
                 }
@@ -189,24 +189,24 @@
                  * Some elements change when others are interacted with, some elements depend on others.
                  */
                 if(this.textile_type === "Dry-laid" || this.textile_type === "Dry-laid with Thermoplastfiber") {
-                    this.ml_options = [5, 15, 5]
+                    this.ml_options = [10, 20, 1]
                     this.throughput_options = [20, 40, 60]
                     // this.aw_options = [100, 250, 500, 1000]
-                    this.textile_ml = 5
+                    this.textile_ml = 15
                     this.textile_tp = undefined
                     this.textile_aw = 250
                 } else if(this.textile_type === "Air-laid" || this.textile_type === "Air-laid with Thermoplastfiber") {
-                    this.ml_options = [5, 15, 5]
+                    this.ml_options = [8, 15, 1]
                     this.throughput_options = [50, 100, 200]
                     // this.aw_options = [300, 500, 800]
-                    this.textile_ml = 5
+                    this.textile_ml = 10
                     this.textile_tp = undefined
                     this.textile_aw = 250
                 } else if(this.textile_type === "Wet-laid" || this.textile_type === "Wet-laid with Thermoplastfiber") {
-                    this.ml_options = [2, 5, 3]
+                    this.ml_options = [5, 10, 1]
                     this.throughput_options = [5, 15,25]
                     // this.aw_options = [50, 100, 200]
-                    this.textile_ml = 5
+                    this.textile_ml = 8
                     this.textile_tp = undefined
                     this.textile_aw = 100
                 }

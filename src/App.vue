@@ -28,13 +28,14 @@
     @saveNewInputs="saveNewInputs($event)"
     @calculateButton="calculateButton()"
     @setStartedCorrectly="setStartedCorrectly()"
-    @setErrorMessage="setErrorMessage($event)" />
+    @setErrorMessage="setErrorMessage($event)"
+    @resetProcessingMasslosses="resetProcessingMasslosses()" />
 
     <v-dialog v-model=dialogOpen width="580px" persistent>
         <v-card>
             <v-card-text>
               <p style="text-align: center; font-size: 19px;">This website requires cookies to function correctly.<br>
-              By clicking 'Accept' or 'here', you accept the use of cookies.<br>
+              By closing this message, you accept the use of cookies.<br>
               Cookie details can be found <span @click="cookiePolicy()" style="color: #55CD89; cursor: pointer;">here</span>.</p>
             </v-card-text>
             <v-card-actions>
@@ -120,7 +121,7 @@ export default {
       },
       "processing_1": {
         "type": undefined,
-        "mass_loss_percent": 10,
+        "mass_loss_percent": 20,
         "wandstärke_mm": undefined,
         "euro_per_kg": undefined,
         "co2_equv_per_kg": undefined
@@ -394,7 +395,7 @@ export default {
         },
         "processing_1": {
           "type": undefined,
-          "mass_loss_percent": 10,
+          "mass_loss_percent": 20,
           "wandstärke_mm": undefined,
           "euro_per_kg": undefined,
           "co2_equv_per_kg": undefined
@@ -474,7 +475,7 @@ export default {
       if(processing_1.euro_per_kg === undefined) processing_1.euro_per_kg = ""
       if(processing_1.co2_equv_per_kg === undefined) processing_1.co2_equv_per_kg = ""
       if(processing_1.type === "Compression Moulding") {
-        processing_1.type = "CompressionMoulding" //ist das in der recycling.exe gueltig?
+        processing_1.type = "CompressionMoulding"
         processing_2.type = ""
       }
       if(processing_1.type === "Doublebeltpress (Organosheet Production)") {
@@ -522,35 +523,35 @@ export default {
        */
       this.footerProgressBar = 99
       this.formatAppInputKeys()
-      // this.log()
+      this.log()
 
-      //setTimeout(() => {
-      //  router.push({name: "ResultsView"})
-      //}, 8000);
+      // setTimeout(() => {
+        //  router.push({name: "ResultsView"})
+      // }, 3000)
       // console.log(this.app_input);
       //let url1 = "https://85.215.180.183/call_server.php";
-      const header=axios.create({
+
+      const header = axios.create({
         baseURL:'https://oekocap.org',
         timeout:900000,
-        
-      });
-      header.post('/call_server.php',this.app_input).then(res => {             
+      })
+      header.post('/call_server.php',this.app_input).then(res => {
         return res.data
       }).then(data => {
           // console.log(data)
           try {        
-            let data1=JSON.stringify(data);      
+            let data1=JSON.stringify(data)
             this.appOutput = data1.replaceAll("INFINITY", "null")
             this.appOutput = JSON.parse(this.appOutput)
             // console.log(this.appOutput)
           } catch (error) {
-            this.errorMessage = "Internal error. No output could be generated based on the given input.(1)"
+            this.errorMessage = "Internal error. No output could be generated based on the given input."
             router.push({name: "ErrorView"})
             // todo: save such inputs in the backend for debugging
             return
           }
           if(!(Object.prototype.hasOwnProperty.call(this.appOutput, "processes"))) {
-            this.$emit("setErrorMessage", "Internal error. No output could be generated based on the given input.(2)")
+            this.$emit("setErrorMessage", "Internal error. No output could be generated based on the given input.")
             router.push({name: "ErrorView"})
             // todo: save such inputs in the backend for debugging
           }
@@ -570,7 +571,7 @@ export default {
           // console.log(this.$route.name)
           if(this.$route.name !== "WaitingView") return
           router.push({name: "ErrorView"})
-      });         
+      })
     },
      checkOutputValidity(output) {
     //   /**
@@ -610,6 +611,10 @@ export default {
        * This function is usually emitted form child-elements.
        */
       this.errorMessage = message
+    },
+    resetProcessingMasslosses() {
+      this.app_input.processing_1.mass_loss_percent = 20
+      this.app_input.processing_2.mass_loss_percent = 10
     },
     log() {
       /**
