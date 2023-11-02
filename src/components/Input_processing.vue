@@ -41,9 +41,9 @@
             :color=color_green
             :thumb-color=color_green
             thumb-size="20"
-            :min="0.5"
-            :max="40"
-            :step="0.1" />
+            :min="15"
+            :max="30"
+            :step="1" />
             <p class="percentage">{{ Math.round(proc_1_ml * 10) / 10 }}%</p>
         </div>
 
@@ -96,9 +96,9 @@
             :color=color_green
             :thumb-color=color_green
             thumb-size="20"
-            :min="0.5"
-            :max="40"
-            :step="0.1" />
+            :min="15"
+            :max="30"
+            :step="1" />
             <p v-if="!proc_2_ml_disabled"
             id="proc_2_ml" class="percentage">{{ Math.round(proc_2_ml * 10) / 10 }}%</p>
         </div>
@@ -232,10 +232,15 @@
                 this.proc_1_type_options = ["Doublebeltpress (Organosheet Production)", "Compression Moulding"]
                 this.proc_2_type_options = ["Isothermal forming"]
                 this.proc_wt_options = [0.5, 1, 2]
-                this.proc_2_type_disabled = false
-                this.proc_2_ml_disabled = false
-                this.proc_2_ml = 10
-                this.proc_2_expmode_disabled = false
+                if(this.proc_1_type === undefined || this.proc_1_type === "Doublebeltpress (Organosheet Production)") {
+                    this.proc_2_type_disabled = false
+                    this.proc_2_ml_disabled = false
+                    this.proc_2_expmode_disabled = false
+                } else if(this.proc_1_type === "Compression Moulding") {
+                    this.proc_2_type_disabled = true
+                    this.proc_2_ml_disabled = true
+                    this.proc_2_expmode_disabled = true
+                }
                 this.moi_options = ["Thermoplastfiber"]
                 this.proc_moi = "Thermoplastfiber"
                 this.moi_disabled = true
@@ -243,10 +248,15 @@
                 this.proc_1_type_options = ["Doublebeltpress (Organosheet Production)", "Compression Moulding"]
                 this.proc_2_type_options = ["Isothermal forming"]
                 this.proc_wt_options = [0.5, 1, 2]
-                this.proc_2_type_disabled = false
-                this.proc_2_ml_disabled = false
-                this.proc_2_ml = 10
-                this.proc_2_expmode_disabled = false
+                if(this.proc_1_type === undefined || this.proc_1_type === "Doublebeltpress (Organosheet Production)") {
+                    this.proc_2_type_disabled = false
+                    this.proc_2_ml_disabled = false
+                    this.proc_2_expmode_disabled = false
+                } else if(this.proc_1_type === "Compression Moulding") {
+                    this.proc_2_type_disabled = true
+                    this.proc_2_ml_disabled = true
+                    this.proc_2_expmode_disabled = true
+                }
                 this.moi_options = ["Thermoplast powder", "Thermoplast foil"]
                 this.moi_disabled = false
             } else if(this.matrix_type === "Thermoset") {
@@ -267,7 +277,7 @@
                     this.proc_2_type = this.app_input_prop.processing_2.type
                     this.proc_2_type_disabled = false
                     this.proc_2_ml_disabled = false
-                    this.proc_2_ml = this.app_input_prop.processing_2.mass_loss_percent
+                    // this.proc_2_ml = this.app_input_prop.processing_2.mass_loss_percent
                     this.proc_wt_options = ["0.34 kg/m³", "1.25 kg/m³", "2.25 kg/m³"]
                     this.proc_2_expmode_disabled = false
                 }
@@ -312,6 +322,7 @@
                  */
                 //thermoset
                 if(this.proc_1_type === "Prepreg Production") {
+                    this.proc_1_ml = 20
                     this.proc_2_type_disabled = false
                     this.proc_2_ml_disabled = false
                     this.proc_2_ml = 10
@@ -319,6 +330,7 @@
                     this.proc_wt_options = ["0.34 kg/m³", "1.25 kg/m³", "2.25 kg/m³"]
                     this.proc_wt = undefined
                 } else if(this.proc_1_type === "Wet Compression Moulding" || this.proc_1_type === "Resin Transfer Moulding") {
+                    this.proc_1_ml = 30
                     this.proc_2_type_disabled = true
                     this.proc_2_type = undefined
                     this.proc_2_ml_disabled = true
@@ -332,9 +344,11 @@
                 } else if(this.proc_1_type === "Doublebeltpress (Organosheet Production)") {
                     this.proc_2_type_disabled = false
                     this.proc_2_ml_disabled = false
+                    this.proc_1_ml = 20
                     this.proc_2_ml = 10
                     this.proc_2_expmode_disabled = false
                 } else if(this.proc_1_type === "Compression Moulding") {
+                    this.proc_1_ml = 30
                     this.proc_2_type_disabled = true
                     this.proc_2_type = undefined
                     this.proc_2_ml_disabled = true

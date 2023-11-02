@@ -74,9 +74,9 @@
             :color=color_green
             :thumb-color=color_green
             thumb-size="20"
-            :min="0.5"
-            :max="15"
-            :step="0.1"
+            :min="5"
+            :max="10"
+            :step="1"
             v-model="shred_1_ml" />
             <v-slider
             v-if="waste_type === undefined || waste_type === 'End of Life' && size1dot5 === false"
@@ -85,9 +85,9 @@
             :color=color_green
             :thumb-color=color_green
             thumb-size="20"
-            :min="0.5"
-            :max="15"
-            :step="0.1"
+            :min="5"
+            :max="10"
+            :step="1"
             v-model="shred_1_ml" />
             <p
             v-if="waste_type === 'End of Life' && size1dot5 === true"
@@ -144,9 +144,9 @@
             :color=color_green
             :thumb-color=color_green
             thumb-size="20"
-            :min="0.5"
-            :max="15"
-            :step="0.1"
+            :min="5"
+            :max="10"
+            :step="1"
             v-model="shred_2_ml" />
             <v-slider
             v-if="!fine_checkbox"
@@ -155,9 +155,9 @@
             :color=color_green
             :thumb-color=color_green
             thumb-size="20"
-            :min="0.5"
-            :max="15"
-            :step="0.1"
+            :min="5"
+            :max="10"
+            :step="1"
             v-model="shred_2_ml" />
             <p
             v-if="fine_checkbox"

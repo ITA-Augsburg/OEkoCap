@@ -28,7 +28,8 @@
     @saveNewInputs="saveNewInputs($event)"
     @calculateButton="calculateButton()"
     @setStartedCorrectly="setStartedCorrectly()"
-    @setErrorMessage="setErrorMessage($event)" />
+    @setErrorMessage="setErrorMessage($event)"
+    @resetProcessingMasslosses="resetProcessingMasslosses()" />
 
     <v-dialog v-model=dialogOpen width="580px" persistent>
         <v-card>
@@ -120,7 +121,7 @@ export default {
       },
       "processing_1": {
         "type": undefined,
-        "mass_loss_percent": 10,
+        "mass_loss_percent": 20,
         "wandstärke_mm": undefined,
         "euro_per_kg": undefined,
         "co2_equv_per_kg": undefined
@@ -394,7 +395,7 @@ export default {
         },
         "processing_1": {
           "type": undefined,
-          "mass_loss_percent": 10,
+          "mass_loss_percent": 20,
           "wandstärke_mm": undefined,
           "euro_per_kg": undefined,
           "co2_equv_per_kg": undefined
@@ -610,6 +611,10 @@ export default {
        * This function is usually emitted form child-elements.
        */
       this.errorMessage = message
+    },
+    resetProcessingMasslosses() {
+      this.app_input.processing_1.mass_loss_percent = 20
+      this.app_input.processing_2.mass_loss_percent = 10
     },
     log() {
       /**

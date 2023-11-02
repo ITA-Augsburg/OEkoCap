@@ -24,7 +24,7 @@
             "app_output_prop", "startedCorrectly", "error_message_prop",
             "buttonCalculateEnabled", "button2enabled", "button3enabled", "button4enabled", "button5enabled",
             "progressValue", "color_green", "color_lightgrey"],
-            emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "setStartedCorrectly", "setErrorMessage"],
+            emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "setStartedCorrectly", "setErrorMessage", "resetProcessingMasslosses"],
             mounted() {
                 /**
                  * If user enters app via url (oekocap.com/matrix for example) then user gets redirected to the start.
