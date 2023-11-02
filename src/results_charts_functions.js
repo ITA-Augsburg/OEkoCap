@@ -28,7 +28,7 @@ export function createCharts(output, benchmarks) {
     let category = "gwp_charts"
     let parentId = "gwp_or_cost_charts"
     let title = "GWP range"
-    let unit = "kg CO²"
+    let unit = "CO₂-eq./kg part"
 
     let data = undefined
     
@@ -71,7 +71,7 @@ export function createCharts(output, benchmarks) {
     category = "cost_charts"
     parentId = "gwp_or_cost_charts"
     title = "Cost range"
-    unit = "€"
+    unit = "€/kg part"
 
     // output only
     name = "cost_range_output_only_chart"
@@ -114,7 +114,7 @@ export function createCharts(output, benchmarks) {
     category = "pdf_gwp_cost_charts"
     parentId = "charts_for_pdf"
     title = "GWP range"
-    unit = "kg CO²"
+    unit = "CO₂-eq./kg part"
 
     name = "pdf_gwp_chart"
     barChartBenchmarkLabels = (output.gwp.minValue === null || output.gwp.maxValue === null)
@@ -139,7 +139,7 @@ export function createCharts(output, benchmarks) {
     category = "pdf_gwp_cost_charts"
     parentId = "charts_for_pdf"
     title = "Cost range"
-    unit = "€"
+    unit = "€/kg part"
 
     name = "pdf_cost_chart"
     barChartBenchmarkLabels = (output.cost.minValue_eur_per_kg === null || output.cost.maxValue_eur_per_kg === null)
@@ -161,12 +161,12 @@ export function createCharts(output, benchmarks) {
     data = undefined
     barChartBenchmarkLabels = undefined
 
-    // avarage gwp of each process pie-chart + custom legend (output)
+    // average gwp of each process pie-chart + custom legend (output)
 
     category = "max_gwp_per_process_charts"
     parentId = "gwp_or_cost_per_process_charts"
-    title = "Avarage GWP of each process"
-    unit = "kg CO²"
+    title = "Average GWP of each process"
+    unit = "CO₂-eq./kg part"
 
     // output
     name = "max_gwp_of_each_output_process_chart"
@@ -180,11 +180,14 @@ export function createCharts(output, benchmarks) {
         if(process.minCostPerKg === null || process.maxCostPerKg === null) processesCostOk = false
     })
     if(processesGwpOk) {
-        output.processes.forEach((process, i) => {
+        let counter = 0
+        output.processes.forEach((process) => {
+            if(process.name === "Oxidation") return // equivalent of continue in a for() loop
             pieChartLabels.push(process.name)
             let dataPoint = (process.maxGWPValue + process.minGWPValue) / 2
             data.push(Math.round(dataPoint * 100) / 100)
-            pieChartColors.push(randomColor(i, 1, output.processes.length, "pie"))
+            pieChartColors.push(randomColor(counter, 1, output.processes.length, "pie"))
+            counter++
         })
         addPieCharts(charts, category, name, title, pieChartLabels, data, pieChartColors, unit, parentId)
     }
@@ -193,12 +196,12 @@ export function createCharts(output, benchmarks) {
     pieChartLabels = undefined
     pieChartColors = undefined
 
-    // avarage cost/kg of each process pie-chart + custom legend (output)
+    // average cost/kg of each process pie-chart + custom legend (output)
 
     category = "max_cost_per_process_charts"
     parentId = "gwp_or_cost_per_process_charts"
-    title = "Avarage cost of each process"
-    unit = "€"
+    title = "Average cost of each process"
+    unit = "€/kg part"
     
     // output
     name = "max_cost_of_each_output_process_chart"
@@ -206,11 +209,14 @@ export function createCharts(output, benchmarks) {
     data = []
     pieChartColors = []
     if(processesCostOk) {
-        output.processes.forEach((process, i) => {
+        let counter = 0
+        output.processes.forEach((process) => {
+            if(process.name === "Oxidation") return // equivalent of continue in a for() loop
             pieChartLabels.push(process.name)
             let dataPoint = (process.minCostPerKg + process.maxCostPerKg) / 2
             data.push(Math.round(dataPoint * 100) / 100)
-            pieChartColors.push(randomColor(i, 1, output.processes.length, "pie"))
+            pieChartColors.push(randomColor(counter, 1, output.processes.length, "pie"))
+            counter++
         })
         addPieCharts(charts, category, name, title, pieChartLabels, data, pieChartColors, unit, parentId)
     }
@@ -547,7 +553,7 @@ function createPieChart(id, title, labels, data, colors, unit, legendFontSize, p
                         })
                         let pieSlice = (chart.data.datasets[0].data[i] / (sum / 100))
                         let percent = Math.round(pieSlice * 100) / 100
-                        let text = label + ": " + chart.data.datasets[0].data[i] + " " + unit + " (" + percent + "%)"
+                        let text = label + ": " + percent + "% " + unit
                         customLegend.innerHTML += 
                         `
                             <div style="display: flex; width: fit-content">
@@ -973,7 +979,7 @@ function randomColor(i, alpha, numberOfElements, chart_type) {
     }
     
     // if there aren't many processes, hand-pick a beautiful set of colors
-    // else assign processes colors that are as different as possible
+    // else assign processes ugly colors that are as different as possible, picked by a machine
     if(numberOfElements <= 5 && ["bar", "pie"].includes(chart_type)) {
         switch(i) {
             case 0:

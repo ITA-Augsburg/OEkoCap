@@ -38,9 +38,9 @@
     v-model=expert_mode_cost
     @update:model-value="propagateNewValues()"
     class="textfield cost_textfield"
-    label="€/kg"
+    label="€/kg part"
     single-line
-    suffix="€/kg"
+    suffix="€/kg part"
     variant="solo"
     :bg-color=color_green
     ></v-text-field>
@@ -51,9 +51,9 @@
     v-model=expert_mode_gwp
     @update:model-value="propagateNewValues()"
     class="textfield co2_textfield"
-    label="kg CO2-eq./kg"
+    label="CO₂-eq./kg part"
     single-line
-    suffix="kg CO2-eq./kg"
+    suffix="CO₂-eq./kg part"
     variant="solo"
     :bg-color=color_green
     ></v-text-field>

@@ -165,7 +165,7 @@ import { createCharts } from "../results_charts_functions.js"
              */
             
             this.exe_output = this.app_output_prop
-
+            
             // for testing the results-page, modify the next two lines and the mounted() in ResultsView.vue.
             // this.exe_output = this.test_output // for testing enable this line (real output will be ignored)
             if(!this.startedCorrectly) return // for testing disable this line
