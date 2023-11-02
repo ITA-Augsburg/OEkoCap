@@ -216,7 +216,7 @@
             if(this.waste_type === "Cut-Off") {
                 this.coarse_expmode_disabled = undefined
             }
-            if(this.size1dot5) document.getElementById("waste_fine_text").classList.add("pointer")
+            if(this.size1dot5 && document.getElementById("waste_fine_text") !== null) document.getElementById("waste_fine_text").classList.add("pointer")
         },
         data() {
             return {
@@ -251,9 +251,9 @@
                  * When the fine-shredding checkbox is enabled, then its text is clickable to toggle the checkbox, the cursor is set to pointer.
                  */
                 this.size1dot5 = !this.size1dot5
-                this.size1dot5 ? 
-                    document.getElementById("waste_fine_text").classList.add("pointer") :
-                    document.getElementById("waste_fine_text").classList.remove("pointer")
+                this.size1dot5
+                    ? document.getElementById("waste_fine_text").classList.add("pointer")
+                    : document.getElementById("waste_fine_text").classList.remove("pointer")
             },
             toggleFineCheckbox() {
                 /**
