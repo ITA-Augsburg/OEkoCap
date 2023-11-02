@@ -15,7 +15,8 @@
     :color_green=color_green
     :matrix_insertion_prop=matrix_insertion_prop
     :app_input_prop=app_input_prop
-    @saveNewInputs="saveNewInputs($event)" />
+    @saveNewInputs="saveNewInputs($event)"
+    @resetProcessingMasslosses="resetProcessingMasslosses()" />
     <Input_footer
     :id=id
     :progressValue=progressValue
@@ -39,7 +40,7 @@ export default {
     "buttonCalculateEnabled", "button2enabled", "button3enabled", "button4enabled", "button5enabled",
     "progressValue", "color_green", "color_lightgrey"
     ],
-    emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "setStartedCorrectly", "setErrorMessage"],
+    emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "setStartedCorrectly", "setErrorMessage", "resetProcessingMasslosses"],
     mounted() {
         /**
          * If user enters app via url (oekocap.com/matrix for example) then user gets redirected to the start.
@@ -65,6 +66,9 @@ export default {
              * transmits the emit from child-component to App.vue->app_input.
              */
             this.$emit("saveNewInputs", new_values)
+        },
+        resetProcessingMasslosses() {
+            this.$emit("resetProcessingMasslosses", undefined)
         }
     }
 }

@@ -1,7 +1,7 @@
 .start_area {
     width: var(--content-width);
     margin: 0px calc((100vw - var(--content-width)) / 2) 0px calc((100vw - var(--content-width)) / 2);
-    min-height: calc(100vh - 80px - 358px - 150px);
+    min-height: calc(100vh - 80px - 216.8px - 150px);
     align-content: center;
 }
 @media(max-width: 500px) {
@@ -13,7 +13,7 @@
 .start_logocontainer {
     display: grid;
     /* flex-wrap: wrap; */
-    margin-top: calc((100vh - 80px - 358px - 157.5px - 290px) / 2); /* center element */
+    margin-top: 70px;
 }
 .start_sublogocontainer {
     display: flex;
@@ -36,11 +36,7 @@
     text-align: center;
     padding: 0px 40px 30px 40px;
 }
-@media (max-height: 1080px) {
-    .start_logocontainer {
-        margin-top: 97.25px;
-    }
-}
+
 @media (max-width: 500px) {
     .start_logocontainer {
         margin-top: 50px;

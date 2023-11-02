@@ -23,7 +23,7 @@ export default {
         "buttonCalculateEnabled", "button2enabled", "button3enabled", "button4enabled", "button5enabled",
         "progressValue", "color_green"
     ],
-    emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "setStartedCorrectly", "setErrorMessage"],
+    emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "setStartedCorrectly", "setErrorMessage", "resetProcessingMasslosses"],
     data: () => ({
     }),
     mounted() {
