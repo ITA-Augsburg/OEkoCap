@@ -13,6 +13,7 @@
     :tooltip_text=Tooltip_texts.results_subheader_tooltip />
     <Results
     :app_output_prop=app_output_prop
+    :startedCorrectly=startedCorrectly
     :color_green=color_green
     :color_lightgrey=color_lightgrey
     @setErrorMessage=setErrorMessage($event)

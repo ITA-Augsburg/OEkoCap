@@ -156,7 +156,7 @@ import { createCharts } from "../results_charts_functions.js"
  * After the output is delivered from the server, charts are created from it, information is visualised in this component.
  */
     export default {
-        props: ["app_output_prop", "color_green", "color_lightgrey"],
+        props: ["app_output_prop", "startedCorrectly", "color_green", "color_lightgrey"],
         emits: ["setErrorMessage", "chartsAsImages"],
         mounted() {
             /**
