@@ -523,7 +523,7 @@ export default {
        */
       this.footerProgressBar = 99
       this.formatAppInputKeys()
-      this.log()
+      // this.log()
 
       // setTimeout(() => {
         //  router.push({name: "ResultsView"})
