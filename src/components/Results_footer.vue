@@ -37,7 +37,7 @@
  * The button is disabled for the time being and this feature is put on the backlog.
  */
     export default {
-        props: ["color_lightgrey", "data_urls_prop"],
+        props: ["color_lightgrey", "app_input_prop", "data_urls_prop"],
         mounted() {
             // setTimeout(() => {
             //     console.log(this.data_urls_prop)
@@ -48,7 +48,7 @@
         methods: {
             handlePdfButton() {
                 /**
-                 * Creates a pdf from the contents of Results.vue.
+                 * Creates a pdf of the results.
                  */
 
                 let date = new Date()
@@ -62,11 +62,11 @@
                 // let bundesm_logo = this.imageToDataUrl("bundesm_logo_results")
                 // let ita_logo = this.imageToDataUrl("ita_logo_results")
 
-                // let generalDescription = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+                let inputs = this.buildInputsString()
 
                 let content = [
                     { image: headerLogo, width: 180, margin: [ 0, 0, 0, 50], alignment: "center" },
-                    // { text: generalDescription, margin: [0, 25, 0, 20], alignment: "justify" },
+                    { text: inputs, margin: [0, 25, 0, 20], alignment: "justify" },
                 ]
                 this.addChartsToPdf(content)
 
@@ -122,6 +122,69 @@
                 context.drawImage(image, 0, 0)
                 // console.log(canvas.toDataURL("img/png"))
                 return canvas.toDataURL("img/png")
+            },
+            buildInputsString() {
+                let s = ""
+                s += "Inputs\n"
+
+                // waste
+                s += "Waste type: " + this.app_input_prop.waste.type + "\n"
+                if(this.app_input_prop.transport.co2_equv_per_kg !== "") s += "Waste gwp: " + this.app_input_prop.transport.co2_equv_per_kg + "\n"
+                if(this.app_input_prop.transport.euro_per_kg !== "") s += "Waste cost: " + this.app_input_prop.transport.euro_per_kg + "\n"
+
+                // shredding 1
+                s += "Shredding step 1 type: " + this.app_input_prop.shredding_1.type + "\n"
+                s += "Shredding step 1 mass loss percent: " + this.app_input_prop.shredding_1.mass_loss_percent + "\n"
+                if(this.app_input_prop.shredding_1.co2_equv_per_kg !== "") s += "Shredding step 1 gwp: " + this.app_input_prop.shredding_1.co2_equv_per_kg + "\n"
+                if(this.app_input_prop.shredding_1.euro_per_kg !== "") s += "Shredding step 1 cost: " + this.app_input_prop.shredding_1.euro_per_kg + "\n"
+
+                // shredding 2
+                if(this.app_input_prop.shredding_2.type !== "") {
+                    if(this.app_input_prop.shredding_2.type !== "") s += "Shredding step 2 type: " + this.app_input_prop.shredding_2.type + "\n"
+                    if(this.app_input_prop.shredding_2.mass_loss_percent !== "") s += "Shredding step 2 type: " + this.app_input_prop.shredding_2.mass_loss_percent + "\n"
+                    if(this.app_input_prop.shredding_2.co2_equv_per_kg !== "") s += "Shredding step 2 gwp: " + this.app_input_prop.shredding_2.co2_equv_per_kg + "\n"
+                    if(this.app_input_prop.shredding_2.euro_per_kg !== "") s += "Shredding step 2 cost: " + this.app_input_prop.shredding_2.euro_per_kg + "\n"
+                }
+
+                // separation
+                s += "Separation type: " + this.app_input_prop.separation.type + "\n"
+                if(this.app_input_prop.separation.co2_equv_per_kg !== "") s += "Separation gwp: " + this.app_input_prop.separation.co2_equv_per_kg + "\n"
+                if(this.app_input_prop.separation.euro_per_kg !== "") s += "Separation cost: " + this.app_input_prop.separation.euro_per_kg + "\n"
+
+                // polymer
+                s += "Polymer thermo-type: " + this.app_input_prop.polymer.thermo_type + "\n"
+                s += "Polymer matrix-type: " + this.app_input_prop.polymer.matrix_type + "\n"
+                s += "Polymer fiber volume content percent: " + this.app_input_prop.polymer.fvc_percent + "\n"
+                s += "Polymer feedstock type: " + this.app_input_prop.polymer.feedstock_type + "\n"
+                s += "Polymer state of origin: " + this.app_input_prop.polymer.state_of_origin + "\n"
+                if(this.app_input_prop.polymer.co2_equv_per_kg !== "") s += "Polymer gwp: " + this.app_input_prop.polymer.co2_equv_per_kg + "\n"
+                if(this.app_input_prop.polymer.euro_per_kg !== "") s += "Polymer cost: " + this.app_input_prop.polymer.euro_per_kg + "\n"
+
+                // textile process
+                s += "Textile process type: " + this.app_input_prop.textile_process.type + "\n"
+                s += "Textile process mass loss percent: " + this.app_input_prop.textile_process.mass_loss_percent + "\n"
+                s += "Textile process throughput kg/h: " + this.app_input_prop.textile_process.throughput_kg_per_h + "\n"
+                s += "Textile process areal weight g/m²: " + this.app_input_prop.textile_process.areal_weight_g_per_sqm + "\n"
+                if(this.app_input_prop.textile_process.co2_equv_per_kg !== "") s += "Textile process gwp: " + this.app_input_prop.textile_process.co2_equv_per_kg + "\n"
+                if(this.app_input_prop.textile_process.euro_per_kg !== "") s += "Textile process cost: " + this.app_input_prop.textile_process.euro_per_kg + "\n"
+
+                // processing 1
+                s += "Processing step 1 type: " + this.app_input_prop.processing_1.type + "\n"
+                s += "Processing step 1 mass loss percent: " + this.app_input_prop.processing_1.mass_loss_percent + "\n"
+                s += "Processing step 1 wall thickness: " + this.app_input_prop.processing_1.wandstärke_mm + "\n"
+                if(this.app_input_prop.processing_1.co2_equv_per_kg !== "") s += "Processing step 1 gwp: " + this.app_input_prop.processing_1.co2_equv_per_kg + "\n"
+                if(this.app_input_prop.processing_1.euro_per_kg !== "") s += "Processing step 1 cost: " + this.app_input_prop.processing_1.euro_per_kg + "\n"
+
+                // processing 2
+                if(this.app_input_prop.processing_2.type !== "") {
+                    if(this.app_input_prop.processing_2.type !== "") s += "Processing step 2 type: " + this.app_input_prop.processing_2.type + "\n"
+                    if(this.app_input_prop.processing_2.mass_loss_percent !== "") s += "Processing step 2 mass loss percent: " + this.app_input_prop.processing_2.mass_loss_percent + "\n"
+                    if(this.app_input_prop.processing_2.wandstärke_mm !== "") s += "Processing step 2 wall thickness: " + this.app_input_prop.processing_2.wandstärke_mm + "\n"
+                    if(this.app_input_prop.processing_2.co2_equv_per_kg !== "") s += "Processing step 2 gwp: " + this.app_input_prop.processing_2.co2_equv_per_kg + "\n"
+                    if(this.app_input_prop.processing_2.euro_per_kg !== "") s += "Processing step 2 cost: " + this.app_input_prop.processing_2.euro_per_kg + "\n"
+                }
+
+                return s
             },
             addChartsToPdf(pdfContent) {
                 /**
