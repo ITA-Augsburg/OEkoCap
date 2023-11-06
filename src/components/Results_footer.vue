@@ -62,11 +62,11 @@
                 // let bundesm_logo = this.imageToDataUrl("bundesm_logo_results")
                 // let ita_logo = this.imageToDataUrl("ita_logo_results")
 
-                let inputs = this.buildInputsString()
+                // let inputs = this.buildInputsString()
 
                 let content = [
                     { image: headerLogo, width: 180, margin: [ 0, 0, 0, 50], alignment: "center" },
-                    { text: inputs, margin: [0, 25, 0, 20], alignment: "justify" },
+                    // { text: inputs, margin: [0, 25, 0, 20], alignment: "justify" },
                 ]
                 this.addChartsToPdf(content)
 
