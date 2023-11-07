@@ -1,9 +1,9 @@
 <script setup>
     import Copyright_text from "./Copyright_text.vue"
+    import { splitCamelCase } from "../results_charts_functions"
     import pdfMake from "pdfmake/build/pdfmake"
     import pdfFonts from "pdfmake/build/vfs_fonts"
     pdfMake.vfs = pdfFonts.pdfMake.vfs
-    import { splitCamelCase } from "../results_charts_functions"
 </script>
 
 <template>
@@ -217,7 +217,7 @@
                     layout: "noBorders",
                     table: {
                         headerRows: 0,
-                        widths: ["*", "*", "*"],
+                        widths: ["auto", "auto", "auto"],
                         body: [
                             [
                                 {text: "WASTE", fontSize: 10, alignment: "center"},
@@ -232,17 +232,17 @@
                     layout: "lightHorizontalLines",
                     table: {
                         headerRows: 0,
-                        widths: ["*", "*", "*"],
+                        widths: ["auto", "auto", "auto"],
                         body: [
                             [
                                 {text: "type", fontSize: 10, alignment: "center"},
-                                {text: "cost", fontSize: 10, alignment: "center"},
-                                {text: "gwp", fontSize: 10, alignment: "center"}
+                                {text: "gwp", fontSize: 10, alignment: "center"},
+                                {text: "cost", fontSize: 10, alignment: "center"}
                             ],
                             [
                                 {text: waste_type, fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]},
-                                {text: this.checkInputString(this.app_input_prop.transport.co2_equv_per_kg), fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]},
-                                {text: this.checkInputString(this.app_input_prop.transport.euro_per_kg), fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]}
+                                {text: this.checkInputString(this.app_input_prop.transport.euro_per_kg), fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]},
+                                {text: this.checkInputString(this.app_input_prop.transport.co2_equv_per_kg), fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]}
                             ],
                         ]
                     }
@@ -256,7 +256,7 @@
                         layout: "lightHorizontalLines",
                         table: {
                             headerRows: 0,
-                            widths: ["*", "*", "*", "*"],
+                            widths: ["auto", "auto", "auto", "auto"],
                             body:[
                                 [
                                     {text: "type", fontSize: 10, alignment: "center"},
@@ -284,7 +284,7 @@
                             layout: "lightHorizontalLines",
                             table: {
                                 headerRows: 0,
-                                widths: ["*", "*", "*", "*"],
+                                widths: ["auto", "auto", "auto", "auto"],
                                 body:[
                                     [
                                         {text: "type", fontSize: 10, alignment: "center"},
@@ -305,10 +305,99 @@
                     )
                 }
 
-                // TODO (uncomment App.vue app_input)
                 // polymer
+                pdfContent.push(
+                    {text: "POLYMER", fontSize: 10, alignment: "center", margin: [0, 0, 0, 5]},
+                        {
+                            layout: "lightHorizontalLines",
+                            table: {
+                                headerRows: 0,
+                                widths: ["auto", "auto", "auto", "auto", "auto", "auto", "auto"],
+                                body:[
+                                    [
+                                        {text: "thermo type", fontSize: 10, alignment: "center"},
+                                        {text: "matrix type", fontSize: 10, alignment: "center"},
+                                        {text: "fiber volume content (%)", fontSize: 10, alignment: "center"},
+                                        {text: "feedstock type", fontSize: 10, alignment: "center"},
+                                        {text: "state of origin", fontSize: 10, alignment: "center"},
+                                        {text: "gwp", fontSize: 10, alignment: "center"},
+                                        {text: "cost", fontSize: 10, alignment: "center"}
+                                    ],
+                                    [
+                                        {text: this.app_input_prop.polymer.thermo_type, fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]},
+                                        {text: this.app_input_prop.polymer.matrix_type, fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]},
+                                        {text: this.app_input_prop.polymer.fvc_percent, fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]},
+                                        {text: this.app_input_prop.polymer.feedstock_type, fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]},
+                                        {text: this.app_input_prop.polymer.state_of_origin, fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]},
+                                        {text: this.checkInputString(this.app_input_prop.polymer.co2_equv_per_kg), fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]},
+                                        {text: this.checkInputString(this.app_input_prop.polymer.euro_per_kg), fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]}
+                                    ],
+                                ]
+                            }
+                        },
+                        {text: "", margin: [0, 0, 0, 20]}
+                )
+
                 // textile process
+                pdfContent.push(
+                    {text: "TEXTILE PROCESS", fontSize: 10, alignment: "center", margin: [0, 0, 0, 5]},
+                        {
+                            layout: "lightHorizontalLines",
+                            table: {
+                                headerRows: 0,
+                                widths: ["auto", "auto", "auto", "auto", "auto", "auto"],
+                                body:[
+                                    [
+                                        {text: "type", fontSize: 10, alignment: "center"},
+                                        {text: "mass loss (%)", fontSize: 10, alignment: "center"},
+                                        {text: "throughput\n(kg/h)", fontSize: 10, alignment: "center"},
+                                        {text: "areal weight\n(g/m²)", fontSize: 10, alignment: "center"},
+                                        {text: "gwp", fontSize: 10, alignment: "center"},
+                                        {text: "cost", fontSize: 10, alignment: "center"}
+                                    ],
+                                    [
+                                        {text: this.app_input_prop.textile_process.type, fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]},
+                                        {text: this.app_input_prop.textile_process.mass_loss_percent, fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]},
+                                        {text: this.app_input_prop.textile_process.throughput_kg_per_h, fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]},
+                                        {text: this.app_input_prop.textile_process.areal_weight_g_per_sqm, fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]},
+                                        {text: this.checkInputString(this.app_input_prop.textile_process.co2_equv_per_kg), fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]},
+                                        {text: this.checkInputString(this.app_input_prop.textile_process.euro_per_kg), fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]}
+                                    ],
+                                ]
+                            }
+                        },
+                        {text: "", margin: [0, 0, 0, 20]}
+                )
+
                 // processing 1
+                pdfContent.push(
+                    {text: "PROCESSING STEP 1", fontSize: 10, alignment: "center", margin: [0, 0, 0, 5]},
+                        {
+                            layout: "lightHorizontalLines",
+                            table: {
+                                headerRows: 0,
+                                widths: ["auto", "auto", "auto", "auto", "auto"],
+                                body:[
+                                    [
+                                        {text: "type", fontSize: 10, alignment: "center"},
+                                        {text: "mass loss (%)", fontSize: 10, alignment: "center"},
+                                        {text: "wall thickness", fontSize: 10, alignment: "center"},
+                                        {text: "gwp", fontSize: 10, alignment: "center"},
+                                        {text: "cost", fontSize: 10, alignment: "center"}
+                                    ],
+                                    [
+                                        {text: splitCamelCase(this.app_input_prop.processing_1.type), fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]},
+                                        {text: this.app_input_prop.processing_1.mass_loss_percent, fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]},
+                                        {text: this.app_input_prop.processing_1.wandstärke_mm, fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]},
+                                        {text: this.checkInputString(this.app_input_prop.processing_1.co2_equv_per_kg), fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]},
+                                        {text: this.checkInputString(this.app_input_prop.processing_1.euro_per_kg), fontSize: 10, alignment: "center", margin: [0, 3, 0, 0]}
+                                    ],
+                                ]
+                            }
+                        },
+                        {text: "", margin: [0, 0, 0, 20]}
+                )
+
                 // if processing 2
             },
             checkInputString(app_input_string) {
