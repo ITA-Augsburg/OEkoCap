@@ -5,5 +5,6 @@
     "matrix_subheader_tooltip": "Type and polymer must be chosen to continue.",
     "textile_subheader_tooltip": "Type and throughput must be chosen to continue.",
     "processing_subheader_tooltip": "Type for step 1, type for step 2 if available, wall thickness and method of insertion if available must be chosen to continue.",
-    "results_subheader_tooltip": "For certain input-combinations there might be missing data. This means: the bar-chart might have missing data (left side, green column). The pie-chart might not be able to show. The ashby-chart might have missing data (green ellipse)."
+    "results_subheader_tooltip": "For certain input-combinations there might be missing data. This means: the bar-chart might have missing data (left side, green column). The pie-chart might not be able to show. The ashby-chart might have missing data (green ellipse).",
+    "separation_type_disabled_tooltip": "Separation can't be defined if the waste-type is Cut-Off."
 }

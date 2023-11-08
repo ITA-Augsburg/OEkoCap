@@ -232,6 +232,12 @@ export default {
           textile_process.euro_per_kg = undefined
           this.button5enabled = false
         }
+        // lock button 3, 4, 5 if waste type changes because separation type needs to be updated
+        if(waste.type !== new_values.waste_type) {
+          this.button3enabled = false
+          this.button4enabled = false
+          this.button5enabled = false
+        }
 
         waste.type = new_values.waste_type
         waste.size_bigger_1dot5_m = new_values.waste_size
