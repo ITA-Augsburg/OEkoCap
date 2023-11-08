@@ -211,7 +211,7 @@ import { createCharts } from "../results_charts_functions.js"
                 exe_output: undefined,
 
                 // when testing, set exe_output to test_output in mounted()
-                test_output: benchmarks.test_output_5,
+                test_output: benchmarks.test_output_1,
                 benchmarks: benchmarks.benchmarks
             }
         },

@@ -529,6 +529,7 @@ export default {
       if(shredding_2.co2_equv_per_kg === undefined) shredding_2.co2_equv_per_kg = ""
       // separation
       if(separation.type === undefined) separation.type = ""
+      if(separation.type === "Pyrolysis") separation.type = "Pyrolyse"
       if(separation.euro_per_kg === undefined) separation.euro_per_kg = ""
       if(separation.co2_equv_per_kg === undefined) separation.co2_equv_per_kg = ""
       // matrix

@@ -70,8 +70,8 @@
              */
             if(this.app_input_prop.waste.type === "End of Life") {
                 this.separation_inputs_disabled = false
-                this.type_options = ["Pyrolyse"]
-                this.separation_type = "Pyrolyse"
+                this.type_options = ["Pyrolysis"]
+                this.separation_type = "Pyrolysis"
                 this.saveNewInputs()
                 this.separation_type = this.app_input_prop.separation.type
             } else if(this.app_input_prop.waste.type === "Cut-Off") {
