@@ -50,9 +50,13 @@
         components: {
             Expert_mode: Expert_mode
         },
+        mounted() {
+            if(this.app_input_prop.waste.type === "End of Life") this.type_options = ["Pyrolyse"]
+            if(this.app_input_prop.waste.type === "Cut-Off") this.type_options = [""]
+        },
         data() {
             return {
-                type_options: ["Pyrolyse"],
+                type_options: [],
                 separation_type: this.app_input_prop.separation.type,
 
                 expert_mode_cost: this.app_input_prop.separation.euro_per_kg,

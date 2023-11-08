@@ -106,7 +106,7 @@ export default {
         "thermo_type": undefined,
         "matrix_type": undefined,
         "fvc_percent": 30,
-        "feedstock_type": "biodegredable",
+        "feedstock_type": "fossilbased",
         "state_of_origin": "virgin",
         "euro_per_kg": undefined,
         "co2_equv_per_kg": undefined
@@ -442,7 +442,7 @@ export default {
           "thermo_type": undefined,
           "matrix_type": undefined,
           "fvc_percent": 30,
-          "feedstock_type": "biodegredable",
+          "feedstock_type": "fossilbased",
           "state_of_origin": "virgin",
           "euro_per_kg": undefined,
           "co2_equv_per_kg": undefined
@@ -522,6 +522,7 @@ export default {
       if(shredding_2.euro_per_kg === undefined) shredding_2.euro_per_kg = ""
       if(shredding_2.co2_equv_per_kg === undefined) shredding_2.co2_equv_per_kg = ""
       // separation
+      if(separation.type === undefined) separation.type = ""
       if(separation.euro_per_kg === undefined) separation.euro_per_kg = ""
       if(separation.co2_equv_per_kg === undefined) separation.co2_equv_per_kg = ""
       // matrix
