@@ -1,5 +1,6 @@
 <script setup>
     import Copyright_text from "./Copyright_text.vue"
+    import { splitCamelCase } from "../results_charts_functions"
     import pdfMake from "pdfmake/build/pdfmake"
     import pdfFonts from "pdfmake/build/vfs_fonts"
     pdfMake.vfs = pdfFonts.pdfMake.vfs
@@ -62,12 +63,10 @@
                 // let bundesm_logo = this.imageToDataUrl("bundesm_logo_results")
                 // let ita_logo = this.imageToDataUrl("ita_logo_results")
 
-                // let inputs = this.buildInputsString()
-
                 let content = [
-                    { image: headerLogo, width: 180, margin: [ 0, 0, 0, 50], alignment: "center" },
-                    // { text: inputs, margin: [0, 25, 0, 20], alignment: "justify" },
+                    { image: headerLogo, width: 180, margin: [ 0, 0, 0, 20], alignment: "center" },
                 ]
+                this.addInputsToPdf(content)
                 this.addChartsToPdf(content)
 
                 let docDefinition = {
@@ -123,68 +122,192 @@
                 // console.log(canvas.toDataURL("img/png"))
                 return canvas.toDataURL("img/png")
             },
-            buildInputsString() {
-                let s = ""
-                s += "Inputs\n"
+            addInputsToPdf(pdfContent) {
+                /**
+                 * Creates a section listing the inputs.
+                 */
 
-                // waste
-                s += "Waste type: " + this.app_input_prop.waste.type + "\n"
-                if(this.app_input_prop.transport.co2_equv_per_kg !== "") s += "Waste gwp: " + this.app_input_prop.transport.co2_equv_per_kg + "\n"
-                if(this.app_input_prop.transport.euro_per_kg !== "") s += "Waste cost: " + this.app_input_prop.transport.euro_per_kg + "\n"
+                let waste_type = this.app_input_prop.waste.type === "EoL" ? "End of Life" : this.app_input_prop.waste.type
 
-                // shredding 1
-                s += "Shredding step 1 type: " + this.app_input_prop.shredding_1.type + "\n"
-                s += "Shredding step 1 mass loss percent: " + this.app_input_prop.shredding_1.mass_loss_percent + "\n"
-                if(this.app_input_prop.shredding_1.co2_equv_per_kg !== "") s += "Shredding step 1 gwp: " + this.app_input_prop.shredding_1.co2_equv_per_kg + "\n"
-                if(this.app_input_prop.shredding_1.euro_per_kg !== "") s += "Shredding step 1 cost: " + this.app_input_prop.shredding_1.euro_per_kg + "\n"
+                pdfContent.push({text: "Inputs", fontSize: 14, alignment: "center", bold: true, margin: [0, 0, 0, 20]})
 
-                // shredding 2
-                if(this.app_input_prop.shredding_2.type !== "") {
-                    if(this.app_input_prop.shredding_2.type !== "") s += "Shredding step 2 type: " + this.app_input_prop.shredding_2.type + "\n"
-                    if(this.app_input_prop.shredding_2.mass_loss_percent !== "") s += "Shredding step 2 type: " + this.app_input_prop.shredding_2.mass_loss_percent + "\n"
-                    if(this.app_input_prop.shredding_2.co2_equv_per_kg !== "") s += "Shredding step 2 gwp: " + this.app_input_prop.shredding_2.co2_equv_per_kg + "\n"
-                    if(this.app_input_prop.shredding_2.euro_per_kg !== "") s += "Shredding step 2 cost: " + this.app_input_prop.shredding_2.euro_per_kg + "\n"
-                }
+                // waste, transport, shredding 1, shredding 2, separation
+                pdfContent.push(
+                    {
+                        layout: "lightHorizontalLines",
+                        table: {
+                            headerRows: 1,
+                            widths: ["*", "*", "*", "*", "*", "*"],
+                            body: [
+                                [
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "WASTE", fontSize: 8, alignment: "center"},
+                                    {text: "TRANSPORT", fontSize: 8, alignment: "center"},
+                                    {text: "SHREDDING\nSTEP 1", fontSize: 8, alignment: "center"},
+                                    {text: "SHREDDING\nSTEP 2", fontSize: 8, alignment: "center"},
+                                    {text: "SEPARATION", fontSize: 8, alignment: "center"}
+                                ],
+                                [
+                                    {text: "type", fontSize: 8, alignment: "center"},
+                                    {text: waste_type, fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: this.app_input_prop.shredding_1.type, fontSize: 8, alignment: "center"},
+                                    {text: this.app_input_prop.shredding_2.type, fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.app_input_prop.separation.type), fontSize: 8, alignment: "center"}
+                                ],
+                                [
+                                    {text: "gwp", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.app_input_prop.transport.co2_equv_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.app_input_prop.shredding_1.co2_equv_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.app_input_prop.shredding_2.co2_equv_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.app_input_prop.separation.co2_equv_per_kg), fontSize: 8, alignment: "center"}
+                                ],
+                                [
+                                    {text: "cost", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.app_input_prop.transport.euro_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.app_input_prop.shredding_1.euro_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.app_input_prop.shredding_2.euro_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.app_input_prop.separation.euro_per_kg), fontSize: 8, alignment: "center"}
+                                ],
+                                [
+                                    {text: "mass loss (%)", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: this.app_input_prop.shredding_1.mass_loss_percent, fontSize: 8, alignment: "center"},
+                                    {text: this.app_input_prop.shredding_2.mass_loss_percent, fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"}
+                                ]
+                            ]
+                        }
+                    },
+                    {text: "", margin: [0, 0, 0, 20]}
+                )
 
-                // separation
-                s += "Separation type: " + this.app_input_prop.separation.type + "\n"
-                if(this.app_input_prop.separation.co2_equv_per_kg !== "") s += "Separation gwp: " + this.app_input_prop.separation.co2_equv_per_kg + "\n"
-                if(this.app_input_prop.separation.euro_per_kg !== "") s += "Separation cost: " + this.app_input_prop.separation.euro_per_kg + "\n"
-
-                // polymer
-                s += "Polymer thermo-type: " + this.app_input_prop.polymer.thermo_type + "\n"
-                s += "Polymer matrix-type: " + this.app_input_prop.polymer.matrix_type + "\n"
-                s += "Polymer fiber volume content percent: " + this.app_input_prop.polymer.fvc_percent + "\n"
-                s += "Polymer feedstock type: " + this.app_input_prop.polymer.feedstock_type + "\n"
-                s += "Polymer state of origin: " + this.app_input_prop.polymer.state_of_origin + "\n"
-                if(this.app_input_prop.polymer.co2_equv_per_kg !== "") s += "Polymer gwp: " + this.app_input_prop.polymer.co2_equv_per_kg + "\n"
-                if(this.app_input_prop.polymer.euro_per_kg !== "") s += "Polymer cost: " + this.app_input_prop.polymer.euro_per_kg + "\n"
-
-                // textile process
-                s += "Textile process type: " + this.app_input_prop.textile_process.type + "\n"
-                s += "Textile process mass loss percent: " + this.app_input_prop.textile_process.mass_loss_percent + "\n"
-                s += "Textile process throughput kg/h: " + this.app_input_prop.textile_process.throughput_kg_per_h + "\n"
-                s += "Textile process areal weight g/m²: " + this.app_input_prop.textile_process.areal_weight_g_per_sqm + "\n"
-                if(this.app_input_prop.textile_process.co2_equv_per_kg !== "") s += "Textile process gwp: " + this.app_input_prop.textile_process.co2_equv_per_kg + "\n"
-                if(this.app_input_prop.textile_process.euro_per_kg !== "") s += "Textile process cost: " + this.app_input_prop.textile_process.euro_per_kg + "\n"
-
-                // processing 1
-                s += "Processing step 1 type: " + this.app_input_prop.processing_1.type + "\n"
-                s += "Processing step 1 mass loss percent: " + this.app_input_prop.processing_1.mass_loss_percent + "\n"
-                s += "Processing step 1 wall thickness: " + this.app_input_prop.processing_1.wandstärke_mm + "\n"
-                if(this.app_input_prop.processing_1.co2_equv_per_kg !== "") s += "Processing step 1 gwp: " + this.app_input_prop.processing_1.co2_equv_per_kg + "\n"
-                if(this.app_input_prop.processing_1.euro_per_kg !== "") s += "Processing step 1 cost: " + this.app_input_prop.processing_1.euro_per_kg + "\n"
-
-                // processing 2
-                if(this.app_input_prop.processing_2.type !== "") {
-                    if(this.app_input_prop.processing_2.type !== "") s += "Processing step 2 type: " + this.app_input_prop.processing_2.type + "\n"
-                    if(this.app_input_prop.processing_2.mass_loss_percent !== "") s += "Processing step 2 mass loss percent: " + this.app_input_prop.processing_2.mass_loss_percent + "\n"
-                    if(this.app_input_prop.processing_2.wandstärke_mm !== "") s += "Processing step 2 wall thickness: " + this.app_input_prop.processing_2.wandstärke_mm + "\n"
-                    if(this.app_input_prop.processing_2.co2_equv_per_kg !== "") s += "Processing step 2 gwp: " + this.app_input_prop.processing_2.co2_equv_per_kg + "\n"
-                    if(this.app_input_prop.processing_2.euro_per_kg !== "") s += "Processing step 2 cost: " + this.app_input_prop.processing_2.euro_per_kg + "\n"
-                }
-
-                return s
+                // polymer, textile process, processing 1, processing 2
+                pdfContent.push(
+                    {
+                        layout: "lightHorizontalLines",
+                        table: {
+                            headerRows: 1,
+                            widths: ["*", "*", "*", "*", "*", "*"],
+                            body: [
+                                [
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "POLYMER", fontSize: 8, alignment: "center"},
+                                    {text: "TEXTILE\nPROCESS", fontSize: 8, alignment: "center"},
+                                    {text: "PROCESSING\nSTEP 1", fontSize: 8, alignment: "center"},
+                                    {text: "PROCESSING\nSTEP 2", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"}
+                                ],
+                                [
+                                    {text: "type", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: this.app_input_prop.textile_process.type, fontSize: 8, alignment: "center"},
+                                    {text: splitCamelCase(this.app_input_prop.processing_1.type), fontSize: 8, alignment: "center"},
+                                    {text: splitCamelCase(this.app_input_prop.processing_2.type), fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"}
+                                ],
+                                [
+                                    {text: "gwp", fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.app_input_prop.polymer.co2_equv_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.app_input_prop.textile_process.co2_equv_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.app_input_prop.processing_1.co2_equv_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.app_input_prop.processing_2.co2_equv_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"}
+                                ],
+                                [
+                                    {text: "cost", fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.app_input_prop.polymer.euro_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.app_input_prop.textile_process.euro_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.app_input_prop.processing_1.euro_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.app_input_prop.processing_2.euro_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"}
+                                ],
+                                [
+                                    {text: "mass loss (%)", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: this.app_input_prop.textile_process.mass_loss_percent, fontSize: 8, alignment: "center"},
+                                    {text: this.app_input_prop.processing_1.mass_loss_percent, fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.app_input_prop.processing_2.mass_loss_percent), fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"}
+                                ],
+                                [
+                                    {text: "thermo type", fontSize: 8, alignment: "center"},
+                                    {text: this.app_input_prop.polymer.thermo_type, fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"}
+                                ],
+                                [
+                                    {text: "matrix type", fontSize: 8, alignment: "center"},
+                                    {text: this.app_input_prop.polymer.matrix_type, fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"}
+                                ],
+                                [
+                                    {text: "fiber volume\ncontent (%)", fontSize: 8, alignment: "center"},
+                                    {text: this.app_input_prop.polymer.fvc_percent, fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"}
+                                ],
+                                [
+                                    {text: "feedstock type", fontSize: 8, alignment: "center"},
+                                    {text: this.app_input_prop.polymer.feedstock_type, fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"}
+                                ],
+                                [
+                                    {text: "state of origin", fontSize: 8, alignment: "center"},
+                                    {text: this.app_input_prop.polymer.state_of_origin, fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"}
+                                ],
+                                [
+                                    {text: "throughput\n(kg/h)", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: this.app_input_prop.textile_process.throughput_kg_per_h, fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"}
+                                ],
+                                [
+                                    {text: "areal weight\n(g/m²)", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: this.app_input_prop.textile_process.areal_weight_g_per_sqm, fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"}
+                                ],
+                                [
+                                    {text: "wall thickness", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"},
+                                    {text: this.app_input_prop.processing_1.wandstärke_mm, fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.app_input_prop.processing_2.wandstärke_mm), fontSize: 8, alignment: "center"},
+                                    {text: "", fontSize: 8, alignment: "center"}
+                                ]
+                            ]
+                        }
+                    },
+                    {text: "", pageBreak: "after"}
+                )
+            },
+            checkInputString(app_input_string) {
+                /**
+                 * Returns appropriate string if parameter-string is an empty-string.
+                 */
+                return app_input_string === "" ? "not defined" : app_input_string
             },
             addChartsToPdf(pdfContent) {
                 /**

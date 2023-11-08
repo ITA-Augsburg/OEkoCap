@@ -570,7 +570,7 @@ function createPieChart(id, title, labels, data, colors, unit, legendFontSize, p
         }]
     })
 }
-function splitCamelCase(camelString) {
+export function splitCamelCase(camelString) {
     /**
      * Takes a camel-case string and adds whitespaces before every uppercase character. An exception is the first character of the string.
      */
