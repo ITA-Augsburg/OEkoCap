@@ -323,24 +323,49 @@
                  * Creates sections for diagram-images in the pdf.
                  */
                 // let about = "About this chart"
-                // let description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat"
+                let description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat"
                 
                 // bar charts
                 pdfContent.push({
                     layout: "noBorders",
                     table: {
                         headerRows: 0,
-                        widths: ["*", "*"],
+                        widths: [180, "auto"],
                         body: [
                             [
-                                {image: this.data_urls_prop["pdf_gwp_chart_normal_font_chartImage"].image, fit: [220, 400], alignment: "center", margin: [0, 0, 0, 50]},
-                                {image: this.data_urls_prop["pdf_cost_chart_normal_font_legendImage"].image, fit: [220, 400], alignment: "center", margin: [0, 0, 0, 50]},
+                                {text: description, rowSpan: 2, fontSize: 10, alignment: "justify"},
+                                {image: this.data_urls_prop["gwp_bar_chart_chartImage"].image, fit: [200, 400], alignment: "center", margin: [0, 30, 0, 10]},
+                                // {image: this.data_urls_prop["cost_bar_chart_chartImage"].image, fit: [220, 400], alignment: "center", margin: [0, 30, 0, 10]},
                             ],
+                            [
+                                {},
+                                {image: this.data_urls_prop["gwp_bar_chart_legendImage"].image, fit: [360, 400], alignment: "center", margin: [0, 0, 0, 20]},
+                                // {image: this.data_urls_prop["cost_bar_chart_legendImage"].image, fit: [360, 400], alignment: "center", margin: [0, 0, 0, 20]},
+                            ]
                         ],
                     }
+                    
                 })
-                // pdfContent.push({text: about, alignment: "justify", margin: [0, 10, 0, 10]})
-                // pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0]})
+                pdfContent.push({
+                    layout: "noBorders",
+                    table: {
+                        headerRows: 0,
+                        widths: [180, "auto"],
+                        body: [
+                            [
+                                {text: description, rowSpan: 2, fontSize: 10, alignment: "justify"},
+                                // {image: this.data_urls_prop["gwp_bar_chart_chartImage"].image, fit: [200, 400], alignment: "center", margin: [0, 30, 0, 10]},
+                                {image: this.data_urls_prop["cost_bar_chart_chartImage"].image, fit: [220, 400], alignment: "center", margin: [0, 30, 0, 10]},
+                            ],
+                            [
+                                {},
+                                // {image: this.data_urls_prop["gwp_bar_chart_legendImage"].image, fit: [360, 400], alignment: "center", margin: [0, 0, 0, 20]},
+                                {image: this.data_urls_prop["cost_bar_chart_legendImage"].image, fit: [360, 400], alignment: "center", margin: [0, 0, 0, 20]},
+                            ]
+                        ],
+                    }
+                    
+                })
 
                 // pie charts next to each other
                 // pie charts might not exist depending on the output from recycling.exe

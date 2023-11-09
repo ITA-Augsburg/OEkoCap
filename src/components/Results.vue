@@ -59,6 +59,7 @@ import { createCharts } from "../results_charts_functions.js"
         v-on:update:model-value='handleUI("benchmark_select")' />
 
         <div id="gwp_or_cost_charts" />
+        <br><br>
 
         <div id="gwp_or_cost_per_process_charts" />
 
@@ -298,16 +299,24 @@ import { createCharts } from "../results_charts_functions.js"
                 // unhide chart according to button- and select-states, viewport-width
                 // bar-chart
                 if(this.selected_benchmark === undefined) {
-                    this.wideWindow ?
-                        this.unhideElement(this.charts[chartCategory][chartName].normal_font) :
+                    if(this.wideWindow) {
+                        this.unhideElement(this.charts[chartCategory][chartName].normal_font)
+                        this.unhideElement(this.charts[chartCategory][chartName].normal_font + "_legend_container")
+                    } else {
                         this.unhideElement(this.charts[chartCategory][chartName].small_font)
+                        this.unhideElement(this.charts[chartCategory][chartName].small_font + "_legend_container")
+                    }
                 } else {
                     for(let key in this.benchmarks) {
                         if(this.selected_benchmark === this.benchmarks[key].name) {
                             let benchmarkName = key.replaceAll(" ", "_")
-                            this.wideWindow ?
-                                this.unhideElement(this.charts[chartCategory][chartNamefragment + benchmarkName + "_chart"].normal_font) :
+                            if(this.wideWindow) {
+                                this.unhideElement(this.charts[chartCategory][chartNamefragment + benchmarkName + "_chart"].normal_font)
+                                this.unhideElement(this.charts[chartCategory][chartNamefragment + benchmarkName + "_chart"].normal_font + "_legend_container")
+                            } else {
                                 this.unhideElement(this.charts[chartCategory][chartNamefragment + benchmarkName + "_chart"].small_font)
+                                this.unhideElement(this.charts[chartCategory][chartNamefragment + benchmarkName + "_chart"].small_font + "_legend_container")
+                            }
                         }
                     }
                 }
@@ -402,11 +411,15 @@ import { createCharts } from "../results_charts_functions.js"
                 //     images.push({type: "bar", name: key, image: selectedChart.toDataURL()})
                 // }
 
-                // gwp and cost bar-charts with output and every benchmark
+                // gwp and cost bar-charts with output and every benchmark + custom-legend
                 let pdf_gwp_barchart = document.getElementById("pdf_gwp_chart_normal_font")
+                let pdf_gwp_barchart_legend = document.getElementById("pdf_gwp_chart_normal_font_legend_container")
                 let pdf_cost_barchart = document.getElementById("pdf_cost_chart_normal_font")
-                images["pdf_gwp_chart_normal_font_chartImage"] = {type: "bar", image: pdf_gwp_barchart.toDataURL()}
-                images["pdf_cost_chart_normal_font_legendImage"] = {type: "bar", image: pdf_cost_barchart.toDataURL()}
+                let pdf_cost_barchart_legend = document.getElementById("pdf_cost_chart_normal_font_legend_container")
+                this.htmlElementToCanvas(pdf_gwp_barchart, pdf_gwp_barchart_legend, "gwp_bar_chart", "bar", images)
+                this.htmlElementToCanvas(pdf_cost_barchart, pdf_cost_barchart_legend, "cost_bar_chart", "bar", images)
+                // images["pdf_gwp_chart_normal_font_chartImage"] = {type: "bar", image: pdf_gwp_barchart.toDataURL()}
+                // images["pdf_cost_chart_normal_font_legendImage"] = {type: "bar", image: pdf_cost_barchart.toDataURL()}
                 
                 // max_gwp_per_process_charts max_gwp_of_each_output_process_chart + custom-legend
                 // pie-chart might not exist, depending on the recycling.exe output

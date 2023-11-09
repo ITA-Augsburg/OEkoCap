@@ -129,7 +129,7 @@ export function createCharts(output, benchmarks) {
     }
     // addBarCharts(charts, category, name, title, barChartBenchmarkLabels, data, unit, parentId)
     createCanvasElement(name + "_normal_font", "pdf_bar_chart", "charts_for_pdf")
-    createBarChart(name + "_normal_font", title, barChartBenchmarkLabels, data, unit, 15)
+    createBarChart(name + "_normal_font", title, barChartBenchmarkLabels, data, unit, 20, parentId)
     charts.pdf_gwp_cost_charts[name] = {}
     charts.pdf_gwp_cost_charts[name]["normal_font"] = name + "_normal_font"
     name = undefined
@@ -154,7 +154,7 @@ export function createCharts(output, benchmarks) {
     }
     // addBarCharts(charts, category, name, title, barChartBenchmarkLabels, data, unit, parentId)
     createCanvasElement(name + "_normal_font", "pdf_bar_chart", "charts_for_pdf")
-    createBarChart(name + "_normal_font", title, barChartBenchmarkLabels, data, unit, 15)
+    createBarChart(name + "_normal_font", title, barChartBenchmarkLabels, data, unit, 20, parentId)
     charts.pdf_gwp_cost_charts[name] = {}
     charts.pdf_gwp_cost_charts[name]["normal_font"] = name + "_normal_font"
     name = undefined
@@ -285,7 +285,7 @@ function createCanvasElement(id, className, parentId) {
     // console.log(myCanvas)
     return newCanvas
 }
-function createBarChart(id, title, benchmarkLabels, data, unit, legendFontSize) {
+function createBarChart(id, title, benchmarkLabels, data, unit, legendFontSize, parentId) {
     /**
      * Creates a Chart.js bar-chart with a legend.
      * The green column always represents the output data.
@@ -376,62 +376,161 @@ function createBarChart(id, title, benchmarkLabels, data, unit, legendFontSize) 
                 },
                 legend: {
                     // maxWidth: 700,
-                    position: "bottom",
-                    labels: {
-                        font: {
-                            size: benchmarkLabels.length <= 2
-                                ? legendFontSize
-                                : 35
-                        },
-                        boxWidth: benchmarkLabels.length <= 2
-                            ? 25
-                            : 40,
-                        boxHeight: benchmarkLabels.length <= 2
-                            ? 25
-                            : 40,
-                        generateLabels: (chart) => {
-                            if(data[0][0] === undefined && data[1][0] === undefined) {
-                                return
-                            } else if(data[0][0] === undefined) {
-                                let localLabel = chart.data.labels[1]
-                                if(chart.data.labels[1] === "Glasfiber-Fabric + Epoxy (Resin Transfer Molding)") {
-                                    localLabel = "Glasfiber-Fabric + Epoxy (RTM)"
-                                } else if(chart.data.labels[1] === "Glasfiber-Fabric + Epoxy (Wet Compression Molding)") {
-                                    localLabel = "Glasfiber-Fabric + Epoxy (WCM)"
-                                }
-                                return [{
-                                    text: localLabel + " range: [" + data[1][0] + ", " + data[1][1] + "] " + unit,
-                                    strokeStyle: chart.data.datasets[0].borderColor[1],
-                                    fillStyle: chart.data.datasets[0].backgroundColor[1]
-                                }]
-                            } else if(data[1][0] === undefined) {
-                                return [{
-                                    text: chart.data.labels[0] + " range: [" + data[0][0] + ", " + data[0][1] + "] " + unit,
-                                    strokeStyle: chart.data.datasets[0].borderColor[0],
-                                    fillStyle: chart.data.datasets[0].backgroundColor[0]
-                                }]
-                            }
-                            return chart.data.labels.map((label, index) => {
-                                let localLabel = label
-                                if(label === "Glasfiber-Fabric + Epoxy (Resin Transfer Molding)") {
-                                    localLabel = "Glasfiber-Fabric + Epoxy (RTM)"
-                                } else if(label === "Glasfiber-Fabric + Epoxy (Wet Compression Molding)") {
-                                    localLabel = "Glasfiber-Fabric + Epoxy (WCM)"
-                                }
-                                return {
-                                    text: localLabel + " range: [" + data[index][0] + ", " + data[index][1] + "] " + unit,
-                                    strokeStyle: chart.data.datasets[0].borderColor[index],
-                                    fillStyle: chart.data.datasets[0].backgroundColor[index]
-                                }
-                            })
-                        }
-                    }
+                    display: false
+                    // position: "bottom",
+                    // labels: {
+                    //     font: {
+                    //         size: benchmarkLabels.length <= 2
+                    //             ? legendFontSize
+                    //             : 35
+                    //     },
+                    //     boxWidth: benchmarkLabels.length <= 2
+                    //         ? 25
+                    //         : 40,
+                    //     boxHeight: benchmarkLabels.length <= 2
+                    //         ? 25
+                    //         : 40,
+                    //     generateLabels: (chart) => {
+                    //         if(data[0][0] === undefined && data[1][0] === undefined) {
+                    //             return
+                    //         } else if(data[0][0] === undefined) {
+                    //             let localLabel = chart.data.labels[1]
+                    //             if(chart.data.labels[1] === "Glasfiber-Fabric + Epoxy (Resin Transfer Molding)") {
+                    //                 localLabel = "Glasfiber-Fabric + Epoxy (RTM)"
+                    //             } else if(chart.data.labels[1] === "Glasfiber-Fabric + Epoxy (Wet Compression Molding)") {
+                    //                 localLabel = "Glasfiber-Fabric + Epoxy (WCM)"
+                    //             }
+                    //             return [{
+                    //                 text: localLabel + " range: [" + data[1][0] + ", " + data[1][1] + "] " + unit,
+                    //                 strokeStyle: chart.data.datasets[0].borderColor[1],
+                    //                 fillStyle: chart.data.datasets[0].backgroundColor[1]
+                    //             }]
+                    //         } else if(data[1][0] === undefined) {
+                    //             return [{
+                    //                 text: chart.data.labels[0] + " range: [" + data[0][0] + ", " + data[0][1] + "] " + unit,
+                    //                 strokeStyle: chart.data.datasets[0].borderColor[0],
+                    //                 fillStyle: chart.data.datasets[0].backgroundColor[0]
+                    //             }]
+                    //         }
+                    //         return chart.data.labels.map((label, index) => {
+                    //             let localLabel = label
+                    //             if(label === "Glasfiber-Fabric + Epoxy (Resin Transfer Molding)") {
+                    //                 localLabel = "Glasfiber-Fabric + Epoxy (RTM)"
+                    //             } else if(label === "Glasfiber-Fabric + Epoxy (Wet Compression Molding)") {
+                    //                 localLabel = "Glasfiber-Fabric + Epoxy (WCM)"
+                    //             }
+                    //             return {
+                    //                 text: localLabel + " range: [" + data[index][0] + ", " + data[index][1] + "] " + unit,
+                    //                 strokeStyle: chart.data.datasets[0].borderColor[index],
+                    //                 fillStyle: chart.data.datasets[0].backgroundColor[index]
+                    //             }
+                    //         })
+                    //     }
+                    // }
                 },
                 tooltip: {
                     enabled: false
                 }
             }
-        }
+        },
+        // Creating legend here to separate it from the chart itself. If not decoupled then chart size depends on the size of the legend (more legend items = smaller chart)
+        plugins: [{
+            beforeInit: function(chart) {
+                if(chart.canvas.id === id) {
+                    let legendId = id + "_legend"
+                    //create legend-container
+                    const legendContainer = document.createElement("div")
+                    legendContainer.id = legendId + "_container"
+                    legendContainer.classList.add("custom_legend_container")
+                    legendContainer.classList.add("hidden_chart")
+                    legendContainer.innerHTML =
+                    `
+                    <div id=${legendId} style="width: fit-content;"></div>
+                    `
+                    // append legend-conainer after the corresponding charts canvas element
+                    document.getElementById(parentId).appendChild(legendContainer)
+
+                    const customLegend = document.getElementById(legendId)
+                    customLegend.innerHTML = ``
+
+                    if(data[0][0] === undefined && data[1][0] === undefined) {
+                        // if results values and benchmark values are missing, legend doesnt contain any elements
+                        return
+                    } else if(data[0][0] === undefined) {
+                        // if results values are missing, legend only contains a message and benchmark
+                        let localLabel = chart.data.labels[1]
+                        // if(chart.data.labels[1] === "Glasfiber-Fabric + Epoxy (Resin Transfer Molding)") {
+                        //     localLabel = "Glasfiber-Fabric + Epoxy (RTM)"
+                        // } else if(chart.data.labels[1] === "Glasfiber-Fabric + Epoxy (Wet Compression Molding)") {
+                        //     localLabel = "Glasfiber-Fabric + Epoxy (WCM)"
+                        // }
+                        customLegend.innerHTML += 
+                        `
+                            <div style="font-size: 18px;">
+                                Result: missing data
+                            </div>
+                            <div style="font-size: 18px;">
+                                ${localLabel}
+                            </div>
+                            <div style="display: flex; width: fit-content">
+                                <div style="width: 30px; height: 30px; background-color: ${chart.data.datasets[0].backgroundColor[1]}; border: 1px solid black;"></div>
+                                <div style="font-size: ${legendFontSize}px; margin-left: 10px; margin-top: 'auto' margin-bottom: 'auto'">
+                                    ${"range: [" + data[1][0] + ", " + data[1][1] + "] " + unit}
+                                </div>
+                            </div>
+                        `
+                        return
+                    } else if(data[1][0] === undefined) {
+                        // if benchmark values are missing, legend ony contains result
+                        customLegend.innerHTML += 
+                        `
+                            <div style="font-size: 18px;">
+                                ${chart.data.labels[0]}
+                            </div>
+                            <div style="display: flex; width: fit-content">
+                                <div style="width: 30px; height: 30px; background-color: ${chart.data.datasets[0].backgroundColor[0]}; border: 1px solid black;"></div>
+                                <div style="font-size: ${legendFontSize}px; margin-left: 10px; margin-top: 'auto' margin-bottom: 'auto'">
+                                    ${"range: [" + data[0][0] + ", " + data[0][1] + "] " + unit}
+                                </div>
+                            </div>
+                        `
+                        return
+                    }
+                    // if result and benchmark values both present, legend contains both
+
+                    // in pdf chart if result is missing
+                    if(chart.data.labels[0] !== "Result") {
+                        customLegend.innerHTML +=
+                        `
+                            <div style="font-size: 18px;">
+                                Result: missing data
+                            </div>
+                        `
+                    }
+                    chart.data.labels.forEach((label, i) => {
+                        let localLabel = label
+                        // if(label === "Glasfiber-Fabric + Epoxy (Resin Transfer Molding)") {
+                        //     localLabel = "Glasfiber-Fabric + Epoxy (RTM)"
+                        // } else if(label === "Glasfiber-Fabric + Epoxy (Wet Compression Molding)") {
+                        //     localLabel = "Glasfiber-Fabric + Epoxy (WCM)"
+                        // }
+                        customLegend.innerHTML += 
+                        `
+                            <div style="font-size: 18px;">
+                                ${localLabel}
+                            </div>
+                            <div style="display: flex; width: fit-content">
+                                <div style="width: 30px; height: 30px; background-color: ${chart.data.datasets[0].backgroundColor[i]}; border: 1px solid black;"></div>
+                                <div style="font-size: ${legendFontSize}px; margin-left: 10px; margin-top: 'auto' margin-bottom: 'auto'">
+                                    ${"range: [" + data[i][0] + ", " + data[i][1] + "] " + unit}
+                                </div>
+                            </div>
+                        `
+                    })
+                    return
+                }
+            }
+        }]
     })
 }
 function addBarCharts(chartsObj, category, name, title, benchmarkLabels, data, unit, parentId) {
@@ -444,11 +543,11 @@ function addBarCharts(chartsObj, category, name, title, benchmarkLabels, data, u
     chartsObj[category][name]["normal_font"] = {}
     // create canvases and charts, save their id
     createCanvasElement((name + "_small_font"), "bar_chart", parentId)
-    createBarChart((name + "_small_font"), title, benchmarkLabels, data, unit, 12)
+    createBarChart((name + "_small_font"), title, benchmarkLabels, data, unit, 20, parentId) // change legendFontSize parameter here, if legend element text should be smaller
     chartsObj[category][name]["small_font"] = name + "_small_font"
 
     createCanvasElement((name + "_normal_font"), "bar_chart", parentId)
-    createBarChart((name + "_normal_font"), title, benchmarkLabels, data, unit, 15)
+    createBarChart((name + "_normal_font"), title, benchmarkLabels, data, unit, 20, parentId)
     chartsObj[category][name]["normal_font"] = name + "_normal_font"
 }
 function checkBarChartData(data) {
