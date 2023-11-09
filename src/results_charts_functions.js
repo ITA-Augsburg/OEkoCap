@@ -175,10 +175,14 @@ export function createCharts(output, benchmarks) {
     pieChartColors = []
     let processesGwpOk = true
     let processesCostOk = true
+    // if there is a missing value in one of the piecharts then that piechart cannot be built
     output.processes.forEach((process) => {
         if(process.minGWPValue === null || process.maxGWPValue === null) processesGwpOk = false
         if(process.minCostPerKg === null || process.maxCostPerKg === null) processesCostOk = false
     })
+    if(output.materials.minGWPValue === null || output.materials.maxGWPValue === null) processesGwpOk = false
+    if(output.materials.minCostPerKg === null || output.materials.maxCostPerKg === null) processesCostOk = false
+    // all gwp values present, build gwp-piechart
     if(processesGwpOk) {
         let counter = 0
         output.processes.forEach((process) => {
@@ -186,9 +190,15 @@ export function createCharts(output, benchmarks) {
             pieChartLabels.push(process.name)
             let dataPoint = (process.maxGWPValue + process.minGWPValue) / 2
             data.push(Math.round(dataPoint * 100) / 100)
-            pieChartColors.push(randomColor(counter, 1, output.processes.length, "pie"))
+            pieChartColors.push(randomColor(counter, 1, output.processes.length+1, "pie")) // numberOfElements+1 because after this forEach one more element is added
             counter++
         })
+        // add material portion
+        pieChartLabels.push(output.materials.matrix)
+        let dataPoint = (output.materials.maxGWPValue + output.materials.minGWPValue) / 2
+        data.push(Math.round(dataPoint * 100) / 100)
+        pieChartColors.push(randomColor(counter, 1, output.processes.length+1, "pie"))
+        counter++
         addPieCharts(charts, category, name, title, pieChartLabels, data, pieChartColors, unit, parentId)
     }
     name = undefined
@@ -208,6 +218,7 @@ export function createCharts(output, benchmarks) {
     pieChartLabels = []
     data = []
     pieChartColors = []
+    // all cost values present, build cost-piechart
     if(processesCostOk) {
         let counter = 0
         output.processes.forEach((process) => {
@@ -215,9 +226,15 @@ export function createCharts(output, benchmarks) {
             pieChartLabels.push(process.name)
             let dataPoint = (process.minCostPerKg + process.maxCostPerKg) / 2
             data.push(Math.round(dataPoint * 100) / 100)
-            pieChartColors.push(randomColor(counter, 1, output.processes.length, "pie"))
+            pieChartColors.push(randomColor(counter, 1, output.processes.length+1, "pie")) // numberOfElements+1 because after this forEach one more element is added
             counter++
         })
+        // add material portion
+        pieChartLabels.push(output.materials.matrix)
+        let dataPoint = (output.materials.minCostPerKg + output.materials.maxCostPerKg) / 2
+        data.push(Math.round(dataPoint * 100) / 100)
+        pieChartColors.push(randomColor(counter, 1, output.processes.length+1, "pie"))
+        counter++
         addPieCharts(charts, category, name, title, pieChartLabels, data, pieChartColors, unit, parentId)
     }
     name = undefined
