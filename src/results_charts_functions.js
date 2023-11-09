@@ -605,12 +605,14 @@ export function splitCamelCase(camelString) {
     let charArray = camelString.split("")
     let upperCaseIndexes = []
     let whitespaceString = camelString
-    for(let i=charArray.length-1; i>0; i--) { // index 0 (the first char in the string) should not be included
+    for(let i=charArray.length-1; i>=0; i--) { // add the position of every uppercase character, but in reverse order
         if(charArray[i] === charArray[i].toUpperCase()) {
             upperCaseIndexes.push(i)
         }
     }
-    for(let i=0; i<upperCaseIndexes.length; i++) {
+    // console.log(upperCaseIndexes)
+    for(let i=0; i<upperCaseIndexes.length-1; i++) { // length-1 because no whitespace should be added before the first character
+        if(upperCaseIndexes[i] === upperCaseIndexes[i+1] + 1) continue // if two uppercase characters next to each other then dont add whtespace
         let leftSlice = whitespaceString.slice(0, upperCaseIndexes[i])
         let rightSlice = whitespaceString.slice(upperCaseIndexes[i])
         whitespaceString = leftSlice + " " + rightSlice

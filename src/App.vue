@@ -134,68 +134,6 @@ export default {
         "co2_equv_per_kg": undefined
       }
     }
-
-    // this is only for testing pdf input depiction
-    // app_input: {
-    //   "waste": {
-    //     "type": "EoL",
-    //     "quantity_to": 1,
-    //     "size_bigger_1dot5_m": false,
-    //     "fmc_percent": 60
-    //   },
-    //   "transport": {
-    //     "euro_per_kg": 1,
-    //     "co2_equv_per_kg": ""
-    //   },
-    //   "shredding_1": {
-    //     "type": "Fine",
-    //     "mass_loss_percent": 5,
-    //     "euro_per_kg": "",
-    //     "co2_equv_per_kg": 1
-    //   },
-    //   "shredding_2": {
-    //     "type": "",
-    //     "mass_loss_percent": "",
-    //     "euro_per_kg": "",
-    //     "co2_equv_per_kg": ""
-    //   },
-    //   "separation": {
-    //     "type": "Pyrolyse",
-    //     "euro_per_kg": 1,
-    //     "co2_equv_per_kg": ""
-    //   },
-    //   "polymer": {
-    //     "thermo_type": "Thermoplast",
-    //     "matrix_type": "PP",
-    //     "fvc_percent": 30,
-    //     "feedstock_type": "biodegredable",
-    //     "state_of_origin": "virgin",
-    //     "euro_per_kg": "",
-    //     "co2_equv_per_kg": 1
-    //   },
-    //   "textile_process": {
-    //     "type": "Carding",
-    //     "mass_loss_percent": 15,
-    //     "throughput_kg_per_h": 20,
-    //     "areal_weight_g_per_sqm": 250,
-    //     "co2_equv_per_kg": 1,
-    //     "euro_per_kg": 1
-    //   },
-    //   "processing_1": {
-    //     "type": "DoubleBeltPressingWithPowder",
-    //     "mass_loss_percent": 20,
-    //     "wandstärke_mm": 0.5,
-    //     "euro_per_kg": 1,
-    //     "co2_equv_per_kg": ""
-    //   },
-    //   "processing_2": {
-    //     "type": "IRCompressionMoulding",
-    //     "mass_loss_percent": 10,
-    //     "wandstärke_mm": 0.5,
-    //     "euro_per_kg": "",
-    //     "co2_equv_per_kg": ""
-    //   }
-    // }
   }),
   methods: {
     cookiePolicy() {

@@ -1,6 +1,7 @@
 <script setup>
     import Copyright_text from "./Copyright_text.vue"
     import { splitCamelCase } from "../results_charts_functions"
+    import benchmarks from "../process_benchmarks.json"
     import pdfMake from "pdfmake/build/pdfmake"
     import pdfFonts from "pdfmake/build/vfs_fonts"
     pdfMake.vfs = pdfFonts.pdfMake.vfs
@@ -43,8 +44,16 @@
             // setTimeout(() => {
             //     console.log(this.data_urls_prop)
             // }, 5000);
+            this.actual_input = this.app_input_prop
+
+            // comment this in for testing the pdf
+            // this.actual_input = this.test_input
         },
         data: () => ({
+            actual_input: undefined,
+
+            // this is only for testing pdf input visualisation
+            test_input: benchmarks.test_input
         }),
         methods: {
             handlePdfButton() {
@@ -127,7 +136,7 @@
                  * Creates a section listing the inputs.
                  */
 
-                let waste_type = this.app_input_prop.waste.type === "EoL" ? "End of Life" : this.app_input_prop.waste.type
+                let waste_type = this.actual_input.waste.type === "EoL" ? "End of Life" : this.actual_input.waste.type
 
                 pdfContent.push({text: "Inputs", fontSize: 14, alignment: "center", bold: true, margin: [0, 0, 0, 20]})
 
@@ -151,32 +160,32 @@
                                     {text: "type", fontSize: 8, alignment: "center"},
                                     {text: waste_type, fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
-                                    {text: this.app_input_prop.shredding_1.type, fontSize: 8, alignment: "center"},
-                                    {text: this.app_input_prop.shredding_2.type, fontSize: 8, alignment: "center"},
-                                    {text: this.checkInputString(this.app_input_prop.separation.type), fontSize: 8, alignment: "center"}
+                                    {text: this.actual_input.shredding_1.type, fontSize: 8, alignment: "center"},
+                                    {text: this.actual_input.shredding_2.type, fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.actual_input.separation.type), fontSize: 8, alignment: "center"}
                                 ],
                                 [
                                     {text: "gwp", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
-                                    {text: this.checkInputString(this.app_input_prop.transport.co2_equv_per_kg), fontSize: 8, alignment: "center"},
-                                    {text: this.checkInputString(this.app_input_prop.shredding_1.co2_equv_per_kg), fontSize: 8, alignment: "center"},
-                                    {text: this.checkInputString(this.app_input_prop.shredding_2.co2_equv_per_kg), fontSize: 8, alignment: "center"},
-                                    {text: this.checkInputString(this.app_input_prop.separation.co2_equv_per_kg), fontSize: 8, alignment: "center"}
+                                    {text: this.checkInputString(this.actual_input.transport.co2_equv_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.actual_input.shredding_1.co2_equv_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.actual_input.shredding_2.co2_equv_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.actual_input.separation.co2_equv_per_kg), fontSize: 8, alignment: "center"}
                                 ],
                                 [
                                     {text: "cost", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
-                                    {text: this.checkInputString(this.app_input_prop.transport.euro_per_kg), fontSize: 8, alignment: "center"},
-                                    {text: this.checkInputString(this.app_input_prop.shredding_1.euro_per_kg), fontSize: 8, alignment: "center"},
-                                    {text: this.checkInputString(this.app_input_prop.shredding_2.euro_per_kg), fontSize: 8, alignment: "center"},
-                                    {text: this.checkInputString(this.app_input_prop.separation.euro_per_kg), fontSize: 8, alignment: "center"}
+                                    {text: this.checkInputString(this.actual_input.transport.euro_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.actual_input.shredding_1.euro_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.actual_input.shredding_2.euro_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.actual_input.separation.euro_per_kg), fontSize: 8, alignment: "center"}
                                 ],
                                 [
                                     {text: "mass loss (%)", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
-                                    {text: this.app_input_prop.shredding_1.mass_loss_percent, fontSize: 8, alignment: "center"},
-                                    {text: this.app_input_prop.shredding_2.mass_loss_percent, fontSize: 8, alignment: "center"},
+                                    {text: this.actual_input.shredding_1.mass_loss_percent, fontSize: 8, alignment: "center"},
+                                    {text: this.actual_input.shredding_2.mass_loss_percent, fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"}
                                 ]
                             ]
@@ -204,38 +213,38 @@
                                 [
                                     {text: "type", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
-                                    {text: this.app_input_prop.textile_process.type, fontSize: 8, alignment: "center"},
-                                    {text: splitCamelCase(this.app_input_prop.processing_1.type), fontSize: 8, alignment: "center"},
-                                    {text: splitCamelCase(this.app_input_prop.processing_2.type), fontSize: 8, alignment: "center"},
+                                    {text: this.actual_input.textile_process.type, fontSize: 8, alignment: "center"},
+                                    {text: splitCamelCase(this.actual_input.processing_1.type), fontSize: 8, alignment: "center"},
+                                    {text: splitCamelCase(this.actual_input.processing_2.type), fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"}
                                 ],
                                 [
                                     {text: "gwp", fontSize: 8, alignment: "center"},
-                                    {text: this.checkInputString(this.app_input_prop.polymer.co2_equv_per_kg), fontSize: 8, alignment: "center"},
-                                    {text: this.checkInputString(this.app_input_prop.textile_process.co2_equv_per_kg), fontSize: 8, alignment: "center"},
-                                    {text: this.checkInputString(this.app_input_prop.processing_1.co2_equv_per_kg), fontSize: 8, alignment: "center"},
-                                    {text: this.checkInputString(this.app_input_prop.processing_2.co2_equv_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.actual_input.polymer.co2_equv_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.actual_input.textile_process.co2_equv_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.actual_input.processing_1.co2_equv_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.actual_input.processing_2.co2_equv_per_kg), fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"}
                                 ],
                                 [
                                     {text: "cost", fontSize: 8, alignment: "center"},
-                                    {text: this.checkInputString(this.app_input_prop.polymer.euro_per_kg), fontSize: 8, alignment: "center"},
-                                    {text: this.checkInputString(this.app_input_prop.textile_process.euro_per_kg), fontSize: 8, alignment: "center"},
-                                    {text: this.checkInputString(this.app_input_prop.processing_1.euro_per_kg), fontSize: 8, alignment: "center"},
-                                    {text: this.checkInputString(this.app_input_prop.processing_2.euro_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.actual_input.polymer.euro_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.actual_input.textile_process.euro_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.actual_input.processing_1.euro_per_kg), fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.actual_input.processing_2.euro_per_kg), fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"}
                                 ],
                                 [
                                     {text: "mass loss (%)", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
-                                    {text: this.app_input_prop.textile_process.mass_loss_percent, fontSize: 8, alignment: "center"},
-                                    {text: this.app_input_prop.processing_1.mass_loss_percent, fontSize: 8, alignment: "center"},
-                                    {text: this.checkInputString(this.app_input_prop.processing_2.mass_loss_percent), fontSize: 8, alignment: "center"},
+                                    {text: this.actual_input.textile_process.mass_loss_percent, fontSize: 8, alignment: "center"},
+                                    {text: this.actual_input.processing_1.mass_loss_percent, fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.actual_input.processing_2.mass_loss_percent), fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"}
                                 ],
                                 [
                                     {text: "thermo type", fontSize: 8, alignment: "center"},
-                                    {text: this.app_input_prop.polymer.thermo_type, fontSize: 8, alignment: "center"},
+                                    {text: this.actual_input.polymer.thermo_type, fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
@@ -243,7 +252,7 @@
                                 ],
                                 [
                                     {text: "matrix type", fontSize: 8, alignment: "center"},
-                                    {text: this.app_input_prop.polymer.matrix_type, fontSize: 8, alignment: "center"},
+                                    {text: this.actual_input.polymer.matrix_type, fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
@@ -251,7 +260,7 @@
                                 ],
                                 [
                                     {text: "fiber volume\ncontent (%)", fontSize: 8, alignment: "center"},
-                                    {text: this.app_input_prop.polymer.fvc_percent, fontSize: 8, alignment: "center"},
+                                    {text: this.actual_input.polymer.fvc_percent, fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
@@ -259,7 +268,7 @@
                                 ],
                                 [
                                     {text: "feedstock type", fontSize: 8, alignment: "center"},
-                                    {text: this.app_input_prop.polymer.feedstock_type, fontSize: 8, alignment: "center"},
+                                    {text: this.actual_input.polymer.feedstock_type, fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
@@ -267,7 +276,7 @@
                                 ],
                                 [
                                     {text: "state of origin", fontSize: 8, alignment: "center"},
-                                    {text: this.app_input_prop.polymer.state_of_origin, fontSize: 8, alignment: "center"},
+                                    {text: this.actual_input.polymer.state_of_origin, fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
@@ -276,7 +285,7 @@
                                 [
                                     {text: "throughput\n(kg/h)", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
-                                    {text: this.app_input_prop.textile_process.throughput_kg_per_h, fontSize: 8, alignment: "center"},
+                                    {text: this.actual_input.textile_process.throughput_kg_per_h, fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"}
@@ -284,7 +293,7 @@
                                 [
                                     {text: "areal weight\n(g/m²)", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
-                                    {text: this.app_input_prop.textile_process.areal_weight_g_per_sqm, fontSize: 8, alignment: "center"},
+                                    {text: this.actual_input.textile_process.areal_weight_g_per_sqm, fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"}
@@ -293,8 +302,8 @@
                                     {text: "wall thickness", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"},
-                                    {text: this.app_input_prop.processing_1.wandstärke_mm, fontSize: 8, alignment: "center"},
-                                    {text: this.checkInputString(this.app_input_prop.processing_2.wandstärke_mm), fontSize: 8, alignment: "center"},
+                                    {text: this.actual_input.processing_1.wandstärke_mm, fontSize: 8, alignment: "center"},
+                                    {text: this.checkInputString(this.actual_input.processing_2.wandstärke_mm), fontSize: 8, alignment: "center"},
                                     {text: "", fontSize: 8, alignment: "center"}
                                 ]
                             ]

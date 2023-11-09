@@ -1,4 +1,64 @@
 {
+    "test_input": {
+        "waste": {
+            "type": "EoL",
+            "quantity_to": 1,
+            "size_bigger_1dot5_m": false,
+            "fmc_percent": 60
+        },
+        "transport": {
+            "euro_per_kg": 1,
+            "co2_equv_per_kg": ""
+        },
+        "shredding_1": {
+            "type": "Fine",
+            "mass_loss_percent": 5,
+            "euro_per_kg": "",
+            "co2_equv_per_kg": 1
+        },
+        "shredding_2": {
+            "type": "",
+            "mass_loss_percent": "",
+            "euro_per_kg": "",
+            "co2_equv_per_kg": ""
+        },
+        "separation": {
+            "type": "Pyrolyse",
+            "euro_per_kg": 1,
+            "co2_equv_per_kg": ""
+        },
+        "polymer": {
+            "thermo_type": "Thermoplast",
+            "matrix_type": "PP",
+            "fvc_percent": 30,
+            "feedstock_type": "fossilbased",
+            "state_of_origin": "virgin",
+            "euro_per_kg": "",
+            "co2_equv_per_kg": 1
+        },
+        "textile_process": {
+            "type": "Carding",
+            "mass_loss_percent": 15,
+            "throughput_kg_per_h": 20,
+            "areal_weight_g_per_sqm": 250,
+            "co2_equv_per_kg": 1,
+            "euro_per_kg": 1
+        },
+        "processing_1": {
+            "type": "DoubleBeltPressingWithPowder",
+            "mass_loss_percent": 20,
+            "wandstärke_mm": 0.5,
+            "euro_per_kg": 1,
+            "co2_equv_per_kg": ""
+        },
+        "processing_2": {
+            "type": "IRCompressionMoulding",
+            "mass_loss_percent": 10,
+            "wandstärke_mm": 0.5,
+            "euro_per_kg": "",
+            "co2_equv_per_kg": ""
+        }
+    },
     "test_output_1": {"gwp":{"minValue":12.97050278228259,"maxValue":23.82102786696809},"processes":[{"maxCostPerKg":55.5,"maxGWPValue":12.0868,"maxCostTotalInEur":47370.776249999995,"minGWPValue":5.2753,"name":"ResinTransferMoulding","minCostPerKg":46.57142857142857,"position":4,"minCostTotalInEur":39749.994999999995},{"maxCostPerKg":5.008625966943069,"maxGWPValue":0.817002,"maxCostTotalInEur":4275.0,"minGWPValue":0.817002,"name":"Carding","minCostPerKg":2.31732428070566,"position":3,"minCostTotalInEur":1977.9},{"maxCostPerKg":0.0,"maxGWPValue":0.0,"maxCostTotalInEur":0.0,"minGWPValue":0.0,"name":"Oxidation","minCostPerKg":0.0,"position":2,"minCostTotalInEur":0.0},{"maxCostPerKg":2.90500306082698,"maxGWPValue":6.14579,"maxCostTotalInEur":2479.5,"minGWPValue":2.10672,"name":"Pyrolysis","minCostPerKg":1.7251933886137238,"position":1,"minCostTotalInEur":1472.5},{"maxCostPerKg":0.23432168266400324,"maxGWPValue":0.0191545,"maxCostTotalInEur":200.0,"minGWPValue":0.0191545,"name":"ShreddingProcessFine","minCostPerKg":0.0035148252399600484,"position":0,"minCostTotalInEur":3.0}],"flexuralStrength_MPa":[{"flexuralStrength0_MPa":[{"value":"257.5164"},{"value":"213.4237"}]},{"flexuralStrength90_MPa":[{"value":"347.6314"},{"value":"310.195"}]}],"cost":{"minValue_eur_per_kg":"53.63070609910049","maxValue_eur_per_kg":"69.67444077665922"},"materials":{"maxCostPerKg":6.026490066225166,"maxGWPValue":4.75232,"minGWPValue":4.75232,"minCostPerKg":3.013245033112583,"matrix":"EP"},"tensileModulus_GPa":[{"tensileModulus0_GPa":[]},{"tensileModulus90_GPa":[]}],"flexuralModulus_GPa":[{"flexuralModulus0_GPa":[{"value":"18.5061"},{"value":"23.5362"}]},{"flexuralModulus90_GPa":[{"value":"26.5334"},{"value":"33.0391"}]}],"tensileStrength_MPa":[{"tensileStrength0_MPa":[]},{"tensileStrength90_MPa":[]}]},
     "benchmarks": {
         "glasfiber_fabric_plus_epoxy_resin_transfer_moulding": {

@@ -164,10 +164,10 @@ import { createCharts } from "../results_charts_functions.js"
              * Also creates data-urls of the charts for use when creating the pdf in Results_footer.vue.
              */
             
-            this.exe_output = this.app_output_prop
+            this.actual_output = this.app_output_prop
             
             // for testing the results-page, modify the next two lines and the mounted() in ResultsView.vue.
-            // this.exe_output = this.test_output // for testing enable this line (real output will be ignored)
+            // this.actual_output = this.test_output // for testing enable this line (real output will be ignored)
             if(!this.startedCorrectly) return // for testing disable this line
 
             // fill benchmark-select element
@@ -187,7 +187,7 @@ import { createCharts } from "../results_charts_functions.js"
                 }
             })
 
-            this.charts = createCharts(this.exe_output, this.benchmarks)
+            this.charts = createCharts(this.actual_output, this.benchmarks)
             // console.log(JSON.stringify(this.charts, null, 4))
             this.sendChartsAsImages()
         },
@@ -208,9 +208,9 @@ import { createCharts } from "../results_charts_functions.js"
 
                 charts: undefined,
 
-                exe_output: undefined,
+                actual_output: undefined,
 
-                // when testing, set exe_output to test_output in mounted()
+                // when testing, set actual_output to test_output in mounted()
                 test_output: benchmarks.test_output_1,
                 benchmarks: benchmarks.benchmarks
             }
