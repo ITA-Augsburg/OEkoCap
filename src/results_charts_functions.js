@@ -554,13 +554,24 @@ function createPieChart(id, title, labels, data, colors, unit, legendFontSize, p
                         let pieSlice = (chart.data.datasets[0].data[i] / (sum / 100))
                         let percent = Math.round(pieSlice * 100) / 100
                         let localLabel = splitCamelCase(label)
-                        let text = localLabel + ": " + percent + "% " + unit
+                        // let text = localLabel + ":<br>" + percent + "% " + unit
                         customLegend.innerHTML += 
+                        // `
+                        //     <div style="display: flex; width: fit-content">
+                        //         <div style="width: 30px; height: 30px; background-color: ${chart.data.datasets[0].backgroundColor[i]}; border: 1px solid black;"></div>
+                        //         <div style="font-size: ${legendFontSize}px; margin-left: 10px;">
+                        //             ${text}
+                        //         </div>
+                        //     </div>
+                        // `
                         `
+                            <div style="font-size: 18px;">
+                                ${localLabel}
+                            </div>
                             <div style="display: flex; width: fit-content">
                                 <div style="width: 30px; height: 30px; background-color: ${chart.data.datasets[0].backgroundColor[i]}; border: 1px solid black;"></div>
-                                <div style="font-size: ${legendFontSize}px; margin-left: 10px;">
-                                    ${text}
+                                <div style="font-size: ${legendFontSize}px; margin-left: 10px; margin-top: 'auto' margin-bottom: 'auto'">
+                                    ${percent + "% " + unit}
                                 </div>
                             </div>
                         `
@@ -599,7 +610,7 @@ function addPieCharts(chartsObj, category, name, title, labels, data, colors, un
     chartsObj[category][name]["normal_font"] = {}
     // create canvases and charts, save their id
     createCanvasElement((name + "_small_font"), "pie_chart", parentId)
-    createPieChart((name + "_small_font"), title, labels, data, colors, unit, 15, parentId)
+    createPieChart((name + "_small_font"), title, labels, data, colors, unit, 20, parentId) // change legendFontSize parameter here, if legend element text should be smaller
     chartsObj[category][name]["small_font"] = name + "_small_font"
 
     createCanvasElement((name + "_normal_font"), "pie_chart", parentId)
@@ -728,7 +739,7 @@ function createAshbyChart(id, data, legendFontSize, parentId) {
                         customLegend.innerHTML += 
                         `
                             <div style="font-size: 18px;">
-                                ${data.names[i]}    
+                                ${data.names[i]}
                             </div>
                             <div style="display: flex; width: fit-content">
                                 <div style="width: 30px; height: 30px; background-color: ${ellipse.backgroundColor}; border: 1px solid black;"></div>
@@ -744,6 +755,12 @@ function createAshbyChart(id, data, legendFontSize, parentId) {
                             </div>
                         `
                     })
+                    if(data.names[0] !== "Result") {
+                        let missingData = document.createElement("div")
+                        missingData.style.fontSize = "18px"
+                        missingData.innerText = "Result: missing data"
+                        customLegend.insertAdjacentElement("afterbegin", missingData)
+                    }
                 }
             }
         }]
@@ -759,7 +776,7 @@ function addAshbyCharts(chartsObj, category, name, data, parentId) {
     chartsObj[category][name]["normal_font"] = {}
     // create canvases and charts, save their id
     createCanvasElement((name + "_small_font"), "ashby_chart", parentId)
-    createAshbyChart((name + "_small_font"), data, 15, parentId)
+    createAshbyChart((name + "_small_font"), data, 20, parentId) // change legendFontSize parameter here, if legend element text should be smaller
     chartsObj[category][name]["small_font"] = name + "_small_font"
 
     createCanvasElement((name + "_normal_font"), "ashby_chart", parentId)
