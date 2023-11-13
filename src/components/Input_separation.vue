@@ -10,6 +10,7 @@
 
         <div class="tooltip_container">
             <v-select
+            v-if="app_input_prop.waste.type === 'End of Life'"
             v-model=separation_type
             v-on:update:model-value=saveNewInputs()
             class="select separation_type_select"
@@ -20,17 +21,30 @@
             variant="solo"
             :bg-color=color_green />
 
+            <v-select
+            v-if="app_input_prop.waste.type === 'Cut-Off'"
+            v-model=separation_type
+            v-on:update:model-value=saveNewInputs()
+            class="select separation_type_select"
+            label="Type"
+            single-line
+            suffix="Type"
+            :items=type_options
+            disabled
+            variant="solo"
+            :bg-color=color_green />
+
             <Tooltip
-            :tooltip_enabled=false
+            :tooltip_enabled=separation_inputs_disabled
             :tooltip_class="'tooltip select_tooltip'"
-            :tooltip_text=Tooltip_texts.test />
+            :tooltip_text=Tooltip_texts.separation_type_disabled_tooltip />
         </div>
 
         <Expert_mode
         @newExpertModeValues=newExpertModeValues($event)
         :label=label
         :tooltip_text_prop=Tooltip_texts.test
-        :disabled=false
+        :disabled=separation_inputs_disabled
         :expert_mode_cost_prop=expert_mode_cost
         :expert_mode_gwp_prop=expert_mode_gwp
         :color_green=color_green />
@@ -50,15 +64,38 @@
         components: {
             Expert_mode: Expert_mode
         },
+        mounted() {
+            /**
+             * 
+             */
+            if(this.app_input_prop.waste.type === "End of Life") {
+                this.separation_inputs_disabled = false
+                this.type_options = ["Pyrolysis"]
+                this.separation_type = "Pyrolysis"
+                this.saveNewInputs()
+                this.separation_type = this.app_input_prop.separation.type
+            } else if(this.app_input_prop.waste.type === "Cut-Off") {
+                this.separation_inputs_disabled = true
+                this.type_options = [""]
+                this.separation_type = ""
+                this.expert_mode_cost = undefined
+                this.expert_mode_gwp = undefined
+                this.saveNewInputs()
+                this.separation_type = this.app_input_prop.separation.type
+                this.expert_mode_cost = this.app_input_prop.separation.euro_per_kg
+                this.expert_mode_gwp = this.app_input_prop.separation.co2_equv_per_kg
+            }
+        },
         data() {
             return {
-                type_options: ["Pyrolyse"],
+                type_options: [],
                 separation_type: this.app_input_prop.separation.type,
 
                 expert_mode_cost: this.app_input_prop.separation.euro_per_kg,
                 expert_mode_gwp: this.app_input_prop.separation.co2_equv_per_kg,
 
-                label: "Expert mode"
+                label: "Expert mode",
+                separation_inputs_disabled: true
             }
         },
         methods: {

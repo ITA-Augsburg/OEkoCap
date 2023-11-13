@@ -59,6 +59,7 @@ import { createCharts } from "../results_charts_functions.js"
         v-on:update:model-value='handleUI("benchmark_select")' />
 
         <div id="gwp_or_cost_charts" />
+        <br><br>
 
         <div id="gwp_or_cost_per_process_charts" />
 
@@ -164,10 +165,10 @@ import { createCharts } from "../results_charts_functions.js"
              * Also creates data-urls of the charts for use when creating the pdf in Results_footer.vue.
              */
             
-            this.exe_output = this.app_output_prop
+            this.actual_output = this.app_output_prop
             
             // for testing the results-page, modify the next two lines and the mounted() in ResultsView.vue.
-            // this.exe_output = this.test_output // for testing enable this line (real output will be ignored)
+            // this.actual_output = this.test_output // for testing enable this line (real output will be ignored)
             if(!this.startedCorrectly) return // for testing disable this line
 
             // fill benchmark-select element
@@ -187,7 +188,7 @@ import { createCharts } from "../results_charts_functions.js"
                 }
             })
 
-            this.charts = createCharts(this.exe_output, this.benchmarks)
+            this.charts = createCharts(this.actual_output, this.benchmarks)
             // console.log(JSON.stringify(this.charts, null, 4))
             this.sendChartsAsImages()
         },
@@ -208,10 +209,10 @@ import { createCharts } from "../results_charts_functions.js"
 
                 charts: undefined,
 
-                exe_output: undefined,
+                actual_output: undefined,
 
-                // when testing, set exe_output to test_output in mounted()
-                test_output: benchmarks.test_output_5,
+                // when testing, set actual_output to test_output in mounted()
+                test_output: benchmarks.test_output_1,
                 benchmarks: benchmarks.benchmarks
             }
         },
@@ -298,16 +299,24 @@ import { createCharts } from "../results_charts_functions.js"
                 // unhide chart according to button- and select-states, viewport-width
                 // bar-chart
                 if(this.selected_benchmark === undefined) {
-                    this.wideWindow ?
-                        this.unhideElement(this.charts[chartCategory][chartName].normal_font) :
+                    if(this.wideWindow) {
+                        this.unhideElement(this.charts[chartCategory][chartName].normal_font)
+                        this.unhideElement(this.charts[chartCategory][chartName].normal_font + "_legend_container")
+                    } else {
                         this.unhideElement(this.charts[chartCategory][chartName].small_font)
+                        this.unhideElement(this.charts[chartCategory][chartName].small_font + "_legend_container")
+                    }
                 } else {
                     for(let key in this.benchmarks) {
                         if(this.selected_benchmark === this.benchmarks[key].name) {
                             let benchmarkName = key.replaceAll(" ", "_")
-                            this.wideWindow ?
-                                this.unhideElement(this.charts[chartCategory][chartNamefragment + benchmarkName + "_chart"].normal_font) :
+                            if(this.wideWindow) {
+                                this.unhideElement(this.charts[chartCategory][chartNamefragment + benchmarkName + "_chart"].normal_font)
+                                this.unhideElement(this.charts[chartCategory][chartNamefragment + benchmarkName + "_chart"].normal_font + "_legend_container")
+                            } else {
                                 this.unhideElement(this.charts[chartCategory][chartNamefragment + benchmarkName + "_chart"].small_font)
+                                this.unhideElement(this.charts[chartCategory][chartNamefragment + benchmarkName + "_chart"].small_font + "_legend_container")
+                            }
                         }
                     }
                 }
@@ -402,11 +411,15 @@ import { createCharts } from "../results_charts_functions.js"
                 //     images.push({type: "bar", name: key, image: selectedChart.toDataURL()})
                 // }
 
-                // gwp and cost bar-charts with output and every benchmark
+                // gwp and cost bar-charts with output and every benchmark + custom-legend
                 let pdf_gwp_barchart = document.getElementById("pdf_gwp_chart_normal_font")
+                let pdf_gwp_barchart_legend = document.getElementById("pdf_gwp_chart_normal_font_legend_container")
                 let pdf_cost_barchart = document.getElementById("pdf_cost_chart_normal_font")
-                images["pdf_gwp_chart_normal_font_chartImage"] = {type: "bar", image: pdf_gwp_barchart.toDataURL()}
-                images["pdf_cost_chart_normal_font_legendImage"] = {type: "bar", image: pdf_cost_barchart.toDataURL()}
+                let pdf_cost_barchart_legend = document.getElementById("pdf_cost_chart_normal_font_legend_container")
+                this.htmlElementToCanvas(pdf_gwp_barchart, pdf_gwp_barchart_legend, "gwp_bar_chart", "bar", images)
+                this.htmlElementToCanvas(pdf_cost_barchart, pdf_cost_barchart_legend, "cost_bar_chart", "bar", images)
+                // images["pdf_gwp_chart_normal_font_chartImage"] = {type: "bar", image: pdf_gwp_barchart.toDataURL()}
+                // images["pdf_cost_chart_normal_font_legendImage"] = {type: "bar", image: pdf_cost_barchart.toDataURL()}
                 
                 // max_gwp_per_process_charts max_gwp_of_each_output_process_chart + custom-legend
                 // pie-chart might not exist, depending on the recycling.exe output

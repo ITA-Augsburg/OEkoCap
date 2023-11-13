@@ -36,10 +36,10 @@
             <v-card-text>
               <p style="text-align: center; font-size: 19px;">This website requires cookies to function correctly.<br>
               By closing this message, you accept the use of cookies.<br>
-              Cookie details can be found <span @click="cookiePolicy()" style="color: #55CD89; cursor: pointer;">here</span>.</p>
+              Cookie details can be found <span @click="acceptCookies(true)" style="color: #55CD89; cursor: pointer;">here</span>.</p>
             </v-card-text>
             <v-card-actions>
-                <v-btn block @click="dialogOpen = false">Accept</v-btn>
+                <v-btn block @click="acceptCookies(false)">Accept</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -53,6 +53,26 @@
  * app_input is defined here.
  */
 export default {
+  mounted() {
+    /**
+     * If the user accepts the cookie-policy, the date is saved in the browsers localstorage.
+     * The expiration of the item is set arbitrarily to one year.
+     * When a year passes, the item is deleted and the user is prompted again, to accept the cookie-policy.
+     */
+    // check for existing cookie, if not present or not valid then display cookie message, else don't display the message
+    if (window.localStorage.getItem("acceptedTheCookiePolicy") === null) {
+      // dialog-box blocks the rest of the page until clicked. (see acceptCookies function)
+      this.dialogOpen = true
+    } else {
+      // if localstorage-item expired, delete it. Cookie-policy has to be accepted again.
+      let cookieDate = new Date(window.localStorage.getItem("acceptedTheCookiePolicy"))
+      let elapsedMilliseconds = new Date().getTime() - cookieDate.getTime()
+      if(elapsedMilliseconds > 1000 * 60 * 60 * 24 * 365) {
+        window.localStorage.removeItem("acceptedTheCookiePolicy")
+        this.dialogOpen = true
+      }
+    }
+  },
   data: () => ({
     button2enabled: true,
     button3enabled: false,
@@ -71,7 +91,7 @@ export default {
     appOutput: undefined,
     errorMessage: undefined,
 
-    dialogOpen: true,
+    dialogOpen: false,
 
     //default values are set here, these are passed to and shown in child-components
     app_input: {
@@ -106,7 +126,7 @@ export default {
         "thermo_type": undefined,
         "matrix_type": undefined,
         "fvc_percent": 30,
-        "feedstock_type": "biodegredable",
+        "feedstock_type": "fossilbased",
         "state_of_origin": "virgin",
         "euro_per_kg": undefined,
         "co2_equv_per_kg": undefined
@@ -134,73 +154,18 @@ export default {
         "co2_equv_per_kg": undefined
       }
     }
-
-    // this is only for testing pdf input depiction
-    // app_input: {
-    //   "waste": {
-    //     "type": "EoL",
-    //     "quantity_to": 1,
-    //     "size_bigger_1dot5_m": false,
-    //     "fmc_percent": 60
-    //   },
-    //   "transport": {
-    //     "euro_per_kg": 1,
-    //     "co2_equv_per_kg": ""
-    //   },
-    //   "shredding_1": {
-    //     "type": "Fine",
-    //     "mass_loss_percent": 5,
-    //     "euro_per_kg": "",
-    //     "co2_equv_per_kg": 1
-    //   },
-    //   "shredding_2": {
-    //     "type": "",
-    //     "mass_loss_percent": "",
-    //     "euro_per_kg": "",
-    //     "co2_equv_per_kg": ""
-    //   },
-    //   "separation": {
-    //     "type": "Pyrolyse",
-    //     "euro_per_kg": 1,
-    //     "co2_equv_per_kg": ""
-    //   },
-    //   "polymer": {
-    //     "thermo_type": "Thermoplast",
-    //     "matrix_type": "PP",
-    //     "fvc_percent": 30,
-    //     "feedstock_type": "biodegredable",
-    //     "state_of_origin": "virgin",
-    //     "euro_per_kg": "",
-    //     "co2_equv_per_kg": 1
-    //   },
-    //   "textile_process": {
-    //     "type": "Carding",
-    //     "mass_loss_percent": 15,
-    //     "throughput_kg_per_h": 20,
-    //     "areal_weight_g_per_sqm": 250,
-    //     "co2_equv_per_kg": 1,
-    //     "euro_per_kg": 1
-    //   },
-    //   "processing_1": {
-    //     "type": "DoubleBeltPressingWithPowder",
-    //     "mass_loss_percent": 20,
-    //     "wandstärke_mm": 0.5,
-    //     "euro_per_kg": 1,
-    //     "co2_equv_per_kg": ""
-    //   },
-    //   "processing_2": {
-    //     "type": "IRCompressionMoulding",
-    //     "mass_loss_percent": 10,
-    //     "wandstärke_mm": 0.5,
-    //     "euro_per_kg": "",
-    //     "co2_equv_per_kg": ""
-    //   }
-    // }
   }),
   methods: {
-    cookiePolicy() {
+    acceptCookies(goToImprint) {
+      /**
+       * Hides cookie popup and takes user to the imprint-page if 'here' was clicked.
+       * Sets a localStorage item to indicate that the cookie-policy was alredy accepted and popup doesn't need to show.
+       * The item has an arbitrary expiration date of one year.
+       */
+      let dateString = new Date().toString()
+      window.localStorage.setItem("acceptedTheCookiePolicy", dateString)
       this.dialogOpen = false
-      router.push({name: "ImprintView"})
+      if (goToImprint) router.push({name: "ImprintView"})
     },
     saveNewInputs(new_values) {
       /**
@@ -230,6 +195,12 @@ export default {
           textile_process.areal_weight_g_per_sqm = undefined
           textile_process.co2_equv_per_kg = undefined
           textile_process.euro_per_kg = undefined
+          this.button5enabled = false
+        }
+        // lock button 3, 4, 5 if waste type changes because separation type needs to be updated
+        if(waste.type !== new_values.waste_type) {
+          this.button3enabled = false
+          this.button4enabled = false
           this.button5enabled = false
         }
 
@@ -442,7 +413,7 @@ export default {
           "thermo_type": undefined,
           "matrix_type": undefined,
           "fvc_percent": 30,
-          "feedstock_type": "biodegredable",
+          "feedstock_type": "fossilbased",
           "state_of_origin": "virgin",
           "euro_per_kg": undefined,
           "co2_equv_per_kg": undefined
@@ -522,6 +493,8 @@ export default {
       if(shredding_2.euro_per_kg === undefined) shredding_2.euro_per_kg = ""
       if(shredding_2.co2_equv_per_kg === undefined) shredding_2.co2_equv_per_kg = ""
       // separation
+      if(separation.type === undefined) separation.type = ""
+      if(separation.type === "Pyrolysis") separation.type = "Pyrolyse"
       if(separation.euro_per_kg === undefined) separation.euro_per_kg = ""
       if(separation.co2_equv_per_kg === undefined) separation.co2_equv_per_kg = ""
       // matrix

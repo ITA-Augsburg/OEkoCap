@@ -151,18 +151,21 @@
             }
 
             if(this.textile_type === "Dry-laid" || this.textile_type === "Dry-laid with Thermoplastfiber") {
-                    this.ml_options = [10, 20, 1]
-                    this.throughput_options = [20, 40, 60]
-                    // this.aw_options = [100, 250, 500, 1000]
-                } else if(this.textile_type === "Air-laid" || this.textile_type === "Air-laid with Thermoplastfiber") {
-                    this.ml_options = [8, 15, 1]
-                    this.throughput_options = [50, 100, 200]
-                    // this.aw_options = [300, 500, 800]
-                } else if(this.textile_type === "Wet-laid" || this.textile_type === "Wet-laid with Thermoplastfiber") {
-                    this.ml_options = [5, 10, 1]
-                    this.throughput_options = [5, 15, 25]
-                    // this.aw_options = [50, 100, 200]
-                }
+                this.ml_options = [10, 20, 1]
+                this.throughput_options = [20, 40, 60]
+                // this.aw_options = [100, 250, 500, 1000]
+            } else if(this.textile_type === "Air-laid" || this.textile_type === "Air-laid with Thermoplastfiber") {
+                this.ml_options = [8, 15, 1]
+                this.throughput_options = [50, 100, 200]
+                // this.aw_options = [300, 500, 800]
+            } else if(this.textile_type === "Wet-laid" || this.textile_type === "Wet-laid with Thermoplastfiber") {
+                this.ml_options = [5, 10, 1]
+                this.throughput_options = [5, 15, 25]
+                // this.aw_options = [50, 100, 200]
+            }
+
+            // saveNewInputs will execute code that enables the next footer button if needed
+            this.saveNewInputs()
         },
         data() {
             return {
