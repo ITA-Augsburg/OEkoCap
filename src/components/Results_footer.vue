@@ -53,7 +53,7 @@
             actual_input: undefined,
 
             // this is only for testing pdf input visualisation
-            test_input: benchmarks.test_input
+            // test_input: benchmarks.test_input
         }),
         methods: {
             handlePdfButton() {
