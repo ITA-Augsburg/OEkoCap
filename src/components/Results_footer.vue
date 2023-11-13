@@ -323,7 +323,7 @@
                  * Creates sections for diagram-images in the pdf.
                  */
                 // let about = "About this chart"
-                let description = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat"
+                let description = " " // "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat"
                 
                 // bar charts
                 pdfContent.push({
