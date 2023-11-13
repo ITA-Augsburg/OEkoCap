@@ -121,6 +121,9 @@
             } else if(this.matrix_type === "Thermoset") {
                 this.polymer_options = ["EP"]
             }
+
+            // saveNewInputs will execute code that enables the next footer button if needed
+            this.saveNewInputs()
         },
         data() {
             return {

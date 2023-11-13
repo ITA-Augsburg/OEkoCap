@@ -62,7 +62,7 @@
 
 .bar_chart {
     max-width: 480px;
-    margin-bottom: 60px;
+    margin-bottom: 20px;
     min-height: 369px;
 }
 @media (max-width: 500px) {
@@ -87,7 +87,7 @@
 }
 
 .pie_chart {
-    margin-bottom: 60px;
+    margin-bottom: 30px;
 }
 
 .custom_legend_container {
