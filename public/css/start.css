@@ -21,20 +21,23 @@
 }
 .frauenhofer_logo_start {
     height: 132.183px;
+    cursor: pointer;
+    margin: 5px;
 }
 .ita_logo_start {
     height: 132.183px;
+    cursor: pointer;
+    margin: 5px;
 }
 .aif_logo_start {
     height: 132.183px;
+    cursor: pointer;
+    margin: 5px;
 }
 .igf_logo_start {
     height: 132.183px;
-}
-.start_text {
-    font-size: 27px;
-    text-align: center;
-    padding: 0px 40px 30px 40px;
+    cursor: pointer;
+    margin: 5px;
 }
 
 @media (max-width: 500px) {
@@ -58,10 +61,6 @@
     .igf_logo_start {
         margin: 30px 0px;
         height: 44px;
-    }
-    .start_text {
-        margin: auto;
-        font-size: 22px;
     }
 }
 

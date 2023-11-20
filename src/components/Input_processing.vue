@@ -19,7 +19,7 @@
             suffix="Type - Step 1"
             :items=proc_1_type_options
             variant="solo"
-            :bg-color=color_green />
+            :bg-color=color_main />
 
             <Tooltip
             :tooltip_enabled=false
@@ -39,8 +39,8 @@
             v-model=proc_1_ml
             v-on:update:model-value="[saveNewInputs()]"
             class="slider"
-            :color=color_green
-            :thumb-color=color_green
+            :color=color_main
+            :thumb-color=color_main
             thumb-size="20"
             :min="15"
             :max="30"
@@ -53,7 +53,7 @@
         :label=step1expmodelabel
         :tooltip_text_prop=Tooltip_texts.test
         :disabled=false
-        :color_green=color_green
+        :color_main=color_main
         :expert_mode_cost_prop=proc_1_cost
         :expert_mode_gwp_prop=proc_1_gwp />
 
@@ -71,7 +71,7 @@
             suffix="Type - Step 2"
             :items=proc_2_type_options
             variant="solo"
-            :bg-color=color_green />
+            :bg-color=color_main />
 
             <Tooltip
             :tooltip_enabled=false
@@ -94,8 +94,8 @@
             v-model=proc_2_ml
             v-on:update:model-value="[saveNewInputs()]"
             class="slider"
-            :color=color_green
-            :thumb-color=color_green
+            :color=color_main
+            :thumb-color=color_main
             thumb-size="20"
             :min="15"
             :max="30"
@@ -110,7 +110,7 @@
         :label=step2expmodelabel
         :tooltip_text_prop=Tooltip_texts.test
         :disabled=false
-        :color_green=color_green
+        :color_main=color_main
         :expert_mode_cost_prop=proc_2_cost
         :expert_mode_gwp_prop=proc_2_gwp />
 
@@ -191,7 +191,7 @@
                 <v-btn
                 v-if="buttonCalculateEnabled"
                 @click="calculateButton()"
-                :color=color_green
+                :color=color_main
                 elevation="5"
                 width="225px"
                 height="55px"
@@ -218,7 +218,7 @@
  * The calculate-button emits a signal to App.vue where the inputs are sent to the server.
  */
     export default {
-        props: ["app_input_prop", "proc_moi_prop", "matrix_insertion_prop", "buttonCalculateEnabled", "color_green", "color_lightgrey", "color_darkgreen"],
+        props: ["app_input_prop", "proc_moi_prop", "matrix_insertion_prop", "buttonCalculateEnabled", "color_main", "color_lightgrey", "color_darkgreen"],
         emits: ["saveNewInputs", "calculateButton"],
         components: {
             Expert_mode: Expert_mode

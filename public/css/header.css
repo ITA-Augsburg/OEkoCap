@@ -1,8 +1,8 @@
 .header {
     width: 100vw;
     height: 80px;
-    /* background-color: var(--color-green); */
-    background-image: linear-gradient(to right, #002B51, #E94E24);
+    /* background-color: var(--color-main); */
+    background-image: linear-gradient(to right, #002B51, var(--color-main));
     position: relative;
 }
 
@@ -27,7 +27,7 @@
 }
 
 .header_text {
-    color: #F2F2F2;
+    color: var(--color-white);
     margin: 0px 10px;
     cursor: pointer;
 }

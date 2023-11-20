@@ -13,9 +13,9 @@
 
             <v-progress-linear
                 class="footer_progressbar"
-                :bg-color=color_green
+                :bg-color=color_main
                 bg-opacity="0.2"
-                :color=color_green
+                :color=color_main
                 height="10"
                 :model-value=progressValue
             >
@@ -47,7 +47,7 @@
                 <v-btn
                 v-if="id === 'waste'"
                 icon=""
-                :color=color_green
+                :color=color_main
                 elevation="12"
                 width="45px"
                 height="45px"
@@ -75,7 +75,7 @@
                 <v-btn
                 v-if="id === 'separation'"
                 icon=""
-                :color=color_green
+                :color=color_main
                 elevation="12"
                 width="45px"
                 height="45px"
@@ -103,7 +103,7 @@
                 <v-btn
                 v-if="id === 'matrix'"
                 icon=""
-                :color=color_green
+                :color=color_main
                 elevation="12"
                 width="45px"
                 height="45px"
@@ -131,7 +131,7 @@
                 <v-btn
                 v-if="id === 'textile'"
                 icon=""
-                :color=color_green
+                :color=color_main
                 elevation="12"
                 width="45px"
                 height="45px"
@@ -159,7 +159,7 @@
                 <v-btn
                 v-if="id === 'processing'"
                 icon=""
-                :color=color_green
+                :color=color_main
                 elevation="12"
                 width="45px"
                 height="45px"
@@ -228,7 +228,7 @@
  */
 export default {
     props: ["button2enabled", "button3enabled", "button4enabled", "button5enabled",
-    "progressValue", "id", "color_green", "color_lightgrey"],
+    "progressValue", "id", "color_main", "color_lightgrey"],
     emits: ["updateInputFooter"],
     data: () => ({
         dialogOpen: false,

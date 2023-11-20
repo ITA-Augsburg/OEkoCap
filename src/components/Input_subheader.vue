@@ -6,7 +6,7 @@
 
 <div class="subheader">
     <p class="subheader_text_1">ÖkoCaP</p>
-    <p class="subheader_text_2">{{ text_2 }}</p>
+    <p class="subheader_text_2">{{ text_2 }}</p> <!-- style="font-weight: 900;"-->
     <div class="subheader_text_3_container">
       <p class="subheader_text_3">{{ text_3 }}</p>
       <Tooltip

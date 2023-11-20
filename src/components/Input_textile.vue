@@ -18,7 +18,7 @@
             suffix="Type"
             :items=type_options
             variant="solo"
-            :bg-color=color_green />
+            :bg-color=color_main />
 
             <Tooltip
             :tooltip_enabled=false
@@ -38,16 +38,16 @@
             v-if="textile_type === undefined"
             disabled
             class="slider"
-            :color=color_green
-            :thumb-color=color_green
+            :color=color_main
+            :thumb-color=color_main
             thumb-size="20" />
             <v-slider
             v-if="textile_type !== undefined"
             v-model=textile_ml
             v-on:update:model-value="saveNewInputs()"
             class="slider"
-            :color=color_green
-            :thumb-color=color_green
+            :color=color_main
+            :thumb-color=color_main
             thumb-size="20"
             :min=ml_options[0]
             :max=ml_options[1]
@@ -97,7 +97,7 @@
         :label=label
         :tooltip_text_prop=Tooltip_texts.test
         :disabled=false
-        :color_green=color_green
+        :color_main=color_main
         :expert_mode_cost_prop=expert_mode_cost
         :expert_mode_gwp_prop=expert_mode_gwp />
 
@@ -111,7 +111,7 @@
  * Every time an input is made, every input of this component is emitted to App.vue->app_input.
  */
     export default {
-        props: ["app_input_prop", "matrix_insertion_prop", "color_green", "color_lightgrey"],
+        props: ["app_input_prop", "matrix_insertion_prop", "color_main", "color_lightgrey"],
         emits: ["saveNewInputs"],
         components: {
             Expert_mode: Expert_mode

@@ -1,5 +1,5 @@
 <template>
-    <h2>Imprint</h2>
+    <br>
     <p>
     Information pursuant to the Interstate Media Treaty § 18 para. 2<br>
     <br>

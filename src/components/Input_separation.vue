@@ -19,7 +19,7 @@
             suffix="Type"
             :items=type_options
             variant="solo"
-            :bg-color=color_green />
+            :bg-color=color_main />
 
             <v-select
             v-if="app_input_prop.waste.type === 'Cut-Off'"
@@ -32,7 +32,7 @@
             :items=type_options
             disabled
             variant="solo"
-            :bg-color=color_green />
+            :bg-color=color_main />
 
             <Tooltip
             :tooltip_enabled=separation_inputs_disabled
@@ -47,7 +47,7 @@
         :disabled=separation_inputs_disabled
         :expert_mode_cost_prop=expert_mode_cost
         :expert_mode_gwp_prop=expert_mode_gwp
-        :color_green=color_green />
+        :color_main=color_main />
 
     </div>
 
@@ -59,7 +59,7 @@
  * Every time an input is made, every input of this component is emitted to App.vue->app_input.
  */
     export default {
-        props: ["app_input_prop", "color_green"],
+        props: ["app_input_prop", "color_main"],
         emits: ["saveNewInputs"],
         components: {
             Expert_mode: Expert_mode

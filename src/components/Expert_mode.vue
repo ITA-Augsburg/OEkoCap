@@ -12,7 +12,7 @@
             class="switch"
             inset
             :label=label
-            :color=color_green
+            :color=color_main
             v-model="switchState"
             @click="showHideExpertMode()"
             ></v-switch>
@@ -22,7 +22,7 @@
             disabled
             inset
             :label=label
-            :color=color_green
+            :color=color_main
             v-model="switchState"
             ></v-switch>
         </div>
@@ -42,7 +42,7 @@
     single-line
     suffix="€/kg part"
     variant="solo"
-    :bg-color=color_green
+    :bg-color=color_main
     ></v-text-field>
 
     <!-- A text-field that corresponds to the global warming potential. -->
@@ -55,7 +55,7 @@
     single-line
     suffix="CO₂-eq./kg part"
     variant="solo"
-    :bg-color=color_green
+    :bg-color=color_main
     ></v-text-field>
 
     <!-- A popup that pops up when an invalid character has been typed into the textfields -->
@@ -77,7 +77,7 @@
  * In this component the user can specify the cost and global warming potential of something.
  */
     export default {
-        props: ["disabled", "expert_mode_cost_prop", "expert_mode_gwp_prop", "label", "color_green", "tooltip_text_prop"],
+        props: ["disabled", "expert_mode_cost_prop", "expert_mode_gwp_prop", "label", "color_main", "tooltip_text_prop"],
         emits: ["newExpertModeValues"],
         mounted() {
             /**

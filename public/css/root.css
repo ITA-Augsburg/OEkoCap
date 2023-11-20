@@ -9,7 +9,7 @@
     --color-white: #FFFFFF;
     --color-lightgrey: #F2F2F2;
     --color-grey: #4a4a4a;
-    --color-green: #55CD89;
+    --color-main: #E94E24;
 
     --font-montserrat: "montserrat", Arial;
 }
@@ -19,6 +19,7 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
     font-family: var(--font-montserrat);
+    /* letter-spacing: 80pt; */
     /* font-weight: 700; */
     /* font-style: italic; */
 }

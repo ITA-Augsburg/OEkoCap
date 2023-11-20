@@ -16,7 +16,7 @@
             suffix="Type"
             :items=type_options
             variant="solo"
-            :bg-color=color_green
+            :bg-color=color_main
             v-model=waste_type
             v-on:update:model-value="[updateWasteRoute(), saveNewInputs()]" />
 
@@ -34,14 +34,14 @@
                 @click="[toggleSizeCheckbox(), updateWasteRoute(), saveNewInputs()]"
                 class="checkbox waste_size_checkbox"
                 label="Waste Size > 1.5m"
-                :color=color_green
+                :color=color_main
                 v-model="size1dot5" />
                 <v-checkbox
                 v-if="waste_type === undefined"
                 disabled
                 class="checkbox waste_size_checkbox"
                 label="Waste Size > 1.5m"
-                :color=color_green
+                :color=color_main
                 v-model="size1dot5" />
             </div>
 
@@ -71,8 +71,8 @@
             v-if="waste_type === 'End of Life' && size1dot5 === true"
             v-on:update:model-value="saveNewInputs()"
             class="slider"
-            :color=color_green
-            :thumb-color=color_green
+            :color=color_main
+            :thumb-color=color_main
             thumb-size="20"
             :min="5"
             :max="10"
@@ -82,8 +82,8 @@
             v-if="waste_type === undefined || waste_type === 'End of Life' && size1dot5 === false"
             disabled
             class="slider"
-            :color=color_green
-            :thumb-color=color_green
+            :color=color_main
+            :thumb-color=color_main
             thumb-size="20"
             :min="5"
             :max="10"
@@ -102,7 +102,7 @@
         :disabled=false
         :expert_mode_gwp_prop=shred_1_gwp
         :expert_mode_cost_prop=shred_1_cost
-        :color_green=color_green />
+        :color_main=color_main />
         <Expert_mode
         v-if="coarse_expmode_disabled && coarse_expmode_disabled !== undefined"
         :label=coarse_expmode_label
@@ -110,7 +110,7 @@
         :disabled=true
         :expert_mode_cost_prop=shred_1_cost
         :expert_mode_gwp_prop=shred_1_gwp
-        :color_green=color_green />
+        :color_main=color_main />
 
         <div class="tooltip_container">
             <div class="checkbox_container waste_fine_checkbox_container">
@@ -118,13 +118,13 @@
                 v-if="waste_type === 'End of Life' && size1dot5"
                 @click="[toggleFineCheckbox(), updateWasteRoute(), saveNewInputs()]"
                 class="checkbox waste_fine_checkbox"
-                :color=color_green
+                :color=color_main
                 v-model="fine_checkbox" />
                 <v-checkbox
                 v-if="waste_type === 'End of Life' && !size1dot5"
                 disabled
                 class="checkbox waste_fine_checkbox"
-                :color=color_green
+                :color=color_main
                 v-model="fine_checkbox" />
 
             </div>
@@ -141,8 +141,8 @@
             v-if="fine_checkbox"
             v-on:update:model-value="saveNewInputs()"
             class="slider"
-            :color=color_green
-            :thumb-color=color_green
+            :color=color_main
+            :thumb-color=color_main
             thumb-size="20"
             :min="5"
             :max="10"
@@ -152,8 +152,8 @@
             v-if="!fine_checkbox"
             class="slider"
             disabled
-            :color=color_green
-            :thumb-color=color_green
+            :color=color_main
+            :thumb-color=color_main
             thumb-size="20"
             :min="5"
             :max="10"
@@ -172,7 +172,7 @@
         :disabled=false
         :expert_mode_cost_prop=shred_2_cost
         :expert_mode_gwp_prop=shred_2_gwp
-        :color_green=color_green />
+        :color_main=color_main />
         <Expert_mode
         v-if="waste_type === 'End of Life' && !fine_checkbox"
         :label=fine_expmode_label
@@ -180,7 +180,7 @@
         :disabled=true
         :expert_mode_cost_prop=shred_2_cost
         :expert_mode_gwp_prop=shred_2_gwp
-        :color_green=color_green />
+        :color_main=color_main />
 
         <br>
 
@@ -191,7 +191,7 @@
         :disabled=false
         :expert_mode_cost_prop=transport_cost
         :expert_mode_gwp_prop=transport_gwp
-        :color_green=color_green />
+        :color_main=color_main />
         
     </div>
 
@@ -203,7 +203,7 @@
  * Every time an input is made, every input of this component is emitted to App.vue->app_input.
  */
     export default {
-        props: ["app_input_prop", "color_green", "waste_fine_checkbox_prop"],
+        props: ["app_input_prop", "color_main", "waste_fine_checkbox_prop"],
         emits: ["saveNewInputs"],
         mounted() {
             /**
