@@ -1,14 +1,16 @@
 .header {
     width: 100vw;
     height: 80px;
-    background-color: var(--color-green);
+    /* background-color: var(--color-green); */
+    background-image: linear-gradient(to right, #002B51, #E94E24);
     position: relative;
 }
 
-.header_logo {
+.oekocap_header_logo {
     position: absolute;
     top: 7px;
-    left: calc(50vw - 400px);
+    left: calc(50vw - 378px);
+    left: 10px;
     width: 130px;
     min-width: 130px;
     cursor: pointer;
@@ -17,11 +19,11 @@
 .header_textcontainer {
     position: absolute;
     top: 28px;
-    left: calc(50vw + 165px);
+    left: calc(50vw - 240.7px);
     display: flex;
     flex-wrap: nowrap;
     color: var(--color-white);
-    font-size: 20px;
+    font-size:18px;
 }
 
 .header_text {
@@ -30,42 +32,21 @@
     cursor: pointer;
 }
 
+.cu_header_logo {
+    position: absolute;
+    top: -67px;
+    /* left: calc(50vw + 220px); */
+    left: calc(100vw - 110px);
+    width: 130px;
+    min-width: 130px;
+    cursor: pointer;
+}
+
 #hamburger {
     display: none;
 }
 
-/* if screen width below 1215px */
-@media (max-width: 1215px) {
-
-    .header {
-        width: 100vw;
-        height: 80px;
-        background-color: var(--color-green);
-        position: relative;
-    }
-    
-    .header_logo {
-        position: absolute;
-        top: 7px;
-        left: calc(10px);
-    }
-    
-    .header_textcontainer {
-        position: absolute;
-        top: 28px;
-        left: calc(100vw - 395px);
-        display: flex;
-        flex-wrap: nowrap;
-    }
-    
-    .header_text {
-        color: #F2F2F2;
-        width: fit-content;
-        margin: 0px 10px;
-    }
-}
-
-@media (max-width: 540px) {
+@media (max-width: 780px) {
 
     .header_textcontainer {
         display: none;
@@ -75,7 +56,7 @@
         display: block;
         position: absolute;
         top: 0px;
-        right: 0px;
+        left: 0px;
         cursor: pointer;
     }
 
@@ -86,5 +67,15 @@
         padding: 19.3px 0px;
         width: auto;
         margin: 0px;
+    }
+
+    .cu_header_logo {
+        position: absolute;
+        top: 2px;
+        /* left: calc(50vw + 220px); */
+        left: calc(100vw - 110px);
+        width: 130px;
+        min-width: 130px;
+        cursor: pointer;
     }
 }
