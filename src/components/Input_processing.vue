@@ -13,7 +13,7 @@
             <v-select
             v-model=proc_1_type
             v-on:update:model-value="[toggleStepTwo(), saveNewInputs()]"
-            class="select processing_type_select"
+            class="select select_maincolor processing_type_select"
             label="Type - Step 1"
             single-line
             suffix="Type - Step 1"
@@ -65,7 +65,7 @@
             <v-select
             v-model=proc_2_type
             v-on:update:model-value="[saveNewInputs()]"
-            class="select processing_2_type_select"
+            class="select select_maincolor processing_2_type_select"
             label="Type - Step 2"
             single-line
             suffix="Type - Step 2"
@@ -121,7 +121,7 @@
             v-if="proc_1_type !== 'Prepreg Production' || proc_1_type === undefined"
             v-model=proc_wt
             v-on:update:model-value="[saveNewInputs()]"
-            class="select processing_wt_select"
+            class="select select_grey processing_wt_select"
             label="Wall thickness [mm]"
             single-line
             suffix="Wall thickness [mm]"
@@ -132,7 +132,7 @@
             v-if="proc_1_type === 'Prepreg Production'"
             v-model=proc_wt
             v-on:update:model-value="[saveNewInputs()]"
-            class="select processing_wt_select"
+            class="select select_grey processing_wt_select"
             label="Utilization"
             single-line
             suffix="Utilization"
@@ -151,7 +151,7 @@
             v-if="!moi_disabled"
             v-model=proc_moi
             v-on:update:model-value="[saveNewInputs()]"
-            class="select processing_moi_select"
+            class="select select_grey processing_moi_select"
             label="Method of insertion"
             single-line
             suffix="Method of insertion"
@@ -162,7 +162,7 @@
             v-if="moi_disabled"
             disabled
             v-model=proc_moi
-            class="select processing_moi_select processing_moi_select_disabled"
+            class="select select_grey processing_moi_select processing_moi_select_disabled"
             label="Method of insertion"
             single-line
             suffix="Method of insertion"
@@ -199,7 +199,7 @@
                 <v-btn
                 v-if="!buttonCalculateEnabled"
                 disabled
-                :color=color_darkgreen
+                :color=color_main_disabled
                 elevation="5"
                 width="225px"
                 height="55px"
@@ -218,7 +218,7 @@
  * The calculate-button emits a signal to App.vue where the inputs are sent to the server.
  */
     export default {
-        props: ["app_input_prop", "proc_moi_prop", "matrix_insertion_prop", "buttonCalculateEnabled", "color_main", "color_lightgrey", "color_darkgreen"],
+        props: ["app_input_prop", "proc_moi_prop", "matrix_insertion_prop", "buttonCalculateEnabled", "color_main", "color_lightgrey", "color_main_disabled"],
         emits: ["saveNewInputs", "calculateButton"],
         components: {
             Expert_mode: Expert_mode

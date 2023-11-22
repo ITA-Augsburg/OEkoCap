@@ -37,7 +37,7 @@
     v-if="switchState && !disabled"
     v-model=expert_mode_cost
     @update:model-value="propagateNewValues()"
-    class="textfield cost_textfield"
+    class="textfield"
     label="€/kg part"
     single-line
     suffix="€/kg part"
@@ -50,7 +50,7 @@
     v-if="switchState && !disabled"
     v-model=expert_mode_gwp
     @update:model-value="propagateNewValues()"
-    class="textfield co2_textfield"
+    class="textfield"
     label="CO₂-eq./kg part"
     single-line
     suffix="CO₂-eq./kg part"

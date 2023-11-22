@@ -1,7 +1,7 @@
 <script setup>
     import Input_subheader from "../components/Input_subheader.vue"
     import Error from "../components/Error.vue"
-    import Button_footer from "../components/Footer_with_button.vue"
+    import Button_footer from "../components/Error_footer.vue"
 </script>
 
 <template>

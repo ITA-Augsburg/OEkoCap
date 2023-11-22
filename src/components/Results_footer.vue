@@ -18,7 +18,7 @@
                 elevation="5"
                 width="225px"
                 height="55px"
-                ><p class="results_pdf_button_text">download results</p></v-btn>
+                ><p class="results_pdf_button_text">download as pdf</p></v-btn>
             </div>
         
             <Copyright_text />

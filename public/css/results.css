@@ -55,6 +55,9 @@
 .results_benchmark_process_select {
     margin: 20px 10px 40px 10px;
 }
+.results_benchmark_process_select .v-select__selection-text {
+    font-size: 14px;
+}
 
 .hidden_chart {
     display: none !important;

@@ -13,7 +13,7 @@
             v-if="app_input_prop.waste.type === 'End of Life'"
             v-model=separation_type
             v-on:update:model-value=saveNewInputs()
-            class="select separation_type_select"
+            class="select select_maincolor separation_type_select"
             label="Type"
             single-line
             suffix="Type"

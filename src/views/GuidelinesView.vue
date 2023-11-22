@@ -11,7 +11,7 @@
     :tooltip_text="''" />
 
     <div class="info_area">
-        <p style="font-size: 20px; text-align: center; padding-top: 50px;">Coming soon</p>
+        <p style="font-size: 20px; text-align: center; padding-top: 50px; color: var(--color-grey)">Coming soon</p>
     </div>
 
     <Sponsor_footer />

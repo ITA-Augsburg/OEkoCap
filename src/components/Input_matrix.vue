@@ -12,7 +12,7 @@
             <v-select
             v-model="matrix_type"
             v-on:update:model-value="[updateMatrixRoute(), saveNewInputs()]"
-            class="select matrix_type_select"
+            class="select select_maincolor matrix_type_select"
             label="Type"
             single-line
             suffix="Type"
@@ -30,7 +30,7 @@
             <v-select
             v-model="matrix_polymer"
             v-on:update:model-value="saveNewInputs()"
-            class="select matrix_polymer_select"
+            class="select select_maincolor matrix_polymer_select"
             label="Polymer"
             single-line
             suffix="Polymer"

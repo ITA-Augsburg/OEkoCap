@@ -10,7 +10,7 @@
         
         <div class="tooltip_container">
             <v-select
-            class="select waste_type_select"
+            class="select select_maincolor waste_type_select"
             label="Type"
             single-line
             suffix="Type"

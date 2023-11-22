@@ -19,7 +19,7 @@ const props = {
     color_lightgrey: "#F2F2F2",
     color_grey: "#4A4A4A",
     color_main: "#E94E24",
-    color_darkgreen: "#7fc79f",
+    color_main_disabled: "#e89780",
 }
 
 const routes = [
@@ -79,7 +79,7 @@ const routes = [
         props: {
             color_main: props.color_main,
             color_lightgrey: props.color_lightgrey,
-            color_darkgreen: props.color_darkgreen
+            color_main_disabled: props.color_main_disabled
         }
     },
     {

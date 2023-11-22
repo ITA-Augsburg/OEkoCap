@@ -12,7 +12,7 @@
             <v-select
             v-model=textile_type
             v-on:update:model-value="[updateTextileRoute(), saveNewInputs()]"
-            class="select textile_type_select"
+            class="select select_maincolor textile_type_select"
             label="Type"
             single-line
             suffix="Type"
@@ -59,7 +59,7 @@
             <v-select
             v-model=textile_tp
             v-on:update:model-value="saveNewInputs()"
-            class="select textile_throughput_select"
+            class="select select_grey textile_throughput_select"
             label="Throughput [kg/h/m]"
             single-line
             suffix="Throughput [kg/h/m]"
@@ -78,7 +78,7 @@
             <v-select
             v-model=textile_aw
             v-on:update:model-value="saveNewInputs()"
-            class="select textile_aw_select"
+            class="select select_grey textile_aw_select"
             label="Areal weight [g/m²]"
             single-line
             suffix="Areal weight [g/m²]"

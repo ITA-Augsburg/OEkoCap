@@ -49,7 +49,7 @@ import { createCharts } from "../results_charts_functions.js"
         </div>
 
         <v-select
-        class="select results_benchmark_process_select"
+        class="select select_maincolor results_benchmark_process_select"
         label="Benchmarks"
         single-line
         :items=benchmark_options
@@ -168,8 +168,8 @@ import { createCharts } from "../results_charts_functions.js"
             this.actual_output = this.app_output_prop
             
             // for testing the results-page, modify the next two lines and the mounted() in ResultsView.vue.
-            // this.actual_output = this.test_output // for testing enable this line (real output will be ignored)
-            if(!this.startedCorrectly) return // for testing disable this line
+            this.actual_output = this.test_output // for testing enable this line (real output will be ignored)
+            // if(!this.startedCorrectly) return // for testing disable this line
 
             // fill benchmark-select element
             this.benchmark_options = []

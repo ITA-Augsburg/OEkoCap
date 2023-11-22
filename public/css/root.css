@@ -3,6 +3,11 @@
     src: url("../montserrat-v26-latin-regular.woff2") format("woff2");
 }
 
+@font-face {
+    font-family: "montserrat_bold";
+    src: url("../Montserrat-Bold.ttf") format("truetype");
+}
+
 :root {
     --content-width: 480px;
 
@@ -12,6 +17,7 @@
     --color-main: #E94E24;
 
     --font-montserrat: "montserrat", Arial;
+    --font-montserrat-bold: "montserrat_bold", Arial;
 }
 
 /* otherwise there is unwanted whitespace on the right side on mobile */

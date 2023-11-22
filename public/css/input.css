@@ -19,9 +19,34 @@
     height: 50px;
 }
 .select .v-label {
-    color: var(--color-grey);
     font-size: 20px;
     opacity: 1;
+}
+.select .v-select__selection-text {
+    font-size: 20px;
+}
+.select .v-text-field__suffix {
+    font-size: 16px;
+}
+
+.select_maincolor .v-label {
+    color: var(--color-white);
+}
+.select_maincolor .v-select__selection-text {
+    color: var(--color-white);
+}
+.select_maincolor .v-text-field__suffix {
+    color: var(--color-white) !important;
+}
+
+.select_grey .v-label {
+    color: var(--color-grey);
+}
+.select_grey .v-select__selection-text {
+    color: var(--color-grey);
+}
+.select_grey .v-text-field__suffix {
+    color: var(--color-grey) !important;
 }
 
 .checkbox {
@@ -94,9 +119,17 @@
     width: calc(var(--content-width) - 20px);
 }
 .textfield .v-label {
-    color: var(--color-grey);
+    color: var(--color-white);
     font-size: 20px;
     opacity: 1;
+}
+.textfield input {
+    color: var(--color-white) !important;
+    font-size: 20px;
+}
+.textfield .v-text-field__suffix {
+    color: var(--color-white);
+    font-size: 20px;
 }
 @media (max-width: 500px) {
     .textfield {
