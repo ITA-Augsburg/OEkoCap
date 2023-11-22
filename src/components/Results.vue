@@ -13,7 +13,7 @@ import { createCharts } from "../results_charts_functions.js"
                 <v-btn
                 v-if=gwp_button_active
                 @click='handleUI("gwp")'
-                :color=color_green
+                :color=color_main
                 elevation="5"
                 width="225px"
                 height="55px"
@@ -32,7 +32,7 @@ import { createCharts } from "../results_charts_functions.js"
                 <v-btn
                 v-if=cost_button_active
                 @click='handleUI("cost")'
-                :color=color_green
+                :color=color_main
                 elevation="5"
                 width="225px"
                 height="55px"
@@ -49,12 +49,12 @@ import { createCharts } from "../results_charts_functions.js"
         </div>
 
         <v-select
-        class="select results_benchmark_process_select"
+        class="select select_maincolor results_benchmark_process_select"
         label="Benchmarks"
         single-line
         :items=benchmark_options
         variant="solo"
-        :bg-color=color_green
+        :bg-color=color_main
         v-model=selected_benchmark
         v-on:update:model-value='handleUI("benchmark_select")' />
 
@@ -68,7 +68,7 @@ import { createCharts } from "../results_charts_functions.js"
                 <v-btn
                 v-if=tensile_button_active
                 @click='handleUI("tensile")'
-                :color=color_green
+                :color=color_main
                 elevation="5"
                 width="225px"
                 height="55px"
@@ -87,7 +87,7 @@ import { createCharts } from "../results_charts_functions.js"
                 <v-btn
                 v-if=flexural_button_active
                 @click='handleUI("flexural")'
-                :color=color_green
+                :color=color_main
                 elevation="5"
                 width="225px"
                 height="55px"
@@ -108,7 +108,7 @@ import { createCharts } from "../results_charts_functions.js"
                 <v-btn
                 v-if=zero_button_active
                 @click='handleUI("zero")'
-                :color=color_green
+                :color=color_main
                 elevation="5"
                 width="225px"
                 height="55px"
@@ -127,7 +127,7 @@ import { createCharts } from "../results_charts_functions.js"
                 <v-btn
                 v-if=ninety_button_active
                 @click='handleUI("ninety")'
-                :color=color_green
+                :color=color_main
                 elevation="5"
                 width="225px"
                 height="55px"
@@ -157,7 +157,7 @@ import { createCharts } from "../results_charts_functions.js"
  * After the output is delivered from the server, charts are created from it, information is visualised in this component.
  */
     export default {
-        props: ["app_output_prop", "startedCorrectly", "color_green", "color_lightgrey"],
+        props: ["app_output_prop", "startedCorrectly", "color_main", "color_lightgrey"],
         emits: ["setErrorMessage", "chartsAsImages"],
         mounted() {
             /**

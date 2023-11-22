@@ -1,22 +1,30 @@
 <script setup>
-  import router from "../router"
+import router from "../router"
 </script>
 
 <template>
   <!-- App-header component with App-logo and some hyperlinks. On small screens there is a hamburger(button). -->
   <div class="header">
     <v-img
+    v-if="wideWindow"
     :src='require("../assets/logo_oekocap_weiss.png")'
     alt="oekoCap_logo"
-    :class="'header_logo'"
+    :class="'oekocap_header_logo'"
     @click="()=>{router.push({name: 'StartView'})}" />
-
+    
     <p class="header_textcontainer">
-      <span class="header_text" @click="()=>{router.push({name: 'StartView'})}">Calculator</span>
-      <span class="header_text" @click="()=>{router.push({name: 'GuidelinesView'})}">Guidelines</span>
-      <span class="header_text" @click="()=>{router.push({name: 'ProjectView'})}">Project</span>
-      <span class="header_text" @click="()=>{router.push({name: 'ImprintView'})}">Imprint</span>
+      <span class="header_text" @click="()=>{router.push({name: 'StartView'})}">CALCULATOR</span>
+      <span class="header_text" @click="()=>{router.push({name: 'GuidelinesView'})}">GUIDELINES</span>
+      <span class="header_text" @click="()=>{router.push({name: 'ProjectView'})}">PROJEKT</span>
+      <span class="header_text" @click="()=>{router.push({name: 'ImprintView'})}">IMPRINT</span>
     </p>
+
+    <v-img
+    :src='require("../assets/cu_logo.png")'
+    alt="composites_united_logo"
+    :class="'cu_header_logo'"
+    @click="redirectToCU()" />
+    
     <svg
     xmlns="http://www.w3.org/2000/svg"
     width="80"
@@ -66,19 +74,24 @@ export default {
      * Hamburger-button and -drawer should only be visible if the browser-viewport-width is less then 500px wide. If drawer open and window gets resized to width >= 500px then close the drawer.
      */
     window.addEventListener("resize", () => {
-              if(this.wideWindow === false && window.innerWidth >= 500) {
+              if(this.wideWindow === false && window.innerWidth > 780) {
                 this.drawer = false
                 this.wideWindow = true
-              } else if(this.wideWindow === true && window.innerWidth < 500) {
+              } else if(this.wideWindow === true && window.innerWidth <= 780) {
                 this.wideWindow = false
               }
             })
   },
   data() {
     return {
-      wideWindow: window.innerWidth >= 500 ? true : false,
+      wideWindow: window.innerWidth > 780 ? true : false,
       headerTextRight: ["Calculator", "Guidelines", "Project"],
       drawer: false
+    }
+  },
+  methods: {
+    redirectToCU() {
+      window.open("https://composites-united.com/", "_blanc")
     }
   }
 }

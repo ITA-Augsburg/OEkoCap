@@ -35,7 +35,7 @@
         methods: {
             handleBackButton() {
                 /**
-                 * Sends user back to the start-page
+                 * Sends user back to the start-page.
                  * Resets App.vue->app_input, since the user can start choosing values and then go back to the start-page.
                  */
                 this.$emit("clearAppInput", undefined)

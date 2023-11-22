@@ -6,19 +6,19 @@
 
 <template>
 
-    <div class="input_area">
+    <div class="input_area_for_step_2_subheader">
 
         <div class="tooltip_container">
             <v-select
             v-model="matrix_type"
             v-on:update:model-value="[updateMatrixRoute(), saveNewInputs()]"
-            class="select matrix_type_select"
+            class="select select_maincolor matrix_type_select"
             label="Type"
             single-line
             suffix="Type"
             :items=type_options
             variant="solo"
-            :bg-color=color_green />
+            :bg-color=color_main />
 
             <Tooltip
             :tooltip_enabled=false
@@ -30,13 +30,13 @@
             <v-select
             v-model="matrix_polymer"
             v-on:update:model-value="saveNewInputs()"
-            class="select matrix_polymer_select"
+            class="select select_maincolor matrix_polymer_select"
             label="Polymer"
             single-line
             suffix="Polymer"
             :items=polymer_options
             variant="solo"
-            :bg-color=color_green />
+            :bg-color=color_main />
 
             <Tooltip
             :tooltip_enabled=false
@@ -56,8 +56,8 @@
             v-model="matrix_fmc"
             v-on:update:model-value="saveNewInputs()"
             class="slider"
-            :color=color_green
-            :thumb-color=color_green
+            :color=color_main
+            :thumb-color=color_main
             thumb-size="20"
             :min="20"
             :max="40"
@@ -73,13 +73,13 @@
                 v-on:update:model-value="saveNewInputs()"
                 class="checkbox matrix_iip_checkbox"
                 label="Insert matrix as fibers in textile process"
-                :color=color_green />
+                :color=color_main />
                 <v-checkbox
                 v-if="matrix_type === 'Thermoset'"
                 disabled
                 class="checkbox matrix_iip_checkbox"
                 label="Insert matrix as fibers in textile process"
-                :color=color_green />
+                :color=color_main />
             </div>
             <Tooltip
             :tooltip_enabled=false
@@ -92,7 +92,7 @@
         :label=label
         :tooltip_text_prop=Tooltip_texts.test
         :disabled=false
-        :color_green="color_green"
+        :color_main="color_main"
         :expert_mode_cost_prop=expert_mode_cost
         :expert_mode_gwp_prop=expert_mode_gwp />
 
@@ -106,7 +106,7 @@
  * Every time an input is made, every input of this component is emitted to App.vue->app_input.
  */
     export default {
-        props: ["app_input_prop", "matrix_insertion_prop", "color_green"],
+        props: ["app_input_prop", "matrix_insertion_prop", "color_main"],
         emits: ["saveNewInputs", "resetProcessingMasslosses"],
         components: {
             Expert_mode: Expert_mode
