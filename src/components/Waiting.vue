@@ -1,6 +1,6 @@
 <template>
 
-    <div class="input_area">
+    <div class="waiting_area">
 
         <div class="loading_logo_entry_point">
             <img :src="require('../assets/loading_cogs.png')" class="loading_img loading_cogs" />

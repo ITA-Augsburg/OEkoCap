@@ -1,6 +1,6 @@
 <template>
 
-    <div class="input_area">
+    <div class="error_area">
 
         <p class="text error_text">Error:<br>{{error_message_prop}}</p>
 

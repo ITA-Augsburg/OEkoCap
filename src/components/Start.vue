@@ -50,7 +50,7 @@
         height="47px"
         ><p class="start_button_text">Start</p></v-btn>
 
-        <v-btn
+        <!-- <v-btn
         style="margin-top: 10px;"
         class="start_button"
         v-bind:color=color_main
@@ -58,7 +58,7 @@
         elevation="5"
         width="160px"
         height="47px"
-        ><p class="start_button_text">example</p></v-btn>
+        ><p class="start_button_text">example</p></v-btn> -->
 
     </div>
 

@@ -1,12 +1,12 @@
 .start_area {
     width: var(--content-width);
     margin: 0px calc((100vw - var(--content-width)) / 2) 0px calc((100vw - var(--content-width)) / 2);
-    min-height: calc(100vh - 80px - 216.8px - 150px);
+    min-height: calc(100vh - 80px - 234.36px - 145.5px);
     align-content: center;
 }
 @media(max-width: 500px) {
     .start_area {
-        min-height: calc(100vh - 80px - 203.95px - 185.5px);
+        min-height: calc(100vh - 80px - 267.95px - 181px);
     }
 }
 

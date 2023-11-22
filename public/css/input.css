@@ -1,16 +1,32 @@
-.input_area {
+.input_area_for_step_1_subheader {
     width: var(--content-width);
     margin: 0px calc((100vw - var(--content-width)) / 2) 30px calc((100vw - var(--content-width)) / 2);
-    min-height: calc(100vh - 80px - 175px - 177.5px - 30px); /*total height - header h - subheader h - footer h - margin-bottom*/;
+    min-height: calc(100vh - 80px - 175px - 173px - 30px); /*total height - header h - subheader h - footer h - margin-bottom*/;
     /* overflow-y: visible;
     overflow-x: hidden; */
     position: relative;
 }
 @media (max-width: 500px) {
-    .input_area {
+    .input_area_for_step_1_subheader {
         width: 100vw;
         margin: 0px 0px 30px 0px;
-        min-height: calc(100vh - 80px - 175px - 145px - 30px); /*total height - header h - subheader h - footer h - margin-bottom*/
+        min-height: calc(100vh - 80px - 175px - 140.5px - 30px); /*total height - header h - subheader h - footer h - inputarea-margin-bottom*/
+    }
+}
+
+.input_area_for_step_2_subheader {
+    width: var(--content-width);
+    margin: 0px calc((100vw - var(--content-width)) / 2) 30px calc((100vw - var(--content-width)) / 2);
+    min-height: calc(100vh - 80px - 225px - 173px - 30px); /*total height - header h - subheader h - footer h - margin-bottom*/;
+    /* overflow-y: visible;
+    overflow-x: hidden; */
+    position: relative;
+}
+@media (max-width: 500px) {
+    .input_area_for_step_2_subheader {
+        width: 100vw;
+        margin: 0px 0px 30px 0px;
+        min-height: calc(100vh - 80px - 225px - 140.5px - 30px); /*total height - header h - subheader h - footer h - inputarea-margin-bottom*/
     }
 }
 

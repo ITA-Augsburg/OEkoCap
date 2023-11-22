@@ -6,7 +6,7 @@
 </script>
 <template>
 
-    <div class="input_area">
+    <div class="input_area_for_step_2_subheader">
 
         <div class="tooltip_container">
 

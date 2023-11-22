@@ -1,0 +1,50 @@
+.info_area {
+    width: var(--content-width);
+    margin: 0px calc((100vw - var(--content-width)) / 2) 0px calc((100vw - var(--content-width)) / 2);
+    height: fit-content;
+    min-height: calc(100vh - 80px - 175px - 145.5px); /*total height - header h - subheader h - footer h*/
+    align-content: center;
+}
+@media (max-width: 500px) {
+    .info_area {
+        width: 100vw;
+        min-height: calc(100vh - 80px - 175px - 181px - 30px); /*total height - header h - subheader h - footer h - infoarea marginbottom*/
+        margin: 0px 0px 30px 0px;
+        padding: 0px 20px;
+        text-align: justify;
+        font-size: 14px;
+    }
+}
+
+.waiting_area {
+    width: var(--content-width);
+    margin: 0px calc((100vw - var(--content-width)) / 2) 30px calc((100vw - var(--content-width)) / 2);
+    min-height: calc(100vh - 80px - 175px - 173px - 30px); /*total height - header h - subheader h - footer h - margin-bottom*/;
+    /* overflow-y: visible;
+    overflow-x: hidden; */
+    position: relative;
+}
+@media (max-width: 500px) {
+    .waiting_area {
+        width: 100vw;
+        margin: 0px 0px 30px 0px;
+        min-height: calc(100vh - 80px - 175px - 140.5px - 30px); /*total height - header h - subheader h - footer h - inputarea-margin-bottom*/
+    }
+}
+
+.error_area {
+    width: var(--content-width);
+    margin: 0px calc((100vw - var(--content-width)) / 2) 30px calc((100vw - var(--content-width)) / 2);
+    min-height: calc(100vh - 80px - 175px - 170.5px - 30px); /*total height - header h - subheader h - footer h - margin-bottom*/;
+    /* overflow-y: visible;
+    overflow-x: hidden; */
+    position: relative;
+}
+@media (max-width: 500px) {
+    .error_area {
+        width: 100vw;
+        margin: 0px 0px 30px 0px;
+        /* min-height: calc(100vh - 80px - 175px - 170.5px - 30px); */
+        /*total height - header h - subheader h - footer h - inputarea-margin-bottom*/
+    }
+}
