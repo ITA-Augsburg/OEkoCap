@@ -18,8 +18,8 @@ const props = {
     color_black: "#000000",
     color_lightgrey: "#F2F2F2",
     color_grey: "#4A4A4A",
-    color_green: "#55CD89",
-    color_darkgreen: "#7fc79f",
+    color_main: "#E94E24",
+    color_main_disabled: "#e89780",
 }
 
 const routes = [
@@ -33,7 +33,7 @@ const routes = [
         name: "StartView",
         component: StartView,
         props: {
-            color_green: props.color_green
+            color_main: props.color_main
         }
     },
     {
@@ -41,7 +41,7 @@ const routes = [
         name: "WasteView",
         component: WasteView,
         props: {
-            color_green: props.color_green,
+            color_main: props.color_main,
             color_lightgrey: props.color_lightgrey
         }
     },
@@ -50,7 +50,7 @@ const routes = [
         name: "SeparationView",
         component: SeparationView,
         props: {
-            color_green: props.color_green,
+            color_main: props.color_main,
             color_lightgrey: props.color_lightgrey
         }
     },
@@ -59,7 +59,7 @@ const routes = [
         name: "MatrixView",
         component: MatrixView,
         props: {
-            color_green: props.color_green,
+            color_main: props.color_main,
             color_lightgrey: props.color_lightgrey
         }
     },
@@ -68,7 +68,7 @@ const routes = [
         name: "TextileView",
         component: TextileView,
         props: {
-            color_green: props.color_green,
+            color_main: props.color_main,
             color_lightgrey: props.color_lightgrey
         }
     },
@@ -77,9 +77,9 @@ const routes = [
         name: "ProcessingView",
         component: ProcessingView,
         props: {
-            color_green: props.color_green,
+            color_main: props.color_main,
             color_lightgrey: props.color_lightgrey,
-            color_darkgreen: props.color_darkgreen
+            color_main_disabled: props.color_main_disabled
         }
     },
     {
@@ -87,7 +87,7 @@ const routes = [
         name: "WaitingView",
         component: WaitingView,
         props: {
-            color_green: props.color_green,
+            color_main: props.color_main,
             color_lightgrey: props.color_lightgrey
         }
     },
@@ -96,7 +96,7 @@ const routes = [
         name: "ResultsView",
         component: ResultsView,
         props: {
-            color_green: props.color_green,
+            color_main: props.color_main,
             color_lightgrey: props.color_lightgrey
         }
     },
@@ -105,7 +105,7 @@ const routes = [
         name: "ErrorView",
         component: ErrorView,
         props: {
-            color_green: props.color_green,
+            color_main: props.color_main,
             color_lightgrey: props.color_lightgrey
         }
     },
@@ -114,7 +114,7 @@ const routes = [
         name: "GuidelinesView",
         component: GuidelinesView,
         props: {
-            color_green: props.color_green,
+            color_main: props.color_main,
             color_lightgrey: props.color_lightgrey
         }
     },
@@ -123,7 +123,7 @@ const routes = [
         name: "ProjectView",
         component: ProjectView,
         props: {
-            color_green: props.color_green,
+            color_main: props.color_main,
             color_lightgrey: props.color_lightgrey
         }
     },
@@ -132,7 +132,7 @@ const routes = [
         name: "ImprintView",
         component: ImprintView,
         props: {
-            color_green: props.color_green,
+            color_main: props.color_main,
             color_lightgrey: props.color_lightgrey
         }
     }

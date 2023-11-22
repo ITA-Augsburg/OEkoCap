@@ -34,9 +34,9 @@
     <v-dialog v-model=dialogOpen width="580px" persistent>
         <v-card>
             <v-card-text>
-              <p style="text-align: center; font-size: 19px;">This website requires cookies to function correctly.<br>
+              <p style="text-align: center; font-size: 19px; color: var(--color-grey);">This website requires cookies to function correctly.<br>
               By closing this message, you accept the use of cookies.<br>
-              Cookie details can be found <span @click="acceptCookies(true)" style="color: #55CD89; cursor: pointer;">here</span>.</p>
+              Cookie details can be found <span @click="acceptCookies(true)" style="color: var(--color-main); cursor: pointer;">here</span>.</p>
             </v-card-text>
             <v-card-actions>
                 <v-btn block @click="acceptCookies(false)">Accept</v-btn>

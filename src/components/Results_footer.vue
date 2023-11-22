@@ -18,7 +18,7 @@
                 elevation="5"
                 width="225px"
                 height="55px"
-                ><p class="results_pdf_button_text">download results</p></v-btn>
+                ><p class="results_pdf_button_text">download as pdf</p></v-btn>
             </div>
         
             <Copyright_text />
@@ -27,7 +27,8 @@
     </div>
 
     <img :src='require("../assets/logo_oekocap_schwarz.png")' style="display: none;"  id="oekocap_logo_black_results">
-    <img :src='require("../assets/logos_together.png")' style="display: none;"  id="logos_together_results">
+    <img :src='require("../assets/logos_together_with_cu.png")' style="display: none;"  id="logos_together_results">
+    <!-- <img :src='require("../assets/cu_logo_colored.png")' style="display: none;"  id="cu_logo"> -->
     <!-- <img :src='require("../assets/frauenhofer_logo.png")' style="display: none;"  id="frauenhofer_logo_results">
     <img :src='require("../assets/logo_bundesm_wirtschaft_klimaschutz.png")' style="display: none;"  id="bundesm_logo_results">
     <img :src='require("../assets/ita_logo_bunt.png")' style="display: none;"  id="ita_logo_results"> -->
@@ -68,6 +69,7 @@
 
                 let headerLogo = this.imageToDataUrl("oekocap_logo_black_results")
                 let footer_logos = this.imageToDataUrl("logos_together_results")
+                // let cu_logo = this.imageToDataUrl("cu_logo")
                 // let frauenhofer_logo = this.imageToDataUrl("frauenhofer_logo_results")
                 // let bundesm_logo = this.imageToDataUrl("bundesm_logo_results")
                 // let ita_logo = this.imageToDataUrl("ita_logo_results")
@@ -88,9 +90,11 @@
                     //             headerRows: 0,
                     //             widths: ["*"],
                     //             body: [[
-                    //                 { text: "www.oekocap.org", fontSize: 7, alignment: "right", margin: [ 0, 7, 40, 0 ] }
+                    //             { image: cu_logo, fit:[150, 150], alignment: "right", margin: [ 0, 7, 40, 0 ] }
                     //             ]]
                     //         }
+
+                    //         image: cu_logo, fit:[50, 50], alignment: "right", margin: [ 0, 10, 20, 0 ]
                     //     }
                     // },
                     footer: function(currentPage, pageCount) {

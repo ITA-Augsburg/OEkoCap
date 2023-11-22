@@ -15,16 +15,16 @@
     :app_input_prop=app_input_prop
     :proc_moi_prop=proc_moi_prop
     :matrix_insertion_prop=matrix_insertion_prop
-    :color_green=color_green
+    :color_main=color_main
     :color_lightgrey=color_lightgrey
-    :color_darkgreen=color_darkgreen
+    :color_main_disabled=color_main_disabled
     :buttonCalculateEnabled=buttonCalculateEnabled
     @saveNewInputs="saveNewInputs($event)"
     @calculateButton="calculateButton()" />
     <Input_footer
     :id=id
     :progressValue=progressValue
-    :color_green=color_green
+    :color_main=color_main
     :color_lightgrey=color_lightgrey
     :button2enabled=button2enabled
     :button3enabled=button3enabled
@@ -42,7 +42,7 @@ export default {
     "app_input_prop", "waste_fine_checkbox_prop", "matrix_insertion_prop", "proc_moi_prop",
     "app_output_prop", "startedCorrectly", "error_message_prop",
     "buttonCalculateEnabled", "button2enabled", "button3enabled", "button4enabled", "button5enabled",
-    "progressValue", "color_green", "color_lightgrey", "color_darkgreen"
+    "progressValue", "color_main", "color_lightgrey", "color_main_disabled"
     ],
     emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "setStartedCorrectly", "setErrorMessage", "resetProcessingMasslosses"],
     mounted() {

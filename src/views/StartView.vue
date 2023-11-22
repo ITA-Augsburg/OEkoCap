@@ -7,7 +7,7 @@
 <template>
     <Start_subheader />
     <Start
-    :color_green=color_green
+    :color_main=color_main
     @clearAppInput="clearAppInput()" />
     <Sponsor_footer />
 </template>
@@ -21,7 +21,7 @@ export default {
         "app_input_prop", "waste_fine_checkbox_prop", "matrix_insertion_prop", "proc_moi_prop",
         "app_output_prop", "startedCorrectly",  "error_message_prop",
         "buttonCalculateEnabled", "button2enabled", "button3enabled", "button4enabled", "button5enabled",
-        "progressValue", "color_green"
+        "progressValue", "color_main"
     ],
     emits: ["clearAppInput", "updateInputFooter", "saveNewInputs", "calculateButton", "setStartedCorrectly", "setErrorMessage", "resetProcessingMasslosses"],
     data: () => ({

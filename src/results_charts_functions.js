@@ -186,18 +186,19 @@ export function createCharts(output, benchmarks) {
     if(processesGwpOk) {
         let counter = 0
         output.processes.forEach((process) => {
+            // console.log(process.name)
             if(process.name === "Oxidation") return // equivalent of continue in a for() loop
             pieChartLabels.push(process.name)
             let dataPoint = (process.maxGWPValue + process.minGWPValue) / 2
             data.push(Math.round(dataPoint * 100) / 100)
-            pieChartColors.push(randomColor(counter, 1, output.processes.length+1, "pie")) // numberOfElements+1 because after this forEach one more element is added
+            pieChartColors.push(randomColor(counter, 1, output.processes.length-1+1, "pie")) // numberOfElements-1 because process.name = oxidation is skipped; +1 because after this forEach one more element is added (output.materials.matrix)
             counter++
         })
         // add material portion
         pieChartLabels.push(output.materials.matrix)
         let dataPoint = (output.materials.maxGWPValue + output.materials.minGWPValue) / 2
         data.push(Math.round(dataPoint * 100) / 100)
-        pieChartColors.push(randomColor(counter, 1, output.processes.length+1, "pie"))
+        pieChartColors.push(randomColor(counter, 1, output.processes.length-1+1, "pie"))
         counter++
         addPieCharts(charts, category, name, title, pieChartLabels, data, pieChartColors, unit, parentId)
     }
@@ -226,14 +227,14 @@ export function createCharts(output, benchmarks) {
             pieChartLabels.push(process.name)
             let dataPoint = (process.minCostPerKg + process.maxCostPerKg) / 2
             data.push(Math.round(dataPoint * 100) / 100)
-            pieChartColors.push(randomColor(counter, 1, output.processes.length+1, "pie")) // numberOfElements+1 because after this forEach one more element is added
+            pieChartColors.push(randomColor(counter, 1, output.processes.length-1+1, "pie")) // numberOfElements-1 because process.name = oxidation is skipped; +1 because after this forEach one more element is added (output.materials.matrix)
             counter++
         })
         // add material portion
         pieChartLabels.push(output.materials.matrix)
         let dataPoint = (output.materials.minCostPerKg + output.materials.maxCostPerKg) / 2
         data.push(Math.round(dataPoint * 100) / 100)
-        pieChartColors.push(randomColor(counter, 1, output.processes.length+1, "pie"))
+        pieChartColors.push(randomColor(counter, 1, output.processes.length-1+1, "pie"))
         counter++
         addPieCharts(charts, category, name, title, pieChartLabels, data, pieChartColors, unit, parentId)
     }
@@ -313,7 +314,7 @@ function createBarChart(id, title, benchmarkLabels, data, unit, legendFontSize, 
                 {
                     data: checkBarChartData(data),
                     backgroundColor: benchmarkLabels.length <= 2
-                        ? ["#55CD89", "#F2F2F2"]
+                        ? ["#E94E24", "#F2F2F2"]
                         : lotsOfColors,
                     barThickness: benchmarkLabels.length <= 2
                         ? 80
@@ -323,7 +324,7 @@ function createBarChart(id, title, benchmarkLabels, data, unit, legendFontSize, 
                     // hoverBorderWidth: 2,
                     // hoverBorderColor: "#000",
                     borderSkipped: false,
-                    hoverBackgroundColor: "#55CD89",
+                    hoverBackgroundColor: "#E94E24",
                     categoryPercentage: benchmarkLabels.length <= 2
                         ? undefined
                         : 0.8,
@@ -1012,7 +1013,7 @@ function setAshbyChartData(output, benchmarks, mechArg1, mechArg2) {
         xMax: outputMinMax[selection_x].max,
         yMin: outputMinMax[selection_y].min,
         yMax: outputMinMax[selection_y].max,
-        backgroundColor: 'hsla(146, 55%, 57%, 0.45)'
+        backgroundColor: 'hsla(13, 82%, 53%, 0.45)'
     }
     let data = {
         ellipses: [],
@@ -1133,25 +1134,31 @@ function randomColor(i, alpha, numberOfElements, chart_type) {
         console.error("Invalid 'chart_type' parameter in randomColor(..) function in results_charts_functions.js.")
     }
     
-    // if there aren't many processes, hand-pick a beautiful set of colors
-    // else assign processes ugly colors that are as different as possible, picked by a machine
+    // if there aren't many processes, hand-pick a beautiful set of colors.
+    // else assign processes ugly colors that are as different as possible, picked by the algorithm below.
     if(numberOfElements <= 5 && ["bar", "pie"].includes(chart_type)) {
         switch(i) {
             case 0:
-                return "#69ffaa" // lightest green
+                return "#ff5526" // lightest red
+                // return "#0088ff" // lightest blue
             case 1:
-                return "#54cc88" // light
+                return "#cc441f" // light red
+                // return "#006dcc" // light blue
             case 2:
-                return "#3f9966" // middle
+                return "#993317" // middle red
+                // return "#005299" // middle blue
             case 3:
-                return "#2a6644" // dark
+                return "#66220f" // dark red
+                // return "#003666" // dark blue
             case 4:
-                return "#153322" // darkest
+                return "#331108" // darkest red
+                // return "#001b33" // darkest blue
         }
     } else {
-        // set interval depending on numberOfElements and start from 146
+        // set interval depending on numberOfElements and start from 13
         let interval = 356 / numberOfElements
-        let h = (146 + i * interval) % 356, s = 55, l = 57
+        // let h = (146 + i * interval) % 356, s = 55, l = 57
+        let h = (13 + i * interval) % 356, s = 82, l = 53
         // console.log("hsla(" + h +"°, " + s + "%, " + l + "%, " + alpha + ")")
         return "hsla(" + h + ", " + s + "%, " + l + "%, " + alpha + ")"
     }
