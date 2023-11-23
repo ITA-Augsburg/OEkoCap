@@ -573,11 +573,12 @@ export default {
         return res.data
       }).then(data => {
           // console.log(data)
-          try {        
-            let data1=JSON.stringify(data)
+          try {
+			let data1 = data
             this.appOutput = data1.replaceAll("INFINITY", "null")
             this.appOutput = JSON.parse(this.appOutput)
             // console.log(this.appOutput)
+			// console.log(typeof this.appOutput)
           } catch (error) {
             this.errorMessage = "Internal error. No output could be generated based on the given input."
             router.push({name: "ErrorView"})
