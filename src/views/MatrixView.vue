@@ -6,17 +6,22 @@
 </script>
 
 <template>
+    <!-- Subheader on the matrix-page -->
     <Input_subheader
     :text_2='"Step 2: Part production"'
     :text_3='"MATRIX"'
     :tooltip_enabled=true
     :tooltip_text=Tooltip_texts.matrix_subheader_tooltip />
+
+    <!-- Main area on the matrix-page -->
     <Input_matrix
     :color_main=color_main
     :matrix_insertion_prop=matrix_insertion_prop
     :app_input_prop=app_input_prop
     @saveNewInputs="saveNewInputs($event)"
     @resetProcessingMasslosses="resetProcessingMasslosses()" />
+
+    <!-- Footer on the matrix-page -->
     <Input_footer
     :id=id
     :progressValue=progressValue

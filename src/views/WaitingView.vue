@@ -5,12 +5,17 @@
 </script>
 
 <template>
+    <!-- Subheader on the waiting-page -->
     <Input_subheader
     :text_2='"CALCULATOR"'
     :text_3='"⠀"'
     :tooltip_enabled=false
     :tooltip_text="''" />
-    <Waiting></Waiting>
+
+    <!-- Main area on the waiting-page -->
+    <Waiting />
+
+    <!-- Footer on the waiting-page -->
     <Input_footer
     :id=id
     :progressValue=progressValue

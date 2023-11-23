@@ -1,5 +1,6 @@
 <template>
 
+    <!-- centered container with set width -->
     <div class="error_area">
 
         <p class="text error_text">Error:<br>{{error_message_prop}}</p>

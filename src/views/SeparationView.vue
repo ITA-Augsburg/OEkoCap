@@ -6,15 +6,21 @@
 </script>
 
 <template>
+
+    <!-- Subheader on the separation-page -->
     <Input_subheader
     :text_2='"Step 1: Recycling"'
     :text_3='"SEPARATION"'
     :tooltip_enabled=true
     :tooltip_text=Tooltip_texts.separation_subheader_tooltip />
+
+    <!-- Main area on the separation-page -->
     <Input_separation
     :color_main=color_main
     :app_input_prop=app_input_prop
     @saveNewInputs="saveNewInputs($event)" />
+
+    <!-- Footer on the separation-page -->
     <Input_footer
     :id=id
 

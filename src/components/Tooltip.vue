@@ -1,4 +1,5 @@
 <template>
+    <!-- vuetify tooltip-component with a div-parent that controls the existence and the text of the tooltip -->
     <div
     v-if="tooltip_enabled"
     :class=tooltip_class >
@@ -26,6 +27,9 @@
 <script>
 /**
  * A tooltip that can be hovered to display text.
+ * Props:
+ * tooltip_text (string): text to be displayed.
+ * tooltip_enabled (boolean): controls the existence of the element.
  */
     export default {
         props: ["tooltip_class", "tooltip_text", "tooltip_enabled"],

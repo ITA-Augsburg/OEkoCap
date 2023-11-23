@@ -1,4 +1,6 @@
 <template>
+
+    <!-- The data-protection document in html-form -->
     <div style="color: var(--color-grey);">
 
         <h2>Data protection</h2>

@@ -6,9 +6,12 @@
 
 <template>
     
+    <!-- centered container -->
     <div class="input_area_for_step_1_subheader">
         
         <div class="tooltip_container">
+
+            <!-- waste-type dropdown -->
             <v-select
             class="select select_maincolor waste_type_select"
             label="Type"
@@ -20,6 +23,7 @@
             v-model=waste_type
             v-on:update:model-value="[updateWasteRoute(), saveNewInputs()]" />
 
+            <!-- optional waste-type tooltip -->
             <Tooltip
             :tooltip_enabled=false
             :tooltip_class="'tooltip select_tooltip'"
@@ -29,6 +33,8 @@
         <div class="tooltip_container"
         v-if="waste_type === 'End of Life' || waste_type === undefined">
             <div class="checkbox_container">
+
+                <!-- waste-size checkbox, enabled -->
                 <v-checkbox
                 v-if="waste_type === 'End of Life'"
                 @click="[toggleSizeCheckbox(), updateWasteRoute(), saveNewInputs()]"
@@ -36,6 +42,8 @@
                 label="Waste Size > 1.5m"
                 :color=color_main
                 v-model="size1dot5" />
+
+                <!-- waste-size checkbox, disabled -->
                 <v-checkbox
                 v-if="waste_type === undefined"
                 disabled
@@ -45,6 +53,7 @@
                 v-model="size1dot5" />
             </div>
 
+            <!-- optional waste-size tooltip -->
             <Tooltip
             :tooltip_enabled=false
             :tooltip_class="'tooltip waste_size_tooltip'"
@@ -56,10 +65,16 @@
         waste_type === undefined ||
         waste_type === 'End of Life' && size1dot5 === true ||
         waste_type === 'End of Life' && size1dot5 === false">
+
+            <!-- coarse-shredding mass-loss text enabled -->
             <p v-if="waste_type === 'End of Life' && size1dot5 === true"
             class="text waste_coarse_text">Coarse Shredding - Mass loss</p>
+
+            <!-- coarse-shredding mass-loss text disabled -->
             <p v-if="waste_type === undefined || waste_type === 'End of Life' && size1dot5 === false"
             class="text waste_coarse_text text_disabled">Coarse Shredding - Mass loss</p>
+
+            <!-- optional coarse-shredding tooltip -->
             <Tooltip
             :tooltip_enabled=false
             :tooltip_class="'tooltip waste_coarse_text_tooltip'"
@@ -67,6 +82,8 @@
         </div>
 
         <div class="slider_container">
+
+            <!-- coarse-shredding slider, enabled -->
             <v-slider
             v-if="waste_type === 'End of Life' && size1dot5 === true"
             v-on:update:model-value="saveNewInputs()"
@@ -78,6 +95,8 @@
             :max="10"
             :step="1"
             v-model="shred_1_ml" />
+
+            <!-- coarse-shredding slider, disabled -->
             <v-slider
             v-if="waste_type === undefined || waste_type === 'End of Life' && size1dot5 === false"
             disabled
@@ -89,11 +108,14 @@
             :max="10"
             :step="1"
             v-model="shred_1_ml" />
+
+            <!-- coarse-shredding percentage-text, only displayed if coarse-shredding slider enabled -->
             <p
             v-if="waste_type === 'End of Life' && size1dot5 === true"
             class="percentage">{{ Math.round(shred_1_ml * 10) / 10 }}%</p>
         </div>
 
+        <!-- coarse-shredding expert-mode, enabled -->
         <Expert_mode
         v-if="!coarse_expmode_disabled && coarse_expmode_disabled !== undefined"
         @newExpertModeValues="newExpertModeValues($event)"
@@ -103,6 +125,8 @@
         :expert_mode_gwp_prop=shred_1_gwp
         :expert_mode_cost_prop=shred_1_cost
         :color_main=color_main />
+
+        <!-- coarse-shredding expert-mode, disabled -->
         <Expert_mode
         v-if="coarse_expmode_disabled && coarse_expmode_disabled !== undefined"
         :label=coarse_expmode_label
@@ -113,13 +137,19 @@
         :color_main=color_main />
 
         <div class="tooltip_container">
+
+            <!-- fine-shredding checkbox for toggling fine-shredding input-elements -->
             <div class="checkbox_container waste_fine_checkbox_container">
+
+                <!-- fine-shredding checkbox enabled -->
                 <v-checkbox
                 v-if="waste_type === 'End of Life' && size1dot5"
                 @click="[toggleFineCheckbox(), updateWasteRoute(), saveNewInputs()]"
                 class="checkbox waste_fine_checkbox"
                 :color=color_main
                 v-model="fine_checkbox" />
+
+                <!-- fine-shredding checkbox disabled -->
                 <v-checkbox
                 v-if="waste_type === 'End of Life' && !size1dot5"
                 disabled
@@ -127,16 +157,22 @@
                 :color=color_main
                 v-model="fine_checkbox" />
 
+            <!-- fine-, cutting-shredding text -->
             </div>
             <p v-if="shred_2_type !== 'Cutting'" id="waste_fine_text" class="text waste_fine_text"
             @click="handleFineMassLossText()">Fine Shredding - Mass loss</p>
             <p v-if="shred_2_type === 'Cutting'" class="text waste_cutting_text">Cutting - Mass loss</p>
+
+            <!-- optional fine-, cutting-shredding tooltip -->
             <Tooltip
             :tooltip_enabled=false
             :tooltip_class="'tooltip waste_fine_text_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>
+
         <div class="slider_container">
+
+            <!-- fine-, cutting-shredding slider enabled -->
             <v-slider
             v-if="fine_checkbox"
             v-on:update:model-value="saveNewInputs()"
@@ -148,6 +184,8 @@
             :max="10"
             :step="1"
             v-model="shred_2_ml" />
+
+            <!-- fine-, cutting-shredding slider disabled -->
             <v-slider
             v-if="!fine_checkbox"
             class="slider"
@@ -159,11 +197,14 @@
             :max="10"
             :step="1"
             v-model="shred_2_ml" />
+
+            <!-- fine-, cutting-shredding percentage-text, only displayed if fine-, cutting-shredding slider enabled -->
             <p
             v-if="fine_checkbox"
             class="percentage">{{ Math.round(shred_2_ml * 10) / 10 }}%</p>
         </div>
 
+        <!-- fine-, cutting-shredding expert-mode, enabled -->
         <Expert_mode
         v-if="waste_type === 'Cut-Off' || waste_type === 'End of Life' && fine_checkbox"
         @newExpertModeValues="newExpertModeValues($event)"
@@ -173,6 +214,8 @@
         :expert_mode_cost_prop=shred_2_cost
         :expert_mode_gwp_prop=shred_2_gwp
         :color_main=color_main />
+
+        <!-- fine-, cutting-shredding expert-mode, disabled -->
         <Expert_mode
         v-if="waste_type === 'End of Life' && !fine_checkbox"
         :label=fine_expmode_label
@@ -184,6 +227,7 @@
 
         <br>
 
+        <!-- transport expert-mode -->
         <Expert_mode
         @newExpertModeValues="newExpertModeValues($event)"
         :label=transport_label
@@ -201,6 +245,11 @@
 /**
  * This component holds input-elements related to App.vue->app_input.waste, .shredding_1, .shredding_2 and .transportation.
  * Every time an input is made, every input of this component is emitted to App.vue->app_input.
+ * Props:
+ * app_input_prop (json): the input-json that goes into recycling.exe on the server. This input is always updated when user interacts with any of the input-elements on the input-pages.
+ * waste_fine_checkbox_prop (boolean): controls wether or not the fine-shredding elements are enabled.
+ * Emits:
+ * saveNewInputs: whenever an input-element is interacted with, the modified values are sent to App.vue->app_input.
  */
     export default {
         props: ["app_input_prop", "color_main", "waste_fine_checkbox_prop"],

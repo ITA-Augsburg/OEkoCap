@@ -6,10 +6,16 @@ import { createCharts } from "../results_charts_functions.js"
 
 <template>
 
+    <!-- centered container with set width -->
     <div class="results_area">
 
+        <!-- container for the buttons "GWP" and "COST" -->
         <div class="results_buttoncontainer">
+
+            <!-- GWP-button, depending wether the button is active or not, the maincolor or the grey version will display -->
             <div class="results_left_buttoncontainer">
+
+                <!-- maincolor version -->
                 <v-btn
                 v-if=gwp_button_active
                 @click='handleUI("gwp")'
@@ -18,6 +24,8 @@ import { createCharts } from "../results_charts_functions.js"
                 width="225px"
                 height="55px"
                 ><p class="results_button_text active_button_text">GWP</p></v-btn>
+
+                <!-- grey version -->
                 <v-btn
                 v-if=!gwp_button_active
                 @click='handleUI("gwp")'
@@ -28,7 +36,10 @@ import { createCharts } from "../results_charts_functions.js"
                 ><p class="results_button_text inactive_button_text">GWP</p></v-btn>
             </div>
 
+            <!-- COST-button, depending wether the button is active or not, the maincolor or the grey version will display -->
             <div class="results_right_buttoncontainer">
+
+                <!-- maincolor version -->
                 <v-btn
                 v-if=cost_button_active
                 @click='handleUI("cost")'
@@ -37,6 +48,8 @@ import { createCharts } from "../results_charts_functions.js"
                 width="225px"
                 height="55px"
                 ><p class="results_button_text active_button_text">COST</p></v-btn>
+
+                <!-- grey version -->
                 <v-btn
                 v-if=!cost_button_active
                 @click='handleUI("cost")'
@@ -48,6 +61,7 @@ import { createCharts } from "../results_charts_functions.js"
             </div>
         </div>
 
+        <!-- benchmark dropdown -->
         <v-select
         class="select select_maincolor results_benchmark_process_select"
         label="Benchmarks"
@@ -58,13 +72,20 @@ import { createCharts } from "../results_charts_functions.js"
         v-model=selected_benchmark
         v-on:update:model-value='handleUI("benchmark_select")' />
 
+        <!-- container that holds the gwp- or cost-barchart depending on the active button above -->
         <div id="gwp_or_cost_charts" />
         <br><br>
 
+        <!-- container that holds the gwp- or cost-piechart depending on the active button above -->
         <div id="gwp_or_cost_per_process_charts" />
 
+        <!-- container for the buttons "tensile" and "flexural" -->
         <div class="results_buttoncontainer">
+
+            <!-- tensile-button, depending wether the button is active or not, the maincolor or the grey version will display -->
             <div class="results_left_buttoncontainer">
+
+                <!-- maincolor version -->
                 <v-btn
                 v-if=tensile_button_active
                 @click='handleUI("tensile")'
@@ -73,6 +94,8 @@ import { createCharts } from "../results_charts_functions.js"
                 width="225px"
                 height="55px"
                 ><p class="results_button_text active_button_text">TENSILE</p></v-btn>
+
+                <!-- grey version -->
                 <v-btn
                 v-if=!tensile_button_active
                 @click='handleUI("tensile")'
@@ -83,7 +106,10 @@ import { createCharts } from "../results_charts_functions.js"
                 ><p class="results_button_text inactive_button_text">TENSILE</p></v-btn>
             </div>
 
+            <!-- flexural-button, depending wether the button is active or not, the maincolor or the grey version will display -->
             <div class="results_right_buttoncontainer">
+
+                <!-- maincolor version -->
                 <v-btn
                 v-if=flexural_button_active
                 @click='handleUI("flexural")'
@@ -92,6 +118,8 @@ import { createCharts } from "../results_charts_functions.js"
                 width="225px"
                 height="55px"
                 ><p class="results_button_text active_button_text">FLEXURAL</p></v-btn>
+
+                <!-- grey version -->
                 <v-btn
                 v-if=!flexural_button_active
                 @click='handleUI("flexural")'
@@ -103,8 +131,13 @@ import { createCharts } from "../results_charts_functions.js"
             </div>
         </div>
 
+        <!-- container for the buttons "zero degree" and "ninety degree" -->
         <div class="results_buttoncontainer">
+
+            <!-- zero-button, depending wether the button is active or not, the maincolor or the grey version will display -->
             <div class="results_left_buttoncontainer">
+
+                <!-- maincolor version -->
                 <v-btn
                 v-if=zero_button_active
                 @click='handleUI("zero")'
@@ -113,6 +146,8 @@ import { createCharts } from "../results_charts_functions.js"
                 width="225px"
                 height="55px"
                 ><p class="results_button_text active_button_text">0°</p></v-btn>
+
+                <!-- grey version -->
                 <v-btn
                 v-if=!zero_button_active
                 @click='handleUI("zero")'
@@ -123,7 +158,10 @@ import { createCharts } from "../results_charts_functions.js"
                 ><p class="results_button_text inactive_button_text">0°</p></v-btn>
             </div>
 
+            <!-- ninety-button, depending wether the button is active or not, the maincolor or the grey version will display -->
             <div class="results_right_buttoncontainer">
+
+                <!-- maincolor version -->
                 <v-btn
                 v-if=ninety_button_active
                 @click='handleUI("ninety")'
@@ -132,6 +170,8 @@ import { createCharts } from "../results_charts_functions.js"
                 width="225px"
                 height="55px"
                 ><p class="results_button_text active_button_text">90°</p></v-btn>
+
+                <!-- grey version -->
                 <v-btn
                 v-if=!ninety_button_active
                 @click='handleUI("ninety")'
@@ -143,11 +183,13 @@ import { createCharts } from "../results_charts_functions.js"
             </div>
         </div>
 
+        <!-- container that holds the ashbychart, depending on the combination of the four buttons above -->
         <div id="mechanical_values_charts" />
 
         
     </div>
     
+    <!-- the charts are converted to images, when the result-page loads. In order to create images from the charts, they need to be displayed in the dom. Charts that are needed in image-form are displayed here for a split-second, while the package html2canvas converts them. Then they are hidden and remain hidden. Chart-images are needed in the pdf. -->
     <div id="charts_for_pdf" style="width: 1000px;" />
 
 </template>
@@ -155,10 +197,15 @@ import { createCharts } from "../results_charts_functions.js"
 <script>
 /**
  * After the output is delivered from the server, charts are created from it, information is visualised in this component.
+ * Props:
+ * app_output_prop (json): output from the recycling.exe from the server.
+ * startedCorrectly (boolean): false on initialisation, if user enters website on oekocap.org/results, then they're sent to the start-page. startedCorrectly is set to true on the start-page.
+ * Emits:
+ * chartsAsImages (array of json-objects, containing images as dataUrls): sends chart-images to the parent and ultimately to Results_footer.vue.
  */
     export default {
         props: ["app_output_prop", "startedCorrectly", "color_main", "color_lightgrey"],
-        emits: ["setErrorMessage", "chartsAsImages"],
+        emits: ["chartsAsImages"],
         mounted() {
             /**
              * Creates charts from output and benchmarks.

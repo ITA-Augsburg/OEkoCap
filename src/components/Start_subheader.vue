@@ -1,14 +1,16 @@
 <template>
+  <!-- Subheader of the start-page -->
   <div class="subheader">
-      <v-img 
-      class="subheader_logo"
-      v-bind:src='require("../assets/logo_oekocap_schwarz.png")'
-      alt="oekoCap_logo"
-      resize="false" />
+    <!-- Oekocap logo -->
+    <v-img 
+    class="subheader_logo"
+    v-bind:src='require("../assets/logo_oekocap_schwarz.png")'
+    alt="oekoCap_logo"
+    resize="false" />
 
-      <div class="text start_text">
-        MULTI-CRITERIA CALCULATION TOOL FOR CARBON FIBER RECYCLING
-      </div>
+    <div class="text start_text">
+      MULTI-CRITERIA CALCULATION TOOL FOR CARBON FIBER RECYCLING
+    </div>
 
   </div>
 

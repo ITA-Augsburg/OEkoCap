@@ -5,9 +5,13 @@
 
 <template>
 
+    <!-- container for height definition -->
     <div class="input_footer">
+
+        <!-- container for centering -->
         <div class="footer_content">
 
+            <!-- back button -->
             <div class="error_footer_buttoncontainer">
                 <v-btn
                 @click=handleBackButton()
@@ -29,7 +33,7 @@
  * Footer component with a button.
  */
     export default {
-        props: ["color_lightgrey", "data_urls_prop"],
+        props: ["color_lightgrey"],
         data: () => ({
         }),
         methods: {

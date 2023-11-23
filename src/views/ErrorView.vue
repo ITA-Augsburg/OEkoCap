@@ -1,18 +1,23 @@
 <script setup>
     import Input_subheader from "../components/Input_subheader.vue"
     import Error from "../components/Error.vue"
-    import Button_footer from "../components/Error_footer.vue"
+    import Error_footer from "../components/Error_footer.vue"
 </script>
 
 <template>
+    <!-- Subheader on the error-page -->
     <Input_subheader
     :text_2='"CALCULATOR"'
     :text_3='"ERROR"'
     :tooltip_enabled=false
     :tooltip_text="''" />
+
+    <!-- Main area on the error-page -->
     <Error
     :error_message_prop=error_message_prop />
-    <Button_footer />
+
+    <!-- Footer on the error-page -->
+    <Error_footer />
 </template>
 
 <script>

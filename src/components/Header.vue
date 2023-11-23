@@ -3,8 +3,11 @@ import router from "../router"
 </script>
 
 <template>
-  <!-- App-header component with App-logo and some hyperlinks. On small screens there is a hamburger(button). -->
+
+  <!-- App-header component with App-logo and CU-logo and some hyperlinks. On small screens there is a hamburger(button). -->
   <div class="header">
+
+    <!-- oekocap-logo, does not display on narrow viewport width -->
     <v-img
     v-if="wideWindow"
     :src='require("../assets/logo_oekocap_weiss.png")'
@@ -12,6 +15,7 @@ import router from "../router"
     :class="'oekocap_header_logo'"
     @click="()=>{router.push({name: 'StartView'})}" />
     
+    <!-- links to different pages of the app, does not display on narrow viewport widths -->
     <p class="header_textcontainer">
       <span class="header_text" @click="()=>{router.push({name: 'StartView'})}">CALCULATOR</span>
       <span class="header_text" @click="()=>{router.push({name: 'GuidelinesView'})}">GUIDELINES</span>
@@ -19,12 +23,14 @@ import router from "../router"
       <span class="header_text" @click="()=>{router.push({name: 'ImprintView'})}">IMPRINT</span>
     </p>
 
+    <!-- CU-logo, links to their website -->
     <v-img
     :src='require("../assets/cu_logo.png")'
     alt="composites_united_logo"
     :class="'cu_header_logo'"
     @click="redirectToCU()" />
     
+    <!-- hamburgerbutton, only displays on narrow viewport width -->
     <svg
     xmlns="http://www.w3.org/2000/svg"
     width="80"
@@ -43,7 +49,7 @@ import router from "../router"
     v-model="drawer"
     temporary
     location="bottom"
-    width="325"
+    width="325" 
   >
     <v-list-item>
       <div class="header_text" @click="()=>{router.push({name: 'StartView'})}">Calculator</div>
@@ -68,7 +74,6 @@ import router from "../router"
  * This is the app-header-component, it is present at the top of the page all the time. It contains elements for navigating to important pages.
  */
 export default {
-  props: [],
   mounted() {
     /** 
      * Hamburger-button and -drawer should only be visible if the browser-viewport-width is less then 500px wide. If drawer open and window gets resized to width >= 500px then close the drawer.

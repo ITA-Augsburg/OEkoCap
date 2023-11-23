@@ -4,16 +4,20 @@
 </script>
 
 <template>
+
+    <!-- Subheader on the project-page -->
     <Input_subheader
     :text_2='"Project"'
     :text_3='"⠀"'
     :tooltip_enabled=false
     :tooltip_text="''" />
 
+    <!-- Main area on the project-page -->
     <div class="info_area">
         <p style="font-size: 20px; text-align: center; padding-top: 50px; color: var(--color-grey)">Coming soon</p>
     </div>
 
+    <!-- Footer on the project-page -->
     <Sponsor_footer />
 </template>
 

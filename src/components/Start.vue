@@ -3,9 +3,10 @@
 </script>
 
 <template>
-
+    <!-- centered container with set width -->
     <div class="start_area">
 
+        <!-- company logos -->
         <div class="start_logocontainer">
             <div class="start_sublogocontainer">
                 <v-img
@@ -41,6 +42,7 @@
             
         </div>
 
+        <!-- start-button -->
         <v-btn
         @click="startButton()"
         class="start_button"
@@ -50,6 +52,7 @@
         height="47px"
         ><p class="start_button_text">Start</p></v-btn>
 
+        <!-- example-button, for development purposes only, see the readme -->
         <!-- <v-btn
         style="margin-top: 10px;"
         class="start_button"
