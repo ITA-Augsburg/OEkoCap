@@ -11,6 +11,8 @@ When developing, one might want to access the results-page. This can be done wit
 - Start.vue → comment in example button in template
 - When done developing don’t forget to undo the steps above!
 
+Whenever building dist on the server, two files need to be copied manually into the updated dist folder: call_server.php and server.conf. These files are found on the server in a different folder. Make sure you don't delete these files in the original folder!
+
 #### Pre-requirements
 Node.js installed
 
