@@ -6,10 +6,12 @@
 </script>
 <template>
 
+    <!-- centered container -->
     <div class="input_area_for_step_2_subheader">
 
         <div class="tooltip_container">
 
+            <!-- processing step 1 dropdown -->
             <v-select
             v-model=proc_1_type
             v-on:update:model-value="[toggleStepTwo(), saveNewInputs()]"
@@ -21,6 +23,7 @@
             variant="solo"
             :bg-color=color_main />
 
+            <!-- optional processing step 1 tooltip -->
             <Tooltip
             :tooltip_enabled=false
             :tooltip_class="'tooltip select_tooltip'"
@@ -28,13 +31,18 @@
         </div>
 
         <div class="tooltip_container">
+
+            <!-- processing step 1 mass-loss text with optional tooltip -->
             <p class="text processing_ml_text">Mass loss - Step 1</p>
             <Tooltip
             :tooltip_enabled=false
             :tooltip_class="'tooltip processing_ml_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>
+
         <div class="slider_container">
+
+            <!-- processing step 1 mass-loss slider -->
             <v-slider
             v-model=proc_1_ml
             v-on:update:model-value="[saveNewInputs()]"
@@ -48,6 +56,7 @@
             <p class="percentage">{{ Math.round(proc_1_ml * 10) / 10 }}%</p>
         </div>
 
+        <!-- processing step 1 expert mode -->
         <Expert_mode
         @newExpertModeValues="newExpertModeValues($event)"
         :label=step1expmodelabel
@@ -62,6 +71,8 @@
         <div
         class="tooltip_container"
         v-if="!proc_2_type_disabled">
+
+            <!-- processing step 2 dropdown -->
             <v-select
             v-model=proc_2_type
             v-on:update:model-value="[saveNewInputs()]"
@@ -73,6 +84,7 @@
             variant="solo"
             :bg-color=color_main />
 
+            <!-- optional processing step 2 tooltip -->
             <Tooltip
             :tooltip_enabled=false
             :tooltip_class="'tooltip select_tooltip'"
@@ -82,13 +94,17 @@
         <div 
         v-if="!proc_2_ml_disabled"
         class="tooltip_container">
+            <!-- processing step 2 mass-loss text with optional tooltip -->
             <p class="text processing_ml_text">Mass loss - Step 2</p>
             <Tooltip
             :tooltip_enabled=false
             :tooltip_class="'tooltip processing_ml_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>
+
         <div class="slider_container">
+
+            <!-- processing step 2 mass-loss slider -->
             <v-slider
             v-if="!proc_2_ml_disabled"
             v-model=proc_2_ml
@@ -104,6 +120,7 @@
             id="proc_2_ml" class="percentage">{{ Math.round(proc_2_ml * 10) / 10 }}%</p>
         </div>
 
+        <!-- processing step 2 expert mode -->
         <Expert_mode
         v-if="!proc_2_expmode_disabled"
         @newExpertModeValues="newExpertModeValues($event)"
@@ -114,9 +131,12 @@
         :expert_mode_cost_prop=proc_2_cost
         :expert_mode_gwp_prop=proc_2_gwp />
 
-        <div v-if="!proc_2_expmode_disabled"><br><br></div>
+        <!-- some padding if processing step 2 enabled -->
+        <div v-if="!proc_2_expmode_disabled" style="height: 48px;"></div>
 
         <div class="tooltip_container">
+
+            <!-- wall thickness dropdown -->
             <v-select
             v-if="proc_1_type !== 'Prepreg Production' || proc_1_type === undefined"
             v-model=proc_wt
@@ -128,6 +148,8 @@
             :items=proc_wt_options
             variant="solo"
             :bg-color=color_lightgrey />
+
+            <!-- wall thickness dropdown but renamed. The selected value is converted back into [0.5, 1, 2] in App.vue->formatAppInputKeys() -->
             <v-select
             v-if="proc_1_type === 'Prepreg Production'"
             v-model=proc_wt
@@ -140,6 +162,7 @@
             variant="solo"
             :bg-color=color_lightgrey />
 
+            <!-- optional wall thickness tooltip -->
             <Tooltip
             :tooltip_enabled=false
             :tooltip_class="'tooltip select_tooltip'"
@@ -147,6 +170,8 @@
         </div>
 
         <div class="tooltip_container">
+
+            <!-- method of insertion dropdown, enabled -->
             <v-select
             v-if="!moi_disabled"
             v-model=proc_moi
@@ -158,6 +183,8 @@
             :items=moi_options
             variant="solo"
             :bg-color=color_lightgrey />
+
+            <!-- method of insertion dropdown, disabled -->
             <v-select
             v-if="moi_disabled"
             disabled
@@ -170,14 +197,18 @@
             variant="solo"
             :bg-color=color_lightgrey />
 
+            <!-- optional method of insertion tooltip -->
             <Tooltip
             :tooltip_enabled=false
             :tooltip_class="'tooltip select_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>
 
+        <!-- "clear all" and "calculate" buttons -->
         <div class="processing_buttoncontainer">
             <div class="processing_clear_buttoncontainer">
+
+                <!-- clear all button -->
                 <v-btn
                 @click="clearButton()"
                 :color=color_lightgrey
@@ -188,6 +219,8 @@
             </div>
 
             <div class="processing_calc_buttoncontainer">
+
+                <!-- calculate button, enabled -->
                 <v-btn
                 v-if="buttonCalculateEnabled"
                 @click="calculateButton()"
@@ -196,6 +229,8 @@
                 width="225px"
                 height="55px"
                 ><p class="processing_calc_button_text">Calculate</p></v-btn>
+
+                <!-- calculate button, disabled -->
                 <v-btn
                 v-if="!buttonCalculateEnabled"
                 disabled
@@ -216,6 +251,14 @@
  * This component holds input-elements related to App.vue->app_input.processing_1 and .processing_2.
  * Every time an input is made, every input of this component is emitted to App.vue->app_input.
  * The calculate-button emits a signal to App.vue where the inputs are sent to the server.
+ * Props:
+ * app_input_prop (json): the input-json that goes into recycling.exe on the server. This input is always updated when user interacts with any of the input-elements on the input-pages.
+ * proc_moi_prop (string): contains the currently selected value of the method-of-insertion dropdown.
+ * matrix_insertion_prop (boolean): controls the state of the matrix insertion checkbox.
+ * buttonCalculateEnabled (boolean):
+ * Emits:
+ * saveNewInputs: whenever an input-element is interacted with, the modified values are sent to App.vue->app_input.
+ * calculateButton: when calculate-button pressed, triggers App.vue->calculateButton()
  */
     export default {
         props: ["app_input_prop", "proc_moi_prop", "matrix_insertion_prop", "buttonCalculateEnabled", "color_main", "color_lightgrey", "color_main_disabled"],

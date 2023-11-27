@@ -6,11 +6,14 @@
 </script>
 
 <template>
+    <!-- Subheader on the processing-page -->
     <Input_subheader
     :text_2='"Step 2: Part production"'
     :text_3='"PROCESSING"'
     :tooltip_enabled=true
     :tooltip_text=Tooltip_texts.processing_subheader_tooltip />
+
+    <!-- Main area on the processing-page -->
     <Input_processing
     :app_input_prop=app_input_prop
     :proc_moi_prop=proc_moi_prop
@@ -21,6 +24,8 @@
     :buttonCalculateEnabled=buttonCalculateEnabled
     @saveNewInputs="saveNewInputs($event)"
     @calculateButton="calculateButton()" />
+
+    <!-- Footer on the processing-page -->
     <Input_footer
     :id=id
     :progressValue=progressValue

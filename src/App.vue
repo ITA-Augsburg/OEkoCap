@@ -6,8 +6,10 @@
 
 <template>
   <VApp>
+    <!-- Header, always visible -->
     <Header />
 
+    <!-- Displays and switches between Views. Takes props and emits for every View-component that it handles. The list of handled Views can be found in router/index.js -->
     <RouterView
     :startedCorrectly=startedCorrectly
     :progressValue=footerProgressBar
@@ -31,6 +33,7 @@
     @setErrorMessage="setErrorMessage($event)"
     @resetProcessingMasslosses="resetProcessingMasslosses()" />
 
+    <!-- Cookie dialog box -->
     <v-dialog v-model=dialogOpen width="580px" persistent>
         <v-card>
             <v-card-text>
@@ -574,11 +577,11 @@ export default {
       }).then(data => {
           // console.log(data)
           try {
-			let data1 = data
+            let data1 = data
             this.appOutput = data1.replaceAll("INFINITY", "null")
             this.appOutput = JSON.parse(this.appOutput)
             // console.log(this.appOutput)
-			// console.log(typeof this.appOutput)
+            // console.log(typeof this.appOutput)
           } catch (error) {
             this.errorMessage = "Internal error. No output could be generated based on the given input."
             router.push({name: "ErrorView"})

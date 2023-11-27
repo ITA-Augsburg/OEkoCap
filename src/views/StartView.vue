@@ -5,10 +5,15 @@
 </script>
 
 <template>
+    <!-- Subheader on the start-page -->
     <Start_subheader />
+
+    <!-- Main area on the waste-page -->
     <Start
     :color_main=color_main
     @clearAppInput="clearAppInput()" />
+
+    <!-- Footer on the start-page -->
     <Sponsor_footer />
 </template>
 

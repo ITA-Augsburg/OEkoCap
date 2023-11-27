@@ -8,9 +8,13 @@
 </script>
 
 <template>
+    <!-- container for height definition -->
     <div class="results_footer">
+
+        <!-- container for centering -->
         <div class="footer_content">
 
+            <!-- pdf-download button -->
             <div class="results_pdf_buttoncontainer">
                 <v-btn
                 @click=handlePdfButton()
@@ -38,6 +42,9 @@
 /**
  * Holds a button for creating a pdf from the contents of Results.vue.
  * The button is disabled for the time being and this feature is put on the backlog.
+ * Props:
+ * app_input_prop (json): the input-json that goes into recycling.exe on the server. This input is always updated when user interacts with any of the input-elements on the input-pages.
+ * data_urls_prop (array of json-objects containing chart-image dataUrls): when results-page is initialised, this prop is populated. See Results.vue.
  */
     export default {
         props: ["color_lightgrey", "app_input_prop", "data_urls_prop"],

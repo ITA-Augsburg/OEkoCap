@@ -6,18 +6,23 @@
 </script>
 
 <template>
+
+    <!-- Subheader on the results-page -->
     <Input_subheader
     :text_2='"CALCULATOR"'
     :text_3='"RESULTS"'
     :tooltip_enabled=true
     :tooltip_text=Tooltip_texts.results_subheader_tooltip />
+
+    <!-- Main area on the results-page -->
     <Results
     :app_output_prop=app_output_prop
     :startedCorrectly=startedCorrectly
     :color_main=color_main
     :color_lightgrey=color_lightgrey
-    @setErrorMessage=setErrorMessage($event)
     @chartsAsImages=chartsAsImages($event) />
+
+    <!-- Footer on the results-page -->
     <Results_footer
     :color_lightgrey=color_lightgrey
     :app_input_prop=app_input_prop
@@ -56,12 +61,6 @@ export default {
              * Updates the progress-bar in the input-footer.
              */
             this.$emit("updateInputFooter", undefined)
-        },
-        setErrorMessage(message) {
-            /**
-             * transmits the emit from child-component to App.vue.
-             */
-            this.$emit("setErrorMessage", message)
         },
         chartsAsImages(images) {
             /**

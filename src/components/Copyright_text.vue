@@ -1,4 +1,6 @@
 <template>
+
+    <!-- Copyright-text that automatically determines the current year. Used in footer components. -->
     <p class="footer_copyright_text">
         {{ copyrightTextFragment }}
         <a
