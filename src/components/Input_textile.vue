@@ -6,9 +6,12 @@
 
 <template>
 
+    <!-- centered container -->
     <div class="input_area_for_step_2_subheader">
 
         <div class="tooltip_container">
+
+            <!-- textile type dropdown -->
             <v-select
             v-model=textile_type
             v-on:update:model-value="[updateTextileRoute(), saveNewInputs()]"
@@ -20,6 +23,7 @@
             variant="solo"
             :bg-color=color_main />
 
+            <!-- optional textile type tooltip -->
             <Tooltip
             :tooltip_enabled=false
             :tooltip_class="'tooltip select_tooltip'"
@@ -27,6 +31,8 @@
         </div>
 
         <div class="tooltip_container">
+
+            <!-- textile mass-loss text with optional tooltip -->
             <p class="text textile_ml_text">Mass loss</p>
             <Tooltip
             :tooltip_enabled=false
@@ -34,13 +40,8 @@
             :tooltip_text=Tooltip_texts.test />
         </div>
         <div class="slider_container">
-            <v-slider
-            v-if="textile_type === undefined"
-            disabled
-            class="slider"
-            :color=color_main
-            :thumb-color=color_main
-            thumb-size="20" />
+
+            <!-- textile mass-loss slider, enabled -->
             <v-slider
             v-if="textile_type !== undefined"
             v-model=textile_ml
@@ -52,10 +53,23 @@
             :min=ml_options[0]
             :max=ml_options[1]
             :step=ml_options[2] />
+            
+            <!-- textile mass-loss slider, disabled -->
+            <v-slider
+            v-if="textile_type === undefined"
+            disabled
+            class="slider"
+            :color=color_main
+            :thumb-color=color_main
+            thumb-size="20" />
+
+            <!-- textile mass-loss percentage-value, only displayed when slider enabled -->
             <p v-if="textile_type !== undefined" class="percentage">{{ textile_ml }}%</p>
         </div>
 
         <div class="tooltip_container">
+
+            <!-- textile throughput dropdown -->
             <v-select
             v-model=textile_tp
             v-on:update:model-value="saveNewInputs()"
@@ -67,6 +81,7 @@
             variant="solo"
             :bg-color=color_lightgrey />
 
+            <!-- optional textile throughput tooltip -->
             <Tooltip
             :tooltip_enabled=false
             :tooltip_class="'tooltip select_tooltip'"
@@ -75,6 +90,8 @@
 
         <div class="tooltip_container"
         v-if="false">
+
+            <!-- textile areal-weight dropdown, currently disabled because it is currently not user defined in recycling.exe -->
             <v-select
             v-model=textile_aw
             v-on:update:model-value="saveNewInputs()"
@@ -86,12 +103,14 @@
             variant="solo"
             :bg-color=color_lightgrey />
 
+            <!-- optional textile areal-weight tooltip -->
             <Tooltip
             :tooltip_enabled=false
             :tooltip_class="'tooltip select_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>
 
+        <!-- textile expert mode -->
         <Expert_mode
         @newExpertModeValues="newExpertModeValues($event)"
         :label=label
@@ -109,6 +128,11 @@
 /**
  * This component holds input-elements related to App.vue->app_input.textile_process.
  * Every time an input is made, every input of this component is emitted to App.vue->app_input.
+ * Props:
+ * app_input_prop (json): the input-json that goes into recycling.exe on the server. This input is always updated when user interacts with any of the input-elements on the input-pages.
+ * matrix_insertion_prop (boolean): controls the state of the matrix insertion checkbox on the matrix input-page, is also set there.
+ * Emits:
+ * saveNewInputs: whenever an input-element is interacted with, the modified values are sent to App.vue->app_input.
  */
     export default {
         props: ["app_input_prop", "matrix_insertion_prop", "color_main", "color_lightgrey"],

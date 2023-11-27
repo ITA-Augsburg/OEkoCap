@@ -6,9 +6,12 @@
 
 <template>
 
+    <!-- centered container -->
     <div class="input_area_for_step_1_subheader">
 
         <div class="tooltip_container">
+
+            <!-- separation type dropdown, enabled -->
             <v-select
             v-if="app_input_prop.waste.type === 'End of Life'"
             v-model=separation_type
@@ -21,6 +24,7 @@
             variant="solo"
             :bg-color=color_main />
 
+            <!-- separation type dropdown, disabled -->
             <v-select
             v-if="app_input_prop.waste.type === 'Cut-Off'"
             v-model=separation_type
@@ -34,12 +38,14 @@
             variant="solo"
             :bg-color=color_main />
 
+            <!-- optional separation type tooltip -->
             <Tooltip
             :tooltip_enabled=separation_inputs_disabled
             :tooltip_class="'tooltip select_tooltip'"
             :tooltip_text=Tooltip_texts.separation_type_disabled_tooltip />
         </div>
 
+        <!-- separation expert-mode -->
         <Expert_mode
         @newExpertModeValues=newExpertModeValues($event)
         :label=label
@@ -57,6 +63,10 @@
 /**
  * This component holds input-elements related to App.vue->app_input.separation.
  * Every time an input is made, every input of this component is emitted to App.vue->app_input.
+ * Props:
+ * app_input_prop (json): the input-json that goes into recycling.exe on the server. This input is always updated when user interacts with any of the input-elements on the input-pages.
+ * Emits:
+ * saveNewInputs: whenever an input-element is interacted with, the modified values are sent to App.vue->app_input.
  */
     export default {
         props: ["app_input_prop", "color_main"],

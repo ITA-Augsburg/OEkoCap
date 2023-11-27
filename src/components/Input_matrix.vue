@@ -6,9 +6,12 @@
 
 <template>
 
+    <!-- centered container -->
     <div class="input_area_for_step_2_subheader">
 
         <div class="tooltip_container">
+
+            <!-- matrix type dropdown -->
             <v-select
             v-model="matrix_type"
             v-on:update:model-value="[updateMatrixRoute(), saveNewInputs()]"
@@ -20,6 +23,7 @@
             variant="solo"
             :bg-color=color_main />
 
+            <!-- optional matrix type tooltip -->
             <Tooltip
             :tooltip_enabled=false
             :tooltip_class="'tooltip select_tooltip'"
@@ -27,6 +31,8 @@
         </div>
 
         <div class="tooltip_container">
+
+            <!-- matrix polymer dropdown -->
             <v-select
             v-model="matrix_polymer"
             v-on:update:model-value="saveNewInputs()"
@@ -38,6 +44,7 @@
             variant="solo"
             :bg-color=color_main />
 
+            <!-- optional matrix polymer tooltip -->
             <Tooltip
             :tooltip_enabled=false
             :tooltip_class="'tooltip select_tooltip'"
@@ -45,6 +52,8 @@
         </div>
 
         <div class="tooltip_container">
+
+            <!-- fiber volume content text and optional tooltip -->
             <p class="text matrix_fmc_text">Fiber Volume Content</p>
             <Tooltip
             :tooltip_enabled=false
@@ -52,6 +61,8 @@
             :tooltip_text=Tooltip_texts.test />
         </div>
         <div class="slider_container">
+
+            <!-- fiber volume content slider -->
             <v-slider
             v-model="matrix_fmc"
             v-on:update:model-value="saveNewInputs()"
@@ -67,6 +78,8 @@
 
         <div class="tooltip_container">
             <div class="checkbox_container">
+
+                <!-- matrix insertion checkbox, enabled -->
                 <v-checkbox
                 v-if="matrix_type !== 'Thermoset'"
                 v-model="matrix_insertion"
@@ -74,6 +87,8 @@
                 class="checkbox matrix_iip_checkbox"
                 label="Insert matrix as fibers in textile process"
                 :color=color_main />
+
+                <!-- matrix insertion checkbox, disabled -->
                 <v-checkbox
                 v-if="matrix_type === 'Thermoset'"
                 disabled
@@ -81,12 +96,15 @@
                 label="Insert matrix as fibers in textile process"
                 :color=color_main />
             </div>
+
+            <!-- optional matrix insertion tooltip -->
             <Tooltip
             :tooltip_enabled=false
             :tooltip_class="'tooltip matrix_insert_text_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>
 
+        <!-- matrix expert-mode -->
         <Expert_mode
         @newExpertModeValues="newExpertModeValues($event)"
         :label=label
@@ -104,6 +122,12 @@
 /**
  * This component holds input-elements related to App.vue->app_input.polymer.
  * Every time an input is made, every input of this component is emitted to App.vue->app_input.
+ * Props:
+ * app_input_prop (json): the input-json that goes into recycling.exe on the server. This input is always updated when user interacts with any of the input-elements on the input-pages.
+ * matrix_insertion_prop (boolean): controls the state of the matrix insertion checkbox.
+ * Emits:
+ * saveNewInputs: whenever an input-element is interacted with, the modified values are sent to App.vue->app_input.
+ * resetProcessingMassLosses: when matrix type is changed, processing-page mass-loss values are reset because they are dependent on the matrix type.
  */
     export default {
         props: ["app_input_prop", "matrix_insertion_prop", "color_main"],

@@ -5,20 +5,27 @@
     import Sponsor_footer from "../components/Sponsor_footer.vue"
 </script>
 <template>
+    <!-- Subheader on the imprint-page -->
     <Input_subheader
     :text_2='"Imprint"'
     :text_3='"⠀"'
     :tooltip_enabled=false
     :tooltip_text="''" />
 
+    <!-- Main area on the imprint-page -->
     <div class="info_area">
         <Imprint />
         <Data_protection />
     </div>
 
+    <!-- Footer on the imprint-page -->
     <Sponsor_footer />
+
 </template>
 <script>
+/**
+ * Page for displaying legal information.
+ */
     export default {
         props: ["app_input_prop", "waste_fine_checkbox_prop", "matrix_insertion_prop", "proc_moi_prop",
             "app_output_prop", "startedCorrectly", "error_message_prop",

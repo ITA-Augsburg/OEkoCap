@@ -6,17 +6,23 @@
 </script>
 
 <template>
+
+    <!-- Subheader on the textile-page -->
     <Input_subheader
     :text_2='"Step 2: Part production"'
     :text_3='"TEXTILE"'
     :tooltip_enabled=true
     :tooltip_text=Tooltip_texts.textile_subheader_tooltip />
+
+    <!-- Main area on the textile-page -->
     <Input_textile
     :app_input_prop=app_input_prop
     :matrix_insertion_prop=matrix_insertion_prop
     :color_main=color_main
     :color_lightgrey=color_lightgrey
     @saveNewInputs="saveNewInputs($event)" />
+
+    <!-- Footer on the textile-page -->
     <Input_footer
     :id=id
     :progressValue=progressValue

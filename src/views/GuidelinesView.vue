@@ -4,16 +4,19 @@
 </script>
 
 <template>
+    <!-- Subheader on the guidelines-page -->
     <Input_subheader
     :text_2='"Guidelines"'
     :text_3='"⠀"'
     :tooltip_enabled=false
     :tooltip_text="''" />
 
+    <!-- Main area on the guidelines-page -->
     <div class="info_area">
         <p style="font-size: 20px; text-align: center; padding-top: 50px; color: var(--color-grey)">Coming soon</p>
     </div>
 
+    <!-- Footer on the guidelines-page -->
     <Sponsor_footer />
 </template>
 

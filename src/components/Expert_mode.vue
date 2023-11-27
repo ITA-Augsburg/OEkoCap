@@ -4,9 +4,10 @@
 
 <template>
 
-    <!-- Checkbox that can open two text-fields. A tooltip next to it. -->
     <div class="tooltip_container">
+        <!-- Switch that can open two textfields -->
         <div class="switch_container">
+            <!-- Switch enabled -->
             <v-switch
             v-if="!disabled"
             class="switch"
@@ -14,8 +15,9 @@
             :label=label
             :color=color_main
             v-model="switchState"
-            @click="showHideExpertMode()"
-            ></v-switch>
+            @click="showHideExpertMode()" />
+
+            <!-- switch disabled -->
             <v-switch
             v-if="disabled"
             class="switch"
@@ -23,16 +25,16 @@
             inset
             :label=label
             :color=color_main
-            v-model="switchState"
-            ></v-switch>
+            v-model="switchState" />
         </div>
+
         <Tooltip
         v-if="tooltip_text_prop !== undefined"
         :tooltip_class=exp_tooltip_class
         :tooltip_text=tooltip_text_prop />
     </div>
     
-    <!-- A text-field that corresponds to cost. -->
+    <!-- cost textfield -->
     <v-text-field
     v-if="switchState && !disabled"
     v-model=expert_mode_cost
@@ -42,10 +44,9 @@
     single-line
     suffix="€/kg part"
     variant="solo"
-    :bg-color=color_main
-    ></v-text-field>
+    :bg-color=color_main />
 
-    <!-- A text-field that corresponds to the global warming potential. -->
+    <!-- gwp textfield -->
     <v-text-field
     v-if="switchState && !disabled"
     v-model=expert_mode_gwp
@@ -55,10 +56,9 @@
     single-line
     suffix="CO₂-eq./kg part"
     variant="solo"
-    :bg-color=color_main
-    ></v-text-field>
+    :bg-color=color_main />
 
-    <!-- A popup that pops up when an invalid character has been typed into the textfields -->
+    <!-- A popup for when an invalid character has been typed into the textfields -->
     <v-dialog v-model=dialogOpen width="auto" close-on-content-click>
         <v-card>
             <v-card-text>
@@ -74,7 +74,15 @@
 
 <script>
 /**
- * In this component the user can specify the cost and global warming potential of something.
+ * In this component the user can specify the cost and global warming potential of an input-group. See app_input.
+ * Props:
+ * disabled (boolean): this whole component can be displayed in a disabled state.
+ * expert_mode_cost_prop (number): the current cost-value in the cost-textfield.
+ * expert_mode_gwp_prop (number): the current gwp-value in the gwp-textfield.
+ * label (string): the label next to the switch-element.
+ * tooltip_text_prop (string): text to be displayed in the tooltip.
+ * Emits:
+ * newExpertModeValues: whenever a new value is typed into one of the textfields, the new values are sent to App.vue and put into app_input.
  */
     export default {
         props: ["disabled", "expert_mode_cost_prop", "expert_mode_gwp_prop", "label", "color_main", "tooltip_text_prop"],

@@ -6,16 +6,21 @@
 </script>
 
 <template>
+    <!-- Subheader on the waste-page -->
     <Input_subheader
     :text_2='"Step 1: Recycling"'
     :text_3='"WASTE"'
     :tooltip_enabled=true
     :tooltip_text=Tooltip_texts.waste_subheader_tooltip />
+
+    <!-- Main area on the waste-page -->
     <Input_waste
     :color_main=color_main
     :app_input_prop=app_input_prop
     :waste_fine_checkbox_prop=waste_fine_checkbox_prop
     @saveNewInputs="saveNewInputs($event)" />
+
+    <!-- Footer on the waste-page -->
     <Input_footer
     :id="id"
     :progressValue=progressValue

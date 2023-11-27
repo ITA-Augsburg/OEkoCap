@@ -6,24 +6,31 @@
 <template>
 
     <!-- App-footer that has buttons and a progress-bar on it for navigating the input-pages. -->
+
+    <!-- container for defining height -->
     <div class="input_footer">
+
+        <!-- container for centering content -->
         <div class="footer_content">
 
+            <!-- percentage value of the progress bar. Not displayed on narrow viewport width. -->
             <p class="footer_percentage">{{ progressValue }}%</p>
 
+            <!-- vuetify progress bar -->
             <v-progress-linear
-                class="footer_progressbar"
-                :bg-color=color_main
-                bg-opacity="0.2"
-                :color=color_main
-                height="10"
-                :model-value=progressValue
-            >
-            </v-progress-linear>
+            class="footer_progressbar"
+            :bg-color=color_main
+            bg-opacity="0.2"
+            :color=color_main
+            height="10"
+            :model-value=progressValue />
 
+            <!-- container for the buttons -->
             <div class="footer_buttoncontainer">
 
-                <!-- BUTTON BACK -->
+                <!-- back button -->
+
+                <!-- enabled -->
                 <v-btn
                 v-if="id !== 'waiting' && id !== 'err' && id !== 'results'"
                 icon=""
@@ -33,6 +40,8 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">‹</p></v-btn>
+
+                <!-- disabled -->
                 <v-btn
                 v-if="id === 'waiting' || id === 'err' || id === 'results'"
                 disabled
@@ -43,7 +52,9 @@
                 height="45px"
                 ><p class="footer_disabled_button_text">‹</p></v-btn>
 
-                <!-- BUTTON 1 -->
+                <!-- one button -->
+
+                <!-- enabled, selected (maincolor) -->
                 <v-btn
                 v-if="id === 'waste'"
                 icon=""
@@ -52,6 +63,8 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">1</p></v-btn>
+
+                <!-- enabled, not selected (grey) -->
                 <v-btn
                 v-if="id !== 'waste' && id !== 'waiting' && id !== 'err' && id !== 'results'"
                 icon=""
@@ -61,6 +74,8 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">1</p></v-btn>
+
+                <!-- disabled, not selectable (grey) -->
                 <v-btn
                 v-if="id === 'waiting' || id === 'err' || id === 'results'"
                 disabled
@@ -71,7 +86,9 @@
                 height="45px"
                 ><p class="footer_disabled_button_text">1</p></v-btn>
 
-                <!-- BUTTON 2 -->
+                <!-- two button -->
+                
+                <!-- enabled, selected (maincolor) -->
                 <v-btn
                 v-if="id === 'separation'"
                 icon=""
@@ -80,6 +97,8 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">2</p></v-btn>
+
+                <!-- enabled, not selected (grey) -->
                 <v-btn
                 v-if="id !== 'separation' && button2enabled"
                 icon=""
@@ -89,6 +108,8 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">2</p></v-btn>
+
+                <!-- disabled, not selectable (grey) -->
                 <v-btn
                 v-if="id !== 'separation' && !button2enabled"
                 disabled
@@ -99,7 +120,9 @@
                 height="45px"
                 ><p class="footer_disabled_button_text">2</p></v-btn>
 
-                <!-- BUTTON 3 -->
+                <!-- three button -->
+
+                <!-- enabled, selected (maincolor) -->
                 <v-btn
                 v-if="id === 'matrix'"
                 icon=""
@@ -108,6 +131,8 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">3</p></v-btn>
+
+                <!-- enabled, not selected (grey) -->
                 <v-btn
                 v-if="id !== 'matrix' && button3enabled"
                 icon=""
@@ -117,6 +142,8 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">3</p></v-btn>
+
+                <!-- disabled, not selectable (grey) -->
                 <v-btn
                 v-if="id !== 'matrix' && !button3enabled"
                 disabled
@@ -127,7 +154,9 @@
                 height="45px"
                 ><p class="footer_disabled_button_text">3</p></v-btn>
 
-                <!-- BUTTON 4 -->
+                <!-- four button -->
+
+                <!-- enabled, selected (maincolor) -->
                 <v-btn
                 v-if="id === 'textile'"
                 icon=""
@@ -136,6 +165,8 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">4</p></v-btn>
+
+                <!-- enabled, not selected (grey) -->
                 <v-btn
                 v-if="id !== 'textile' && button4enabled"
                 icon=""
@@ -145,6 +176,8 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">4</p></v-btn>
+
+                <!-- disabled, not selectable (grey) -->
                 <v-btn
                 v-if="id !== 'textile' && !button4enabled"
                 disabled
@@ -155,7 +188,9 @@
                 height="45px"
                 ><p class="footer_disabled_button_text">4</p></v-btn>
 
-                <!-- BUTTON 5 -->
+                <!-- five button -->
+
+                <!-- enabled, selected (maincolor) -->
                 <v-btn
                 v-if="id === 'processing'"
                 icon=""
@@ -164,6 +199,8 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">5</p></v-btn>
+
+                <!-- enabled, not selected (grey) -->
                 <v-btn
                 v-if="id !== 'processing' && button5enabled"
                 icon=""
@@ -173,6 +210,8 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">5</p></v-btn>
+
+                <!-- disabled, not selectable (grey) -->
                 <v-btn
                 v-if="id !== 'processing' && !button5enabled"
                 disabled
@@ -183,7 +222,9 @@
                 height="45px"
                 ><p class="footer_disabled_button_text">5</p></v-btn>
                 
-                <!-- BUTTON NEXT -->
+                <!-- next button -->
+
+                <!-- enabled -->
                 <v-btn
                 v-if="id !== 'waiting' && id !== 'err' && id !== 'results'"
                 icon=""
@@ -193,6 +234,8 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_button_text">›</p></v-btn>
+
+                <!-- disabled -->
                 <v-btn
                 v-if="id === 'waiting' || id === 'err' || id === 'results'"
                 disabled
@@ -202,6 +245,7 @@
                 width="45px"
                 height="45px"
                 ><p class="footer_disabled_button_text">›</p></v-btn>
+
             </div>
 
             <Copyright_text />
@@ -209,6 +253,7 @@
         </div>
     </div>
 
+    <!-- popup for displaying error-messages that these buttons might trigger -->
     <v-dialog v-model=dialogOpen width="auto" close-on-content-click>
         <v-card>
             <v-card-text>
@@ -225,6 +270,12 @@
 <script>
 /**
  * App-footer that has buttons and a progress-bar on it for navigating the input-pages.
+ * Props:
+ * buttonXenabled (boolean): controls wether the button is enabled or disabled. These props are updated in App.vue through the updateInputFooter emit.
+ * progressValue (number, 0 to 100): controls the state of the progress bar.
+ * id (string): identifies the parent-component that the Input_footer-component is in. Id-value is used by the buttons of this component.
+ * Emits:
+ * updateInputFooter: buttons are dynamically enabled and disabled, depending on the state of App.vue->app_input. See diagrams/oekocap_webapp_abhaengigkeiten_diagramm.png.
  */
 export default {
     props: ["button2enabled", "button3enabled", "button4enabled", "button5enabled",
