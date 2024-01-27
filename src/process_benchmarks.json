@@ -59,7 +59,262 @@
             "co2_equv_per_kg": ""
         }
     },
-    "test_output_1": {"gwp":{"minValue":12.97050278228259,"maxValue":23.82102786696809},"processes":[{"maxCostPerKg":55.5,"maxGWPValue":12.0868,"maxCostTotalInEur":47370.776249999995,"minGWPValue":5.2753,"name":"ResinTransferMoulding","minCostPerKg":46.57142857142857,"position":4,"minCostTotalInEur":39749.994999999995},{"maxCostPerKg":5.008625966943069,"maxGWPValue":0.817002,"maxCostTotalInEur":4275.0,"minGWPValue":0.817002,"name":"Carding","minCostPerKg":2.31732428070566,"position":3,"minCostTotalInEur":1977.9},{"maxCostPerKg":0.0,"maxGWPValue":0.0,"maxCostTotalInEur":0.0,"minGWPValue":0.0,"name":"Oxidation","minCostPerKg":0.0,"position":2,"minCostTotalInEur":0.0},{"maxCostPerKg":2.90500306082698,"maxGWPValue":6.14579,"maxCostTotalInEur":2479.5,"minGWPValue":2.10672,"name":"Pyrolysis","minCostPerKg":1.7251933886137238,"position":1,"minCostTotalInEur":1472.5},{"maxCostPerKg":0.23432168266400324,"maxGWPValue":0.0191545,"maxCostTotalInEur":200.0,"minGWPValue":0.0191545,"name":"ShreddingProcessFine","minCostPerKg":0.0035148252399600484,"position":0,"minCostTotalInEur":3.0}],"flexuralStrength_MPa":[{"flexuralStrength0_MPa":[{"value":"257.5164"},{"value":"213.4237"}]},{"flexuralStrength90_MPa":[{"value":"347.6314"},{"value":"310.195"}]}],"cost":{"minValue_eur_per_kg":"53.63070609910049","maxValue_eur_per_kg":"69.67444077665922"},"materials":{"maxCostPerKg":6.026490066225166,"maxGWPValue":4.75232,"minGWPValue":4.75232,"minCostPerKg":3.013245033112583,"matrix":"EP"},"tensileModulus_GPa":[{"tensileModulus0_GPa":[]},{"tensileModulus90_GPa":[]}],"flexuralModulus_GPa":[{"flexuralModulus0_GPa":[{"value":"18.5061"},{"value":"23.5362"}]},{"flexuralModulus90_GPa":[{"value":"26.5334"},{"value":"33.0391"}]}],"tensileStrength_MPa":[{"tensileStrength0_MPa":[]},{"tensileStrength90_MPa":[]}]},
+    "test_output_1": {"gwp":{"minValue":12.97050278228259,"maxValue":23.82102786696809},"processes":[{"maxCostPerKg":55.5,"maxGWPValue":12.0868,"maxCostTotalInEur":47370.776249999995,"minGWPValue":5.2753,"name":"ResinTransferMoulding","minCostPerKg":46.57142857142857,"position":4,"minCostTotalInEur":39749.994999999995},{"maxCostPerKg":5.008625966943069,"maxGWPValue":0.817002,"maxCostTotalInEur":4275.0,"minGWPValue":0.817002,"name":"Carding","minCostPerKg":2.31732428070566,"position":3,"minCostTotalInEur":1977.9},{"maxCostPerKg":0.0,"maxGWPValue":0.0,"maxCostTotalInEur":0.0,"minGWPValue":0.0,"name":"Oxidation","minCostPerKg":0.0,"position":2,"minCostTotalInEur":0.0},{"maxCostPerKg":2.90500306082698,"maxGWPValue":6.14579,"maxCostTotalInEur":2479.5,"minGWPValue":2.10672,"name":"Pyrolysis","minCostPerKg":1.7251933886137238,"position":1,"minCostTotalInEur":1472.5},{"maxCostPerKg":0.23432168266400324,"maxGWPValue":0.0191545,"maxCostTotalInEur":200.0,"minGWPValue":0.0191545,"name":"ShreddingProcessFine","minCostPerKg":0.0035148252399600484,"position":0,"minCostTotalInEur":3.0}],"flexuralStrength_MPa":[{"flexuralStrength0_MPa":[{"value":"257.5164"},{"value":"213.4237"}]},{"flexuralStrength90_MPa":[{"value":"347.6314"},{"value":"310.195"}]}],"cost":{"minValue_eur_per_kg":"53.63070609910049","maxValue_eur_per_kg":"69.67444077665922"},"materials":{"matrixMaxCostPerKg":6.026490066225166,"maxGWPValue":4.75232,"minGWPValue":4.75232,"matrixMinCostPerKg":3.013245033112583,"matrix":"EP"},"tensileModulus_GPa":[{"tensileModulus0_GPa":[]},{"tensileModulus90_GPa":[]}],"flexuralModulus_GPa":[{"flexuralModulus0_GPa":[{"value":"18.5061"},{"value":"23.5362"}]},{"flexuralModulus90_GPa":[{"value":"26.5334"},{"value":"33.0391"}]}],"tensileStrength_MPa":[{"tensileStrength0_MPa":[]},{"tensileStrength90_MPa":[]}]},
+    "test_output_v5_1": {
+        "gwp": {
+            "minValue": 27.24789097626983,
+            "maxValue": 30.345561750255253
+        },
+        "processes": [
+            {
+                "maxCostPerKg": 9.7,
+                "maxGWPValue": 4.73716,
+                "maxCostTotalInEur": 13973.625999999998,
+                "minGWPValue": 1.73853,
+                "name": "IRCompressionMoulding",
+                "minCostPerKg": 7.387499999999999,
+                "position": 4,
+                "minCostTotalInEur": 10642.284749999999
+            },
+            {
+                "maxCostPerKg": 3.960526315789474,
+                "maxGWPValue": 0.715577,
+                "maxCostTotalInEur": 5705.455,
+                "minGWPValue": 0.616533,
+                "name": "DoubleBeltPressingWithFoil",
+                "minCostPerKg": 1.0789473684210527,
+                "position": 3,
+                "minCostTotalInEur": 1554.31
+            },
+            {
+                "maxCostPerKg": 9.49617515167502,
+                "maxGWPValue": 0.385336,
+                "maxCostTotalInEur": 13680.0,
+                "minGWPValue": 0.385336,
+                "name": "Carding",
+                "minCostPerKg": 6.035069208235572,
+                "position": 2,
+                "minCostTotalInEur": 8694.0
+            },
+            {
+                "maxCostPerKg": 29.8490885615516,
+                "maxGWPValue": 8.32998,
+                "maxCostTotalInEur": 43000.0,
+                "minGWPValue": 8.32998,
+                "name": "CuttingProcess",
+                "minCostPerKg": 29.8490885615516,
+                "position": 1,
+                "minCostTotalInEur": 43000.0
+            },
+            {
+                "maxCostPerKg": 6.9416485026864185,
+                "maxGWPValue": 8.32998,
+                "maxCostTotalInEur": 10000.0,
+                "minGWPValue": 8.32998,
+                "name": "Transport",
+                "minCostPerKg": 6.9416485026864185,
+                "position": 0,
+                "minCostTotalInEur": 10000.0
+            }
+        ],
+        "flexuralStrength_MPa": [
+            {
+                "flexuralStrength0_MPa": [
+                    {
+                        "value": "266.3894"
+                    },
+                    {
+                        "value": "277.1088"
+                    },
+                    {
+                        "value": "288.793"
+                    },
+                    {
+                        "value": "326.6972"
+                    },
+                    {
+                        "value": "341.07"
+                    },
+                    {
+                        "value": "288.2153"
+                    },
+                    {
+                        "value": "302.5877"
+                    },
+                    {
+                        "value": "385.0816"
+                    },
+                    {
+                        "value": "405.4414"
+                    },
+                    {
+                        "value": "306.2568"
+                    },
+                    {
+                        "value": "305.4399"
+                    }
+                ]
+            },
+            {
+                "flexuralStrength90_MPa": [
+                    {
+                        "value": "266.6056"
+                    },
+                    {
+                        "value": "240.6592"
+                    },
+                    {
+                        "value": "232.503"
+                    },
+                    {
+                        "value": "243.4261"
+                    },
+                    {
+                        "value": "328.12"
+                    },
+                    {
+                        "value": "256.6739"
+                    },
+                    {
+                        "value": "282.6141"
+                    },
+                    {
+                        "value": "304.4677"
+                    },
+                    {
+                        "value": "598.5996"
+                    },
+                    {
+                        "value": "397.6039"
+                    },
+                    {
+                        "value": "414.6818"
+                    }
+                ]
+            }
+        ],
+        "cost": {
+            "minValue_eur_per_kg": "53.082070936706046",
+            "maxValue_eur_per_kg": "62.32582084993545"
+        },
+        "materials": {
+            "maxGWPValue": 7.84753,
+            "minGWPValue": 7.84753,
+            "matrixMaxCostPerKg": 1.9618834080717489,
+            "carbonFibreCostPerKg": 0.4164989101611851,
+            "matrix": "PA6",
+            "matrixMinCostPerKg": 1.3733183856502242
+        },
+        "tensileModulus_GPa": [
+            {
+                "tensileModulus0_GPa": [
+                    {
+                        "value": "20.35"
+                    }
+                ]
+            },
+            {
+                "tensileModulus90_GPa": [
+                    {
+                        "value": "21.84"
+                    }
+                ]
+            }
+        ],
+        "flexuralModulus_GPa": [
+            {
+                "flexuralModulus0_GPa": [
+                    {
+                        "value": "18.3883"
+                    },
+                    {
+                        "value": "23.2491"
+                    },
+                    {
+                        "value": "25.8081"
+                    },
+                    {
+                        "value": "22.5154"
+                    },
+                    {
+                        "value": "21.74"
+                    },
+                    {
+                        "value": "17.52"
+                    },
+                    {
+                        "value": "21.6194"
+                    },
+                    {
+                        "value": "22.2612"
+                    },
+                    {
+                        "value": "17.2014"
+                    },
+                    {
+                        "value": "21.3072"
+                    },
+                    {
+                        "value": "17.6894"
+                    }
+                ]
+            },
+            {
+                "flexuralModulus90_GPa": [
+                    {
+                        "value": "20.4504"
+                    },
+                    {
+                        "value": "18.1333"
+                    },
+                    {
+                        "value": "18.1258"
+                    },
+                    {
+                        "value": "14.377"
+                    },
+                    {
+                        "value": "19.69"
+                    },
+                    {
+                        "value": "14.6817"
+                    },
+                    {
+                        "value": "19.6447"
+                    },
+                    {
+                        "value": "16.2095"
+                    },
+                    {
+                        "value": "32.1009"
+                    },
+                    {
+                        "value": "30.7089"
+                    },
+                    {
+                        "value": "25.4309"
+                    }
+                ]
+            }
+        ],
+        "tensileStrength_MPa": [
+            {
+                "tensileStrength0_MPa": [
+                    {
+                        "value": "244.66"
+                    }
+                ]
+            },
+            {
+                "tensileStrength90_MPa": [
+                    {
+                        "value": "259.82"
+                    }
+                ]
+            }
+        ]
+    },
+
     "benchmarks": {
         "glasfiber_fabric_plus_epoxy_resin_transfer_moulding": {
             "name": "Glasfiber-Fabric + Epoxy (Resin Transfer Molding)",
