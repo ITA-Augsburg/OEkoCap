@@ -91,7 +91,7 @@
             :color=color_main
             :thumb-color=color_main
             thumb-size="20"
-            :min="5"
+            :min="0"
             :max="10"
             :step="1"
             v-model="shred_1_ml" />
@@ -104,7 +104,7 @@
             :color=color_main
             :thumb-color=color_main
             thumb-size="20"
-            :min="5"
+            :min="0"
             :max="10"
             :step="1"
             v-model="shred_1_ml" />
@@ -180,7 +180,7 @@
             :color=color_main
             :thumb-color=color_main
             thumb-size="20"
-            :min="5"
+            :min="0"
             :max="10"
             :step="1"
             v-model="shred_2_ml" />
@@ -193,7 +193,7 @@
             :color=color_main
             :thumb-color=color_main
             thumb-size="20"
-            :min="5"
+            :min="0"
             :max="10"
             :step="1"
             v-model="shred_2_ml" />

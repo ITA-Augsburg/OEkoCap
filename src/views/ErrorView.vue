@@ -17,7 +17,8 @@
     :error_message_prop=error_message_prop />
 
     <!-- Footer on the error-page -->
-    <Error_footer />
+    <Error_footer
+    :button_text_prop="'BACK'" />
 </template>
 
 <script>

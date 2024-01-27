@@ -603,7 +603,7 @@ export default {
           // navigate to errorView, pass error as prop
 
           // console.log("Fehler beim Serveraufruf");
-          console.log(rej);
+          // console.log(rej);
           this.errorMessage = "Server not responding."
           // if user left the loading screen (without reloading the website) then don't redirect to results
           // console.log(this.$route.name)

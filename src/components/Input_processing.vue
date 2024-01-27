@@ -50,7 +50,7 @@
             :color=color_main
             :thumb-color=color_main
             thumb-size="20"
-            :min="15"
+            :min="5"
             :max="30"
             :step="1" />
             <p class="percentage">{{ Math.round(proc_1_ml * 10) / 10 }}%</p>
@@ -113,7 +113,7 @@
             :color=color_main
             :thumb-color=color_main
             thumb-size="20"
-            :min="15"
+            :min="5"
             :max="30"
             :step="1" />
             <p v-if="!proc_2_ml_disabled"
