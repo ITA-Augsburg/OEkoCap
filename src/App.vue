@@ -102,7 +102,8 @@ export default {
         "type": "End of Life",
         "quantity_to": 1,
         "size_bigger_1dot5_m": false,
-        "fmc_percent": 60.00
+        "fmc_percent": 60.00,
+        "waste_carbon_fibre_euro_per_kg": 0
       },
       "transport": {
         "euro_per_kg": undefined,
@@ -209,6 +210,7 @@ export default {
 
         waste.type = new_values.waste_type
         waste.size_bigger_1dot5_m = new_values.waste_size
+        waste.waste_carbon_fibre_euro_per_kg = new_values.waste_carbon_fibre_cost
 
         shredding_1.type = new_values.shred_1_type
         shredding_1.mass_loss_percent = new_values.shred_1_ml
@@ -389,7 +391,8 @@ export default {
           "type": "End of Life",
           "quantity_to": 1,
           "size_bigger_1dot5_m": false,
-          "fmc_percent": 60.00
+          "fmc_percent": 60.00,
+          "waste_carbon_fibre_euro_per_kg": 0
         },
         "transport": {
           "euro_per_kg": undefined,
@@ -472,6 +475,7 @@ export default {
       // undefined -> ""; End of Life -> EoL; 
       // waste
       if(waste.type === "End of Life") waste.type = "EoL"
+      if(waste.waste_carbon_fibre_euro_per_kg === undefined || waste.waste_carbon_fibre_euro_per_kg === "") waste.waste_carbon_fibre_euro_per_kg = 0
       // transport
       if(transport.euro_per_kg === undefined) transport.euro_per_kg = ""
       if(transport.co2_equv_per_kg === undefined) transport.co2_equv_per_kg = ""
@@ -669,6 +673,7 @@ export default {
         this.app_input.waste.type,
         this.app_input.waste.size_bigger_1dot5_m,
         this.app_input.waste.fmc_percent,
+        this.app_input.waste.waste_carbon_fibre_euro_per_kg,
         this.app_input.shredding_1.type,
         this.app_input.shredding_1.mass_loss_percent,
         this.app_input.shredding_1.euro_per_kg,
