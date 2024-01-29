@@ -29,6 +29,27 @@
             :tooltip_class="'tooltip select_tooltip'"
             :tooltip_text=Tooltip_texts.test />
         </div>
+
+        <div class="tooltip_container">
+
+            <!-- carbon-fiber-cost textfield -->
+            <v-text-field
+            v-if="waste_type == 'Cut-Off'"
+            v-model=waste_carbon_fibre_cost
+            @update:model-value="checkCarbonFibreCostAndSave()"
+            class="textfield"
+            label="carbon fibre €/kg part"
+            single-line
+            suffix="€/kg part"
+            variant="solo"
+            :bg-color=color_main />
+
+            <!-- optional carbon-fibre-cost tooltip -->
+            <Tooltip
+            :tooltip_enabled=false
+            :tooltip_class="'tooltip textfield_tooltip'"
+            :tooltip_text=Tooltip_texts.waste_carbon_fibre_cost_tooltip />
+        </div>
         
         <div class="tooltip_container"
         v-if="waste_type === 'End of Life' || waste_type === undefined">
@@ -91,7 +112,7 @@
             :color=color_main
             :thumb-color=color_main
             thumb-size="20"
-            :min="5"
+            :min="0"
             :max="10"
             :step="1"
             v-model="shred_1_ml" />
@@ -104,7 +125,7 @@
             :color=color_main
             :thumb-color=color_main
             thumb-size="20"
-            :min="5"
+            :min="0"
             :max="10"
             :step="1"
             v-model="shred_1_ml" />
@@ -180,7 +201,7 @@
             :color=color_main
             :thumb-color=color_main
             thumb-size="20"
-            :min="5"
+            :min="0"
             :max="10"
             :step="1"
             v-model="shred_2_ml" />
@@ -193,7 +214,7 @@
             :color=color_main
             :thumb-color=color_main
             thumb-size="20"
-            :min="5"
+            :min="0"
             :max="10"
             :step="1"
             v-model="shred_2_ml" />
@@ -239,6 +260,18 @@
         
     </div>
 
+    <!-- A popup for when an invalid character has been typed into the carbon-fibre-cost textfield -->
+    <v-dialog v-model=dialogOpen width="auto" close-on-content-click>
+        <v-card>
+            <v-card-text>
+                {{ dialogText }}
+            </v-card-text>
+            <v-card-actions>
+                <v-btn block @click="dialogOpen = false">Close</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+
 </template>
 
 <script>
@@ -272,6 +305,7 @@
                 type_options: ['Cut-Off', 'End of Life'],
                 waste_type: this.app_input_prop.waste.type,
                 size1dot5: this.app_input_prop.waste.size_bigger_1dot5_m,
+                waste_carbon_fibre_cost: this.app_input_prop.waste.waste_carbon_fibre_euro_per_kg,
                 fine_checkbox: this.waste_fine_checkbox_prop,
 
                 shred_1_type: this.app_input_prop.shredding_1.type,
@@ -291,6 +325,9 @@
                 transport_label: "Consider Transportation",
 
                 coarse_expmode_disabled: true,
+
+                dialogOpen: false,
+                dialogText: ""
             }
         },
         methods: {
@@ -326,6 +363,7 @@
                  * Some elements change when others are interacted with, some elements depend on others.
                  */
                 if(this.waste_type === "End of Life") {
+                    this.waste_carbon_fibre_cost = 0
                     this.shred_2_type = "Fine"
                     // this.shred_2_ml = 5.0
                     this.fine_expmode_label = "Fine shredding expert mode"
@@ -374,6 +412,34 @@
                 }
                 // this.log()
             },
+            checkCarbonFibreCostAndSave() {
+                /**
+                 * Checks contents of carbon-fibre-cost textfield. Pops up a message if contents are invalid. Otherwise saves input.
+                 * Contents are saved in App.vue->app_input
+                 */
+                let isNumber = false
+                let isEmpty = false
+                let value = undefined
+                if(this.waste_carbon_fibre_cost === "" || this.waste_carbon_fibre_cost === undefined) {
+                    isEmpty = true
+                } else if(!isNaN(parseFloat(String(this.waste_carbon_fibre_cost).replaceAll(",", ".")))) {
+                    isNumber = true
+                    value = parseFloat(String(this.waste_carbon_fibre_cost).replaceAll(",", "."))
+                } else if(!isNaN(parseInt(String(this.waste_carbon_fibre_cost).replaceAll(",", ".")))) {
+                    isNumber = true
+                    value = parseInt(String(this.waste_carbon_fibre_cost).replaceAll(",", "."))
+                }
+
+                if(isNumber && value >= 0 || isEmpty) {
+                    this.waste_carbon_fibre_cost = value
+                    this.saveNewInputs()
+                } else {
+                    this.waste_carbon_fibre_cost = undefined
+                    this.saveNewInputs()
+                    this.dialogText = "Please input a positive number."
+                    this.dialogOpen = true
+                }
+            },
             newExpertModeValues(new_values) {
                 /**
                  * Handles the ExpertMode.vue emits, saves the values that come from there.
@@ -404,6 +470,7 @@
                     {
                         waste_type: this.waste_type,
                         waste_size: this.size1dot5,
+                        waste_carbon_fibre_cost: this.waste_carbon_fibre_cost,
 
                         shred_1_type: this.shred_1_type,
                         shred_1_ml: this.shred_1_ml,
@@ -427,6 +494,7 @@
                  */
                 console.log("waste_type:"+this.waste_type)
                 console.log("waste_size:"+this.size1dot5)
+                console.log("waste_carbon_fibre_cost:"+this.waste_carbon_fibre_cost)
                 console.log("shred_1_type:"+this.shred_1_type)
                 console.log("shred_1_ml:"+this.shred_1_ml)
                 console.log("shred_1_cost:"+this.shred_1_cost)

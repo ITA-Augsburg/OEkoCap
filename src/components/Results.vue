@@ -259,7 +259,7 @@ import { createCharts } from "../results_charts_functions.js"
                 actual_output: undefined,
 
                 // when testing, set actual_output to test_output in mounted()
-                test_output: benchmarks.test_output_1,
+                test_output: benchmarks.test_output_v5_1,
                 benchmarks: benchmarks.benchmarks
             }
         },

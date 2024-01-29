@@ -1,7 +1,8 @@
 <script setup>
     import Input_subheader from "../components/Input_subheader.vue"
     import Waiting from "../components/Waiting.vue"
-    import Input_footer from "../components/Input_footer.vue"
+    // import Input_footer from "../components/Input_footer.vue"
+    import Error_footer from "../components/Error_footer.vue"
 </script>
 
 <template>
@@ -16,12 +17,15 @@
     <Waiting />
 
     <!-- Footer on the waiting-page -->
-    <Input_footer
+    <Error_footer
+    :button_text_prop="'CANCEL'" />
+    <!-- <Input_footer
     :id=id
     :progressValue=progressValue
     :color_main=color_main
     :color_lightgrey=color_lightgrey
-    @updateInputFooter="updateInputFooter()" />
+    @updateInputFooter="updateInputFooter()" /> -->
+
 </template>
 
 <script>

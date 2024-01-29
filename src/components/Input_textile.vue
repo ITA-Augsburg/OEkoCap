@@ -163,15 +163,21 @@
             ) {
                 this.type_options = ["Dry-laid", "Wet-laid", "Air-laid"]
             } else if(
-                shred_1_type === "Coarse" && shred_2_type === undefined && this.matrix_insertion_prop ||
+                shred_1_type === "Coarse" && shred_2_type === undefined && this.matrix_insertion_prop
+            ) {
+                this.type_options = ["Dry-laid with Thermoplastfiber", "Air-laid with Thermoplastfiber"]
+            } else if(
+                shred_1_type === "Coarse" && shred_2_type === undefined && !this.matrix_insertion_prop
+            ) {
+                this.type_options = ["Dry-laid", "Air-laid"]
+            } else if(
                 shred_1_type === undefined && shred_2_type === "Cutting" && this.matrix_insertion_prop
             ) {
-                this.type_options = ["Dry-laid with Thermoplastfiber", "Air-laid with Thermoplastfiber"] // "Wet-laid with Thermoplastfiber", in recycling.exe v4.3 ergibt error
+                this.type_options = ["Dry-laid with Thermoplastfiber", "Wet-laid with Thermoplastfiber", "Air-laid with Thermoplastfiber"] // "Wet-laid with Thermoplastfiber", in recycling.exe v4.3 ergibt error
             } else if(
-                shred_1_type === "Coarse" && shred_2_type === undefined && !this.matrix_insertion_prop ||
                 shred_1_type === undefined && shred_2_type === "Cutting" && !this.matrix_insertion_prop
             ) {
-                this.type_options = ["Dry-laid", "Air-laid"] // Wet-laid, in recycling.exe v4.3 ergibt error
+                this.type_options = ["Dry-laid", "Wet-laid", "Air-laid"] // Wet-laid, in recycling.exe v4.3 ergibt error
             }
 
             if(this.textile_type === "Dry-laid" || this.textile_type === "Dry-laid with Thermoplastfiber") {

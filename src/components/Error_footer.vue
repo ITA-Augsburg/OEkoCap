@@ -19,7 +19,7 @@
                 elevation="5"
                 width="225px"
                 height="55px"
-                ><p class="error_footer_button_text">back</p></v-btn>
+                ><p class="error_footer_button_text">{{button_text_prop}}</p></v-btn>
             </div>
 
             <Copyright_text />
@@ -33,7 +33,7 @@
  * Footer component with a button.
  */
     export default {
-        props: ["color_lightgrey"],
+        props: ["button_text_prop", "color_lightgrey"],
         data: () => ({
         }),
         methods: {

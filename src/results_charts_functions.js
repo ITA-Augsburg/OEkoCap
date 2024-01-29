@@ -181,24 +181,29 @@ export function createCharts(output, benchmarks) {
         if(process.minCostPerKg === null || process.maxCostPerKg === null) processesCostOk = false
     })
     if(output.materials.minGWPValue === null || output.materials.maxGWPValue === null) processesGwpOk = false
-    if(output.materials.minCostPerKg === null || output.materials.maxCostPerKg === null) processesCostOk = false
+    if(output.materials.matrixMinCostPerKg === null || output.materials.matrixMaxCostPerKg === null) processesCostOk = false
     // all gwp values present, build gwp-piechart
+    let numberOfSlices = output.processes.length+1 // numberOfSlices-1 because process.name = oxidation is skipped; +1 because after this forEach one more element is added (output.materials.matrix)
     if(processesGwpOk) {
         let counter = 0
         output.processes.forEach((process) => {
             // console.log(process.name)
-            if(process.name === "Oxidation") return // equivalent of continue in a for() loop
+            // Oxidation should not be displayed in the piechart
+            if(process.name === "Oxidation") {
+                numberOfSlices-1
+                return // equivalent of continue in a for() loop
+            }
             pieChartLabels.push(process.name)
             let dataPoint = (process.maxGWPValue + process.minGWPValue) / 2
             data.push(Math.round(dataPoint * 100) / 100)
-            pieChartColors.push(randomColor(counter, 1, output.processes.length-1+1, "pie")) // numberOfElements-1 because process.name = oxidation is skipped; +1 because after this forEach one more element is added (output.materials.matrix)
+            pieChartColors.push(randomColor(counter, 1, numberOfSlices, "pie"))
             counter++
         })
         // add material portion
         pieChartLabels.push(output.materials.matrix)
         let dataPoint = (output.materials.maxGWPValue + output.materials.minGWPValue) / 2
         data.push(Math.round(dataPoint * 100) / 100)
-        pieChartColors.push(randomColor(counter, 1, output.processes.length-1+1, "pie"))
+        pieChartColors.push(randomColor(counter, 1, numberOfSlices, "pie"))
         counter++
         addPieCharts(charts, category, name, title, pieChartLabels, data, pieChartColors, unit, parentId)
     }
@@ -220,21 +225,25 @@ export function createCharts(output, benchmarks) {
     data = []
     pieChartColors = []
     // all cost values present, build cost-piechart
+    numberOfSlices = output.processes.length+1 // numberOfSlices-1 because process.name = oxidation is skipped; +1 because after this forEach one more element is added (output.materials.matrix)
     if(processesCostOk) {
         let counter = 0
         output.processes.forEach((process) => {
-            if(process.name === "Oxidation") return // equivalent of continue in a for() loop
+            if(process.name === "Oxidation") {
+                numberOfSlices-1
+                return // equivalent of continue in a for() loop
+            }
             pieChartLabels.push(process.name)
             let dataPoint = (process.minCostPerKg + process.maxCostPerKg) / 2
             data.push(Math.round(dataPoint * 100) / 100)
-            pieChartColors.push(randomColor(counter, 1, output.processes.length-1+1, "pie")) // numberOfElements-1 because process.name = oxidation is skipped; +1 because after this forEach one more element is added (output.materials.matrix)
+            pieChartColors.push(randomColor(counter, 1, numberOfSlices, "pie"))
             counter++
         })
         // add material portion
         pieChartLabels.push(output.materials.matrix)
-        let dataPoint = (output.materials.minCostPerKg + output.materials.maxCostPerKg) / 2
+        let dataPoint = (output.materials.matrixMinCostPerKg + output.materials.matrixMaxCostPerKg) / 2
         data.push(Math.round(dataPoint * 100) / 100)
-        pieChartColors.push(randomColor(counter, 1, output.processes.length-1+1, "pie"))
+        pieChartColors.push(randomColor(counter, 1, numberOfSlices, "pie"))
         counter++
         addPieCharts(charts, category, name, title, pieChartLabels, data, pieChartColors, unit, parentId)
     }
