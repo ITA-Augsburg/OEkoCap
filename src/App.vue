@@ -603,7 +603,7 @@ export default {
           router.push({name: "ResultsView"})
       })
       //if server not responding notify user
-      .catch(rej => {
+      .catch(() => {
           // navigate to errorView, pass error as prop
 
           // console.log("Fehler beim Serveraufruf");
