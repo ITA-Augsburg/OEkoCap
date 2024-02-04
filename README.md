@@ -12,7 +12,10 @@ When developing the results-page, follow these steps:
 - Start.vue → comment in example button in template
 - When done developing don’t forget to undo the steps above!
 
-Whenever a new production build is built on the server, two files need to be copied manually into the dist folder: call_server.php and server.conf. These files are found on the server in a different folder. Make sure you don't delete these files in the original folder!
+Whenever a new production build is built on the server, two files need to be copied manually into the dist folder: call_server.php and server.conf. These files are found on the server in a different folder. Make sure you don't delete these files in the original folder!  
+
+seite ist unter http://oekocap.org und https://oekocap.org erreichbar. “calculate” funtkioniert nur auf der https seite.
+Currently both http://oekocap.org and https://oekocap.org serve the website but only https://oekocap.org can call the server when pressing 'calculate' on the processing-site.
 
 #### Pre-requirements
 Node.js installed
