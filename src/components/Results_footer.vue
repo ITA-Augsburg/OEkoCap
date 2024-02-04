@@ -376,7 +376,8 @@
                         ],
                     }
                     
-                })
+                },
+                {text: "", pageBreak: "after"})
 
                 // pie charts next to each other
                 // pie charts might not exist depending on the output from recycling.exe
@@ -400,7 +401,8 @@
                                 ]
                             ]
                         }
-                    })
+                    },
+                    {text: "", pageBreak: "after"})
                     // pdfContent.push({text: about, alignment: "justify", margin: [0, 0, 0, 10]})
                     // pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0], pageBreak: 'after'})
 
@@ -419,7 +421,8 @@
                                 ]
                             ]
                         }
-                    })
+                    },
+                    {text: "", pageBreak: "after"})
                     // pdfContent.push({text: about, alignment: "justify", margin: [0, 0, 0, 10]})
                     // pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0], pageBreak: 'after'})
                 } else if(this.data_urls_prop["max_cost_of_each_output_process_chart_chartImage"].image !== undefined) {
@@ -437,11 +440,10 @@
                                 ]
                             ]
                         }
-                    })
+                    },
+                    {text: "", pageBreak: "after"})
                     // pdfContent.push({text: about, alignment: "justify", margin: [0, 0, 0, 10]})
                     // pdfContent.push({text: description, alignment: "justify", margin: [0, 0, 0, 0], pageBreak: 'after'})
-                } else {
-                    pdfContent.push({text: "", pageBreak: "after"})
                 }
 
                 // ashby charts

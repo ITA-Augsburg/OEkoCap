@@ -1,9 +1,10 @@
 # oekocap_calculator
 
 #### Notes for development
-By default, the URL [localhost:8080/results](http://localhost:8080/results) will redirect to /start, this is because the user shouldn’t access this page before making their inputs.
+By default, every page will redirect to /start, users should start there and continue through the input pages.  
+To access any page when developing, comment out the redirecting-code in the mounted() function of the page you want to access. Every page has a corresponding file under root/views.
 
-When developing, one might want to access the results-page. This can be done with the following steps:
+When developing the results-page, follow these steps:
 
 - ResultsView.vue → mounted() → comment out the router.push line.
 - Results.vue → mounted() → comment out the “if(startedCorrectly) return” line and comment in actual_output = test_output
@@ -11,24 +12,37 @@ When developing, one might want to access the results-page. This can be done wit
 - Start.vue → comment in example button in template
 - When done developing don’t forget to undo the steps above!
 
-Whenever building dist on the server, two files need to be copied manually into the updated dist folder: call_server.php and server.conf. These files are found on the server in a different folder. Make sure you don't delete these files in the original folder!
+Whenever a new production build is built on the server, two files need to be copied manually into the dist folder: call_server.php and server.conf. These files are found on the server in a different folder. Make sure you don't delete these files in the original folder!
 
 #### Pre-requirements
 Node.js installed
 
 #### Project setup
+Clone git repository into a folder:
+```
+git clone repository-url
+```  
+Navigate inside that folder and install project dependencies:
 ```
 npm install
 ```
 
-#### Compiles and hot-reloads for development
+#### Development
+Start development server (compiles and hot-reloads):
 ```
 npm run serve
 ```
 
-#### Compiles and minifies for production
+#### Compiling the production build
+Builds for production. Places files in the dist folder.
 ```
 npm run build
+```
+Testing the production build locally with the 'serve' npm package.  
+Install the serve package, navigate into project folder and run `serve dist`
+```
+npm install serve
+serve dist
 ```
 
 #### Lints and fixes files

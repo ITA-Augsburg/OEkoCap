@@ -77,6 +77,10 @@
         width: 320px;
     }
 }
+
+.footer_copyright_link {
+    color: var(--color-grey);
+}
 .footer_copyright_link:visited {
     color: var(--color-grey);
 }
