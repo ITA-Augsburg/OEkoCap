@@ -24,33 +24,36 @@ Node.js installed
 Clone git repository into a folder:
 ```
 git clone repository-url
-```  
-Navigate inside that folder and install project dependencies:
 ```
-npm install
+
+Navigate inside that folder and install project dependencies with pnpm. (Install pnpm globally if needed `npm i -g pnpm`)
 ```
+pnpm install
+```
+
+Note: if you have npm packages in this project that were installed before the switch to pnpm, then delete the node_modules folder and run `pnpm install`.
 
 #### Development
 Start development server (compiles and hot-reloads):
 ```
-npm run serve
+pnpm serve
 ```
 
 #### Compiling the production build
 Builds for production. Places files in the dist folder.
 ```
-npm run build
+pnpm build
 ```
-Testing the production build locally with the 'serve' npm package.  
-Install the serve package, navigate into project folder and run `serve dist`
+Testing the production build locally with the 'serve' pnpm package.  
+Install the 'serve' package, navigate into project folder and run `serve dist`
 ```
-npm install serve
+pnpm install serve
 serve dist
 ```
 
 #### Lints and fixes files
 ```
-npm run lint
+pnpm lint
 ```
 
 #### Customize configuration
