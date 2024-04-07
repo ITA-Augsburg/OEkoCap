@@ -59,8 +59,7 @@
             "co2_equv_per_kg": ""
         }
     },
-    "test_output_1": {"gwp":{"minValue":12.97050278228259,"maxValue":23.82102786696809},"processes":[{"maxCostPerKg":55.5,"maxGWPValue":12.0868,"maxCostTotalInEur":47370.776249999995,"minGWPValue":5.2753,"name":"ResinTransferMoulding","minCostPerKg":46.57142857142857,"position":4,"minCostTotalInEur":39749.994999999995},{"maxCostPerKg":5.008625966943069,"maxGWPValue":0.817002,"maxCostTotalInEur":4275.0,"minGWPValue":0.817002,"name":"Carding","minCostPerKg":2.31732428070566,"position":3,"minCostTotalInEur":1977.9},{"maxCostPerKg":0.0,"maxGWPValue":0.0,"maxCostTotalInEur":0.0,"minGWPValue":0.0,"name":"Oxidation","minCostPerKg":0.0,"position":2,"minCostTotalInEur":0.0},{"maxCostPerKg":2.90500306082698,"maxGWPValue":6.14579,"maxCostTotalInEur":2479.5,"minGWPValue":2.10672,"name":"Pyrolysis","minCostPerKg":1.7251933886137238,"position":1,"minCostTotalInEur":1472.5},{"maxCostPerKg":0.23432168266400324,"maxGWPValue":0.0191545,"maxCostTotalInEur":200.0,"minGWPValue":0.0191545,"name":"ShreddingProcessFine","minCostPerKg":0.0035148252399600484,"position":0,"minCostTotalInEur":3.0}],"flexuralStrength_MPa":[{"flexuralStrength0_MPa":[{"value":"257.5164"},{"value":"213.4237"}]},{"flexuralStrength90_MPa":[{"value":"347.6314"},{"value":"310.195"}]}],"cost":{"minValue_eur_per_kg":"53.63070609910049","maxValue_eur_per_kg":"69.67444077665922"},"materials":{"matrixMaxCostPerKg":6.026490066225166,"maxGWPValue":4.75232,"minGWPValue":4.75232,"matrixMinCostPerKg":3.013245033112583,"matrix":"EP"},"tensileModulus_GPa":[{"tensileModulus0_GPa":[]},{"tensileModulus90_GPa":[]}],"flexuralModulus_GPa":[{"flexuralModulus0_GPa":[{"value":"18.5061"},{"value":"23.5362"}]},{"flexuralModulus90_GPa":[{"value":"26.5334"},{"value":"33.0391"}]}],"tensileStrength_MPa":[{"tensileStrength0_MPa":[]},{"tensileStrength90_MPa":[]}]},
-    "test_output_v5_1": {
+    "test_output_from_recycling_v5_1": {
         "gwp": {
             "minValue": 27.24789097626983,
             "maxValue": 30.345561750255253
@@ -321,40 +320,40 @@
             "material": "GFK",
             "gwp_min": 5.19,
             "gwp_max": 7.19,
-            "cost_per_kg_min": 27.50,
-            "cost_per_kg_max": 42.50,
+            "cost_per_kg_min": 18,
+            "cost_per_kg_max": 24,
             "tensile_strength_min": 206,
             "tensile_strength_max": 303,
             "tensile_modulus_min": 21,
             "tensile_modulus_max": 21,
             "flexural_strength_min": 206,
             "flexural_strength_max": 303,
-            "flexural_modulus_min": 26,
-            "flexural_modulus_max": 26
+            "flexural_modulus_min": 21,
+            "flexural_modulus_max": 21
         },
         "glasfiber_fabric_plus_epoxy_wet_compression_moulding": {
             "name": "Glasfiber-Fabric + Epoxy (Wet Compression Molding)",
             "material": "GFK",
             "gwp_min": 4.64,
             "gwp_max": 5.58,
-            "cost_per_kg_min": 18.34,
-            "cost_per_kg_max": 28.35,
+            "cost_per_kg_min": 13.67,
+            "cost_per_kg_max": 18.25,
             "tensile_strength_min": 206,
             "tensile_strength_max": 303,
             "tensile_modulus_min": 21,
             "tensile_modulus_max": 21,
             "flexural_strength_min": 206,
             "flexural_strength_max": 303,
-            "flexural_modulus_min": 26,
-            "flexural_modulus_max": 26
+            "flexural_modulus_min": 21,
+            "flexural_modulus_max": 21
         },
         "aluminium_deep_drawing": {
             "name": "Aluminium (Deep-Drawing)",
             "material": "Aluminium",
             "gwp_min": 12,
             "gwp_max": 14.13,
-            "cost_per_kg_min": 24,
-            "cost_per_kg_max": 30,
+            "cost_per_kg_min": 13.25,
+            "cost_per_kg_max": 17,
             "tensile_strength_min": 290,
             "tensile_strength_max": 338,
             "tensile_modulus_min": 66,
@@ -362,15 +361,15 @@
             "flexural_strength_min": 240,
             "flexural_strength_max": 280,
             "flexural_modulus_min": 66,
-            "flexural_modulus_max": 70
+            "flexural_modulus_max": 79
         },
         "steel_deep_drawing": {
             "name": "Steel (Deep-Drawing)",
             "material": "Steel",
             "gwp_min": 3.21,
             "gwp_max": 4.68,
-            "cost_per_kg_min": 13.50,
-            "cost_per_kg_max": 18,
+            "cost_per_kg_min": 9.25,
+            "cost_per_kg_max": 12.5,
             "tensile_strength_min": 430,
             "tensile_strength_max": 600,
             "tensile_modulus_min": 195,

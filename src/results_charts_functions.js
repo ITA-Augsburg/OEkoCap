@@ -298,12 +298,12 @@ function createCanvasElement(id, className, parentId) {
 function createBarChart(id, title, benchmarkLabels, data, unit, legendFontSize, parentId) {
     /**
      * Creates a Chart.js bar-chart with a legend.
-     * The green column always represents the output data.
+     * The red column always represents the output data.
      * Format of bar-chart-data is always [[a, b], [c, d], ...].
     */
     
     // in the pdf there are only two bar-charts, one with the output-gwp and all benchmark-gwps; and one with the output-cost and all benchmark-costs.
-    // output-gwp and output-cost can be null, in this case exclude the green color.
+    // output-gwp and output-cost can be null, in this case exclude the red color.
     let lotsOfColors = []
     if(benchmarkLabels[0] === "Result") {
         for(let i=0; i<benchmarkLabels.length; i++) {
@@ -344,6 +344,7 @@ function createBarChart(id, title, benchmarkLabels, data, unit, legendFontSize, 
             ]
         },
         options: {
+            responsive: true,
             animation: false,
             hover: false,
             aspectRatio: 1.3,
@@ -1132,7 +1133,7 @@ function getMechanicalMinMaxValues(data, source) {
 }
 function randomColor(i, alpha, numberOfElements, chart_type) {
     /**
-     * Generates a randomised color, that has the same saturation and lightness as the main green color of the app.
+     * Generates a randomised color, that has the same saturation and lightness as the main color of the app.
      * Parameters:
      *     i: for iterating in the parent function.
      *     alpha: transparency-value.
