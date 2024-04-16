@@ -72,7 +72,6 @@ import { createCharts } from "../results_charts_functions.js"
         v-model=selected_benchmark
         v-on:update:model-value='handleUI("benchmark_select")' />
 
-        <!-- container that holds the gwp- or cost-barchart depending on the active button above -->
         <div id="gwp_or_cost_charts" />
         <br><br>
 
@@ -228,22 +227,37 @@ import { createCharts } from "../results_charts_functions.js"
             window.addEventListener("resize", () => {
                 if(this.wideWindow === false && window.innerWidth >= 500) {
                     this.wideWindow = true
-                 this.handleUI("resize")
+                    this.handleUI("resize")
                 } else if(this.wideWindow === true && window.innerWidth < 500) {
-                       this.wideWindow = false
+                    this.wideWindow = false
                     this.handleUI("resize")
                 }
             })
 
             this.charts = createCharts(this.actual_output, this.benchmarks)
             // console.log(JSON.stringify(this.charts, null, 4))
+            this.safariBarchartImages = this.createBarchartImagesForSafari()
+            // console.log(JSON.stringify(this.safariBarchartImages, null, 4))
             this.sendChartsAsImages()
+
+            // Chart.js charts don't resize correctly on Safari. If on safari and window.innerwidth small then display a picture of the chart instead of the chart. This is a bad workaround but I couldn't get it to work otherwise.
+            this.chromeAgent = navigator.userAgent.indexOf("Chrome") > -1
+            // Detect Safari
+            this.safariAgent = navigator.userAgent.indexOf("Safari") > -1
+            // Discard Safari since it also matches Chrome
+            if ((this.chromeAgent) && (this.safariAgent)) this.safariAgent = false
+            // console.log(this.safariAgent)
+            
+
         },
         data() {
             return {
                 legendFont: 20,
                 legendFontS: 15,
                 wideWindow: window.innerWidth >= 500 ? true : false,
+                chromeAgent: undefined,
+                safariAgent: undefined,
+                safariBarchartImages: undefined,
 
                 benchmark_options: [],
                 selected_benchmark: undefined,
@@ -259,7 +273,7 @@ import { createCharts } from "../results_charts_functions.js"
                 actual_output: undefined,
 
                 // when testing, set actual_output to test_output in mounted()
-                test_output: benchmarks.test_output_v5_1,
+                test_output: benchmarks.test_output_from_recycling_v5_1,
                 benchmarks: benchmarks.benchmarks
             }
         },
@@ -350,7 +364,12 @@ import { createCharts } from "../results_charts_functions.js"
                         this.unhideElement(this.charts[chartCategory][chartName].normal_font)
                         this.unhideElement(this.charts[chartCategory][chartName].normal_font + "_legend_container")
                     } else {
-                        this.unhideElement(this.charts[chartCategory][chartName].small_font)
+                        if(this.safariAgent === undefined || !this.safariAgent) {
+                            this.unhideElement(this.charts[chartCategory][chartName].small_font)
+                        } else {
+                            this.unhideElement(chartName + "_chartImage")
+                        }
+
                         this.unhideElement(this.charts[chartCategory][chartName].small_font + "_legend_container")
                     }
                 } else {
@@ -361,7 +380,13 @@ import { createCharts } from "../results_charts_functions.js"
                                 this.unhideElement(this.charts[chartCategory][chartNamefragment + benchmarkName + "_chart"].normal_font)
                                 this.unhideElement(this.charts[chartCategory][chartNamefragment + benchmarkName + "_chart"].normal_font + "_legend_container")
                             } else {
-                                this.unhideElement(this.charts[chartCategory][chartNamefragment + benchmarkName + "_chart"].small_font)
+                                if(this.safariAgent === undefined || !this.safariAgent) {
+                                    this.unhideElement(this.charts[chartCategory][chartNamefragment + benchmarkName + "_chart"].small_font)
+                                }
+                                else {
+                                    this.unhideElement(chartNamefragment + benchmarkName + "_chart" + "_chartImage")
+                                }
+
                                 this.unhideElement(this.charts[chartCategory][chartNamefragment + benchmarkName + "_chart"].small_font + "_legend_container")
                             }
                         }
@@ -433,30 +458,52 @@ import { createCharts } from "../results_charts_functions.js"
                     }
                 }
             },
+            createBarchartImagesForSafari() {
+                /**
+                 * So barcharts appear streched in the Safari browser, or at least on small viewport widths. It might be a problem in the chart.js code, I really tried getting this to work.
+                 * This function offers a temporary solution. It creates images of the problematic charts. These are then displayed exclusively in Safari on small viewport widths.
+                 */
+
+                let images = {}
+                let selectedChart = undefined
+
+                // gwp and cost charts to images. Images do not contain the legends. Legends are rendered separately. 
+                for(let key in this.charts.gwp_charts) {
+                    // canvas to image -> .toDataURL(), chart.js chart to image -> .toBase64Image()
+                    selectedChart = document.getElementById(this.charts.gwp_charts[key].normal_font)
+                    // images.push({type: "bar", name: key, image: selectedChart.toDataURL()})
+                    this.htmlElementToCanvas(selectedChart, undefined, key, "bar", images)
+                }
+                for(let key in this.charts.cost_charts) {
+                    selectedChart = document.getElementById(this.charts.cost_charts[key].normal_font)
+                    // images.push({type: "bar", name: key, image: selectedChart.toDataURL()})
+                    this.htmlElementToCanvas(selectedChart, undefined, key, "bar", images)
+                }
+
+                // insert images into the gwp_or_cost_charts div
+                for(let entry in images) {
+                    // console.log(images[entry])
+                    // console.log(entry)
+                    // console.log(images[entry].image)
+                    let image = new Image()
+                    image.src = images[entry].image
+                    image.alt = "chart_image"
+                    image.id = entry
+                    image.classList.add("safari_barchart_image")
+                    document.getElementById("gwp_or_cost_charts").prepend(image)
+                    document.getElementById(image.id).classList.add("hidden_chart")
+                }
+                return images
+            },
             sendChartsAsImages() {
                 /**
-                 * Creates and sends data-urls of the charts for use when creating the pdf in Results_footer.vue.
+                 * Creates and sends data-urls of some of the charts. These are used when creating the pdf in Results_footer.vue.
                  */
                 let images = []
                 // hand-pick charts
                 let selectedId = undefined
                 let selectedChart = undefined
                 let selectedLegend = undefined
-
-                // gwp_charts gwp_range_output_benchmark_1_chart ... gwp_range_output_benchmark_n_chart
-                // for(let key in this.charts.gwp_charts) {
-                //     if(key === "gwp_range_output_only_chart") continue
-                //     // canvas to image -> .toDataURL(), chart.js chart to image -> .toBase64Image()
-                //     selectedChart = document.getElementById(this.charts.gwp_charts[key].normal_font)
-                //     images.push({type: "bar", name: key, image: selectedChart.toDataURL()})
-                // }
-
-                // cost_charts cost_range_output_benchmark_1_chart ... cost_range_output_benchmark_n_chart
-                // for(let key in this.charts.cost_charts) {
-                //     if(key === "cost_range_output_only_chart") continue
-                //     selectedChart = document.getElementById(this.charts.cost_charts[key].normal_font)
-                //     images.push({type: "bar", name: key, image: selectedChart.toDataURL()})
-                // }
 
                 // gwp and cost bar-charts with output and every benchmark + custom-legend
                 let pdf_gwp_barchart = document.getElementById("pdf_gwp_chart_normal_font")
@@ -509,22 +556,25 @@ import { createCharts } from "../results_charts_functions.js"
                  * html2canvas needs the element to be visible in the DOM, so the element corresponding to the passed information must be temporarily made visible. After html2canvas is done, elements are hidden again.
                  */
                 selectedChart.classList.remove("hidden_chart")
-                selectedLegend.classList.remove("hidden_chart")
+                if(selectedLegend !== undefined) selectedLegend.classList.remove("hidden_chart")
 
                 // Chart to DataUrl
                 // container.push({type: type, name: name + "_chartImage", image: selectedChart.toDataURL()})
                 container[name + "_chartImage"] = {type: type, image: selectedChart.toDataURL()}
+                selectedChart.classList.add("hidden_chart")
                 // let image = new Image()
                 // image.src = selectedChart.toDataURL()
                 // document.body.appendChild(image)
+
                 // Legend to DataUrl
-                html2canvas(selectedLegend, {logging: false}).then(function(canvas) {
-                    // container.push({type: type, image: canvas.toDataURL()})
-                    container[name + "_legendImage"] = {type: type, image: canvas.toDataURL()}
-                    // document.body.appendChild(canvas)
-                })
-                selectedChart.classList.add("hidden_chart")
-                selectedLegend.classList.add("hidden_chart")
+                if(selectedLegend !== undefined) {
+                    html2canvas(selectedLegend, {logging: false}).then(function(canvas) {
+                        // container.push({type: type, image: canvas.toDataURL()})
+                        container[name + "_legendImage"] = {type: type, image: canvas.toDataURL()}
+                        // document.body.appendChild(canvas)
+                    })
+                    selectedLegend.classList.add("hidden_chart")
+                }
             }
         }
     }

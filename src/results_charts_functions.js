@@ -298,12 +298,12 @@ function createCanvasElement(id, className, parentId) {
 function createBarChart(id, title, benchmarkLabels, data, unit, legendFontSize, parentId) {
     /**
      * Creates a Chart.js bar-chart with a legend.
-     * The green column always represents the output data.
+     * The red column always represents the output data.
      * Format of bar-chart-data is always [[a, b], [c, d], ...].
     */
     
     // in the pdf there are only two bar-charts, one with the output-gwp and all benchmark-gwps; and one with the output-cost and all benchmark-costs.
-    // output-gwp and output-cost can be null, in this case exclude the green color.
+    // output-gwp and output-cost can be null, in this case exclude the red color.
     let lotsOfColors = []
     if(benchmarkLabels[0] === "Result") {
         for(let i=0; i<benchmarkLabels.length; i++) {
@@ -344,6 +344,7 @@ function createBarChart(id, title, benchmarkLabels, data, unit, legendFontSize, 
             ]
         },
         options: {
+            responsive: true,
             animation: false,
             hover: false,
             aspectRatio: 1.3,
@@ -919,6 +920,7 @@ function checkAshbyChartData(data) {
      * Therefor the values for displaying the ellipse are modified, ellipse diameter will be three percent of axis-length.
      * Values in the legend won't be affected.
      */
+
     let modifiedData = {
         ellipses: [],
         xAxisRange: data.xAxisRange,
@@ -932,7 +934,9 @@ function checkAshbyChartData(data) {
             xMax: data.ellipses[i].xMax,
             yMin: data.ellipses[i].yMin,
             yMax: data.ellipses[i].yMax,
-            backgroundColor: data.ellipses[i].backgroundColor
+            backgroundColor: data.ellipses[i].backgroundColor,
+            borderColor: data.ellipses[i].borderColor,
+            borderWidth: data.ellipses[i].borderWidth
         }
         // compare xMin and xMax, modify them if needed
         let currentWidth = Math.abs(newEllipse.xMax - newEllipse.xMin)
@@ -1022,7 +1026,9 @@ function setAshbyChartData(output, benchmarks, mechArg1, mechArg2) {
         xMax: outputMinMax[selection_x].max,
         yMin: outputMinMax[selection_y].min,
         yMax: outputMinMax[selection_y].max,
-        backgroundColor: 'hsla(13, 82%, 53%, 0.45)'
+        backgroundColor: undefined,
+        borderColor: "black",
+        borderWidth: 0
     }
     let data = {
         ellipses: [],
@@ -1037,12 +1043,11 @@ function setAshbyChartData(output, benchmarks, mechArg1, mechArg2) {
         outputEllipse.xMax !== undefined &&
         outputEllipse.yMin !== undefined &&
         outputEllipse.yMax !== undefined) {
-            data.ellipses.push(outputEllipse)
-            data.names.push("Result")
-        }
 
+        data.ellipses.push(outputEllipse)
+        data.names.push("Result")
+    }
 
-    let colorIndex = 1 // the color corresponding to 0 is alredy in use (output-ellipse)
     for(let key in benchmarksMinMax) {
         let newEllipse = {
             type: 'ellipse',
@@ -1050,13 +1055,27 @@ function setAshbyChartData(output, benchmarks, mechArg1, mechArg2) {
             xMax: benchmarksMinMax[key][selection_x].max,
             yMin: benchmarksMinMax[key][selection_y].min,
             yMax: benchmarksMinMax[key][selection_y].max,
-            backgroundColor: randomColor(colorIndex, 0.45, 5, "ashby"),
+            backgroundColor: undefined,
+            borderColor: "black",
+            borderWidth: 0
         }
         data.ellipses.push(newEllipse)
         data.names.push(benchmarks[key].name)
-        colorIndex++
+    }
+    data.ellipses = sortEllipses(data.ellipses)
+    // ellipses might have rearranged, colors should appear in descending order anyways. Therefor reassign colors.
+    // j needed for descending order of colors
+    for(let i=data.ellipses.length-1, j=0; i>-1; i--, j++) {
+        data.ellipses[j].backgroundColor = randomColor(i, 1, 5, "ashby")
     }
     return data
+}
+function sortEllipses(ellipses) {
+    /**
+     * Sort ellipses based on their areas. Smallest ellipses should appear 'on top' of bigger ellipses in the ashby chart.
+     */
+    let sortedEllipses = ellipses.toSorted((ellipse1, ellipse2) => (parseInt(ellipse1.xMax) - parseInt(ellipse1.xMin) * parseInt(ellipse1.yMax) - parseInt(ellipse1.yMin)) > (parseInt(ellipse2.xMax) - parseInt(ellipse2.xMin) * parseInt(ellipse2.yMax) - parseInt(ellipse2.yMin)))
+    return sortedEllipses
 }
 function getMechanicalMinMaxValues(data, source) {
     /**
@@ -1132,43 +1151,23 @@ function getMechanicalMinMaxValues(data, source) {
 }
 function randomColor(i, alpha, numberOfElements, chart_type) {
     /**
-     * Generates a randomised color, that has the same saturation and lightness as the main green color of the app.
+     * Generates colors used in the charts.
      * Parameters:
      *     i: for iterating in the parent function.
      *     alpha: transparency-value.
      *     numberOfElements: number of elements of the parent function.
+     *     chart_type: type of chart (e.g. bar, pie, ashby)
     */
 
     if(["bar", "pie", "ashby"].includes(chart_type) === false) {
         console.error("Invalid 'chart_type' parameter in randomColor(..) function in results_charts_functions.js.")
     }
     
-    // if there aren't many processes, hand-pick a beautiful set of colors.
-    // else assign processes ugly colors that are as different as possible, picked by the algorithm below.
-    if(numberOfElements <= 5 && ["bar", "pie"].includes(chart_type)) {
-        switch(i) {
-            case 0:
-                return "#ff5526" // lightest red
-                // return "#0088ff" // lightest blue
-            case 1:
-                return "#cc441f" // light red
-                // return "#006dcc" // light blue
-            case 2:
-                return "#993317" // middle red
-                // return "#005299" // middle blue
-            case 3:
-                return "#66220f" // dark red
-                // return "#003666" // dark blue
-            case 4:
-                return "#331108" // darkest red
-                // return "#001b33" // darkest blue
-        }
-    } else {
-        // set interval depending on numberOfElements and start from 13
-        let interval = 356 / numberOfElements
-        // let h = (146 + i * interval) % 356, s = 55, l = 57
-        let h = (13 + i * interval) % 356, s = 82, l = 53
-        // console.log("hsla(" + h +"°, " + s + "%, " + l + "%, " + alpha + ")")
-        return "hsla(" + h + ", " + s + "%, " + l + "%, " + alpha + ")"
-    }
+    // create variations of the main app color, based on the colors lightness
+    // set interval depending on numberOfElements
+    let interval = 80 / numberOfElements
+    // let h = 208, s = 100, l = (90 - i * interval)
+    let h = 13, s = 82, l = (90 - i * interval)
+    // console.log("hsla(" + h +"°, " + s + "%, " + l + "%, " + alpha + ")")
+    return "hsla(" + h + ", " + s + "%, " + l + "%, " + alpha + ")"
 }
