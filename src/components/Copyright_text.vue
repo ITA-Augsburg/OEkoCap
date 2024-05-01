@@ -9,11 +9,12 @@
         target="_blank">
             ITA Augsburg
         </a>
-        • (v1.1.1)
+        • (v1.1.2)
     </p>
 </template>
 
 <script>
+
     export default {
         mounted() {
             /**
