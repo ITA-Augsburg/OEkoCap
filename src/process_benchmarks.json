@@ -328,8 +328,8 @@
             "tensile_modulus_max": 21,
             "flexural_strength_min": 206,
             "flexural_strength_max": 303,
-            "flexural_modulus_min": 21,
-            "flexural_modulus_max": 21
+            "flexural_modulus_min": 26,
+            "flexural_modulus_max": 26
         },
         "glasfiber_fabric_plus_epoxy_wet_compression_moulding": {
             "name": "Glasfiber-Fabric + Epoxy (Wet Compression Molding)",
@@ -344,8 +344,8 @@
             "tensile_modulus_max": 21,
             "flexural_strength_min": 206,
             "flexural_strength_max": 303,
-            "flexural_modulus_min": 21,
-            "flexural_modulus_max": 21
+            "flexural_modulus_min": 26,
+            "flexural_modulus_max": 26
         },
         "aluminium_deep_drawing": {
             "name": "Aluminium (Deep-Drawing)",
@@ -360,8 +360,8 @@
             "tensile_modulus_max": 79,
             "flexural_strength_min": 240,
             "flexural_strength_max": 280,
-            "flexural_modulus_min": 66,
-            "flexural_modulus_max": 79
+            "flexural_modulus_min": 66.6,
+            "flexural_modulus_max": 70
         },
         "steel_deep_drawing": {
             "name": "Steel (Deep-Drawing)",
